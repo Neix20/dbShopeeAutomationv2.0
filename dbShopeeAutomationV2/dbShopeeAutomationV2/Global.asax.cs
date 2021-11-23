@@ -1,3 +1,4 @@
+using dbShopeeAutomationV2.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,6 +6,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Optimization;
 
 namespace dbShopeeAutomationV2
 {
@@ -21,6 +23,7 @@ namespace dbShopeeAutomationV2
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             AuthConfig.RegisterAuth();
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
             
             ModelBinders.Binders.DefaultBinder = new DevExpress.Web.Mvc.DevExpressEditorsBinder();
 

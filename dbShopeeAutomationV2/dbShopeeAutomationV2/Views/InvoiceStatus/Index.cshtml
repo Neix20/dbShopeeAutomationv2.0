@@ -1,11 +1,15 @@
 ﻿
 @{
-    ViewBag.Title = "Detail Home Page";
+    ViewBag.Title = "Invoice Status Home Page";
     Layout = "~/Views/Shared/_NavLayout.cshtml";
 }
 
 @section tmp_script {
-    <script type="text/javascript">$(".nav-item:nth-child(4)").children().addClass("active")</script>
+    <script type="text/javascript">$(".nav-item:first-child").children().addClass("active")</script>
+}
+
+@section tmp_script {
+    <script type="text/javascript">$(".nav-item:nth-child(2)").children().addClass("active")</script>
 }
 
 <div class="container p-3">
@@ -17,8 +21,10 @@
         </div>
 
         <div class="container p-3">
-            @Html.Action("DetailGridViewPartial")
+
+            @Html.Action("InvoiceStatusGridViewPartial")
+
+
         </div>
     </div>
 </div>
-

@@ -380,6 +380,10 @@
     <Content Include="Views\OrderItem\Index.cshtml" />
     <Content Include="Views\OrderItem\_OrderItemGridViewPartial.cshtml" />
     <Content Include="Views\OrderItemStatus\Index.cshtml" />
+    <Content Include="Views\OrderItemStatus\_OrderItemStatusGridViewPartial.cshtml" />
+    <Content Include="Views\Invoice\Index.cshtml" />
+    <Content Include="Views\Invoice\_InvoiceGridViewPartial.cshtml" />
+    <Content Include="Views\InvoiceStatus\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -397,6 +401,8 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DetailController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\InvoiceStatusController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\OrderItemController.cs" />
     <Compile Include="Controllers\OrderItemStatusController.cs" />

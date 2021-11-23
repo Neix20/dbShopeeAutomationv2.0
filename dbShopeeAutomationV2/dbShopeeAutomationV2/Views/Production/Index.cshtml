@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Production Homepage";
+    Layout = "~/Views/Shared/_NavLayout.cshtml";
+}
+
+@section tmp_script {
+    <script type="text/javascript">$(".nav-item:nth-child(2)").children().addClass("active")</script>
+}
+
+<div class="container">
+    <table class="table mt-3">
+        <thead>
+            <tr class="bg-dark">
+                <td colspan="5" style="color: white;" class="text-center h2">@ViewBag.Title</td>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <div class="container">
+        @Html.Action("ProductionGridViewPartial")
+        <div class="my-3"></div>
+        <a class="btn btn-outline-primary" href="/Production/Create">Create new Production</a>
+    </div>
+</div>
+

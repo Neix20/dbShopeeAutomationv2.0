@@ -9,6 +9,8 @@
         {"Shipment", new List<string>(){"Carrier", "Shipment", "Shipment Status"}},
         {"Operations", new List<string>(){"Operation", "Table Category", "Detail"}}
     };
+
+    string uName = (User.Identity.IsAuthenticated) ? User.Identity.Name : "Admin";
 }
 
 <style>
@@ -50,8 +52,8 @@
                 <li>
                     <div class="profile-pic">
                         <img src="~/Content/Images/default_male.jpg" alt="user-img" width="36" class="img-circle">
-                        &nbsp;&nbsp;<span class="text-white font-medium">Admin</span>
-                        &nbsp;&nbsp;<btn class="btn btn-secondary">Logout</btn>
+                        &nbsp;&nbsp;<span class="text-white font-medium">@uName</span>
+                        &nbsp;&nbsp;<a class="btn btn-secondary" href="/Account/SignOut">Logout</a>
                     </div>
                 </li>
             </ul>

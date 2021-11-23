@@ -42,25 +42,11 @@
         settings.Columns.Add("email_address").Caption = "Email Address";
         settings.Columns.Add("phone_number").Caption = "Phone Number";
 
-        settings.Columns.Add("Address").UnboundType = DevExpress.Data.UnboundColumnType.String;
-
-        settings.CustomUnboundColumnData = (s, e) =>
+        settings.Columns.Add(col =>
         {
-            if (e.Column.FieldName == "Address")
-            {
-                string address_line_1 = e.GetListSourceFieldValue("address_line_1").ToString();
-                List<String> tmpList = new List<String>()
-                {
-                    e.GetListSourceFieldValue("address_line_1").ToString(),
-                    e.GetListSourceFieldValue("address_line_2").ToString(),
-                    e.GetListSourceFieldValue("city").ToString(),
-                    e.GetListSourceFieldValue("zip_code").ToString(),
-                    e.GetListSourceFieldValue("state").ToString(),
-                    e.GetListSourceFieldValue("country").ToString()
-                };
-                e.Value = String.Join(", ", tmpList.ToArray());
-            };
-        };
+            col.FieldName = "Address";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+        });
 
         // Last Updated By
         settings.Columns.Add(columns =>
@@ -72,6 +58,21 @@
 
         settings.CustomUnboundColumnData = (s, e) =>
         {
+            if (e.Column.FieldName.Equals("Address"))
+            {
+                List<String> tmpList = new List<String>()
+                {
+                    e.GetListSourceFieldValue("address_line_1").ToString(),
+                    e.GetListSourceFieldValue("address_line_2").ToString(),
+                    e.GetListSourceFieldValue("city").ToString(),
+                    e.GetListSourceFieldValue("zip_code").ToString(),
+                    e.GetListSourceFieldValue("state").ToString(),
+                    e.GetListSourceFieldValue("country").ToString()
+                };
+                e.Value = String.Join(", ", tmpList.ToArray());
+
+            };
+
             if (e.Column.FieldName == "last_updated_by")
             {
                 int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());

@@ -1,0 +1,105 @@
+@using dbShopeeAutomationV2.Models;
+@using System.Collections.Generic;
+
+@{
+    dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
+
+    Dictionary<int, string> detailDict = new Dictionary<int, string>();
+    db.TShopeeDetails.ToList().ForEach(it =>
+    {
+        detailDict.Add(it.detail_id, it.last_updated_by);
+    });
+
+    Dictionary<int, String> warehouseDict = new Dictionary<int, String>();
+    db.TShopeeStockWarehouses.ToList().ForEach(it =>
+    {
+        warehouseDict.Add(it.stock_warehouse_id, it.name);
+    });
+
+    Dictionary<int, String> productDict = new Dictionary<int, String>();
+    db.TShopeeProducts.ToList().ForEach(it => {
+        productDict.Add(it.product_id, it.SKU);
+    });
+
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "StockItemGridView";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "StockItem", Action = "StockItemGridViewPartial" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "StockItem", Action = "StockItemGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "StockItem", Action = "StockItemGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "StockItem", Action = "StockItemGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "stock_item_id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.SettingsSearchPanel.Visible = true;
+
+        // Header Set Center
+        settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
+        settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
+
+        settings.Columns.Add("name").Caption = "Stock Item";
+        settings.Columns.Add("description").Caption = "Description";
+        settings.Columns.Add("stock_quantity").Caption = "Stock Quantity";
+        // Product SKU
+        settings.Columns.Add(column => {
+            column.FieldName = "Product SKU";
+            column.UnboundType = DevExpress.Data.UnboundColumnType.String;
+        });
+
+        // Stock Warehouse
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Stock Warehouse Location";
+            column.UnboundType = DevExpress.Data.UnboundColumnType.String;
+        });
+
+        // Last Updated By
+        settings.Columns.Add(columns =>
+        {
+            columns.FieldName = "Last Updated By";
+            columns.UnboundType = DevExpress.Data.UnboundColumnType.String;
+        });
+
+        settings.CustomUnboundColumnData = (s, e) =>
+        {
+            if(e.Column.FieldName.Equals("Product SKU"))
+            {
+                int product_id = int.Parse(e.GetListSourceFieldValue("product_id").ToString());
+                e.Value = productDict[product_id];
+            }
+
+            if (e.Column.FieldName.Equals("Stock Warehouse Location"))
+            {
+                int stock_warehouse_id = int.Parse(e.GetListSourceFieldValue("stock_warehouse_id").ToString());
+                e.Value = warehouseDict[stock_warehouse_id];
+            }
+
+            if (e.Column.FieldName.Equals("last_updated_by"))
+            {
+                int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());
+                e.Value = detailDict[detail_id];
+            }
+        };
+
+        // Cell Styles Center
+        settings.Styles.Cell.HorizontalAlign = HorizontalAlign.Center;
+        settings.Styles.Cell.VerticalAlign = VerticalAlign.Middle;
+    });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

@@ -364,6 +364,8 @@
     <Content Include="Views\ProductVariety\Index.cshtml" />
     <Content Include="Views\ProductVariety\_ProductVarietyGridViewPartial.cshtml" />
     <Content Include="Views\StockWarehouse\Index.cshtml" />
+    <Content Include="Views\StockWarehouse\_StockWarehouseGridViewPartial.cshtml" />
+    <Content Include="Views\StockItem\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -385,6 +387,7 @@
     <Compile Include="Controllers\ProductionController.cs" />
     <Compile Include="Controllers\ProductTypeController.cs" />
     <Compile Include="Controllers\ProductVarietyController.cs" />
+    <Compile Include="Controllers\StockItemController.cs" />
     <Compile Include="Controllers\StockWarehouseController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

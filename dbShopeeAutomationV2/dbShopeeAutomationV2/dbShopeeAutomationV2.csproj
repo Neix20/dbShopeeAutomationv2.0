@@ -384,6 +384,11 @@
     <Content Include="Views\Invoice\Index.cshtml" />
     <Content Include="Views\Invoice\_InvoiceGridViewPartial.cshtml" />
     <Content Include="Views\InvoiceStatus\Index.cshtml" />
+    <Content Include="Views\InvoiceStatus\_InvoiceStatusGridViewPartial.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\_UserGridViewPartial.cshtml" />
+    <Content Include="Views\UserRole\Index.cshtml" />
+    <Content Include="Views\UserRole\_UserRoleGridViewPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -415,6 +420,8 @@
     <Compile Include="Controllers\ProductVarietyController.cs" />
     <Compile Include="Controllers\StockItemController.cs" />
     <Compile Include="Controllers\StockWarehouseController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserRoleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

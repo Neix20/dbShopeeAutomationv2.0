@@ -1,0 +1,129 @@
+@using dbShopeeAutomationV2.Models;
+@using System.Collections.Generic;
+
+@{
+    dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
+
+    Dictionary<int, string> detailDict = new Dictionary<int, string>();
+    db.TShopeeDetails.ToList().ForEach(it =>
+    {
+        detailDict.Add(it.detail_id, it.last_updated_by);
+    });
+
+    Dictionary<int, string> platformDict = new Dictionary<int, string>();
+    db.TShopeePlatforms.ToList().ForEach(it =>
+    {
+        platformDict.Add(it.platform_id, it.name);
+    });
+
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "CustomerGridView";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "PaymentMethod", Action = "CustomerGridViewPartial" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "PaymentMethod", Action = "CustomerGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "PaymentMethod", Action = "CustomerGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "PaymentMethod", Action = "CustomerGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "customer_id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.SettingsSearchPanel.Visible = true;
+
+        // Header Set Center
+        settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
+        settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
+
+        // Name => First_name + last_name
+        settings.Columns.Add(col => {
+            col.FieldName = "Name";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+        });
+
+        // Birth Date
+        settings.Columns.Add(col => {
+            col.FieldName = "dob";
+            col.Caption = "Birth Date";
+            col.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
+        });
+
+        // Email Address
+        settings.Columns.Add("email_address").Caption = "Email Address";
+
+        // Phone Number
+        settings.Columns.Add("phone_number").Caption = "Phone Number";
+
+        // Address
+        settings.Columns.Add(col => {
+            col.FieldName = "Address";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+        });
+
+        // Platform Name
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Platform Name";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+        });
+
+        // Last Updated By
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Last Updated By";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+        });
+
+        settings.CustomUnboundColumnData = (s, e) =>
+        {
+            if (e.Column.FieldName.Equals("Name"))
+            {
+                e.Value = $"{e.GetListSourceFieldValue("first_name").ToString()} {e.GetListSourceFieldValue("last_name").ToString()}";
+            }
+
+            if (e.Column.FieldName.Equals("Address"))
+            {
+                List<String> tmpList = new List<String>()
+                {
+                    e.GetListSourceFieldValue("address_line_1").ToString(),
+                    e.GetListSourceFieldValue("address_line_2").ToString(),
+                    e.GetListSourceFieldValue("city").ToString(),
+                    e.GetListSourceFieldValue("zip_code").ToString(),
+                    e.GetListSourceFieldValue("state").ToString(),
+                    e.GetListSourceFieldValue("country").ToString()
+                };
+                e.Value = String.Join(", ", tmpList.ToArray());
+            };
+
+            if (e.Column.FieldName.Equals("Platform Name"))
+            {
+                int platform_id = int.Parse(e.GetListSourceFieldValue("platform_id").ToString());
+                e.Value = platformDict[platform_id];
+            };
+
+            if (e.Column.FieldName.Equals("Last Updated By"))
+            {
+                int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());
+                e.Value = detailDict[detail_id];
+            };
+        };
+
+        // Cell Styles Center
+        settings.Styles.Cell.HorizontalAlign = HorizontalAlign.Center;
+        settings.Styles.Cell.VerticalAlign = VerticalAlign.Middle;
+    });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

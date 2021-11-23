@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace dbShopeeAutomationV2.Controllers
 {
-    public class StockItemController : Controller
+    public class StockItemController : AdminController
     {
         public static string removeFirstAndLast(string str)
         {

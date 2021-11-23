@@ -368,6 +368,10 @@
     <Content Include="Views\StockItem\Index.cshtml" />
     <Content Include="Views\StockItem\_StockItemGridViewPartial.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\_ProductGridViewPartial.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Customer\_CustomerGridViewPartial.cshtml" />
+    <Content Include="Views\PaymentMethod\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -383,7 +387,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DetailController.cs" />
+    <Compile Include="Controllers\PaymentMethodController.cs" />
     <Compile Include="Controllers\ProductBrandController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductionController.cs" />

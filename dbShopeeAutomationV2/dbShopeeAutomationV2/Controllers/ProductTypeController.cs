@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace dbShopeeAutomationV2.Controllers
 {
-    public class ProductTypeController : Controller
+    public class ProductTypeController : AdminController
     {
         dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 

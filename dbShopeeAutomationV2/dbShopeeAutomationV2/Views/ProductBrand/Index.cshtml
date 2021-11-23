@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Production Home Page";
+    ViewBag.Title = "Product Brand Home Page";
     Layout = "~/Views/Shared/_NavLayout.cshtml";
 }
 
@@ -9,7 +9,6 @@
 }
 
 <div class="container p-3">
-
     <div class="border border-dark">
         <div class="row">
             <div class="col">
@@ -18,11 +17,7 @@
         </div>
 
         <div class="container p-3">
-            @Html.Action("ProductionGridViewPartial")
-            <div class="my-3"></div>
-            <a class="btn btn-outline-primary" href="/Production/Create">Create new Production</a>
+            @Html.Action("ProductBrandGridViewPartial")
         </div>
     </div>
-
 </div>
-

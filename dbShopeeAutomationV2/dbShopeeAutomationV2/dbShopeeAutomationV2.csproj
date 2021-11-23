@@ -355,6 +355,11 @@
     <Content Include="Views\Production\Index.cshtml" />
     <Content Include="Views\Production\_ProductionGridViewPartial.cshtml" />
     <Content Include="Views\Production\Create.cshtml" />
+    <Content Include="Views\ProductBrand\Index.cshtml" />
+    <Content Include="Views\ProductBrand\_ProductBrandGridViewPartial.cshtml" />
+    <Content Include="Views\Detail\Index.cshtml" />
+    <Content Include="Views\Detail\_DetailGridViewPartial.cshtml" />
+    <Content Include="Views\ProductType\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -370,7 +375,13 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\DetailController.cs" />
+    <Compile Include="Controllers\ProductBrandController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductionController.cs" />
+    <Compile Include="Controllers\ProductTypeController.cs" />
+    <Compile Include="Controllers\ProductVarietyController.cs" />
+    <Compile Include="Controllers\StockWarehouseController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -470,6 +481,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Admin\" />
+    <Folder Include="Views\ProductVariety\" />
+    <Folder Include="Views\Product\" />
+    <Folder Include="Views\StockWarehouse\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

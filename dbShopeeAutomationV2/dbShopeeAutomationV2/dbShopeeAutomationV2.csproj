@@ -372,6 +372,10 @@
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\_CustomerGridViewPartial.cshtml" />
     <Content Include="Views\PaymentMethod\Index.cshtml" />
+    <Content Include="Views\PaymentMethod\_PaymentMethodGridViewPartial.cshtml" />
+    <Content Include="Views\OrderStatus\Index.cshtml" />
+    <Content Include="Views\OrderStatus\_OrderStatusGridViewPartial.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -389,6 +393,8 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DetailController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\OrderStatusController.cs" />
     <Compile Include="Controllers\PaymentMethodController.cs" />
     <Compile Include="Controllers\ProductBrandController.cs" />
     <Compile Include="Controllers\ProductController.cs" />

@@ -45,7 +45,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
             DateTime currentTime = DateTime.Now;
-            int detail_id = (int)db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == item.product_type_id).detail_id;
+            int detail_id = (int)db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == item.product_type_id).detail_id;
 
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
             db.NSP_TShopeeDetail_Update(detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username, currentTime);

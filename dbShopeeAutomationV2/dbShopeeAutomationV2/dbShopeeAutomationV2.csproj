@@ -360,6 +360,10 @@
     <Content Include="Views\Detail\Index.cshtml" />
     <Content Include="Views\Detail\_DetailGridViewPartial.cshtml" />
     <Content Include="Views\ProductType\Index.cshtml" />
+    <Content Include="Views\ProductType\_ProductTypeGridViewPartial.cshtml" />
+    <Content Include="Views\ProductVariety\Index.cshtml" />
+    <Content Include="Views\ProductVariety\_ProductVarietyGridViewPartial.cshtml" />
+    <Content Include="Views\StockWarehouse\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -481,9 +485,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Admin\" />
-    <Folder Include="Views\ProductVariety\" />
     <Folder Include="Views\Product\" />
-    <Folder Include="Views\StockWarehouse\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -1,0 +1,63 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    IDictionary<string, List<string>> propDict = new Dictionary<string, List<string>>(){
+        {"E-commerce", new List<string>(){"Customer", "Invoice", "Invoice Status", "Order", "Order Item", "Order Item Status",
+                                            "Order Status", "Payment Method", "Platform"}},
+        {"Production", new List<string>(){"Product", "Product Brand", "Product Type", "Product Variety", "Production",
+                                            "Production Detail", "Stock Item", "Stock Warehouse"}},
+        {"Shipment", new List<string>(){"Carrier", "Shipment", "Shipment Status"}},
+        {"Operations", new List<string>(){"Operation", "Table Category", "Detail"}}
+    };
+}
+
+<style>
+    .navbar-nav {
+        flex-direction: row;
+    }
+
+    .nav-item > a {
+        margin: 0px 15px;
+    }
+
+    .profile-pic img.img-circle {
+        border-radius: 50%;
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mt-3">
+    <div class="container-fluid">
+        <a class="navbar-brand">NTL Asia</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                @foreach (var kvp in propDict)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            @kvp.Key
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @foreach (var prop in kvp.Value)
+                            {
+                                string str = $"/{Regex.Replace(prop, @" ", "")}";
+                                <li><a class="dropdown-item" href="@str">@prop</a></li>
+                            }
+                        </ul>
+                    </li>
+                }
+            </ul>
+            <ul class="navbar-nav">
+                <li>
+                    <div class="profile-pic">
+                        <img src="~/Content/Images/default_male.jpg" alt="user-img" width="36" class="img-circle">
+                        &nbsp;&nbsp;<span class="text-white font-medium">Admin</span>
+                        &nbsp;&nbsp;<btn class="btn btn-secondary">Logout</btn>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+@RenderBody()
+@RenderSection("tmp_script", required: true)

@@ -17,5 +17,10 @@ namespace dbShopeeAutomationV2.Models
         public int user_role_id { get; set; }
         public string username { get; set; }
         public string role { get; set; }
+
+        public TShopeeUserRole()
+        {
+
+        }
     }
 }

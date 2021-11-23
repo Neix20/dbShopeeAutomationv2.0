@@ -28,5 +28,10 @@ namespace dbShopeeAutomationV2.Models
         public string country { get; set; }
         public Nullable<int> platform_id { get; set; }
         public Nullable<int> detail_id { get; set; }
+
+        public TShopeeCustomer()
+        {
+
+        }
     }
 }

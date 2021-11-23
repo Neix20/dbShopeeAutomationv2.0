@@ -19,5 +19,10 @@ namespace dbShopeeAutomationV2.Models
         public string description { get; set; }
         public Nullable<int> return_merchandise_authorization_nr { get; set; }
         public Nullable<int> detail_id { get; set; }
+
+        public TShopeeOrderItemStatu()
+        {
+
+        }
     }
 }

@@ -25,5 +25,10 @@ namespace dbShopeeAutomationV2.Models
         public Nullable<int> zip_code { get; set; }
         public string country { get; set; }
         public Nullable<int> detail_id { get; set; }
+
+        public TShopeeStockWarehouse()
+        {
+
+        }
     }
 }

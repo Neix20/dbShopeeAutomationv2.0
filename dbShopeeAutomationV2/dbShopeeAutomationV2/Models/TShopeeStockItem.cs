@@ -21,5 +21,10 @@ namespace dbShopeeAutomationV2.Models
         public Nullable<int> product_id { get; set; }
         public Nullable<int> stock_warehouse_id { get; set; }
         public Nullable<int> detail_id { get; set; }
+
+        public TShopeeStockItem()
+        {
+
+        }
     }
 }

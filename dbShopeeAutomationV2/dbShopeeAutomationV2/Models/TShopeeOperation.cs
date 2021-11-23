@@ -19,5 +19,10 @@ namespace dbShopeeAutomationV2.Models
         public string description { get; set; }
         public Nullable<int> table_category_id { get; set; }
         public Nullable<int> detail_id { get; set; }
+
+        public TShopeeOperation()
+        {
+
+        }
     }
 }

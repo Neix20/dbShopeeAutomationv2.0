@@ -17,5 +17,10 @@ namespace dbShopeeAutomationV2.Models
         public int shipment_status_id { get; set; }
         public string name { get; set; }
         public Nullable<int> detail_id { get; set; }
+
+        public TShopeeShipmentStatu()
+        {
+
+        }
     }
 }

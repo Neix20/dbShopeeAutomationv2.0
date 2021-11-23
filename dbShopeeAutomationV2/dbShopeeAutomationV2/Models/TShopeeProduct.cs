@@ -26,5 +26,10 @@ namespace dbShopeeAutomationV2.Models
         public string product_type { get; set; }
         public string product_variety { get; set; }
         public Nullable<int> detail_id { get; set; }
+
+        public TShopeeProduct()
+        {
+
+        }
     }
 }

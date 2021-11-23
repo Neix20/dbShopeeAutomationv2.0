@@ -21,5 +21,10 @@ namespace dbShopeeAutomationV2.Models
         public Nullable<System.DateTime> created_date { get; set; }
         public string last_updated_by { get; set; }
         public Nullable<System.DateTime> last_updated_date { get; set; }
+
+        public TShopeeDetail()
+        {
+
+        }
     }
 }

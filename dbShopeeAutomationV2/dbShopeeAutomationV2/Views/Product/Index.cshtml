@@ -1,0 +1,201 @@
+﻿@model dbShopeeAutomationV2.Models.TShopeeProduct
+
+@{
+    ViewBag.Title = "Product Home Page";
+    Layout = "~/Views/Shared/_NavLayout.cshtml";
+}
+
+@section tmp_script {
+    <script type="text/javascript">$(".nav-item:nth-child(2)").children().addClass("active")</script>
+}
+
+<div class="container p-3">
+
+    <div class="border border-dark">
+        <div class="row">
+            <div class="col">
+                <div class="bg-dark text-center h1 text-white">Product</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col px-4">
+                @using (Html.BeginForm("ProductGridViewPartialAddNew", "Product", FormMethod.Post, new { @id = "createProductForm" }))
+                {
+
+                    @Html.HiddenFor(model => model.product_id, new { @Value = 0 });
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Product Name</label>
+                                @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Product Code</label>
+                                @Html.TextBoxFor(model => model.product_code, new { @class = "form-control", @Value = ViewData["product_code"] })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Product Description</label>
+                        @Html.TextAreaFor(model => model.description, new { @class = "form-control" })
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Product SKU</label>
+                                @Html.TextBoxFor(model => model.SKU, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Product SKU2</label>
+                                @Html.TextBoxFor(model => model.SKU2, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Product Buy Price</label>
+                                @Html.TextBoxFor(model => model.buy_price, new { @class = "form-control", @type = "number" })
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Product Sell Price</label>
+                                @Html.TextBoxFor(model => model.sell_price, new { @class = "form-control", @type = "number" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>Product Brand</label>
+                                @Html.TextBoxFor(model => model.product_brand, new { @class = "form-control", @list = "product_brand_option", @autocomplete = "false" })
+                                <datalist id="product_brand_option">
+                                    @foreach (var tmp in (ViewData["product_brand_option"] as List<String>))
+                                    {
+                                        <option value="@tmp">@tmp</option>
+                                    }
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>Product Type</label>
+                                @Html.TextBoxFor(model => model.product_type, new { @class = "form-control", @list = "product_type_option", @autocomplete = "false" })
+                                <datalist id="product_type_option">
+                                    @foreach (var tmp in (ViewData["product_type_option"] as List<String>))
+                                    {
+                                        <option value="@tmp">@tmp</option>
+                                    }
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>Product Variety</label>
+                                @Html.TextBoxFor(model => model.product_variety, new { @class = "form-control", @list = "product_variety_option", @autocomplete = "false" })
+                                <datalist id="product_variety_option">
+                                    @foreach (var tmp in (ViewData["product_variety_option"] as List<String>))
+                                    {
+                                        <option value="@tmp">@tmp</option>
+                                    }
+                                </datalist>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+                @using (Html.BeginForm("StockItemAdd", "StockItem", FormMethod.Post, new { @id = "createStockItemForm" }))
+                {
+                    @Html.Hidden("stock_item_name")
+                    @Html.Hidden("stock_item_description")
+                    @Html.Hidden("stock_item_product_id")
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>Stock Warehouse Location</label>
+                                @Html.DropDownList("stock_item_warehouse_id", ViewData["stock_warehouse_option"] as List<SelectListItem>, new { @class = "form-select" })
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="my-3"></div>
+
+                <input class="btn btn-outline-primary" type="submit" value="Create New Product"
+                       form="createProductForm" />
+
+                <div class="my-3"></div>
+
+                <div id="productFormContent">
+
+                </div>
+
+                <div class="my-3"></div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+        // Product Form
+        $("form[id='createProductForm']").submit(e => {
+            e.preventDefault();
+            let form = $("form[id='createProductForm']");
+            const actionLink = form.attr("action");
+            const methodType = form.attr("method");
+
+            $.ajax({
+                type: methodType,
+                url: actionLink,
+                data: form.serialize(),
+                success: response => {
+                    $("#productFormContent").html(response);
+                }
+            });
+
+            // Stock Item Form
+            let stock_item_form = $("form[id='createStockItemForm']");
+            const stock_item_actionLink = stock_item_form.attr("action");
+            const stock_item_methodType = stock_item_form.attr("method");
+
+            $("input[name='stock_item_name']").val($("input[name='name']").val());
+            $("input[name='stock_item_description']").val($("textarea[name='description']").val());
+            $("input[name='stock_item_product_id']").val($("input[name='product_id']").val());
+
+            $.ajax({
+                type: stock_item_methodType,
+                url: stock_item_actionLink,
+                data: stock_item_form.serialize(),
+                success: response => {
+                    console.log(response);
+                }
+            });
+
+            // Reset Value
+            $("input[name='product_code']").val("");
+            $("input[name='name']").val("");
+            $("textarea[name='description']").val("");
+            $("input[name='SKU']").val("");
+            $("input[name='SKU2']").val("");
+            $("input[name='buy_price']").val(0);
+            $("input[name='sell_price']").val(0);
+            $("input[name='product_brand']").val("");
+            $("input[name='product_type']").val("");
+            $("input[name='product_variety']").val("");
+        });
+</script>

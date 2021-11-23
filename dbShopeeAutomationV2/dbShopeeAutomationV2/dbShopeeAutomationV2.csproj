@@ -366,6 +366,8 @@
     <Content Include="Views\StockWarehouse\Index.cshtml" />
     <Content Include="Views\StockWarehouse\_StockWarehouseGridViewPartial.cshtml" />
     <Content Include="Views\StockItem\Index.cshtml" />
+    <Content Include="Views\StockItem\_StockItemGridViewPartial.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -488,7 +490,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Admin\" />
-    <Folder Include="Views\Product\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

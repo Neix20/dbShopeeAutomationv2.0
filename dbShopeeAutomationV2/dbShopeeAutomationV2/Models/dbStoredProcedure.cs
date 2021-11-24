@@ -10,11 +10,6 @@ namespace dbShopeeAutomationV2.Models
         static dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
         // Details Stored Procedure
-        public static int detailInsert(string status, string remark, string created_by, DateTime created_date, string last_updated_by, DateTime last_updated_date)
-        {
-            return db.NSP_TShopeeDetail_Insert(status, remark, created_by, created_date, last_updated_by, last_updated_date);
-        }
-
         public static int detailInsert(TShopeeDetail item)
         {
             DateTime currentTime = DateTime.Now;
@@ -124,6 +119,54 @@ namespace dbShopeeAutomationV2.Models
             db.SaveChanges();
 
             return db.NSP_TShopeeProductVariety_Delete(product_variety_id);
+        }
+
+        // Stock Warehouse Stored Procedure
+        public static int stockWarehouseInsert(string name, string email_address, string phone_number, string address, string username)
+        {
+            string status = $"Stock Warehouse {name}";
+            string remark = "";
+            detailInsert(new TShopeeDetail(status, remark, username, username));
+            db.SaveChanges();
+
+            string[] address_arr = address.Split(new[] { ", " }, StringSplitOptions.None);
+
+            string address_line_1 = address_arr[0];
+            string address_line_2 = address_arr[1];
+            string city = address_arr[2];
+            int zip_code = int.Parse(address_arr[3]);
+            string state = address_arr[4];
+            string country = address_arr[5];
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeStockWarehouse_Insert(name, email_address, phone_number, address_line_1, address_line_2, city, state, zip_code, country, detail_id);
+        }
+
+        public static int stockWarehouseUpdate(int stock_warehouse_id, string name, string email_address, string phone_number, string address, string username)
+        {
+            int detail_id = (int)db.TShopeeStockWarehouses.FirstOrDefault(it => it.stock_warehouse_id == stock_warehouse_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detailUpdate(detail, username);
+            db.SaveChanges();
+
+            string[] address_arr = address.Split(new[] { ", " }, StringSplitOptions.None);
+
+            string address_line_1 = address_arr[0];
+            string address_line_2 = address_arr[1];
+            string city = address_arr[2];
+            int zip_code = int.Parse(address_arr[3]);
+            string state = address_arr[4];
+            string country = address_arr[5];
+
+            return db.NSP_TShopeeStockWarehouse_Update(stock_warehouse_id, name, email_address, phone_number, address_line_1, address_line_2, city, state, zip_code, country, detail_id);
+        }
+
+        public static int stockWarehouseDelete(int stock_warehouse_id)
+        {
+            int detail_id = (int)db.TShopeeStockWarehouses.FirstOrDefault(it => it.stock_warehouse_id == stock_warehouse_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeStockWarehouse_Delete(stock_warehouse_id);
         }
     }
 }

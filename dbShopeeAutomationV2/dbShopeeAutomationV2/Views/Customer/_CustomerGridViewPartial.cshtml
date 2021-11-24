@@ -19,11 +19,11 @@
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "CustomerGridView";
         settings.Width = Unit.Percentage(100);
-        settings.CallbackRouteValues = new { Controller = "PaymentMethod", Action = "CustomerGridViewPartial" };
+        settings.CallbackRouteValues = new { Controller = "Customer", Action = "CustomerGridViewPartial" };
 
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "PaymentMethod", Action = "CustomerGridViewPartialAddNew" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "PaymentMethod", Action = "CustomerGridViewPartialUpdate" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "PaymentMethod", Action = "CustomerGridViewPartialDelete" };
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Customer", Action = "CustomerGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Customer", Action = "CustomerGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Customer", Action = "CustomerGridViewPartialDelete" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsBehavior.ConfirmDelete = true;
 

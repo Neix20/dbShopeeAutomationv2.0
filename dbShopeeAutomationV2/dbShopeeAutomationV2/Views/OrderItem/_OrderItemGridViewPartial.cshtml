@@ -18,11 +18,11 @@
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "OrderItemGridView";
         settings.Width = Unit.Percentage(100);
-        settings.CallbackRouteValues = new { Controller = "OrderItemStatus", Action = "OrderItemGridViewPartial" };
+        settings.CallbackRouteValues = new { Controller = "OrderItem", Action = "OrderItemGridViewPartial" };
 
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "OrderItemStatus", Action = "OrderItemGridViewPartialAddNew" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "OrderItemStatus", Action = "OrderItemGridViewPartialUpdate" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "OrderItemStatus", Action = "OrderItemGridViewPartialDelete" };
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "OrderItem", Action = "OrderItemGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "OrderItem", Action = "OrderItemGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "OrderItem", Action = "OrderItemGridViewPartialDelete" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsBehavior.ConfirmDelete = true;
 

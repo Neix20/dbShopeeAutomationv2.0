@@ -1,0 +1,54 @@
+﻿@model dbShopeeAutomationV2.Models.TShopeePlatform
+
+@{
+    ViewBag.Title = "Platform Home Page";
+    Layout = "~/Views/Shared/_NavLayout.cshtml";
+}
+
+@section tmp_script {
+    <script type="text/javascript">$(".nav-item:first-child").children().addClass("active")</script>
+}
+
+<div class="container p-3">
+    <div class="border border-dark">
+        <div class="row">
+            <div class="col">
+                <div class="bg-dark text-center h1 text-white">Platform</div>
+            </div>
+        </div>
+
+        @using (Html.BeginForm("PlatformGridViewPartialAddNew", "Platform", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(model => model.platform_id, new { @Value = 0 })
+            @Html.HiddenFor(model => model.detail_id, new { @Value = 0 })
+
+            <div class="form-group row px-3">
+                <label for="platformName" class="col-2 col-form-label">Platform Name</label>
+                <div class="col-4">
+                    @Html.TextBoxFor(model => model.name, new { @Class="form-control"})
+                </div>
+            </div>
+
+            <div class="my-2"></div>
+
+            <div class="form-group row px-3">
+                <label for="fileUpload" class="col-2 col-form-label">Excel File</label>
+                <div class="col-4">
+                    <input type="file" class="form-control" name="fileUpload" />
+                </div>
+            </div>
+
+            <div class="my-2"></div>
+
+            <div class="row px-3">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        }
+
+        <div class="container p-3" id="platformFormContent">
+            @Html.Action("PlatformGridViewPartial")
+        </div>
+    </div>
+</div>

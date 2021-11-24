@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace dbShopeeAutomationV2.Controllers
 {
-    public class UserRoleController : Controller
+    public class UserRoleController : AdminController
     {
         // GET: UserRole
         public ActionResult Index()

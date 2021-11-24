@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace dbShopeeAutomationV2.Controllers
 {
-    public class OrderItemController : Controller
+    public class OrderItemController : AdminController
     {
         // GET: OrderItem
         public ActionResult Index()

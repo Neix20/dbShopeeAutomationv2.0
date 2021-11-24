@@ -83,6 +83,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="IronXL, Version=2021.11.0.0, Culture=neutral, PublicKeyToken=0f5804b6690bad1e, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronXL.Excel.2021.11.0\lib\net45\IronXL.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -378,7 +382,6 @@
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Order\_OrderGridViewPartial.cshtml" />
     <Content Include="Views\OrderItem\Index.cshtml" />
-    <Content Include="Views\OrderItem\_OrderItemGridViewPartial.cshtml" />
     <Content Include="Views\OrderItemStatus\Index.cshtml" />
     <Content Include="Views\OrderItemStatus\_OrderItemStatusGridViewPartial.cshtml" />
     <Content Include="Views\Invoice\Index.cshtml" />
@@ -389,6 +392,9 @@
     <Content Include="Views\User\_UserGridViewPartial.cshtml" />
     <Content Include="Views\UserRole\Index.cshtml" />
     <Content Include="Views\UserRole\_UserRoleGridViewPartial.cshtml" />
+    <Content Include="Views\OrderItem\_OrderItemGridViewPartial.cshtml" />
+    <Content Include="Views\Platform\Index.cshtml" />
+    <Content Include="Views\Platform\_PlatformGridViewPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -413,6 +419,7 @@
     <Compile Include="Controllers\OrderItemStatusController.cs" />
     <Compile Include="Controllers\OrderStatusController.cs" />
     <Compile Include="Controllers\PaymentMethodController.cs" />
+    <Compile Include="Controllers\PlatformController.cs" />
     <Compile Include="Controllers\ProductBrandController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductionController.cs" />

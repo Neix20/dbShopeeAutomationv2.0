@@ -30,7 +30,7 @@ namespace dbShopeeAutomationV2.Models
         // Product Brand Stored Procedure
         public static int productBrandInsert(string name, string username)
         {
-            string status = $"Product Brand {name}";
+            string status = $"Product Brand: {name}";
             string remark = "";
             detailInsert(new TShopeeDetail(status, remark, username, username));
             db.SaveChanges();
@@ -62,7 +62,7 @@ namespace dbShopeeAutomationV2.Models
         // Product Types Stored Procedure
         public static int productTypeInsert(string name, string username)
         {
-            string status = $"Product Type {name}";
+            string status = $"Product Type: {name}";
             string remark = "";
             detailInsert(new TShopeeDetail(status, remark, username, username));
             db.SaveChanges();
@@ -93,7 +93,7 @@ namespace dbShopeeAutomationV2.Models
         // Product Variety Stored Procedure
         public static int productVarietyInsert(string name, string username)
         {
-            string status = $"Product Variety {name}";
+            string status = $"Product Variety: {name}";
             string remark = "";
             detailInsert(new TShopeeDetail(status, remark, username, username));
             db.SaveChanges();
@@ -124,7 +124,7 @@ namespace dbShopeeAutomationV2.Models
         // Stock Warehouse Stored Procedure
         public static int stockWarehouseInsert(string name, string email_address, string phone_number, string address, string username)
         {
-            string status = $"Stock Warehouse {name}";
+            string status = $"Stock Warehouse: {name}";
             string remark = "";
             detailInsert(new TShopeeDetail(status, remark, username, username));
             db.SaveChanges();
@@ -168,5 +168,44 @@ namespace dbShopeeAutomationV2.Models
 
             return db.NSP_TShopeeStockWarehouse_Delete(stock_warehouse_id);
         }
+
+        // Stock Item Stored Procedure
+        public static int stockItemInsert(string name, string description, int quantity, string product_sku, string warehouse_title, string username)
+        {
+            string status = $"Stock Item: {name}";
+            string remark = "";
+            detailInsert(new TShopeeDetail(status, remark, username, username));
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int product_id = (int) db.TShopeeProducts.FirstOrDefault(it => it.SKU.Equals(product_sku)).product_id;
+            int warehouse_id = (int) db.TShopeeStockWarehouses.FirstOrDefault(it => it.name.Equals(warehouse_title)).stock_warehouse_id;
+
+            return db.NSP_TShopeeStockItem_Insert(name, description, quantity, product_id, warehouse_id, detail_id);
+        }
+
+        public static int stockItemUpdate(int stock_item_id, string name, string description, int quantity, string product_sku, string warehouse_title, string username)
+        {
+            int detail_id = (int)db.TShopeeStockItems.FirstOrDefault(it => it.stock_item_id == stock_item_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detailUpdate(detail, username);
+            db.SaveChanges();
+
+            int product_id = (int)db.TShopeeProducts.FirstOrDefault(it => it.SKU.Equals(product_sku)).product_id;
+            int warehouse_id = (int)db.TShopeeStockWarehouses.FirstOrDefault(it => it.name.Equals(warehouse_title)).stock_warehouse_id;
+
+            return db.NSP_TShopeeStockItem_Update(stock_item_id, name, description, quantity, product_id, warehouse_id, detail_id);
+        }
+
+        public static int stockItemDelete(int stock_item_id)
+        {
+            int detail_id = (int)db.TShopeeStockItems.FirstOrDefault(it => it.stock_item_id == stock_item_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeStockItem_Delete(stock_item_id);
+        }
+
+        // Product Stored Procedure
     }
 }

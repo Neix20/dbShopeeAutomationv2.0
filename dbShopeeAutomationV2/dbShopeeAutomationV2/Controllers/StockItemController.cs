@@ -31,8 +31,18 @@ namespace dbShopeeAutomationV2.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult StockItemGridViewPartialAddNew(TShopeeStockItem item)
+        public ActionResult StockItemGridViewPartialAddNew(FormCollection collection)
         {
+            string name = removeFirstAndLast(collection["name"]);
+            string description = removeFirstAndLast(collection["description"]);
+            int quantity = int.Parse(removeFirstAndLast(collection["stock_quantity"]));
+            string product_sku = removeFirstAndLast(collection["Product SKU"]);
+            string warehouse_title = removeFirstAndLast(collection["Stock Warehouse Location"]);
+            string username = User.Identity.Name;
+
+            dbStoredProcedure.stockItemInsert(name, description, quantity, product_sku, warehouse_title, username);
+            db.SaveChanges();
+
             var model = db.TShopeeStockItems;
             return PartialView("_StockItemGridViewPartial", model.ToList());
         }
@@ -41,27 +51,14 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult StockItemGridViewPartialUpdate(FormCollection collection)
         {
             int stock_item_id = int.Parse(collection["stock_item_id"]);
-            string stock_item_name = removeFirstAndLast(collection["name"]);
-            string stock_item_description = removeFirstAndLast(collection["description"]);
-            int stock_item_quantity = int.Parse(removeFirstAndLast(collection["stock_quantity"]));
-
-            string stock_item_sku = removeFirstAndLast(collection["Product SKU"]);
-            var product_model = db.TShopeeProducts.FirstOrDefault(it => it.SKU.Equals(stock_item_sku));
-            int product_id = product_model.product_id;
-
+            string name = removeFirstAndLast(collection["name"]);
+            string description = removeFirstAndLast(collection["description"]);
+            int quantity = int.Parse(removeFirstAndLast(collection["stock_quantity"]));
+            string product_sku = removeFirstAndLast(collection["Product SKU"]);
             string warehouse_title = removeFirstAndLast(collection["Stock Warehouse Location"]);
-            var warehouse_model = db.TShopeeStockWarehouses.FirstOrDefault(it => it.name.ToLower().Equals(warehouse_title.ToLower()));
-            int warehouse_id = warehouse_model.stock_warehouse_id;
-
             string username = User.Identity.Name;
-            DateTime currentTime = DateTime.Now;
-            int detail_id = (int)db.TShopeeStockWarehouses.FirstOrDefault(it => it.stock_warehouse_id == warehouse_id).detail_id;
 
-            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
-            db.NSP_TShopeeDetail_Update(detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username, currentTime);
-            db.SaveChanges();
-
-            db.NSP_TShopeeStockItem_Update(stock_item_id, stock_item_name, stock_item_description, stock_item_quantity, product_id, warehouse_id, detail_id);
+            dbStoredProcedure.stockItemUpdate(stock_item_id, name, description, quantity, product_sku, warehouse_title, username);
             db.SaveChanges();
 
             var model = db.TShopeeStockItems;
@@ -81,8 +78,9 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost]
         public void StockItemAdd(FormCollection collection)
         {
-            string stock_item_name = collection["stock_item_name"];
-            string stock_item_description = collection["stock_item_description"];
+            // To Fix
+            string name = collection["stock_item_name"];
+            string description = collection["stock_item_description"];
             int product_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduct') AS INT)").FirstOrDefault();
 
 
@@ -94,8 +92,8 @@ namespace dbShopeeAutomationV2.Controllers
             db.NSP_TShopeeDetail_Insert("Normal", "-", username, currentTime, username, currentTime);
             int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
 
-            db.NSP_TShopeeStockItem_Insert(stock_item_name, stock_item_description, 0, product_id, warehouse_id, detail_id);
-            db.SaveChanges();
+            //db.NSP_TShopeeStockItem_Insert(stock_item_name, stock_item_description, 0, product_id, warehouse_id, detail_id);
+            //db.SaveChanges();
         }
     }
 }

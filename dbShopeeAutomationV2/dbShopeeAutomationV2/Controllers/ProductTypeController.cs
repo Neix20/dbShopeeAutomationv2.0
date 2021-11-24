@@ -29,12 +29,8 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult ProductTypeGridViewPartialAddNew(TShopeeProductType item)
         {
             string username = User.Identity.Name;
-            DateTime currentTime = DateTime.Now;
 
-            db.NSP_TShopeeDetail_Insert("Normal", "-", username, currentTime, username, currentTime);
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
-
-            db.NSP_TShopeeProductType_Insert(item.name, detail_id);
+            dbStoredProcedure.productTypeInsert(item.name, username);
             db.SaveChanges();
 
             var model = db.TShopeeProductTypes;
@@ -44,14 +40,8 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult ProductTypeGridViewPartialUpdate(TShopeeProductType item)
         {
             string username = User.Identity.Name;
-            DateTime currentTime = DateTime.Now;
-            int detail_id = (int)db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == item.product_type_id).detail_id;
 
-            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
-            db.NSP_TShopeeDetail_Update(detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username, currentTime);
-            db.SaveChanges();
-
-            db.NSP_TShopeeProductType_Update(item.product_type_id, item.name, detail_id);
+            dbStoredProcedure.productTypeUpdate(item.product_type_id, item.name, username);
             db.SaveChanges();
 
             var model = db.TShopeeProductTypes;
@@ -61,7 +51,7 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult ProductTypeGridViewPartialDelete(int product_type_id)
         {
-            db.NSP_TShopeeProductType_Delete(product_type_id);
+            dbStoredProcedure.productTypeDelete(product_type_id);
             db.SaveChanges();
 
             var model = db.TShopeeProductTypes;

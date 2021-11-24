@@ -78,22 +78,15 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost]
         public void StockItemAdd(FormCollection collection)
         {
-            // To Fix
-            string name = collection["stock_item_name"];
-            string description = collection["stock_item_description"];
-            int product_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduct') AS INT)").FirstOrDefault();
-
-
-            int warehouse_id = int.Parse(collection["stock_item_warehouse_id"]);
-
+            string name = removeFirstAndLast(collection["stock_item_name"]);
+            string description = removeFirstAndLast(collection["stock_item_description"]);
+            int quantity = 0;
+            string product_sku = removeFirstAndLast(collection["Product SKU"]);
+            string warehouse_title = removeFirstAndLast(collection["Stock Warehouse Location"]);
             string username = User.Identity.Name;
-            DateTime currentTime = DateTime.Now;
 
-            db.NSP_TShopeeDetail_Insert("Normal", "-", username, currentTime, username, currentTime);
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
-
-            //db.NSP_TShopeeStockItem_Insert(stock_item_name, stock_item_description, 0, product_id, warehouse_id, detail_id);
-            //db.SaveChanges();
+            dbStoredProcedure.stockItemInsert(name, description, quantity, product_sku, warehouse_title, username);
+            db.SaveChanges();
         }
     }
 }

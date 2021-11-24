@@ -207,5 +207,83 @@ namespace dbShopeeAutomationV2.Models
         }
 
         // Product Stored Procedure
+        public static int productInsert(string product_code, string name, string description, string SKU, string SKU2, Decimal? buy_price, Decimal? sell_price, string product_brand, string product_type, string product_variety, string username)
+        {
+            // Check if Product Brand Exist
+            var product_brand_list = db.TShopeeProductBrands.Select(x => x.name.ToLower()).ToList();
+            if (!product_brand_list.Contains(product_brand.ToLower()))
+            {
+                productBrandInsert(product_brand, username);
+                db.SaveChanges();
+            }
+
+            // Check if Product Type Exist
+            var product_type_list = db.TShopeeProductTypes.Select(x => x.name.ToLower()).ToList();
+            if (!product_type_list.Contains(product_type.ToLower()))
+            {
+                productTypeInsert(product_type, username);
+                db.SaveChanges();
+            }
+
+            // Check if Product Variety Exist
+            var product_variety_list = db.TShopeeProductVarieties.Select(x => x.name.ToLower()).ToList();
+            if (!product_variety_list.Contains(product_variety.ToLower()))
+            {
+                productVarietyInsert(product_variety, username);
+                db.SaveChanges();
+            }
+
+            // Create New Detail
+            string status = $"Product: {name}";
+            string remark = "";
+            detailInsert(new TShopeeDetail(status, remark, username, username));
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeProduct_Insert(product_code, name, description, SKU, SKU2, buy_price, sell_price, product_brand, product_type, product_variety, detail_id);
+        }
+
+        public static int productUpdate(int product_id, string product_code, string name, string description, string SKU, string SKU2, Decimal? buy_price, Decimal? sell_price, string product_brand, string product_type, string product_variety, string username)
+        {
+            // Check if Product Brand Exist
+            var product_brand_list = db.TShopeeProductBrands.Select(x => x.name.ToLower()).ToList();
+            if (!product_brand_list.Contains(product_brand.ToLower()))
+            {
+                productBrandInsert(product_brand, username);
+                db.SaveChanges();
+            }
+
+            // Check if Product Type Exist
+            var product_type_list = db.TShopeeProductTypes.Select(x => x.name.ToLower()).ToList();
+            if (!product_type_list.Contains(product_type.ToLower()))
+            {
+                productTypeInsert(product_type, username);
+                db.SaveChanges();
+            }
+
+            // Check if Product Variety Exist
+            var product_variety_list = db.TShopeeProductVarieties.Select(x => x.name.ToLower()).ToList();
+            if (!product_variety_list.Contains(product_variety.ToLower()))
+            {
+                productVarietyInsert(product_variety, username);
+                db.SaveChanges();
+            }
+
+            int detail_id = (int)db.TShopeeProducts.FirstOrDefault(it => it.product_id == product_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detailUpdate(detail, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeProduct_Update(product_id, product_code, name, description, SKU, SKU2, buy_price, sell_price, product_brand, product_type, product_variety, detail_id);
+        }
+
+        public static int productDelete(int product_id)
+        {
+            int detail_id = (int)db.TShopeeProducts.FirstOrDefault(it => it.product_id == product_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeProduct_Delete(product_id);
+        }
     }
 }

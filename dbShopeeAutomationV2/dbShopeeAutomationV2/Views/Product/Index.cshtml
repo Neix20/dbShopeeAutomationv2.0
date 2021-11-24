@@ -120,12 +120,12 @@
                 {
                     @Html.Hidden("stock_item_name")
                     @Html.Hidden("stock_item_description")
-                    @Html.Hidden("stock_item_product_id")
+                    @Html.Hidden("Product SKU")
                     <div class="row">
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Stock Warehouse Location</label>
-                                @Html.DropDownList("stock_item_warehouse_id", ViewData["stock_warehouse_option"] as List<SelectListItem>, new { @class = "form-select" })
+                                @Html.DropDownList("Stock Warehouse Location", ViewData["stock_warehouse_option"] as List<SelectListItem>, new { @class = "form-select" })
                             </div>
                         </div>
                     </div>
@@ -139,7 +139,7 @@
                 <div class="my-3"></div>
 
                 <div id="productFormContent">
-
+                    @Html.Action("ProductGridViewPartial")
                 </div>
 
                 <div class="my-3"></div>
@@ -175,15 +175,12 @@
 
             $("input[name='stock_item_name']").val($("input[name='name']").val());
             $("input[name='stock_item_description']").val($("textarea[name='description']").val());
-            $("input[name='stock_item_product_id']").val($("input[name='product_id']").val());
+            $("input[name='Product SKU']").val($("input[name='SKU']").val());
 
             $.ajax({
                 type: stock_item_methodType,
                 url: stock_item_actionLink,
-                data: stock_item_form.serialize(),
-                success: response => {
-                    console.log(response);
-                }
+                data: stock_item_form.serialize()
             });
 
             // Reset Value

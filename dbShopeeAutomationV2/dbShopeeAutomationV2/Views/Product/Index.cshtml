@@ -113,14 +113,7 @@
                             </div>
                         </div>
                     </div>
-                }
 
-
-                @using (Html.BeginForm("StockItemAdd", "StockItem", FormMethod.Post, new { @id = "createStockItemForm" }))
-                {
-                    @Html.Hidden("stock_item_name")
-                    @Html.Hidden("stock_item_description")
-                    @Html.Hidden("Product SKU")
                     <div class="row">
                         <div class="col-4">
                             <div class="form-group">
@@ -166,21 +159,6 @@
                 success: response => {
                     $("#productFormContent").html(response);
                 }
-            });
-
-            // Stock Item Form
-            let stock_item_form = $("form[id='createStockItemForm']");
-            const stock_item_actionLink = stock_item_form.attr("action");
-            const stock_item_methodType = stock_item_form.attr("method");
-
-            $("input[name='stock_item_name']").val($("input[name='name']").val());
-            $("input[name='stock_item_description']").val($("textarea[name='description']").val());
-            $("input[name='Product SKU']").val($("input[name='SKU']").val());
-
-            $.ajax({
-                type: stock_item_methodType,
-                url: stock_item_actionLink,
-                data: stock_item_form.serialize()
             });
 
             // Reset Value

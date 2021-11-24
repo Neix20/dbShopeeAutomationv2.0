@@ -52,6 +52,10 @@ namespace dbShopeeAutomationV2.Controllers
             dbStoredProcedure.productInsert(item.product_code, item.name, item.description, item.SKU, item.SKU2, item.buy_price, item.sell_price, item.product_brand, item.product_type, item.product_variety, username);
             db.SaveChanges();
 
+            string warehouse_title = Request.Form["Stock Warehouse Location"];
+            dbStoredProcedure.stockItemInsert(item.name, item.description, 0, item.SKU, warehouse_title, username);
+            db.SaveChanges();
+
             var model = db.TShopeeProducts;
             return PartialView("_ProductGridViewPartial", model.ToList());
         }
@@ -72,6 +76,10 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult ProductGridViewPartialDelete(int product_id)
         {
             dbStoredProcedure.productDelete(product_id);
+            db.SaveChanges();
+
+            int stock_item_id = db.TShopeeStockItems.FirstOrDefault(it => it.product_id == product_id).stock_item_id;
+            dbStoredProcedure.stockItemDelete(stock_item_id);
             db.SaveChanges();
 
             var model = db.TShopeeProducts;

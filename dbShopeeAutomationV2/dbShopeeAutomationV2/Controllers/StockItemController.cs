@@ -74,19 +74,5 @@ namespace dbShopeeAutomationV2.Controllers
             var model = db.TShopeeStockItems;
             return PartialView("_StockItemGridViewPartial", model.ToList());
         }
-
-        [HttpPost]
-        public void StockItemAdd(FormCollection collection)
-        {
-            string name = removeFirstAndLast(collection["stock_item_name"]);
-            string description = removeFirstAndLast(collection["stock_item_description"]);
-            int quantity = 0;
-            string product_sku = removeFirstAndLast(collection["Product SKU"]);
-            string warehouse_title = removeFirstAndLast(collection["Stock Warehouse Location"]);
-            string username = User.Identity.Name;
-
-            dbStoredProcedure.stockItemInsert(name, description, quantity, product_sku, warehouse_title, username);
-            db.SaveChanges();
-        }
     }
 }

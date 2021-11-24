@@ -25,16 +25,32 @@ namespace dbShopeeAutomationV2.Controllers
             WorkBook wb = WorkBook.Load(filename);
             WorkSheet ws = wb.GetWorkSheet("Shopee Report");
 
-            // Header Row
-            ws.Rows[0].ToList().ForEach(col => {
-
-            });
-
             // Record Rows
-            ws.Rows.ToList().GetRange(1, ws.RowCount - 1).ForEach(row => {
-                row.ToList().ForEach(col => {
+            // Order Id => col[0]
+            // Order Status => col[1]
+            // Payment Method => col[2]
+            // Voucher Code => col[3]
+            // Buyer Username => col[4]
+            // Buyer Name => col[5]
+            // Buyer Mobile Phone => col[6]
+            // Product Name => col[7]
+            // Product Quantity => col[8]
+            // Product Unit Price => col[9]
+            // Order Sub Total => col[10]
+            // Shipping Fee => col[11]
+            // Extra Charges => col[12]
+            // Order Income => col[13]
+            // Carrier Name => col[14]
+            // Tracking Id => col[15]
+            // Shipping Address => col[16]
+            // Order Refund Status => col[17]
+            // Product Variety => col[18]
+            // Purchase Date Time => col[19]
 
-                });
+            int platform_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeePlatform') AS INT)").FirstOrDefault();
+
+            ws.Rows.ToList().GetRange(1, ws.RowCount - 1).ForEach(row => {
+                var col = row.ToList();
             });
         }
 

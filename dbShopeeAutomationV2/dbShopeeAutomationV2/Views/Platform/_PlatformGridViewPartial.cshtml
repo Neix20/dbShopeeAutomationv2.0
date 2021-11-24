@@ -47,15 +47,6 @@
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
         });
 
-        settings.CustomUnboundColumnData = (s, e) =>
-        {
-            if (e.Column.FieldName.Equals("Last Updated By"))
-            {
-                int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());
-                e.Value = detailDict[detail_id];
-            };
-        };
-
         // Cell Styles Center
         settings.Styles.Cell.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Cell.VerticalAlign = VerticalAlign.Middle;

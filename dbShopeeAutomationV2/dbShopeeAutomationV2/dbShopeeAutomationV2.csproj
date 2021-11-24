@@ -447,6 +447,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dbShopeeAutomationV2.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\dbStoredProcedure.cs" />
     <Compile Include="Models\TShopeeCarrier.cs">
       <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
     </Compile>

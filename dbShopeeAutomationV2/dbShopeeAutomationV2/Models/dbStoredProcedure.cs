@@ -410,5 +410,37 @@ namespace dbShopeeAutomationV2.Models
 
             return db.NSP_TShopeePaymentMethod_Delete(payment_method_id);
         }
+
+        // Order Item Status Stored Procedure
+        public static int orderItemStatusInsert(string name, string description, int? rma, string username)
+        {
+            // Create New Detail
+            string status = $"Order Item Status: {name}";
+            string remark = "";
+            detailInsert(new TShopeeDetail(status, remark, username, username));
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeOrderItemStatus_Insert(name, description, rma, detail_id);
+        }
+
+        public static int orderItemStatusUpdate(int order_item_status_id, string name, string description, int? rma, string username)
+        {
+            int detail_id = (int)db.TShopeeOrderItemStatus.FirstOrDefault(it => it.order_item_status_id == order_item_status_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detailUpdate(detail, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeOrderItemStatus_Update(order_item_status_id, name, description, rma, detail_id);
+        }
+
+        public static int orderItemStatusDelete(int order_item_status_id)
+        {
+            int detail_id = (int)db.TShopeeOrderItemStatus.FirstOrDefault(it => it.order_item_status_id == order_item_status_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeOrderItemStatus_Delete(order_item_status_id);
+        }
     }
 }

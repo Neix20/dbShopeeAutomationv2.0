@@ -16,14 +16,19 @@
         productDict.Add(it.product_id, it.SKU);
     });
 
+    Dictionary<int, string> productionDict = new Dictionary<int, string>();
+    db.TShopeeProductions.ToList().ForEach(it => {
+        productionDict.Add(it.production_id, it.title);
+    });
+
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "ProductionDetailFormGridView";
         settings.Width = Unit.Percentage(100);
-        settings.CallbackRouteValues = new { Controller = "ProductionDetailForm", Action = "ProductionDetailFormGridViewPartial", production_id = Request.Params["production_id"] };
+        settings.CallbackRouteValues = new { Controller = "ProductionDetail", Action = "ProductionDetailGridViewPartial"};
 
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ProductionDetailForm", Action = "ProductionDetailFormGridViewPartialUpdate" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ProductionDetailForm", Action = "ProductionDetailFormGridViewPartialDelete" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ProductionDetail", Action = "ProductionDetailGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ProductionDetail", Action = "ProductionDetailGridViewPartialDelete" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsBehavior.ConfirmDelete = true;
 
@@ -43,6 +48,12 @@
         // Header Set Center
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
+
+        // Production Title
+        settings.Columns.Add(col => {
+            col.FieldName = "Production Title";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+        });
 
         // Product SKU
         settings.Columns.Add(col =>
@@ -80,6 +91,12 @@
 
         settings.CustomUnboundColumnData = (s, e) =>
         {
+            if(e.Column.FieldName.Equals("Production Title"))
+            {
+                int production_id = int.Parse(e.GetListSourceFieldValue("production_id").ToString());
+                e.Value = productionDict[production_id];
+            }
+
             if (e.Column.FieldName.Equals("Product SKU"))
             {
                 int product_id = int.Parse(e.GetListSourceFieldValue("product_id").ToString());

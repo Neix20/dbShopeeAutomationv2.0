@@ -58,6 +58,9 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            string production_title = generalFunc.trimStr(Request.Form["Production Title"]);
+            item.production_id = db.TShopeeProductions.FirstOrDefault(it => it.title.ToLower().Equals(production_title.ToLower())).production_id;
+
             string product_sku = generalFunc.trimStr(Request.Form["Product SKU"]);
             int product_id = (int)db.TShopeeProducts.FirstOrDefault(it => it.SKU.ToLower().Equals(product_sku.ToLower())).product_id;
 

@@ -53,7 +53,11 @@ namespace dbShopeeAutomationV2.Controllers
             db.SaveChanges();
 
             string warehouse_title = Request.Form["Stock Warehouse Location"];
-            dbStoredProcedure.stockItemInsert(item.name, item.description, 0, item.SKU, warehouse_title, username);
+
+            int product_id = db.TShopeeProducts.FirstOrDefault(it => it.SKU.Equals(item.SKU)).product_id;
+            int warehouse_id = db.TShopeeStockWarehouses.FirstOrDefault(it => it.name.Equals(warehouse_title)).stock_warehouse_id;
+
+            dbStoredProcedure.stockItemInsert(item.name, item.description, 0, product_id, warehouse_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeProducts;

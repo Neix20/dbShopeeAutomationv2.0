@@ -286,6 +286,6 @@ D:\Github\dbShopeeAutomationv2.0\dbShopeeAutomationV2\dbShopeeAutomationV2\bin\j
 D:\Github\dbShopeeAutomationv2.0\dbShopeeAutomationV2\dbShopeeAutomationV2\bin\ru\DevExpress.XtraTreeList.v15.1.resources.dll
 D:\Github\dbShopeeAutomationv2.0\dbShopeeAutomationV2\dbShopeeAutomationV2\obj\Debug\dbShopeeAutomationV2.dll
 D:\Github\dbShopeeAutomationv2.0\dbShopeeAutomationV2\dbShopeeAutomationV2\obj\Debug\dbShopeeAutomationV2.pdb
-D:\Github\dbShopeeAutomationv2.0\dbShopeeAutomationV2\dbShopeeAutomationV2\obj\Debug\dbShopeeAutomationV2.csprojResolveAssemblyReference.cache
 D:\Github\dbShopeeAutomationv2.0\dbShopeeAutomationV2\dbShopeeAutomationV2\bin\IronXL.dll
 D:\Github\dbShopeeAutomationv2.0\dbShopeeAutomationV2\dbShopeeAutomationV2\bin\IronXL.xml
+D:\Github\dbShopeeAutomationv2.0\dbShopeeAutomationV2\dbShopeeAutomationV2\obj\Debug\dbShopeeAutomationV2.csprojResolveAssemblyReference.cache

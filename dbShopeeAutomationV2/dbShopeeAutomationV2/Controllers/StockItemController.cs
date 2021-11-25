@@ -40,7 +40,10 @@ namespace dbShopeeAutomationV2.Controllers
             string warehouse_title = removeFirstAndLast(collection["Stock Warehouse Location"]);
             string username = User.Identity.Name;
 
-            dbStoredProcedure.stockItemInsert(name, description, quantity, product_sku, warehouse_title, username);
+            int product_id = db.TShopeeProducts.FirstOrDefault(it => it.SKU.Equals(product_sku)).product_id;
+            int warehouse_id = db.TShopeeStockWarehouses.FirstOrDefault(it => it.name.Equals(warehouse_title)).stock_warehouse_id;
+
+            dbStoredProcedure.stockItemInsert(name, description, quantity, product_id, warehouse_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeStockItems;
@@ -58,7 +61,10 @@ namespace dbShopeeAutomationV2.Controllers
             string warehouse_title = removeFirstAndLast(collection["Stock Warehouse Location"]);
             string username = User.Identity.Name;
 
-            dbStoredProcedure.stockItemUpdate(stock_item_id, name, description, quantity, product_sku, warehouse_title, username);
+            int product_id = db.TShopeeProducts.FirstOrDefault(it => it.SKU.Equals(product_sku)).product_id;
+            int warehouse_id = db.TShopeeStockWarehouses.FirstOrDefault(it => it.name.Equals(warehouse_title)).stock_warehouse_id;
+
+            dbStoredProcedure.stockItemUpdate(stock_item_id, name, description, quantity, product_id, warehouse_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeStockItems;

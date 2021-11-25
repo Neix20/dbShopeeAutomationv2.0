@@ -49,7 +49,7 @@ namespace dbShopeeAutomationV2.Controllers
             }
             db.SaveChanges();
 
-            return RedirectToAction("Index", "Production", new { production_id = model.production_id });
+            return RedirectToAction("Index", "ProductionDetailForm", new { production_id = model.production_id });
         }
 
         [ValidateInput(false)]
@@ -74,13 +74,13 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult ProductionGridViewPartialDelete(int production_id)
         {
             // Delete List of Production Detail
-            //var production_detail_list = db.TShopeeProductionDetails.Where(it => it.production_id == production_id).ToList();
-            //production_detail_list.ToList().ForEach(tmp_model =>
-            //{
-            //    int production_detail_id = tmp_model.production_detail_id;
-            //    db.NSP_TShopeeProductionDetail_Delete(production_detail_id);
-            //    db.SaveChanges();
-            //});
+            var production_detail_list = db.TShopeeProductionDetails.Where(it => it.production_id == production_id).ToList();
+            production_detail_list.ToList().ForEach(tmp_model =>
+            {
+                int production_detail_id = tmp_model.production_detail_id;
+                dbStoredProcedure.productionDetailDelete(production_detail_id);
+                db.SaveChanges();
+            });
 
             dbStoredProcedure.productionDelete(production_id);
             db.SaveChanges();

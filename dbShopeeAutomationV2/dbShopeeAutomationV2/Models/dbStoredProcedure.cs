@@ -7,6 +7,10 @@ namespace dbShopeeAutomationV2.Models
 {
     public static class dbStoredProcedure
     {
+        // Memory Optimization:
+        // 1. Do not use TShopeeDetail item as parameters, as it creates a new object each time TShopeeDetail is created.
+        // Replace TShopeeDetail item using its parameters (u will know wat I mean, future me)
+
         static dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
         // Details Stored Procedure
@@ -602,5 +606,73 @@ namespace dbShopeeAutomationV2.Models
         {
             return db.NSP_TShopeeUserRole_Delete(user_role_id);
         }
+
+        // Customer Stored Procedure
+        public static int customerInsert(string full_name, DateTime? dob, string email_address, string phone_number, string address, int platform_id, string username)
+        {
+            string[] name_arr = full_name.Split(new[] { " " }, StringSplitOptions.None);
+            string first_name = name_arr[0];
+            string last_name = name_arr[1];
+
+            // Split Address
+            string[] address_arr = address.Split(new[] { ", " }, StringSplitOptions.None);
+
+            string address_line_1 = address_arr[0];
+            string address_line_2 = address_arr[1];
+            string city = address_arr[2];
+            int zip_code = int.Parse(address_arr[3]);
+            string state = address_arr[4];
+            string country = address_arr[5];
+
+            // Create New Detail
+            string status = $"Customer: {full_name}";
+            string remark = "";
+            detailInsert(new TShopeeDetail(status, remark, username, username));
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeCustomer_Insert(first_name, last_name, dob, email_address, phone_number, address_line_1, address_line_2, city, state, zip_code, country, platform_id, detail_id);
+        }
+
+        public static int customerUpdate(int customer_id,string full_name, DateTime? dob, string email_address, string phone_number, string address, int platform_id, string username)
+        {
+            string[] name_arr = full_name.Split(new[] { " " }, StringSplitOptions.None);
+            string first_name = name_arr[0];
+            string last_name = name_arr[1];
+
+            // Split Address
+            string[] address_arr = address.Split(new[] { ", " }, StringSplitOptions.None);
+
+            string address_line_1 = address_arr[0];
+            string address_line_2 = address_arr[1];
+            string city = address_arr[2];
+            int zip_code = int.Parse(address_arr[3]);
+            string state = address_arr[4];
+            string country = address_arr[5];
+
+            int detail_id = (int)db.TShopeeCustomers.FirstOrDefault(it => it.customer_id == customer_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detailUpdate(detail, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeCustomer_Update(customer_id, first_name, last_name, dob, email_address, phone_number, address_line_1, address_line_2, city, state, zip_code, country, platform_id, detail_id);
+        }
+
+        public static int customerDelete(int customer_id)
+        {
+            int detail_id = (int)db.TShopeeCustomers.FirstOrDefault(it => it.customer_id == customer_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeCustomer_Delete(customer_id);
+        }
+
+        // Order Stored Procedure
+
+        // Order Item Stored Procedure
+
+        // Invoice Stored Procedure
+
+        // Shipment Stored Procedure
     }
 }

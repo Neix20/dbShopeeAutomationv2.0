@@ -112,6 +112,9 @@ namespace dbShopeeAutomationV2.Controllers
             dbStoredProcedure.platformDelete(platform_id);
             db.SaveChanges();
 
+            // Delete All Customer
+
+
             var model = db.TShopeePlatforms;
             return PartialView("_PlatformGridViewPartial", model.ToList());
         }

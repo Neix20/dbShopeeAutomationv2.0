@@ -28,6 +28,9 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult UserRoleGridViewPartialAddNew(TShopeeUserRole item)
         {
+            dbStoredProcedure.userRoleInsert(item.username, item.role);
+            db.SaveChanges();
+
             var model = db.TShopeeUserRoles;
             return PartialView("_UserRoleGridViewPartial", model.ToList());
         }
@@ -35,6 +38,9 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult UserRoleGridViewPartialUpdate(TShopeeUserRole item)
         {
+            dbStoredProcedure.userRoleUpdate(item.user_role_id, item.username, item.role);
+            db.SaveChanges();
+
             var model = db.TShopeeUserRoles;
             return PartialView("_UserRoleGridViewPartial", model.ToList());
         }
@@ -42,6 +48,9 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult UserRoleGridViewPartialDelete(int user_role_id)
         {
+            dbStoredProcedure.userRoleDelete(user_role_id);
+            db.SaveChanges();
+
             var model = db.TShopeeUserRoles;
             return PartialView("_UserRoleGridViewPartial", model.ToList());
         }

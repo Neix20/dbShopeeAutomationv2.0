@@ -572,7 +572,35 @@ namespace dbShopeeAutomationV2.Models
         }
 
         // User Stored Procedure
+        public static int userInsert(string username, string password, string email)
+        {
+            return db.NSP_TShopeeUser_Insert(username, password, email);
+        }
+
+        public static int userUpdate(int user_id, string username, string password, string email)
+        {
+            return db.NSP_TShopeeUser_Update(user_id, username, password, email);
+        }
+
+        public static int userDelete(int user_id)
+        {
+            return db.NSP_TShopeeUser_Delete(user_id);
+        }
 
         // User Role Stored Procedure
+        public static int userRoleInsert(string username, string role)
+        {
+            return db.NSP_TShopeeUserRole_Insert(username, role);
+        }
+
+        public static int userRoleUpdate(int user_role_id, string username, string role)
+        {
+            return db.NSP_TShopeeUserRole_Update(user_role_id, username, role);
+        }
+
+        public static int userRoleDelete(int user_role_id)
+        {
+            return db.NSP_TShopeeUserRole_Delete(user_role_id);
+        }
     }
 }

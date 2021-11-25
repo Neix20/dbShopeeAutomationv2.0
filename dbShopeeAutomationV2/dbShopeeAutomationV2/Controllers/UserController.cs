@@ -28,6 +28,9 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult UserGridViewPartialAddNew(TShopeeUser item)
         {
+            dbStoredProcedure.userInsert(item.username, item.password, item.email);
+            db.SaveChanges();
+
             var model = db.TShopeeUsers;
             return PartialView("_UserGridViewPartial", model.ToList());
         }
@@ -35,6 +38,9 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult UserGridViewPartialUpdate(TShopeeUser item)
         {
+            dbStoredProcedure.userUpdate(item.user_id, item.username, item.password, item.email);
+            db.SaveChanges();
+
             var model = db.TShopeeUsers;
             return PartialView("_UserGridViewPartial", model.ToList());
         }
@@ -42,6 +48,9 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult UserGridViewPartialDelete(int user_id)
         {
+            dbStoredProcedure.userDelete(user_id);
+            db.SaveChanges();
+
             var model = db.TShopeeUsers;
             return PartialView("_UserGridViewPartial", model.ToList());
         }

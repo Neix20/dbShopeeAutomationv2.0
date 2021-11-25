@@ -442,5 +442,43 @@ namespace dbShopeeAutomationV2.Models
 
             return db.NSP_TShopeeOrderItemStatus_Delete(order_item_status_id);
         }
+
+        // Invoice Status Stored Procedure
+        public static int invoiceStatusInsert(string name, string description, string username)
+        {
+            // Create New Detail
+            string status = $"Invoice Status: {name}";
+            string remark = "";
+            detailInsert(new TShopeeDetail(status, remark, username, username));
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeInvoiceStatus_Insert(name, description, detail_id);
+        }
+
+        public static int invoiceStatusUpdate(int invoice_status_id, string name, string description, string username)
+        {
+            int detail_id = (int) db.TShopeeInvoiceStatus.FirstOrDefault(it => it.invoice_status_id == invoice_status_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detailUpdate(detail, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeInvoiceStatus_Update(invoice_status_id, name, description, detail_id);
+        }
+
+        public static int invoiceStatusDelete(int invoice_status_id)
+        {
+            int detail_id = (int)db.TShopeeInvoiceStatus.FirstOrDefault(it => it.invoice_status_id == invoice_status_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeInvoiceStatus_Delete(invoice_status_id);
+        }
+
+        // Order Status Stored Procedure
+
+        // Shipment Status Stored Procedure
+
+        // Carrier Stored Procedure
     }
 }

@@ -65,20 +65,22 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult PlatformGridViewPartialAddNew(TShopeePlatform item)
         {
             string username = User.Identity.Name;
-            DateTime currentTime = DateTime.Now;
 
-            db.NSP_TShopeeDetail_Insert($"Platform {item.name}", "-", username, currentTime, username, currentTime);
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            var platformNameList = db.TShopeePlatforms.Select(it => it.name.ToLower()).ToList();
+            string platform = item.name;
 
-            db.NSP_TShopeePlatform_Insert(item.name, detail_id);
-            db.SaveChanges();
+            if (!platformNameList.Contains(platform.ToLower()))
+            {
+                dbStoredProcedure.platformInsert(platform, username);
+                db.SaveChanges();
+            }
 
-            int platform_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeePlatform') AS INT)").FirstOrDefault();
+            int platform_id = db.TShopeePlatforms.FirstOrDefault(it => it.name.ToLower().Equals(platform.ToLower())).platform_id;
 
             // File Upload / Read Excel
             var file = Request.Files["fileUpload"];
 
-            if(file.ContentLength > 0)
+            if(file != null && file.ContentLength > 0)
             {
                 string file_path = $"{Server.MapPath("~/Content/Uploads")}\\{file.FileName}";
 
@@ -87,8 +89,6 @@ namespace dbShopeeAutomationV2.Controllers
                 // If File Exist, delete existing file
                 if (System.IO.File.Exists(file_path)) System.IO.File.Delete(file_path);
                 file.SaveAs(file_path);
-
-
             }
 
             return RedirectToAction("Index", "Platform");
@@ -98,14 +98,8 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult PlatformGridViewPartialUpdate(TShopeePlatform item)
         {
             string username = User.Identity.Name;
-            DateTime currentTime = DateTime.Now;
-            int detail_id = (int) db.TShopeePlatforms.FirstOrDefault(it => it.platform_id == item.platform_id).detail_id;
 
-            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
-            db.NSP_TShopeeDetail_Update(detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username, currentTime);
-            db.SaveChanges();
-
-            db.NSP_TShopeePlatform_Update(item.platform_id, item.name, detail_id);
+            dbStoredProcedure.platformUpdate(item.platform_id, item.name, username);
             db.SaveChanges();
 
             var model = db.TShopeePlatforms;
@@ -115,7 +109,7 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult PlatformGridViewPartialDelete(int platform_id)
         {
-            db.NSP_TShopeePlatform_Delete(platform_id);
+            dbStoredProcedure.platformDelete(platform_id);
             db.SaveChanges();
 
             var model = db.TShopeePlatforms;

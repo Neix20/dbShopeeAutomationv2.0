@@ -346,5 +346,37 @@ namespace dbShopeeAutomationV2.Models
 
             return db.NSP_TShopeeProductionDetail_Delete(production_detail_id);
         }
+
+        // Platform Stored Procedure
+        public static int platformInsert(string name, string username)
+        {
+            // Create New Detail
+            string status = $"Platform: {name}";
+            string remark = "";
+            detailInsert(new TShopeeDetail(status, remark, username, username));
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeePlatform_Insert(name, detail_id);
+        }
+
+        public static int platformUpdate(int platform_id, string name, string username)
+        {
+            int detail_id = (int) db.TShopeePlatforms.FirstOrDefault(it => it.platform_id == platform_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detailUpdate(detail, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeePlatform_Update(platform_id, name, detail_id);
+        }
+
+        public static int platformDelete(int platform_id)
+        {
+            int detail_id = (int)db.TShopeePlatforms.FirstOrDefault(it => it.platform_id == platform_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeePlatform_Delete(platform_id);
+        }
     }
 }

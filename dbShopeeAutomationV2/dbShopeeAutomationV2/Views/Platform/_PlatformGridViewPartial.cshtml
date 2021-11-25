@@ -15,13 +15,14 @@
         settings.Width = Unit.Percentage(100);
         settings.CallbackRouteValues = new { Controller = "Platform", Action = "PlatformGridViewPartial" };
 
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Platform", Action = "PlatformGridViewPartialAddNew" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Platform", Action = "PlatformGridViewPartialUpdate" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Platform", Action = "PlatformGridViewPartialDelete" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsBehavior.ConfirmDelete = true;
 
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
         settings.CommandColumn.ShowDeleteButton = true;
         settings.CommandColumn.ShowEditButton = true;
 
@@ -46,6 +47,15 @@
             col.FieldName = "Last Updated By";
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
         });
+
+        settings.CustomUnboundColumnData = (s, e) =>
+        {
+            if (e.Column.FieldName.Equals("Last Updated By"))
+            {
+                int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());
+                e.Value = detailDict[detail_id];
+            };
+        };
 
         // Cell Styles Center
         settings.Styles.Cell.HorizontalAlign = HorizontalAlign.Center;

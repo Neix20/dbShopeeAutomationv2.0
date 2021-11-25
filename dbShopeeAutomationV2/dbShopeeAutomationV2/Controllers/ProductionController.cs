@@ -36,17 +36,20 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost]
         public ActionResult Create(TShopeeProduction model)
         {
+            string username = User.Identity.Name;
+
             var tmpModel = db.TShopeeProductions.FirstOrDefault(it => it.production_id == model.production_id);
-            //if (tmpModel != null)
-            //{
-            //    db.NSP_TShopeeProduction_Update(tmpModel.production_id, model.title, model.description, model.status);
-            //}
-            //else
-            //{
-            //    db.NSP_TShopeeProduction_Insert(model.title, model.description, model.status);
-            //}
-            //db.SaveChanges();
-            return RedirectToAction("Index", "ProductionDetailForm", new { production_id = model.production_id });
+            if (tmpModel != null)
+            {
+                dbStoredProcedure.productionUpdate(model.production_id, model.title, model.description, model.status, username);
+            }
+            else
+            {
+                dbStoredProcedure.productionInsert(model.title, model.description, model.status, username);
+            }
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Production", new { production_id = model.production_id });
         }
 
         [ValidateInput(false)]
@@ -59,8 +62,10 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult ProductionGridViewPartialUpdate(TShopeeProduction item)
         {
-            //db.NSP_TShopeeProduction_Update(item.production_id, item.title, item.description, item.status);
-            //db.SaveChanges();
+            string username = User.Identity.Name;
+
+            dbStoredProcedure.productionUpdate(item.production_id, item.title, item.description, item.status, username);
+            db.SaveChanges();
 
             return RedirectToAction("Create", "Production", new { production_id = item.production_id });
         }
@@ -69,15 +74,15 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult ProductionGridViewPartialDelete(int production_id)
         {
             // Delete List of Production Detail
-            var production_detail_list = db.TShopeeProductionDetails.Where(it => it.production_id == production_id).ToList();
-            production_detail_list.ToList().ForEach(tmp_model =>
-            {
-                int production_detail_id = tmp_model.production_detail_id;
-                db.NSP_TShopeeProductionDetail_Delete(production_detail_id);
-                db.SaveChanges();
-            });
+            //var production_detail_list = db.TShopeeProductionDetails.Where(it => it.production_id == production_id).ToList();
+            //production_detail_list.ToList().ForEach(tmp_model =>
+            //{
+            //    int production_detail_id = tmp_model.production_detail_id;
+            //    db.NSP_TShopeeProductionDetail_Delete(production_detail_id);
+            //    db.SaveChanges();
+            //});
 
-            db.NSP_TShopeeProduction_Delete(production_id);
+            dbStoredProcedure.productionDelete(production_id);
             db.SaveChanges();
 
             var model = db.TShopeeProductions;

@@ -1,4 +1,15 @@
+@using dbShopeeAutomationV2.Models;
+@using System.Collections.Generic;
+
 @{
+    dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
+
+    Dictionary<int, string> detailDict = new Dictionary<int, string>();
+    db.TShopeeDetails.ToList().ForEach(it =>
+    {
+        detailDict.Add(it.detail_id, it.last_updated_by);
+    });
+
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "ProductionGridView";
@@ -31,6 +42,22 @@
         settings.Columns.Add("title").Caption = "Production Title";
         settings.Columns.Add("description").Caption = "Production Description";
         settings.Columns.Add("status").Caption = "Production Status";
+
+        // Last Updated By
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Last Updated By";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+        });
+
+        settings.CustomUnboundColumnData = (s, e) =>
+        {
+            if (e.Column.FieldName.Equals("Last Updated By"))
+            {
+                int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());
+                e.Value = detailDict[detail_id];
+            };
+        };
 
         // Cell Styles Center
         settings.Styles.Cell.HorizontalAlign = HorizontalAlign.Center;

@@ -285,5 +285,39 @@ namespace dbShopeeAutomationV2.Models
 
             return db.NSP_TShopeeProduct_Delete(product_id);
         }
+
+        // Production Stored Procedure
+        public static int productionInsert(string title, string description, string production_status, string username)
+        {
+            // Create New Detail
+            string status = $"Production: {title}";
+            string remark = "";
+            detailInsert(new TShopeeDetail(status, remark, username, username));
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeProduction_Insert(title, description, production_status, detail_id);
+        }
+
+        public static int productionUpdate(int production_id, string title, string description, string production_status, string username)
+        {
+            int detail_id = (int)db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detailUpdate(detail, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeProduction_Update(production_id, title, description, production_status, detail_id);
+        }
+
+        public static int productionDelete(int production_id)
+        {
+            int detail_id = (int)db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeProduction_Delete(production_id);
+        }
+
+        // Production Detail Stored Procedure
     }
 }

@@ -399,6 +399,9 @@
     <Content Include="Views\ProductionDetailForm\_ProductionDetailFormGridViewPartial.cshtml" />
     <Content Include="Views\ProductionDetail\Index.cshtml" />
     <Content Include="Views\ProductionDetail\_ProductionDetailGridViewPartial.cshtml" />
+    <Content Include="Views\ShipmentStatus\Index.cshtml" />
+    <Content Include="Views\Carrier\Index.cshtml" />
+    <Content Include="Views\ShipmentStatus\_ShipmentStatusGridViewPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -414,6 +417,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CarrierController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DetailController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
@@ -431,6 +435,7 @@
     <Compile Include="Controllers\ProductionDetailFormController.cs" />
     <Compile Include="Controllers\ProductTypeController.cs" />
     <Compile Include="Controllers\ProductVarietyController.cs" />
+    <Compile Include="Controllers\ShipmentStatusController.cs" />
     <Compile Include="Controllers\StockItemController.cs" />
     <Compile Include="Controllers\StockWarehouseController.cs" />
     <Compile Include="Controllers\UserController.cs" />

@@ -507,9 +507,42 @@ namespace dbShopeeAutomationV2.Models
             return db.NSP_TShopeeOrderStatus_Delete(order_status_id);
         }
 
-
         // Shipment Status Stored Procedure
+        public static int shipmentStatusInsert(string name, string username)
+        {
+            // Create New Detail
+            string status = $"Shipment Status: {name}";
+            string remark = "";
+            detailInsert(new TShopeeDetail(status, remark, username, username));
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeShipmentStatus_Insert(name, detail_id);
+        }
+
+        public static int shipmentStatusUpdate(int shipment_status_id, string name, string username)
+        {
+            int detail_id = (int) db.TShopeeShipmentStatus.FirstOrDefault(it => it.shipment_status_id == shipment_status_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detailUpdate(detail, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeShipmentStatus_Update(shipment_status_id, name, detail_id);
+        }
+
+        public static int shipmentStatusDelete(int shipment_status_id)
+        {
+            int detail_id = (int)db.TShopeeShipmentStatus.FirstOrDefault(it => it.shipment_status_id == shipment_status_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeShipmentStatus_Delete(shipment_status_id);
+        }
 
         // Carrier Stored Procedure
+
+        // User Stored Procedure
+
+        // User Role Stored Procedure
     }
 }

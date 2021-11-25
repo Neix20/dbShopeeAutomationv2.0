@@ -378,5 +378,37 @@ namespace dbShopeeAutomationV2.Models
 
             return db.NSP_TShopeePlatform_Delete(platform_id);
         }
+
+        // Payment Method Stored Procedure
+        public static int paymentMethodInsert(string name, string username)
+        {
+            // Create New Detail
+            string status = $"Payment Method: {name}";
+            string remark = "";
+            detailInsert(new TShopeeDetail(status, remark, username, username));
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeePaymentMethod_Insert(name, detail_id);
+        }
+
+        public static int paymentMethodUpdate(int payment_method_id, string name, string username)
+        {
+            int detail_id = (int)db.TShopeePaymentMethods.FirstOrDefault(it => it.payment_method_id == payment_method_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detailUpdate(detail, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeePaymentMethod_Update(payment_method_id, name, detail_id);
+        }
+
+        public static int paymentMethodDelete(int payment_method_id)
+        {
+            int detail_id = (int)db.TShopeePaymentMethods.FirstOrDefault(it => it.payment_method_id == payment_method_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeePaymentMethod_Delete(payment_method_id);
+        }
     }
 }

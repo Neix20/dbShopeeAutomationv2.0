@@ -28,6 +28,11 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult PaymentMethodGridViewPartialAddNew(TShopeePaymentMethod item)
         {
+            string username = User.Identity.Name;
+
+            dbStoredProcedure.paymentMethodInsert(item.name, username);
+            db.SaveChanges();
+
             var model = db.TShopeePaymentMethods;
             return PartialView("_PaymentMethodGridViewPartial", model.ToList());
         }
@@ -35,6 +40,11 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult PaymentMethodGridViewPartialUpdate(TShopeePaymentMethod item)
         {
+            string username = User.Identity.Name;
+
+            dbStoredProcedure.paymentMethodUpdate(item.payment_method_id, item.name, username);
+            db.SaveChanges();
+
             var model = db.TShopeePaymentMethods;
             return PartialView("_PaymentMethodGridViewPartial", model.ToList());
         }
@@ -42,6 +52,9 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult PaymentMethodGridViewPartialDelete(int payment_method_id)
         {
+            dbStoredProcedure.paymentMethodDelete(payment_method_id);
+            db.SaveChanges();
+
             var model = db.TShopeePaymentMethods;
             return PartialView("_PaymentMethodGridViewPartial", model.ToList());
         }

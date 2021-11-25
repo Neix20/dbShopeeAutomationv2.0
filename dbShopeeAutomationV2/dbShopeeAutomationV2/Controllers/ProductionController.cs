@@ -75,7 +75,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             // Delete List of Production Detail
             var production_detail_list = db.TShopeeProductionDetails.Where(it => it.production_id == production_id).ToList();
-            production_detail_list.ToList().ForEach(tmp_model =>
+            production_detail_list.ForEach(tmp_model =>
             {
                 int production_detail_id = tmp_model.production_detail_id;
                 dbStoredProcedure.productionDetailDelete(production_detail_id);

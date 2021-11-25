@@ -10,10 +10,6 @@ namespace dbShopeeAutomationV2.Controllers
 {
     public class ProductionDetailFormController : AdminController
     {
-        public static string removeFirstAndLast(string str)
-        {
-            return str.Substring(1, str.Length - 2);
-        }
 
         // GET: ProductionDetailForm
         public ActionResult Index(int? production_id)
@@ -45,10 +41,11 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            string product_sku = removeFirstAndLast(Request.Form["Product SKU"]);
+            string product_sku = generalFunc.trimStr(Request.Form["Product SKU"]);
             int product_id = (int)db.TShopeeProducts.FirstOrDefault(it => it.SKU.ToLower().Equals(product_sku.ToLower())).product_id;
 
             dbStoredProcedure.productionDetailInsert(item.UOM, item.manufactured_date, item.expiry_date, item.quantity, product_id, item.production_id, username);
+            db.SaveChanges();
 
             var model = db.TShopeeProductionDetails.Where(it => it.production_id == item.production_id);
             return PartialView("_ProductionDetailFormGridViewPartial", model.ToList());
@@ -59,10 +56,11 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            string product_sku = Request.Form["Product SKU"];
+            string product_sku = generalFunc.trimStr(Request.Form["Product SKU"]);
             int product_id = (int)db.TShopeeProducts.FirstOrDefault(it => it.SKU.ToLower().Equals(product_sku.ToLower())).product_id;
 
             dbStoredProcedure.productionDetailUpdate(item.production_detail_id, item.UOM, item.manufactured_date, item.expiry_date, item.quantity, product_id, item.production_id, username);
+            db.SaveChanges();
 
             var model = db.TShopeeProductionDetails.Where(it => it.production_id == item.production_id);
             return PartialView("_ProductionDetailFormGridViewPartial", model.ToList());
@@ -71,6 +69,8 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult ProductionDetailFormGridViewPartialDelete(int production_detail_id)
         {
+            dbStoredProcedure.productionDetailDelete(production_detail_id);
+            db.SaveChanges();
             var item = db.TShopeeProductionDetails.FirstOrDefault(it => it.production_detail_id == production_detail_id);
             var model = db.TShopeeProductionDetails.Where(it => it.production_id == item.production_id); ;
             return PartialView("_ProductionDetailFormGridViewPartial", model.ToList());

@@ -16,11 +16,6 @@ namespace dbShopeeAutomationV2.Controllers
             return View();
         }
 
-        public static string removeFirstAndLast(string str)
-        {
-            return str.Substring(1, str.Length - 2);
-        }
-
         dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
         [ValidateInput(false)]
@@ -33,10 +28,10 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult StockWarehouseGridViewPartialAddNew(FormCollection collection)
         {
-            string name = removeFirstAndLast(collection["name"]);
-            string email_address = removeFirstAndLast(collection["email_address"]);
-            string phone_number = removeFirstAndLast(collection["phone_number"]);
-            string address = removeFirstAndLast(collection["Address"]);
+            string name = generalFunc.trimStr(collection["name"]);
+            string email_address = generalFunc.trimStr(collection["email_address"]);
+            string phone_number = generalFunc.trimStr(collection["phone_number"]);
+            string address = generalFunc.trimStr(collection["Address"]);
             string username = User.Identity.Name;
 
             dbStoredProcedure.stockWarehouseInsert(name, email_address, phone_number, address, username);
@@ -50,10 +45,10 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult StockWarehouseGridViewPartialUpdate(FormCollection collection)
         {
             int stock_warehouse_id = int.Parse(collection["stock_warehouse_id"]);
-            string name = removeFirstAndLast(collection["name"]);
-            string email_address = removeFirstAndLast(collection["email_address"]);
-            string phone_number = removeFirstAndLast(collection["phone_number"]);
-            string address = removeFirstAndLast(collection["Address"]);
+            string name = generalFunc.trimStr(collection["name"]);
+            string email_address = generalFunc.trimStr(collection["email_address"]);
+            string phone_number = generalFunc.trimStr(collection["phone_number"]);
+            string address = generalFunc.trimStr(collection["Address"]);
             string username = User.Identity.Name;
 
             dbStoredProcedure.stockWarehouseUpdate(stock_warehouse_id, name, email_address, phone_number, address, username);

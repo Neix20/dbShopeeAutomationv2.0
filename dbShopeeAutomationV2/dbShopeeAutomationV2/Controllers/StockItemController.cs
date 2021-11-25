@@ -10,10 +10,6 @@ namespace dbShopeeAutomationV2.Controllers
 {
     public class StockItemController : AdminController
     {
-        public static string removeFirstAndLast(string str)
-        {
-            return str.Substring(1, str.Length - 2);
-        }
 
         // GET: StockItem
         public ActionResult Index()
@@ -33,11 +29,11 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult StockItemGridViewPartialAddNew(FormCollection collection)
         {
-            string name = removeFirstAndLast(collection["name"]);
-            string description = removeFirstAndLast(collection["description"]);
-            int quantity = int.Parse(removeFirstAndLast(collection["stock_quantity"]));
-            string product_sku = removeFirstAndLast(collection["Product SKU"]);
-            string warehouse_title = removeFirstAndLast(collection["Stock Warehouse Location"]);
+            string name = generalFunc.trimStr(collection["name"]);
+            string description = generalFunc.trimStr(collection["description"]);
+            int quantity = int.Parse(generalFunc.trimStr(collection["stock_quantity"]));
+            string product_sku = generalFunc.trimStr(collection["Product SKU"]);
+            string warehouse_title = generalFunc.trimStr(collection["Stock Warehouse Location"]);
             string username = User.Identity.Name;
 
             int product_id = db.TShopeeProducts.FirstOrDefault(it => it.SKU.Equals(product_sku)).product_id;
@@ -54,11 +50,11 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult StockItemGridViewPartialUpdate(FormCollection collection)
         {
             int stock_item_id = int.Parse(collection["stock_item_id"]);
-            string name = removeFirstAndLast(collection["name"]);
-            string description = removeFirstAndLast(collection["description"]);
-            int quantity = int.Parse(removeFirstAndLast(collection["stock_quantity"]));
-            string product_sku = removeFirstAndLast(collection["Product SKU"]);
-            string warehouse_title = removeFirstAndLast(collection["Stock Warehouse Location"]);
+            string name = generalFunc.trimStr(collection["name"]);
+            string description = generalFunc.trimStr(collection["description"]);
+            int quantity = int.Parse(generalFunc.trimStr(collection["stock_quantity"]));
+            string product_sku = generalFunc.trimStr(collection["Product SKU"]);
+            string warehouse_title = generalFunc.trimStr(collection["Stock Warehouse Location"]);
             string username = User.Identity.Name;
 
             int product_id = db.TShopeeProducts.FirstOrDefault(it => it.SKU.Equals(product_sku)).product_id;

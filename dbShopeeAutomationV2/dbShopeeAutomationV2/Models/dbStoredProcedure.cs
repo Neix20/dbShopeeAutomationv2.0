@@ -540,6 +540,36 @@ namespace dbShopeeAutomationV2.Models
         }
 
         // Carrier Stored Procedure
+        public static int carrierInsert(string name, string username)
+        {
+            // Create New Detail
+            string status = $"Carrier: {name}";
+            string remark = "";
+            detailInsert(new TShopeeDetail(status, remark, username, username));
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeCarrier_Insert(name, detail_id);
+        }
+
+        public static int carrierUpdate(int carrier_id, string name, string username)
+        {
+            int detail_id = (int)db.TShopeeCarriers.FirstOrDefault(it => it.carrier_id == carrier_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detailUpdate(detail, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeCarrier_Update(carrier_id, name, detail_id);
+        }
+
+        public static int carrierDelete(int carrier_id)
+        {
+            int detail_id = (int)db.TShopeeCarriers.FirstOrDefault(it => it.carrier_id == carrier_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeCarrier_Delete(carrier_id);
+        }
 
         // User Stored Procedure
 

@@ -402,6 +402,7 @@
     <Content Include="Views\ShipmentStatus\Index.cshtml" />
     <Content Include="Views\Carrier\Index.cshtml" />
     <Content Include="Views\ShipmentStatus\_ShipmentStatusGridViewPartial.cshtml" />
+    <Content Include="Views\Carrier\_CarrierGridViewPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

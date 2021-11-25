@@ -9,75 +9,84 @@
     <script type="text/javascript">$(".nav-item:nth-child(2)").children().addClass("active")</script>
 }
 
-<div class="container">
-    @using (Html.BeginForm("ProductionDetailFormGridViewPartialAddNew", "ProductionDetailForm", FormMethod.Post, new { id = "createProductionDetail" }))
-    {
-        @Html.HiddenFor(model => model.production_id, new { @Value = ViewData["production_id"] })
-        @Html.HiddenFor(model => model.UOM, new { @Value = "-" })
+<div class="container p-3">
 
-        <div class="h2">Production Details</div>
-
-        <div class="border border-dark p-3">
-            <div class="row">
-
-                <!--Change to Select Option-->
-                <div class="col-2">
-                    <label>Product SKU: </label>
-                </div>
-                <div class="col-2">
-                    @Html.DropDownList("Product SKU", ViewData["product_sku_option"] as List<SelectListItem>, new { @class = "form-select" })
-                </div>
-
-                <div class="col-2 text-center">
-                    <label>Quantity: </label>
-                </div>
-                <div class="col-2">
-                    @Html.TextBoxFor(model => model.quantity, new { @class = "form-control", @type = "number" })
-                </div>
+    <div class="border border-dark">
+        <div class="row">
+            <div class="col">
+                <div class="bg-dark text-center h1 text-white">@ViewBag.Title</div>
             </div>
-
-            <div class="mt-1"></div>
-
-            <div class="row">
-
-                <div class="col-2">
-                    <label>Manufacture Date: </label>
-                </div>
-                <div class="col-2">
-                    @Html.TextBoxFor(model => model.manufactured_date, "{0:yyyy-MM-dd}", new { @Class = "form-control", @PlaceHolder = "E.g. 1957-08-31", @type = "date" })
-                </div>
-
-                <div class="col-2 text-center">
-                    <label>Expiry Date: </label>
-                </div>
-                <div class="col-2">
-                    @Html.TextBoxFor(model => model.expiry_date, "{0:yyyy-MM-dd}", new { @Class = "form-control", @PlaceHolder = "E.g. 1957-08-31", @type = "date" })
-                </div>
-
-            </div>
-
-            <div class="my-3"></div>
-
-            <div class="row">
-                <div class="col-2">
-                    <input type="submit" class="btn btn-outline-primary" value="Add New Production Detail" form="createProductionDetail" />
-                </div>
-            </div>
-
-            <div id="productionDetailFormContent">
-                @Html.Action("ProductionDetailFormGridViewPartial", new { production_id = ViewData["production_id"] })
-            </div>
-
         </div>
-    }
 
-    <div class="my-3"></div>
+        <div class="row">
+            <div class="col px-4 py-2">
+                @using (Html.BeginForm("ProductionDetailFormGridViewPartialAddNew", "ProductionDetailForm", FormMethod.Post, new { id = "createProductionDetail" }))
+                {
+                    @Html.HiddenFor(model => model.production_id, new { @Value = ViewData["production_id"] })
+                    @Html.HiddenFor(model => model.UOM, new { @Value = "-" })
 
-    @using (Html.BeginForm("completeProduction", "ProductionDetailForm", FormMethod.Post, new { @id = "completeProductionForm" }))
-    {
-        <input type="text" name="production_id" value="@ViewData["production_id"]" hidden />
-        <input type="submit" class="btn btn-primary" value="Complete Production" form="completeProductionForm" />
-    }
+                    <div class="row">
+
+                        <!--Change to Select Option-->
+                        <div class="col-2">
+                            <label>Product SKU: </label>
+                        </div>
+                        <div class="col-2">
+                            @Html.DropDownList("Product SKU", ViewData["product_sku_option"] as List<SelectListItem>, new { @class = "form-select" })
+                        </div>
+
+                        <div class="col-2 text-center">
+                            <label>Quantity: </label>
+                        </div>
+                        <div class="col-2">
+                            @Html.TextBoxFor(model => model.quantity, new { @class = "form-control", @type = "number" })
+                        </div>
+                    </div>
+
+                    <div class="mt-1"></div>
+
+                    <div class="row">
+
+                        <div class="col-2">
+                            <label>Manufacture Date: </label>
+                        </div>
+                        <div class="col-2">
+                            @Html.TextBoxFor(model => model.manufactured_date, "{0:yyyy-MM-dd}", new { @Class = "form-control", @PlaceHolder = "E.g. 1957-08-31", @type = "date" })
+                        </div>
+
+                        <div class="col-2 text-center">
+                            <label>Expiry Date: </label>
+                        </div>
+                        <div class="col-2">
+                            @Html.TextBoxFor(model => model.expiry_date, "{0:yyyy-MM-dd}", new { @Class = "form-control", @PlaceHolder = "E.g. 1957-08-31", @type = "date" })
+                        </div>
+
+                    </div>
+
+                    <div class="my-3"></div>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <input type="submit" class="btn btn-outline-primary" value="Add New Production Detail" form="createProductionDetail" />
+                        </div>
+                    </div>
+
+                    <div id="productionDetailFormContent">
+                        @Html.Action("ProductionDetailFormGridViewPartial", new { production_id = ViewData["production_id"] })
+                    </div>
+                }
+
+                <div class="my-3"></div>
+
+                @using (Html.BeginForm("completeProduction", "ProductionDetailForm", FormMethod.Post, new { @id = "completeProductionForm" }))
+                {
+                    <input type="text" name="production_id" value="@ViewData["production_id"]" hidden />
+                    <input type="submit" class="btn btn-primary" value="Complete Production" form="completeProductionForm" />
+                }
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script type="text/javascript">

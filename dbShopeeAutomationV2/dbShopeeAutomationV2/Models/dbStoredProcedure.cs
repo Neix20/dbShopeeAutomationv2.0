@@ -476,6 +476,37 @@ namespace dbShopeeAutomationV2.Models
         }
 
         // Order Status Stored Procedure
+        public static int orderStatusInsert(string name, string username)
+        {
+            // Create New Detail
+            string status = $"Order Status: {name}";
+            string remark = "";
+            detailInsert(new TShopeeDetail(status, remark, username, username));
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeOrderStatus_Insert(name, detail_id);
+        }
+
+        public static int orderStatusUpdate(int order_status_id, string name, string username)
+        {
+            int detail_id = (int)db.TShopeeOrderStatus.FirstOrDefault(it => it.order_status_id == order_status_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detailUpdate(detail, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeOrderStatus_Update(order_status_id, name, detail_id);
+        }
+
+        public static int orderStatusDelete(int order_status_id)
+        {
+            int detail_id = (int)db.TShopeeOrderStatus.FirstOrDefault(it => it.order_status_id == order_status_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeOrderStatus_Delete(order_status_id);
+        }
+
 
         // Shipment Status Stored Procedure
 

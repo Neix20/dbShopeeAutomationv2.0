@@ -28,6 +28,11 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult OrderStatusGridViewPartialAddNew(TShopeeOrderStatu item)
         {
+            string username = User.Identity.Name;
+
+            dbStoredProcedure.orderStatusInsert(item.name, username);
+            db.SaveChanges();
+
             var model = db.TShopeeOrderStatus;
             return PartialView("_OrderStatusGridViewPartial", model.ToList());
         }
@@ -35,6 +40,11 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult OrderStatusGridViewPartialUpdate(TShopeeOrderStatu item)
         {
+            string username = User.Identity.Name;
+
+            dbStoredProcedure.orderStatusUpdate(item.order_status_id, item.name, username);
+            db.SaveChanges();
+
             var model = db.TShopeeOrderStatus;
             return PartialView("_OrderStatusGridViewPartial", model.ToList());
         }
@@ -42,6 +52,9 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult OrderStatusGridViewPartialDelete(int order_status_id)
         {
+            dbStoredProcedure.orderStatusDelete(order_status_id);
+            db.SaveChanges();
+
             var model = db.TShopeeOrderStatus;
             return PartialView("_OrderStatusGridViewPartial", model.ToList());
         }

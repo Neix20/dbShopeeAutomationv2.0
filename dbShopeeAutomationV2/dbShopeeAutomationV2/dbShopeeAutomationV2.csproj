@@ -397,6 +397,8 @@
     <Content Include="Views\Platform\_PlatformGridViewPartial.cshtml" />
     <Content Include="Views\ProductionDetailForm\Index.cshtml" />
     <Content Include="Views\ProductionDetailForm\_ProductionDetailFormGridViewPartial.cshtml" />
+    <Content Include="Views\ProductionDetail\Index.cshtml" />
+    <Content Include="Views\ProductionDetail\_ProductionDetailGridViewPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -534,7 +536,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Admin\" />
-    <Folder Include="Views\ProductionDetail\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

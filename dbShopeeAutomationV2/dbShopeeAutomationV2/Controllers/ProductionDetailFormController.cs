@@ -69,10 +69,12 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult ProductionDetailFormGridViewPartialDelete(int production_detail_id)
         {
+            var item = db.TShopeeProductionDetails.FirstOrDefault(it => it.production_detail_id == production_detail_id);
+
             dbStoredProcedure.productionDetailDelete(production_detail_id);
             db.SaveChanges();
-            var item = db.TShopeeProductionDetails.FirstOrDefault(it => it.production_detail_id == production_detail_id);
-            var model = db.TShopeeProductionDetails.Where(it => it.production_id == item.production_id); ;
+            
+            var model = db.TShopeeProductionDetails.Where(it => it.production_id == item.production_id);
             return PartialView("_ProductionDetailFormGridViewPartial", model.ToList());
         }
 

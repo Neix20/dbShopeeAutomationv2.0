@@ -405,6 +405,7 @@
     <Content Include="Views\Carrier\_CarrierGridViewPartial.cshtml" />
     <Content Include="Views\Shipment\Index.cshtml" />
     <Content Include="Views\Shipment\_ShipmentGridViewPartial.cshtml" />
+    <Content Include="Views\Shared\_ProductionLayout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

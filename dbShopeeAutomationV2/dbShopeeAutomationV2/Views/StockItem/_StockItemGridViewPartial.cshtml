@@ -51,19 +51,44 @@
 
         settings.Columns.Add("name").Caption = "Stock Item";
         settings.Columns.Add("description").Caption = "Description";
-        settings.Columns.Add("stock_quantity").Caption = "Stock Quantity";
+
+        settings.Columns.Add(col => {
+            col.FieldName = "stock_quantity";
+            col.Caption = "Stock Quantity";
+
+            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
+            prop.NumberType = SpinEditNumberType.Integer;
+            prop.MinValue = 0;
+            prop.MaxValue = 10000000;
+        });
 
         // Product SKU
-        settings.Columns.Add(column => {
-            column.FieldName = "Product SKU";
-            column.UnboundType = DevExpress.Data.UnboundColumnType.String;
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "product_id";
+            col.Caption = "Product SKU";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeProducts.ToList();
+            prop.TextField = "SKU";
+            prop.ValueField = "product_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
         });
 
         // Stock Warehouse
-        settings.Columns.Add(column =>
+        settings.Columns.Add(col =>
         {
-            column.FieldName = "Stock Warehouse Location";
-            column.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.FieldName = "stock_warehouse_id";
+            col.Caption = "Stock Warehouse Title";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeStockWarehouses.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "stock_warehouse_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
         });
 
         // Last Updated By
@@ -71,22 +96,11 @@
         {
             columns.FieldName = "Last Updated By";
             columns.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            columns.ReadOnly = true;
         });
 
         settings.CustomUnboundColumnData = (s, e) =>
         {
-            if(e.Column.FieldName.Equals("Product SKU"))
-            {
-                int product_id = int.Parse(e.GetListSourceFieldValue("product_id").ToString());
-                e.Value = productDict[product_id];
-            }
-
-            if (e.Column.FieldName.Equals("Stock Warehouse Location"))
-            {
-                int stock_warehouse_id = int.Parse(e.GetListSourceFieldValue("stock_warehouse_id").ToString());
-                e.Value = warehouseDict[stock_warehouse_id];
-            }
-
             if (e.Column.FieldName.Equals("Last Updated By"))
             {
                 int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());

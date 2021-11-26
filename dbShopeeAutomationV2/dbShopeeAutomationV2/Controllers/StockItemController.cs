@@ -27,19 +27,11 @@ namespace dbShopeeAutomationV2.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult StockItemGridViewPartialAddNew(FormCollection collection)
+        public ActionResult StockItemGridViewPartialAddNew(TShopeeStockItem item)
         {
-            string name = generalFunc.trimStr(collection["name"]);
-            string description = generalFunc.trimStr(collection["description"]);
-            int quantity = int.Parse(generalFunc.trimStr(collection["stock_quantity"]));
-            string product_sku = generalFunc.trimStr(collection["Product SKU"]);
-            string warehouse_title = generalFunc.trimStr(collection["Stock Warehouse Location"]);
             string username = User.Identity.Name;
 
-            int product_id = db.TShopeeProducts.FirstOrDefault(it => it.SKU.Equals(product_sku)).product_id;
-            int warehouse_id = db.TShopeeStockWarehouses.FirstOrDefault(it => it.name.Equals(warehouse_title)).stock_warehouse_id;
-
-            dbStoredProcedure.stockItemInsert(name, description, quantity, product_id, warehouse_id, username);
+            dbStoredProcedure.stockItemInsert(item.name, item.description, (int)item.stock_quantity, (int)item.product_id, (int)item.stock_warehouse_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeStockItems;
@@ -47,20 +39,11 @@ namespace dbShopeeAutomationV2.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult StockItemGridViewPartialUpdate(FormCollection collection)
+        public ActionResult StockItemGridViewPartialUpdate(TShopeeStockItem item)
         {
-            int stock_item_id = int.Parse(collection["stock_item_id"]);
-            string name = generalFunc.trimStr(collection["name"]);
-            string description = generalFunc.trimStr(collection["description"]);
-            int quantity = int.Parse(generalFunc.trimStr(collection["stock_quantity"]));
-            string product_sku = generalFunc.trimStr(collection["Product SKU"]);
-            string warehouse_title = generalFunc.trimStr(collection["Stock Warehouse Location"]);
             string username = User.Identity.Name;
 
-            int product_id = db.TShopeeProducts.FirstOrDefault(it => it.SKU.Equals(product_sku)).product_id;
-            int warehouse_id = db.TShopeeStockWarehouses.FirstOrDefault(it => it.name.Equals(warehouse_title)).stock_warehouse_id;
-
-            dbStoredProcedure.stockItemUpdate(stock_item_id, name, description, quantity, product_id, warehouse_id, username);
+            dbStoredProcedure.stockItemUpdate(item.stock_item_id, item.name, item.description, (int)item.stock_quantity, (int)item.product_id, (int)item.stock_warehouse_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeStockItems;

@@ -38,7 +38,14 @@
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
-        settings.Columns.Add("product_type_id").Caption = "ID";
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "product_type_id";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.Integer;
+            col.Caption = "ID";
+            col.ReadOnly = true;
+        });
+
         settings.Columns.Add("name").Caption = "Product Type Name";
 
         // Last Updated By

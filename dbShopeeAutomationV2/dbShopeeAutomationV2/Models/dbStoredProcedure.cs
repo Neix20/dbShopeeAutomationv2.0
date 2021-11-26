@@ -716,6 +716,39 @@ namespace dbShopeeAutomationV2.Models
         }
 
         // Order Item Stored Procedure
+        public static int orderItemInsert(int? quantity, Decimal? sub_total, Decimal? discount_fee, int? RMA_num, string RMA_issued_by, DateTime? RMA_issued_date, int? order_id, int? order_item_status_id, int? product_id, string username)
+        {
+            string product_sku = db.TShopeeProducts.FirstOrDefault(it => it.product_id == product_id).SKU;
+
+            // Create New Detail
+            string status = $"Order ID: {order_id} Order Item: {product_sku}";
+            string remark = "";
+            detailInsert(new TShopeeDetail(status, remark, username, username));
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeOrderItem_Insert(quantity, sub_total, discount_fee, RMA_num, RMA_issued_by, RMA_issued_date, order_id, order_item_status_id, product_id, detail_id);
+        }
+
+        public static int orderItemUpdate(int order_item_id, int? quantity, Decimal? sub_total, Decimal? discount_fee, int? RMA_num, string RMA_issued_by, DateTime? RMA_issued_date, int? order_id, int? order_item_status_id, int? product_id, string username)
+        {
+            int detail_id = (int)db.TShopeeOrderItems.FirstOrDefault(it => it.order_item_id == order_item_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Order ID: {order_id}";
+            detailUpdate(detail, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeOrderItem_Update(order_item_id, quantity, sub_total, discount_fee, RMA_num, RMA_issued_by, RMA_issued_date, order_id, order_item_status_id, product_id, detail_id);
+        }
+
+        public static int orderItemDelete(int order_item_id)
+        {
+            int detail_id = (int)db.TShopeeOrderItems.FirstOrDefault(it => it.order_item_id == order_item_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeOrderItem_Delete(order_item_id);
+        }
 
         // Invoice Stored Procedure
 

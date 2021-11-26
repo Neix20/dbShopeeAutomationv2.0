@@ -51,7 +51,18 @@
             prop.DisplayFormatInEditMode = true;
         });
 
-        settings.Columns.Add("total_price").Caption = "Total Price";
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "total_price";
+            col.Caption = "Total Price";
+
+            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
+            prop.NumberType = SpinEditNumberType.Float;
+            prop.MinValue = 0;
+            prop.MaxValue = 10000000;
+            prop.Increment = 0.1M;
+        });
         settings.Columns.Add("order_status").Caption = "Order Status";
 
         // Last Updated By

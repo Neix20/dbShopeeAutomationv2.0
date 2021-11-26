@@ -15,6 +15,11 @@
         productDict.Add(it.product_id, it.SKU);
     });
 
+    Dictionary<int, string> orderItemStatusDict = new Dictionary<int, string>();
+    db.TShopeeOrderItemStatus.ToList().ForEach(it => {
+        orderItemStatusDict.Add(it.order_item_status_id, it.name);
+    });
+
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "OrderItemGridView";
         settings.Width = Unit.Percentage(100);
@@ -27,7 +32,7 @@
         settings.SettingsBehavior.ConfirmDelete = true;
 
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
         settings.CommandColumn.ShowDeleteButton = true;
         settings.CommandColumn.ShowEditButton = true;
 
@@ -43,21 +48,80 @@
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
-        settings.Columns.Add("quantity").Caption = "Quantity";
-        settings.Columns.Add("sub_total").Caption = "Sub Total";
-        settings.Columns.Add("discount_fee").Caption = "Discount Fee";
-        settings.Columns.Add("RMA_num").Caption = "RMA Number";
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "quantity";
+            col.Caption = "Quantity";
+
+            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
+            prop.NumberType = SpinEditNumberType.Integer;
+            prop.MinValue = 0;
+            prop.MaxValue = 10000000;
+        });
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "sub_total";
+            col.Caption = "Sub Total";
+
+            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
+            prop.NumberType = SpinEditNumberType.Float;
+            prop.MinValue = 0;
+            prop.MaxValue = 10000000;
+            prop.Increment = 0.1M;
+        });
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "discount_fee";
+            col.Caption = "Discount Fee";
+
+            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
+            prop.NumberType = SpinEditNumberType.Float;
+            prop.MinValue = 0;
+            prop.MaxValue = 10000000;
+            prop.Increment = 0.1M;
+        });
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "RMA_num";
+            col.Caption = "RMA Number";
+
+            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
+            prop.NumberType = SpinEditNumberType.Integer;
+            prop.MinValue = 0;
+            prop.MaxValue = 10000000;
+        });
+
         settings.Columns.Add("RMA_issued_by").Caption = "RMA Issued By";
 
         // RMA Issued Date
         settings.Columns.Add(col => {
             col.FieldName = "RMA_issued_date";
             col.Caption = "RMA Issued Date";
+
+            col.ColumnType = MVCxGridViewColumnType.DateEdit;
             col.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
+
+            DateEditProperties prop = col.PropertiesEdit as DateEditProperties;
+            prop.DisplayFormatString = "yyyy-MM-dd";
+            prop.DisplayFormatInEditMode = true;
         });
 
-        settings.Columns.Add("order_id").Caption = "Order ID";
-        settings.Columns.Add("order_item_status_id").Caption = "Order Item Status ID"; // Order Item Status?
+        settings.Columns.Add(col => {
+            col.FieldName = "order_id";
+            col.Caption = "Order ID";
+        });
+
+        settings.Columns.Add(col => {
+            col.FieldName = "Order Item Status";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+        });
 
         // Product ID
         settings.Columns.Add(col => {
@@ -74,6 +138,11 @@
 
         settings.CustomUnboundColumnData = (s, e) =>
         {
+            if (e.Column.FieldName.Equals("Order Item Status")) {
+                int order_item_status_id = int.Parse(e.GetListSourceFieldValue("order_item_status_id").ToString());
+                e.Value = orderItemStatusDict[order_item_status_id];
+            }
+
             if(e.Column.FieldName.Equals("Product Code"))
             {
                 int product_id = int.Parse(e.GetListSourceFieldValue("product_id").ToString());

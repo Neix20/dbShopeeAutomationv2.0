@@ -22,14 +22,9 @@ namespace dbShopeeAutomationV2.Models
         public string SKU2 { get; set; }
         public Nullable<decimal> buy_price { get; set; }
         public Nullable<decimal> sell_price { get; set; }
-        public string product_brand { get; set; }
-        public string product_type { get; set; }
-        public string product_variety { get; set; }
+        public Nullable<int> product_brand_id { get; set; }
+        public Nullable<int> product_type_id { get; set; }
+        public Nullable<int> product_variety_id { get; set; }
         public Nullable<int> detail_id { get; set; }
-
-        public TShopeeProduct()
-        {
-
-        }
     }
 }

@@ -21,28 +21,5 @@ namespace dbShopeeAutomationV2.Models
         public Nullable<System.DateTime> created_date { get; set; }
         public string last_updated_by { get; set; }
         public Nullable<System.DateTime> last_updated_date { get; set; }
-
-        public TShopeeDetail()
-        {
-
-        }
-
-        public TShopeeDetail(string status, string remark, string created_by, DateTime? created_date, string last_updated_by, DateTime? last_updated_date)
-        {
-            this.status = status;
-            this.remark = remark;
-            this.created_by = created_by;
-            this.created_date = created_date;
-            this.last_updated_by = last_updated_by;
-            this.last_updated_date = last_updated_date;
-        }
-
-        public TShopeeDetail(string status, string remark, string created_by, string last_updated_by)
-        {
-            this.status = status;
-            this.remark = remark;
-            this.created_by = created_by;
-            this.last_updated_by = last_updated_by;
-        }
     }
 }

@@ -142,9 +142,9 @@
     <Property Name="SKU2" Type="varchar" MaxLength="20" />
     <Property Name="buy_price" Type="decimal" Precision="10" Scale="2" />
     <Property Name="sell_price" Type="decimal" Precision="10" Scale="2" />
-    <Property Name="product_brand" Type="varchar" MaxLength="50" />
-    <Property Name="product_type" Type="varchar" MaxLength="50" />
-    <Property Name="product_variety" Type="varchar" MaxLength="50" />
+    <Property Name="product_brand_id" Type="int" />
+    <Property Name="product_type_id" Type="int" />
+    <Property Name="product_variety_id" Type="int" />
     <Property Name="detail_id" Type="int" />
   </EntityType>
   <EntityType Name="TShopeeProductBrand">
@@ -494,9 +494,9 @@
     <Parameter Name="SKU2" Type="varchar" Mode="In" />
     <Parameter Name="buy_price" Type="decimal" Mode="In" />
     <Parameter Name="sell_price" Type="decimal" Mode="In" />
-    <Parameter Name="product_brand" Type="varchar" Mode="In" />
-    <Parameter Name="product_type" Type="varchar" Mode="In" />
-    <Parameter Name="product_variety" Type="varchar" Mode="In" />
+    <Parameter Name="product_brand_id" Type="int" Mode="In" />
+    <Parameter Name="product_type_id" Type="int" Mode="In" />
+    <Parameter Name="product_variety_id" Type="int" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeProduct_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -508,9 +508,9 @@
     <Parameter Name="SKU2" Type="varchar" Mode="In" />
     <Parameter Name="buy_price" Type="decimal" Mode="In" />
     <Parameter Name="sell_price" Type="decimal" Mode="In" />
-    <Parameter Name="product_brand" Type="varchar" Mode="In" />
-    <Parameter Name="product_type" Type="varchar" Mode="In" />
-    <Parameter Name="product_variety" Type="varchar" Mode="In" />
+    <Parameter Name="product_brand_id" Type="int" Mode="In" />
+    <Parameter Name="product_type_id" Type="int" Mode="In" />
+    <Parameter Name="product_variety_id" Type="int" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeProductBrand_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">

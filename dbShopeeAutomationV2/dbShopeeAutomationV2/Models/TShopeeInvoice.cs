@@ -21,10 +21,5 @@ namespace dbShopeeAutomationV2.Models
         public Nullable<int> invoice_status_id { get; set; }
         public string payment_method { get; set; }
         public Nullable<int> detail_id { get; set; }
-
-        public TShopeeInvoice()
-        {
-
-        }
     }
 }

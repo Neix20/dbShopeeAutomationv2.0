@@ -19,10 +19,5 @@ namespace dbShopeeAutomationV2.Models
         public Nullable<decimal> total_price { get; set; }
         public string order_status { get; set; }
         public Nullable<int> detail_id { get; set; }
-
-        public TShopeeOrder()
-        {
-
-        }
     }
 }

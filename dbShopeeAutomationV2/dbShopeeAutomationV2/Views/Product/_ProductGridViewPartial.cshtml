@@ -1,4 +1,15 @@
+@using dbShopeeAutomationV2.Models;
+@using System.Collections.Generic;
+
 @{
+    dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
+
+    Dictionary<int, string> detailDict = new Dictionary<int, string>();
+    db.TShopeeDetails.ToList().ForEach(it =>
+    {
+        detailDict.Add(it.detail_id, it.last_updated_by);
+    });
+
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "ProductGridView";
         settings.Width = Unit.Percentage(100);
@@ -31,11 +42,90 @@
         settings.Columns.Add("description").Caption = "Description";
         settings.Columns.Add("SKU").Caption = "SKU";
         settings.Columns.Add("SKU2").Caption = "SKU2";
-        settings.Columns.Add("buy_price").Caption = "Buy Price";
-        settings.Columns.Add("sell_price").Caption = "Sell Price";
-        settings.Columns.Add("product_brand").Caption = "Product Brand";
-        settings.Columns.Add("product_type").Caption = "Product Type";
-        settings.Columns.Add("product_variety").Caption = "Product Variety";
+
+        // Float
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "buy_price";
+            col.Caption = "Buy Price";
+
+            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
+            prop.NumberType = SpinEditNumberType.Float;
+            prop.MinValue = 0;
+            prop.MaxValue = 10000000;
+            prop.Increment = 0.1M;
+            prop.DisplayFormatString = "C";
+        });
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "sell_price";
+            col.Caption = "Sell Price";
+
+            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
+            prop.NumberType = SpinEditNumberType.Float;
+            prop.MinValue = 0;
+            prop.MaxValue = 10000000;
+            prop.Increment = 0.1M;
+            prop.DisplayFormatString = "C";
+        });
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "product_brand_id";
+            col.Caption = "Product Brand";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeProductBrands.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "product_brand_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+        });
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "product_type_id";
+            col.Caption = "Product Type";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeProductTypes.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "product_type_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+        });
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "product_variety_id";
+            col.Caption = "Product Variety";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeProductVarieties.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "product_variety_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+        });
+
+        // Last Updated By
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Last Updated By";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+        });
+
+        settings.CustomUnboundColumnData = (s, e) =>
+        {
+            if (e.Column.FieldName.Equals("Last Updated By"))
+            {
+                int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());
+                e.Value = detailDict[detail_id];
+            };
+        };
 
         // Cell Set Center
         settings.Styles.Cell.HorizontalAlign = HorizontalAlign.Center;

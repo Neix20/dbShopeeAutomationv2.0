@@ -130,23 +130,6 @@
     <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="detail_id" Type="Int32" />
   </EntityType>
-  <EntityType Name="TShopeeProduct">
-    <Key>
-      <PropertyRef Name="product_id" />
-    </Key>
-    <Property Name="product_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="product_code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="SKU" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="SKU2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="buy_price" Type="Decimal" Precision="10" Scale="2" />
-    <Property Name="sell_price" Type="Decimal" Precision="10" Scale="2" />
-    <Property Name="product_brand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="product_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="product_variety" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="detail_id" Type="Int32" />
-  </EntityType>
   <EntityType Name="TShopeeProductBrand">
     <Key>
       <PropertyRef Name="product_brand_id" />
@@ -284,7 +267,6 @@
     <EntitySet Name="TShopeeOrderStatus" EntityType="Self.TShopeeOrderStatu" />
     <EntitySet Name="TShopeePaymentMethods" EntityType="Self.TShopeePaymentMethod" />
     <EntitySet Name="TShopeePlatforms" EntityType="Self.TShopeePlatform" />
-    <EntitySet Name="TShopeeProducts" EntityType="Self.TShopeeProduct" />
     <EntitySet Name="TShopeeProductBrands" EntityType="Self.TShopeeProductBrand" />
     <EntitySet Name="TShopeeProductions" EntityType="Self.TShopeeProduction" />
     <EntitySet Name="TShopeeProductionDetails" EntityType="Self.TShopeeProductionDetail" />
@@ -509,36 +491,6 @@
       <Parameter Name="name" Mode="In" Type="String" />
       <Parameter Name="detail_id" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeProduct_Delete">
-      <Parameter Name="product_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeProduct_Insert">
-      <Parameter Name="product_code" Mode="In" Type="String" />
-      <Parameter Name="name" Mode="In" Type="String" />
-      <Parameter Name="description" Mode="In" Type="String" />
-      <Parameter Name="SKU" Mode="In" Type="String" />
-      <Parameter Name="SKU2" Mode="In" Type="String" />
-      <Parameter Name="buy_price" Mode="In" Type="Decimal" />
-      <Parameter Name="sell_price" Mode="In" Type="Decimal" />
-      <Parameter Name="product_brand" Mode="In" Type="String" />
-      <Parameter Name="product_type" Mode="In" Type="String" />
-      <Parameter Name="product_variety" Mode="In" Type="String" />
-      <Parameter Name="detail_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeProduct_Update">
-      <Parameter Name="product_id" Mode="In" Type="Int32" />
-      <Parameter Name="product_code" Mode="In" Type="String" />
-      <Parameter Name="name" Mode="In" Type="String" />
-      <Parameter Name="description" Mode="In" Type="String" />
-      <Parameter Name="SKU" Mode="In" Type="String" />
-      <Parameter Name="SKU2" Mode="In" Type="String" />
-      <Parameter Name="buy_price" Mode="In" Type="Decimal" />
-      <Parameter Name="sell_price" Mode="In" Type="Decimal" />
-      <Parameter Name="product_brand" Mode="In" Type="String" />
-      <Parameter Name="product_type" Mode="In" Type="String" />
-      <Parameter Name="product_variety" Mode="In" Type="String" />
-      <Parameter Name="detail_id" Mode="In" Type="Int32" />
-    </FunctionImport>
     <FunctionImport Name="NSP_TShopeeProductBrand_Delete">
       <Parameter Name="product_brand_id" Mode="In" Type="Int32" />
     </FunctionImport>
@@ -739,5 +691,53 @@
       <Parameter Name="username" Mode="In" Type="String" />
       <Parameter Name="role" Mode="In" Type="String" />
     </FunctionImport>
+    <EntitySet Name="TShopeeProducts" EntityType="dbShopeeAutomationV2Model.TShopeeProduct" />
+    <FunctionImport Name="NSP_TShopeeProduct_Delete">
+      <Parameter Name="product_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProduct_Insert">
+      <Parameter Name="product_code" Mode="In" Type="String" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="SKU" Mode="In" Type="String" />
+      <Parameter Name="SKU2" Mode="In" Type="String" />
+      <Parameter Name="buy_price" Mode="In" Type="Decimal" />
+      <Parameter Name="sell_price" Mode="In" Type="Decimal" />
+      <Parameter Name="product_brand_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_type_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_variety_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProduct_Update">
+      <Parameter Name="product_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_code" Mode="In" Type="String" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="SKU" Mode="In" Type="String" />
+      <Parameter Name="SKU2" Mode="In" Type="String" />
+      <Parameter Name="buy_price" Mode="In" Type="Decimal" />
+      <Parameter Name="sell_price" Mode="In" Type="Decimal" />
+      <Parameter Name="product_brand_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_type_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_variety_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
+  <EntityType Name="TShopeeProduct">
+    <Key>
+      <PropertyRef Name="product_id" />
+    </Key>
+    <Property Name="product_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="product_code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SKU" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SKU2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="buy_price" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="sell_price" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="product_brand_id" Type="Int32" />
+    <Property Name="product_type_id" Type="Int32" />
+    <Property Name="product_variety_id" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
 </Schema>

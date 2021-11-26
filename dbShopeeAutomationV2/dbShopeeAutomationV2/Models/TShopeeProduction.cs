@@ -14,20 +14,20 @@ namespace dbShopeeAutomationV2.Models
     
     public partial class TShopeeProduction
     {
-        public int production_id { get; set; }
-        public string title { get; set; }
-        public string description { get; set; }
-        public string status { get; set; }
-        public Nullable<int> detail_id { get; set; }
+        public TShopeeProduction(int production_id)
+        {
+            this.production_id = production_id;
+        }
 
         public TShopeeProduction()
         {
 
         }
 
-        public TShopeeProduction(int production_id)
-        {
-            this.production_id = production_id;
-        }
+        public int production_id { get; set; }
+        public string title { get; set; }
+        public string description { get; set; }
+        public string status { get; set; }
+        public Nullable<int> detail_id { get; set; }
     }
 }

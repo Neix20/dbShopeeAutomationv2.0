@@ -17,10 +17,5 @@ namespace dbShopeeAutomationV2.Models
         public int platform_id { get; set; }
         public string name { get; set; }
         public Nullable<int> detail_id { get; set; }
-
-        public TShopeePlatform()
-        {
-
-        }
     }
 }

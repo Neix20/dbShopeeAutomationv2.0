@@ -28,7 +28,7 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult DetailGridViewPartialAddNew(TShopeeDetail item)
         {
-            dbStoredProcedure.detailInsert(item);
+            dbStoredProcedure.detailInsert(item.status, item.remark, item.created_by, item.last_updated_by);
             db.SaveChanges();
 
             var model = db.TShopeeDetails;
@@ -40,7 +40,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            dbStoredProcedure.detailUpdate(item, username);
+            dbStoredProcedure.detailUpdate(item.detail_id, item.status, item.remark, item.created_by, item.created_date, username);
             db.SaveChanges();
 
             var model = db.TShopeeDetails;

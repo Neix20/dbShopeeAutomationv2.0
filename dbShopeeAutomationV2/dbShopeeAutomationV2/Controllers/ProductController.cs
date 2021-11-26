@@ -22,16 +22,6 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult Index()
         {
             ViewData["product_code"] = randomProductCode();
-            ViewData["product_brand_option"] = db.TShopeeProductBrands.Select(x => x.name).ToList();
-            ViewData["product_type_option"] = db.TShopeeProductTypes.Select(x => x.name).ToList();
-            ViewData["product_variety_option"] = db.TShopeeProductVarieties.Select(x => x.name).ToList();
-
-            List<SelectListItem> tmp_list = new List<SelectListItem>();
-            db.TShopeeStockWarehouses.ToList().ForEach(model =>
-            {
-                tmp_list.Add(new SelectListItem() { Text = model.name, Value = model.name });
-            });
-            ViewData["stock_warehouse_option"] = tmp_list;
             return View();
         }
 
@@ -49,13 +39,13 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            dbStoredProcedure.productInsert(item.product_code, item.name, item.description, item.SKU, item.SKU2, item.buy_price, item.sell_price, item.product_brand, item.product_type, item.product_variety, username);
+            dbStoredProcedure.productInsert(item.product_code, item.name, item.description, item.SKU, item.SKU2, item.buy_price, item.sell_price, item.product_brand_id, item.product_type_id, item.product_variety_id, username);
             db.SaveChanges();
 
-            string warehouse_title = Request.Form["Stock Warehouse Location"];
-
             int product_id = db.TShopeeProducts.FirstOrDefault(it => it.SKU.Equals(item.SKU)).product_id;
-            int warehouse_id = db.TShopeeStockWarehouses.FirstOrDefault(it => it.name.Equals(warehouse_title)).stock_warehouse_id;
+
+            string warehouse_title = generalFunc.trimStr(Request.Form["Stock Warehouse Location"]);
+            int warehouse_id = db.TShopeeStockWarehouses.FirstOrDefault(it => it.name.ToLower().Equals(warehouse_title.ToLower())).stock_warehouse_id;
 
             dbStoredProcedure.stockItemInsert(item.name, item.description, 0, product_id, warehouse_id, username);
             db.SaveChanges();
@@ -69,7 +59,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            dbStoredProcedure.productUpdate(item.product_id, item.product_code, item.name, item.description, item.SKU, item.SKU2, item.buy_price, item.sell_price, item.product_brand, item.product_type, item.product_variety, username);
+            dbStoredProcedure.productUpdate(item.product_id, item.product_code, item.name, item.description, item.SKU, item.SKU2, item.buy_price, item.sell_price, item.product_brand_id, item.product_type_id, item.product_variety_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeProducts;

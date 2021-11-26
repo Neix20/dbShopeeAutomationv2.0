@@ -406,6 +406,9 @@
     <Content Include="Views\Shipment\Index.cshtml" />
     <Content Include="Views\Shipment\_ShipmentGridViewPartial.cshtml" />
     <Content Include="Views\Shared\_ProductionLayout.cshtml" />
+    <Content Include="Views\Shared\_EcommerceLayout.cshtml" />
+    <Content Include="Views\Shared\_ShipmentLayout.cshtml" />
+    <Content Include="Views\Shared\_OperationLayout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

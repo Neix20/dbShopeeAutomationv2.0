@@ -14,7 +14,7 @@ namespace dbShopeeAutomationV2 {
             routes.MapRoute(
                 name: "Default", // Route name
                 url: "{controller}/{action}/{id}", // URL with parameters
-                defaults: new { controller = "Production", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+                defaults: new { controller = "Platform", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
         }
     }

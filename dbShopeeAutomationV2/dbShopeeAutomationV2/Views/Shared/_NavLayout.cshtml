@@ -1,18 +1,17 @@
 ﻿@{
-                Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
-                IDictionary<string, List<string>> propDict = new Dictionary<string, List<string>>(){
+    IDictionary<string, List<string>> propDict = new Dictionary<string, List<string>>(){
         {"E-commerce", new List<string>(){"Customer", "Invoice", "Invoice Status", "Order", "Order Item", "Order Item Status",
                                             "Order Status", "Payment Method", "Platform"}},
         {"Production", new List<string>(){"Product", "Product Brand", "Product Type", "Product Variety", "Production",
                                             "Production Detail", "Stock Item", "Stock Warehouse"}},
         {"Shipment", new List<string>(){"Carrier", "Shipment", "Shipment Status"}},
-        {"Operations", new List<string>(){"Operation", "Table Category", "Detail"}},
-        {"Users", new List<string>() { "User", "User Role"} }
+        {"Operations", new List<string>(){"Detail", "User", "User Role"}}
     };
 
-                string uName = (User.Identity.IsAuthenticated) ? User.Identity.Name : "Admin";
-            }
+    string uName = (User.Identity.IsAuthenticated) ? User.Identity.Name : "Admin";
+}
 
 <style>
     .navbar-nav {

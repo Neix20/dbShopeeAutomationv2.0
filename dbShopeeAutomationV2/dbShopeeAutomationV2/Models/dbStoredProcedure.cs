@@ -668,6 +668,52 @@ namespace dbShopeeAutomationV2.Models
         }
 
         // Order Stored Procedure
+        public static int orderInsert(DateTime? order_placed_date, Decimal? total_price, string order_status, string username)
+        {
+            // Create Order Status if It doesn't Exist
+            var order_status_list = db.TShopeeOrderStatus.Select(x => x.name.ToLower()).ToList();
+            if (!order_status_list.Contains(order_status.ToLower()))
+            {
+                orderStatusInsert(order_status, username);
+                db.SaveChanges();
+            }
+
+            // Create New Detail
+            string status = "";
+            string remark = "";
+            detailInsert(new TShopeeDetail(status, remark, username, username));
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeOrder_Insert(order_placed_date, total_price, order_status, detail_id);
+        }
+
+        public static int orderUpdate(int order_id, DateTime? order_placed_date, Decimal? total_price, string order_status, string username)
+        {
+            // Create Order Status if It doesn't Exist
+            var order_status_list = db.TShopeeOrderStatus.Select(x => x.name.ToLower()).ToList();
+            if (!order_status_list.Contains(order_status.ToLower()))
+            {
+                orderStatusInsert(order_status, username);
+                db.SaveChanges();
+            }
+
+            int detail_id = (int)db.TShopeeOrders.FirstOrDefault(it => it.order_id == order_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Order ID: {order_id}";
+            detailUpdate(detail, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeOrder_Update(order_id, order_placed_date, total_price, order_status, detail_id);
+        }
+
+        public static int orderDelete(int order_id) {
+            int detail_id = (int)db.TShopeeOrders.FirstOrDefault(it => it.order_id == order_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeOrder_Delete(order_id);
+        }
 
         // Order Item Stored Procedure
 

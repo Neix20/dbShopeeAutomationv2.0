@@ -28,6 +28,16 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult OrderGridViewPartialAddNew(TShopeeOrder item)
         {
+            string username = User.Identity.Name;
+
+            dbStoredProcedure.orderInsert(item.order_placed_date, item.total_price, item.order_status, username);
+            db.SaveChanges();
+
+            item.order_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeOrder') AS INT)").FirstOrDefault();
+
+            dbStoredProcedure.orderUpdate(item.order_id, item.order_placed_date, item.total_price, item.order_status, username);
+            db.SaveChanges();
+
             var model = db.TShopeeOrders;
             return PartialView("_OrderGridViewPartial", model.ToList());
         }
@@ -35,6 +45,11 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult OrderGridViewPartialUpdate(TShopeeOrder item)
         {
+            string username = User.Identity.Name;
+
+            dbStoredProcedure.orderUpdate(item.order_id, item.order_placed_date, item.total_price, item.order_status, username);
+            db.SaveChanges();
+
             var model = db.TShopeeOrders;
             return PartialView("_OrderGridViewPartial", model.ToList());
         }
@@ -42,6 +57,9 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult OrderGridViewPartialDelete(int order_id)
         {
+            dbStoredProcedure.orderDelete(order_id);
+            db.SaveChanges();
+
             var model = db.TShopeeOrders;
             return PartialView("_OrderGridViewPartial", model.ToList());
         }

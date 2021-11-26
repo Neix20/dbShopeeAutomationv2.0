@@ -38,11 +38,33 @@
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
-        settings.Columns.Add("invoice_date");
-        settings.Columns.Add("invoice_details");
-        settings.Columns.Add("shipping_fee");
-        settings.Columns.Add("invoice_status_id");
-        settings.Columns.Add("payment_method");
+        settings.Columns.Add(col => {
+            col.FieldName = "invoice_date";
+            col.Caption = "Invoice Caption";
+            col.ColumnType = MVCxGridViewColumnType.DateEdit;
+            col.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
+
+            DateEditProperties prop = col.PropertiesEdit as DateEditProperties;
+            prop.DisplayFormatString = "yyyy-MM-dd";
+            prop.DisplayFormatInEditMode = true;
+        });
+
+        settings.Columns.Add("invoice_details").Caption = "Invoice Details";
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "shipping_fee";
+            col.Caption = "Shipping Fee";
+
+            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
+            prop.NumberType = SpinEditNumberType.Integer;
+            prop.MinValue = 0;
+            prop.MaxValue = 10000000;
+        });
+
+        settings.Columns.Add("invoice_status_id").Caption = "Invoice Status ID";
+        settings.Columns.Add("payment_method").Caption = "Payment Method";
 
         // Last Updated By
         settings.Columns.Add(col =>

@@ -752,6 +752,70 @@ namespace dbShopeeAutomationV2.Models
 
         // Invoice Stored Procedure
 
+        // Create Related Invoice Status
+        // Delete Related Invoice Status 
+        public static int invoiceInsert(DateTime? invoice_date, string invoice_details, Decimal? shipping_fee, int? invoice_status_id, string payment_method, string username)
+        {
+            // Create New Detail
+            string status = "";
+            string remark = "";
+            detailInsert(new TShopeeDetail(status, remark, username, username));
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeInvoice_Insert(invoice_date, invoice_details, shipping_fee, invoice_status_id, payment_method, detail_id);
+        }
+
+        public static int invoiceUpdate(int invoice_id, DateTime? invoice_date, string invoice_details, Decimal? shipping_fee, int? invoice_status_id, string payment_method, string username)
+        {
+            int detail_id = (int)db.TShopeeInvoices.FirstOrDefault(it => it.invoice_id == invoice_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Invoice: {invoice_id}";
+            detailUpdate(detail, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeInvoice_Update(invoice_id, invoice_date, invoice_details, shipping_fee, invoice_status_id, payment_method, detail_id);
+        }
+
+        public static int invoiceDelete(int invoice_id)
+        {
+            int detail_id = (int)db.TShopeeInvoices.FirstOrDefault(it => it.invoice_id == invoice_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeInvoice_Delete(invoice_id);
+        }
+
         // Shipment Stored Procedure
+        public static int shipmentInsert(string start_location, string destination, string tracking_id, DateTime? created_date, DateTime? expected_date, DateTime? due_date, int invoice_id, int carrier_id, string shipment_status, string username)
+        {
+            // Create New Detail
+            string status = "";
+            string remark = "";
+            detailInsert(new TShopeeDetail(status, remark, username, username));
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeShipment_Insert(start_location, destination, tracking_id, created_date, expected_date, due_date, invoice_id, carrier_id, shipment_status, detail_id);
+        }
+
+        public static int shipmentUpdate(int shipment_id, string start_location, string destination, string tracking_id, DateTime? created_date, DateTime? expected_date, DateTime? due_date, int invoice_id, int carrier_id, string shipment_status, string username)
+        {
+            int detail_id = (int)db.TShopeeShipments.FirstOrDefault(it => it.shipment_id == shipment_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detailUpdate(detail, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeShipment_Update(shipment_id, start_location, destination, tracking_id, created_date, expected_date, due_date, invoice_id, carrier_id, shipment_status, detail_id);
+        }
+
+        public static int shipmentDelete(int shipment_id)
+        {
+            int detail_id = (int)db.TShopeeShipments.FirstOrDefault(it => it.shipment_id == shipment_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeShipment_Delete(shipment_id);
+        }
     }
 }

@@ -403,6 +403,7 @@
     <Content Include="Views\Carrier\Index.cshtml" />
     <Content Include="Views\ShipmentStatus\_ShipmentStatusGridViewPartial.cshtml" />
     <Content Include="Views\Carrier\_CarrierGridViewPartial.cshtml" />
+    <Content Include="Views\Shipment\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -436,6 +437,7 @@
     <Compile Include="Controllers\ProductionDetailFormController.cs" />
     <Compile Include="Controllers\ProductTypeController.cs" />
     <Compile Include="Controllers\ProductVarietyController.cs" />
+    <Compile Include="Controllers\ShipmentController.cs" />
     <Compile Include="Controllers\ShipmentStatusController.cs" />
     <Compile Include="Controllers\StockItemController.cs" />
     <Compile Include="Controllers\StockWarehouseController.cs" />

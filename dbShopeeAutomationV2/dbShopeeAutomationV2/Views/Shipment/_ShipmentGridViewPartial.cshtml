@@ -1,0 +1,41 @@
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "ShipmentGridView";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "Shipment", Action = "ShipmentGridViewPartial" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Shipment", Action = "ShipmentGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Shipment", Action = "ShipmentGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Shipment", Action = "ShipmentGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.SettingsSearchPanel.Visible = true;
+
+        settings.KeyFieldName = "shipment_id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.Columns.Add("start_location");
+        settings.Columns.Add("destination");
+        settings.Columns.Add("tracking_id");
+        settings.Columns.Add("created_date");
+        settings.Columns.Add("expected_date");
+        settings.Columns.Add("due_date");
+        settings.Columns.Add("invoice_id");
+        settings.Columns.Add("carrier_id");
+        settings.Columns.Add("shipment_status");
+    });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

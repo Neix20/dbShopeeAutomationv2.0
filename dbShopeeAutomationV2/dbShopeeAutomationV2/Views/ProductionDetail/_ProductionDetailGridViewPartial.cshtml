@@ -50,19 +50,44 @@
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
         // Production Title
-        settings.Columns.Add(col => {
-            col.FieldName = "Production Title";
-            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "production_id";
+            col.Caption = "Production Title";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeProductions.ToList();
+            prop.TextField = "title";
+            prop.ValueField = "production_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
         });
 
         // Product SKU
         settings.Columns.Add(col =>
         {
-            col.FieldName = "Product SKU";
-            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.FieldName = "product_id";
+            col.Caption = "Product SKU";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeProducts.ToList();
+            prop.TextField = "SKU";
+            prop.ValueField = "product_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
         });
 
-        settings.Columns.Add("quantity").Caption = "Product Quantity";
+        // Quantity
+        settings.Columns.Add(col => {
+            col.FieldName = "quantity";
+            col.Caption = "Product Quantity";
+
+            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
+            prop.NumberType = SpinEditNumberType.Integer;
+            prop.MinValue = 0;
+            prop.MaxValue = 10000000;
+        });
 
         // Product Manufactured Date
         settings.Columns.Add(column =>
@@ -97,22 +122,11 @@
         {
             col.FieldName = "Last Updated By";
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.ReadOnly = true;
         });
 
         settings.CustomUnboundColumnData = (s, e) =>
         {
-            if(e.Column.FieldName.Equals("Production Title"))
-            {
-                int production_id = int.Parse(e.GetListSourceFieldValue("production_id").ToString());
-                e.Value = productionDict[production_id];
-            }
-
-            if (e.Column.FieldName.Equals("Product SKU"))
-            {
-                int product_id = int.Parse(e.GetListSourceFieldValue("product_id").ToString());
-                e.Value = productDict[product_id];
-            }
-
             if (e.Column.FieldName.Equals("Last Updated By"))
             {
                 int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());

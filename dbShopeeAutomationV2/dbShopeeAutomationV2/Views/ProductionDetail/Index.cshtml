@@ -1,8 +1,10 @@
-﻿@model dbShopeeAutomationV2.Models.TShopeeProductionDetail
+﻿@using dbShopeeAutomationV2.Models
+@model TShopeeProductionDetail
 
 @{
     ViewBag.Title = "Production Detail Form";
     Layout = "~/Views/Shared/_NavLayout.cshtml";
+    dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 }
 
 @section tmp_script {
@@ -28,7 +30,17 @@
                             <label>Production Title: </label>
                         </div>
                         <div class="col-2">
-                            @Html.DropDownListFor(model => model.production_id, ViewData["production_id_option"] as List<SelectListItem>, new { @class = "form-select" })
+                            @Html.DevExpress().ComboBox(settings =>
+                           {
+                               settings.Name = "production_id";
+                               settings.Width = 240;
+                               settings.SelectedIndex = 0;
+                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                               settings.Properties.TextField = "title";
+                               settings.Properties.ValueField = "production_id";
+                               settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                           }).BindList(db.TShopeeProductions.ToList()).GetHtml()
                         </div>
                     </div>
 
@@ -41,14 +53,28 @@
                             <label>Product SKU: </label>
                         </div>
                         <div class="col-2">
-                            @Html.DropDownList("Product SKU", ViewData["product_sku_option"] as List<SelectListItem>, new { @class = "form-select" })
+                            @Html.DevExpress().ComboBox(settings =>
+                           {
+                               settings.Name = "product_id";
+                               settings.Width = 180;
+                               settings.SelectedIndex = 0;
+                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                               settings.Properties.TextField = "SKU";
+                               settings.Properties.ValueField = "product_id";
+                               settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                           }).BindList(db.TShopeeProducts.ToList()).GetHtml()
                         </div>
 
                         <div class="col-2 text-center">
                             <label>Quantity: </label>
                         </div>
                         <div class="col-2">
-                            @Html.TextBoxFor(model => model.quantity, new { @class = "form-control", @type = "number" })
+                            @Html.DevExpress().SpinEdit(settings => {
+                               settings.Name = "quantity";
+                               settings.Properties.MinValue = 0;
+                               settings.Properties.MaxValue = 10000000;
+                           }).Bind(Model).GetHtml()
                         </div>
                     </div>
 

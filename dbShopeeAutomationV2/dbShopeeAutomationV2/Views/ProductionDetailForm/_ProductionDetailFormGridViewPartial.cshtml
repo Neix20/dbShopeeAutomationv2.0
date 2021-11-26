@@ -10,11 +10,6 @@
         detailDict.Add(it.detail_id, it.last_updated_by);
     });
 
-    Dictionary<int, string> productDict = new Dictionary<int, string>();
-    db.TShopeeProducts.ToList().ForEach(it => {
-        productDict.Add(it.product_id, it.SKU);
-    });
-
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "ProductionDetailFormGridView";
         settings.Width = Unit.Percentage(100);
@@ -26,7 +21,7 @@
         settings.SettingsBehavior.ConfirmDelete = true;
 
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.ShowNewButtonInHeader = false;
         settings.CommandColumn.ShowDeleteButton = true;
         settings.CommandColumn.ShowEditButton = true;
 
@@ -45,11 +40,29 @@
         // Product SKU
         settings.Columns.Add(col =>
         {
-            col.FieldName = "Product SKU";
-            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.FieldName = "product_id";
+            col.Caption = "Product SKU";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeProducts.ToList();
+            prop.TextField = "SKU";
+            prop.ValueField = "product_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
         });
 
-        settings.Columns.Add("quantity").Caption = "Product Quantity";
+        // Quantity
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "quantity";
+            col.Caption = "Product Quantity";
+
+            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
+            prop.NumberType = SpinEditNumberType.Integer;
+            prop.MinValue = 0;
+            prop.MaxValue = 10000000;
+        });
 
         // Product Manufactured Date
         settings.Columns.Add(column =>
@@ -84,15 +97,11 @@
         {
             col.FieldName = "Last Updated By";
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.ReadOnly = true;
         });
 
         settings.CustomUnboundColumnData = (s, e) =>
         {
-            if (e.Column.FieldName.Equals("Product SKU")) {
-                int product_id = int.Parse(e.GetListSourceFieldValue("product_id").ToString());
-                e.Value = productDict[product_id];
-            }
-
             if (e.Column.FieldName.Equals("Last Updated By"))
             {
                 int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());

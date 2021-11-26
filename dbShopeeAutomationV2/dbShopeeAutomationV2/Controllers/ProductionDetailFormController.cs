@@ -14,15 +14,7 @@ namespace dbShopeeAutomationV2.Controllers
         // GET: ProductionDetailForm
         public ActionResult Index(int? production_id)
         {
-            production_id = (production_id == null) ? 1 : production_id;
-            ViewData["production_id"] = production_id;
-
-            List<SelectListItem> tmp_list = new List<SelectListItem>();
-            db.TShopeeProducts.Select(x => x.SKU).Distinct().ToList().ForEach(product_sku =>
-            {
-                tmp_list.Add(new SelectListItem() { Text = product_sku, Value = product_sku });
-            });
-            ViewData["product_sku_option"] = tmp_list;
+            ViewData["production_id"] = (production_id == null) ? 1 : production_id;
 
             return View();
         }
@@ -41,10 +33,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            string product_sku = generalFunc.trimStr(Request.Form["Product SKU"]);
-            int product_id = (int)db.TShopeeProducts.FirstOrDefault(it => it.SKU.ToLower().Equals(product_sku.ToLower())).product_id;
-
-            dbStoredProcedure.productionDetailInsert(item.UOM, item.manufactured_date, item.expiry_date, item.quantity, product_id, item.production_id, username);
+            dbStoredProcedure.productionDetailInsert(item.UOM, item.manufactured_date, item.expiry_date, item.quantity, (int) item.product_id, item.production_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeProductionDetails.Where(it => it.production_id == item.production_id);
@@ -58,10 +47,7 @@ namespace dbShopeeAutomationV2.Controllers
 
             item = db.TShopeeProductionDetails.FirstOrDefault(it => it.production_detail_id == item.production_detail_id);
 
-            string product_sku = generalFunc.trimStr(Request.Form["Product SKU"]);
-            int product_id = (int)db.TShopeeProducts.FirstOrDefault(it => it.SKU.ToLower().Equals(product_sku.ToLower())).product_id;
-
-            dbStoredProcedure.productionDetailUpdate(item.production_detail_id, item.UOM, item.manufactured_date, item.expiry_date, item.quantity, product_id, item.production_id, username);
+            dbStoredProcedure.productionDetailUpdate(item.production_detail_id, item.UOM, item.manufactured_date, item.expiry_date, item.quantity, (int) item.product_id, item.production_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeProductionDetails.Where(it => it.production_id == item.production_id);

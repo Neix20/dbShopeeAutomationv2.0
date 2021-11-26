@@ -69,7 +69,12 @@
         {
             column.FieldName = "manufactured_date";
             column.Caption = "Product Manufactured Date";
+            column.ColumnType = MVCxGridViewColumnType.DateEdit;
             column.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
+
+            DateEditProperties prop = column.PropertiesEdit as DateEditProperties;
+            prop.DisplayFormatString = "yyyy-MM-dd";
+            prop.DisplayFormatInEditMode = true;
         });
 
         // Product Expiry Date
@@ -77,7 +82,12 @@
         {
             column.FieldName = "expiry_date";
             column.Caption = "Expiry Date";
+            column.ColumnType = MVCxGridViewColumnType.DateEdit;
             column.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
+
+            DateEditProperties prop = column.PropertiesEdit as DateEditProperties;
+            prop.DisplayFormatString = "yyyy-MM-dd";
+            prop.DisplayFormatInEditMode = true;
         });
 
         settings.Columns.Add("UOM").Caption = "Product UOM";

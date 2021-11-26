@@ -36,7 +36,12 @@
         {
             column.FieldName = "created_date";
             column.Caption = "Created Timestamp";
+            column.ColumnType = MVCxGridViewColumnType.DateEdit;
             column.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
+
+            DateEditProperties prop = column.PropertiesEdit as DateEditProperties;
+            prop.DisplayFormatString = "yyyy-MM-dd";
+            prop.DisplayFormatInEditMode = true;
         });
 
         settings.Columns.Add("last_updated_by").Caption = "Last Updated By";
@@ -46,7 +51,12 @@
         {
             column.FieldName = "last_updated_date";
             column.Caption = "Last Updated Timestamp";
+            column.ColumnType = MVCxGridViewColumnType.DateEdit;
             column.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
+
+            DateEditProperties prop = column.PropertiesEdit as DateEditProperties;
+            prop.DisplayFormatString = "yyyy-MM-dd";
+            prop.DisplayFormatInEditMode = true;
         });
 
         // Cell Styles Center

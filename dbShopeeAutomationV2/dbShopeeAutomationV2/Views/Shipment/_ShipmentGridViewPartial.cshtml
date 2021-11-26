@@ -1,4 +1,15 @@
+@using dbShopeeAutomationV2.Models;
+@using System.Collections.Generic;
+
 @{
+    dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
+
+    Dictionary<int, string> detailDict = new Dictionary<int, string>();
+    db.TShopeeDetails.ToList().ForEach(it =>
+    {
+        detailDict.Add(it.detail_id, it.last_updated_by);
+    });
+
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "ShipmentGridView";
         settings.Width = Unit.Percentage(100);
@@ -11,7 +22,7 @@
         settings.SettingsBehavior.ConfirmDelete = true;
 
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
         settings.CommandColumn.ShowDeleteButton = true;
         settings.CommandColumn.ShowEditButton = true;
         settings.SettingsSearchPanel.Visible = true;
@@ -23,15 +34,76 @@
         settings.Settings.ShowFilterRow = true;
         settings.SettingsBehavior.AllowSelectByRowClick = true;
 
-        settings.Columns.Add("start_location");
-        settings.Columns.Add("destination");
-        settings.Columns.Add("tracking_id");
-        settings.Columns.Add("created_date");
-        settings.Columns.Add("expected_date");
-        settings.Columns.Add("due_date");
-        settings.Columns.Add("invoice_id");
-        settings.Columns.Add("carrier_id");
-        settings.Columns.Add("shipment_status");
+        // Header Set Center
+        settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
+        settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
+
+        settings.Columns.Add("start_location").Caption = "Start Location";
+        settings.Columns.Add("destination").Caption = "Destination";
+        settings.Columns.Add("tracking_id").Caption = "Tracking ID";
+
+        // Created Date
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "created_date";
+            col.Caption = "Created Date";
+            col.ColumnType = MVCxGridViewColumnType.DateEdit;
+            col.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
+
+            DateEditProperties prop = col.PropertiesEdit as DateEditProperties;
+            prop.DisplayFormatString = "yyyy-MM-dd";
+            prop.DisplayFormatInEditMode = true;
+        });
+
+        // Expected Date
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "expected_date";
+            col.Caption = "Expected Date";
+            col.ColumnType = MVCxGridViewColumnType.DateEdit;
+            col.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
+
+            DateEditProperties prop = col.PropertiesEdit as DateEditProperties;
+            prop.DisplayFormatString = "yyyy-MM-dd";
+            prop.DisplayFormatInEditMode = true;
+        });
+
+        // Due Date
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "due_date";
+            col.Caption = "Due Date";
+            col.ColumnType = MVCxGridViewColumnType.DateEdit;
+            col.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
+
+            DateEditProperties prop = col.PropertiesEdit as DateEditProperties;
+            prop.DisplayFormatString = "yyyy-MM-dd";
+            prop.DisplayFormatInEditMode = true;
+        });
+
+        settings.Columns.Add("invoice_id").Caption = "Invoice ID";
+        settings.Columns.Add("carrier_id").Caption = "Carrier ID";
+        settings.Columns.Add("shipment_status").Caption = "Shipment Status";
+
+        // Last Updated By
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Last Updated By";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+        });
+
+        settings.CustomUnboundColumnData = (s, e) =>
+        {
+            if (e.Column.FieldName.Equals("Last Updated By"))
+            {
+                int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());
+                e.Value = detailDict[detail_id];
+            };
+        };
+
+        // Cell Styles Center
+        settings.Styles.Cell.HorizontalAlign = HorizontalAlign.Center;
+        settings.Styles.Cell.VerticalAlign = VerticalAlign.Middle;
     });
 
     if (ViewData["EditError"] != null){

@@ -368,27 +368,26 @@ namespace dbShopeeAutomationV2.Models
         }
 
         // Order Item Status Stored Procedure
-        public static int orderItemStatusInsert(string description, int? rma, string username)
+        public static int orderItemStatusInsert(string name, string description, int? rma, string username)
         {
             // Create New Detail
-            string status = "";
+            string status = $"{name}";
             string remark = "";
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
             int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
-            return db.NSP_TShopeeOrderItemStatus_Insert(description, rma, detail_id);
+            return db.NSP_TShopeeOrderItemStatus_Insert(name, description, rma, detail_id);
         }
 
-        public static int orderItemStatusUpdate(int order_item_status_id, string description, int? rma, string username)
+        public static int orderItemStatusUpdate(int order_item_status_id, string name, string description, int? rma, string username)
         {
             int detail_id = (int)db.TShopeeOrderItemStatus.FirstOrDefault(it => it.order_item_status_id == order_item_status_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
-            detail.status = $"Order Item ID: {order_item_status_id}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
-            return db.NSP_TShopeeOrderItemStatus_Update(order_item_status_id, description, rma, detail_id);
+            return db.NSP_TShopeeOrderItemStatus_Update(order_item_status_id, name, description, rma, detail_id);
         }
 
         public static int orderItemStatusDelete(int order_item_status_id)
@@ -664,6 +663,12 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
+            quantity = (quantity == null) ? 0 : quantity;
+            sub_total = (sub_total == null) ? 0 : sub_total;
+            discount_fee = (discount_fee == null) ? 0 : discount_fee;
+            RMA_num = (RMA_num == null) ? 0 : RMA_num;
+            RMA_issued_date = (RMA_issued_date == null) ? DateTime.Now : RMA_issued_date;
+
             int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
             return db.NSP_TShopeeOrderItem_Insert(quantity, sub_total, discount_fee, RMA_num, RMA_issued_by, RMA_issued_date, order_id, order_item_status_id, product_id, detail_id);
         }
@@ -675,6 +680,12 @@ namespace dbShopeeAutomationV2.Models
             detail.status = $"Order ID: {order_id}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
+
+            quantity = (quantity == null) ? 0 : quantity;
+            sub_total = (sub_total == null) ? 0 : sub_total;
+            discount_fee = (discount_fee == null) ? 0 : discount_fee;
+            RMA_num = (RMA_num == null) ? 0 : RMA_num;
+            RMA_issued_date = (RMA_issued_date == null) ? DateTime.Now : RMA_issued_date;
 
             return db.NSP_TShopeeOrderItem_Update(order_item_id, quantity, sub_total, discount_fee, RMA_num, RMA_issued_by, RMA_issued_date, order_id, order_item_status_id, product_id, detail_id);
         }

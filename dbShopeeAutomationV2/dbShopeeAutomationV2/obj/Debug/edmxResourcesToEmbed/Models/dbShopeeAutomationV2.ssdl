@@ -103,6 +103,7 @@
       <PropertyRef Name="order_item_status_id" />
     </Key>
     <Property Name="order_item_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
     <Property Name="description" Type="varchar(max)" />
     <Property Name="return_merchandise_authorization_nr" Type="int" />
     <Property Name="detail_id" Type="int" />
@@ -440,12 +441,14 @@
     <Parameter Name="order_item_status_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeOrderItemStatus_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
     <Parameter Name="description" Type="varchar(max)" Mode="In" />
     <Parameter Name="return_merchandise_authorization_nr" Type="int" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeOrderItemStatus_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="order_item_status_id" Type="int" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
     <Parameter Name="description" Type="varchar(max)" Mode="In" />
     <Parameter Name="return_merchandise_authorization_nr" Type="int" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />

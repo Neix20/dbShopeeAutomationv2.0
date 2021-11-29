@@ -613,7 +613,6 @@
     </FunctionImport>
     <EntitySet Name="TShopeeInvoices" EntityType="dbShopeeAutomationV2Model.TShopeeInvoice" />
     <EntitySet Name="TShopeeInvoiceStatus" EntityType="dbShopeeAutomationV2Model.TShopeeInvoiceStatu" />
-    <EntitySet Name="TShopeeOrderItemStatus" EntityType="dbShopeeAutomationV2Model.TShopeeOrderItemStatu" />
     <FunctionImport Name="NSP_TShopeeInvoice_Delete">
       <Parameter Name="invoice_id" Mode="In" Type="Int32" />
     </FunctionImport>
@@ -650,20 +649,6 @@
       <Parameter Name="name" Mode="In" Type="String" />
       <Parameter Name="detail_id" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeOrderItemStatus_Delete">
-      <Parameter Name="order_item_status_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeOrderItemStatus_Insert">
-      <Parameter Name="description" Mode="In" Type="String" />
-      <Parameter Name="return_merchandise_authorization_nr" Mode="In" Type="Int32" />
-      <Parameter Name="detail_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeOrderItemStatus_Update">
-      <Parameter Name="order_item_status_id" Mode="In" Type="Int32" />
-      <Parameter Name="description" Mode="In" Type="String" />
-      <Parameter Name="return_merchandise_authorization_nr" Mode="In" Type="Int32" />
-      <Parameter Name="detail_id" Mode="In" Type="Int32" />
-    </FunctionImport>
     <EntitySet Name="TShopeeOrders" EntityType="dbShopeeAutomationV2Model.TShopeeOrder" />
     <FunctionImport Name="NSP_TShopeeOrder_Delete">
       <Parameter Name="order_id" Mode="In" Type="Int32" />
@@ -681,6 +666,23 @@
       <Parameter Name="order_placed_date" Mode="In" Type="DateTime" />
       <Parameter Name="total_price" Mode="In" Type="Decimal" />
       <Parameter Name="order_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="TShopeeOrderItemStatus" EntityType="dbShopeeAutomationV2Model.TShopeeOrderItemStatu" />
+    <FunctionImport Name="NSP_TShopeeOrderItemStatus_Delete">
+      <Parameter Name="order_item_status_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrderItemStatus_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="return_merchandise_authorization_nr" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrderItemStatus_Update">
+      <Parameter Name="order_item_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="return_merchandise_authorization_nr" Mode="In" Type="Int32" />
       <Parameter Name="detail_id" Mode="In" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
@@ -723,15 +725,6 @@
     <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="detail_id" Type="Int32" />
   </EntityType>
-  <EntityType Name="TShopeeOrderItemStatu">
-    <Key>
-      <PropertyRef Name="order_item_status_id" />
-    </Key>
-    <Property Name="order_item_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="return_merchandise_authorization_nr" Type="Int32" />
-    <Property Name="detail_id" Type="Int32" />
-  </EntityType>
   <EntityType Name="TShopeeOrder">
     <Key>
       <PropertyRef Name="order_id" />
@@ -741,6 +734,16 @@
     <Property Name="order_placed_date" Type="DateTime" Precision="3" />
     <Property Name="total_price" Type="Decimal" Precision="10" Scale="2" />
     <Property Name="order_status_id" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeOrderItemStatu">
+    <Key>
+      <PropertyRef Name="order_item_status_id" />
+    </Key>
+    <Property Name="order_item_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="return_merchandise_authorization_nr" Type="Int32" />
     <Property Name="detail_id" Type="Int32" />
   </EntityType>
 </Schema>

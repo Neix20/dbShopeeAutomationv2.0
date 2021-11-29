@@ -50,8 +50,8 @@ namespace dbShopeeAutomationV2.Models
         public virtual DbSet<TShopeeProduct> TShopeeProducts { get; set; }
         public virtual DbSet<TShopeeInvoice> TShopeeInvoices { get; set; }
         public virtual DbSet<TShopeeInvoiceStatu> TShopeeInvoiceStatus { get; set; }
-        public virtual DbSet<TShopeeOrderItemStatu> TShopeeOrderItemStatus { get; set; }
         public virtual DbSet<TShopeeOrder> TShopeeOrders { get; set; }
+        public virtual DbSet<TShopeeOrderItemStatu> TShopeeOrderItemStatus { get; set; }
     
         public virtual int NSP_TShopeeCarrier_Delete(Nullable<int> carrier_id)
         {
@@ -1494,53 +1494,6 @@ namespace dbShopeeAutomationV2.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeInvoiceStatus_Update", invoice_status_idParameter, nameParameter, detail_idParameter);
         }
     
-        public virtual int NSP_TShopeeOrderItemStatus_Delete(Nullable<int> order_item_status_id)
-        {
-            var order_item_status_idParameter = order_item_status_id.HasValue ?
-                new ObjectParameter("order_item_status_id", order_item_status_id) :
-                new ObjectParameter("order_item_status_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrderItemStatus_Delete", order_item_status_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeOrderItemStatus_Insert(string description, Nullable<int> return_merchandise_authorization_nr, Nullable<int> detail_id)
-        {
-            var descriptionParameter = description != null ?
-                new ObjectParameter("description", description) :
-                new ObjectParameter("description", typeof(string));
-    
-            var return_merchandise_authorization_nrParameter = return_merchandise_authorization_nr.HasValue ?
-                new ObjectParameter("return_merchandise_authorization_nr", return_merchandise_authorization_nr) :
-                new ObjectParameter("return_merchandise_authorization_nr", typeof(int));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrderItemStatus_Insert", descriptionParameter, return_merchandise_authorization_nrParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeOrderItemStatus_Update(Nullable<int> order_item_status_id, string description, Nullable<int> return_merchandise_authorization_nr, Nullable<int> detail_id)
-        {
-            var order_item_status_idParameter = order_item_status_id.HasValue ?
-                new ObjectParameter("order_item_status_id", order_item_status_id) :
-                new ObjectParameter("order_item_status_id", typeof(int));
-    
-            var descriptionParameter = description != null ?
-                new ObjectParameter("description", description) :
-                new ObjectParameter("description", typeof(string));
-    
-            var return_merchandise_authorization_nrParameter = return_merchandise_authorization_nr.HasValue ?
-                new ObjectParameter("return_merchandise_authorization_nr", return_merchandise_authorization_nr) :
-                new ObjectParameter("return_merchandise_authorization_nr", typeof(int));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrderItemStatus_Update", order_item_status_idParameter, descriptionParameter, return_merchandise_authorization_nrParameter, detail_idParameter);
-        }
-    
         public virtual int NSP_TShopeeOrder_Delete(Nullable<int> order_id)
         {
             var order_idParameter = order_id.HasValue ?
@@ -1602,6 +1555,61 @@ namespace dbShopeeAutomationV2.Models
                 new ObjectParameter("detail_id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrder_Update", order_idParameter, order_titleParameter, order_placed_dateParameter, total_priceParameter, order_status_idParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeOrderItemStatus_Delete(Nullable<int> order_item_status_id)
+        {
+            var order_item_status_idParameter = order_item_status_id.HasValue ?
+                new ObjectParameter("order_item_status_id", order_item_status_id) :
+                new ObjectParameter("order_item_status_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrderItemStatus_Delete", order_item_status_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeOrderItemStatus_Insert(string name, string description, Nullable<int> return_merchandise_authorization_nr, Nullable<int> detail_id)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("description", description) :
+                new ObjectParameter("description", typeof(string));
+    
+            var return_merchandise_authorization_nrParameter = return_merchandise_authorization_nr.HasValue ?
+                new ObjectParameter("return_merchandise_authorization_nr", return_merchandise_authorization_nr) :
+                new ObjectParameter("return_merchandise_authorization_nr", typeof(int));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrderItemStatus_Insert", nameParameter, descriptionParameter, return_merchandise_authorization_nrParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeOrderItemStatus_Update(Nullable<int> order_item_status_id, string name, string description, Nullable<int> return_merchandise_authorization_nr, Nullable<int> detail_id)
+        {
+            var order_item_status_idParameter = order_item_status_id.HasValue ?
+                new ObjectParameter("order_item_status_id", order_item_status_id) :
+                new ObjectParameter("order_item_status_id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("description", description) :
+                new ObjectParameter("description", typeof(string));
+    
+            var return_merchandise_authorization_nrParameter = return_merchandise_authorization_nr.HasValue ?
+                new ObjectParameter("return_merchandise_authorization_nr", return_merchandise_authorization_nr) :
+                new ObjectParameter("return_merchandise_authorization_nr", typeof(int));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrderItemStatus_Update", order_item_status_idParameter, nameParameter, descriptionParameter, return_merchandise_authorization_nrParameter, detail_idParameter);
         }
     }
 }

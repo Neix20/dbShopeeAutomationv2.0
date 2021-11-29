@@ -108,6 +108,7 @@
             <PropertyRef Name="order_item_status_id" />
           </Key>
           <Property Name="order_item_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
           <Property Name="description" Type="varchar(max)" />
           <Property Name="return_merchandise_authorization_nr" Type="int" />
           <Property Name="detail_id" Type="int" />
@@ -445,12 +446,14 @@
           <Parameter Name="order_item_status_id" Type="int" Mode="In" />
         </Function>
         <Function Name="NSP_TShopeeOrderItemStatus_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="varchar" Mode="In" />
           <Parameter Name="description" Type="varchar(max)" Mode="In" />
           <Parameter Name="return_merchandise_authorization_nr" Type="int" Mode="In" />
           <Parameter Name="detail_id" Type="int" Mode="In" />
         </Function>
         <Function Name="NSP_TShopeeOrderItemStatus_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="order_item_status_id" Type="int" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
           <Parameter Name="description" Type="varchar(max)" Mode="In" />
           <Parameter Name="return_merchandise_authorization_nr" Type="int" Mode="In" />
           <Parameter Name="detail_id" Type="int" Mode="In" />
@@ -1365,7 +1368,6 @@
           </FunctionImport>
           <EntitySet Name="TShopeeInvoices" EntityType="dbShopeeAutomationV2Model.TShopeeInvoice" />
           <EntitySet Name="TShopeeInvoiceStatus" EntityType="dbShopeeAutomationV2Model.TShopeeInvoiceStatu" />
-          <EntitySet Name="TShopeeOrderItemStatus" EntityType="dbShopeeAutomationV2Model.TShopeeOrderItemStatu" />
           <FunctionImport Name="NSP_TShopeeInvoice_Delete">
           <Parameter Name="invoice_id" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -1402,23 +1404,9 @@
             <Parameter Name="name" Mode="In" Type="String" />
             <Parameter Name="detail_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="NSP_TShopeeOrderItemStatus_Delete">
-          <Parameter Name="order_item_status_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="NSP_TShopeeOrderItemStatus_Insert">
-            <Parameter Name="description" Mode="In" Type="String" />
-            <Parameter Name="return_merchandise_authorization_nr" Mode="In" Type="Int32" />
-            <Parameter Name="detail_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="NSP_TShopeeOrderItemStatus_Update">
-            <Parameter Name="order_item_status_id" Mode="In" Type="Int32" />
-            <Parameter Name="description" Mode="In" Type="String" />
-            <Parameter Name="return_merchandise_authorization_nr" Mode="In" Type="Int32" />
-            <Parameter Name="detail_id" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="TShopeeOrders" EntityType="dbShopeeAutomationV2Model.TShopeeOrder" />
           <FunctionImport Name="NSP_TShopeeOrder_Delete">
-            <Parameter Name="order_id" Mode="In" Type="Int32" />
+          <Parameter Name="order_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="NSP_TShopeeOrder_Insert">
             <Parameter Name="order_title" Mode="In" Type="String" />
@@ -1433,6 +1421,23 @@
             <Parameter Name="order_placed_date" Mode="In" Type="DateTime" />
             <Parameter Name="total_price" Mode="In" Type="Decimal" />
             <Parameter Name="order_status_id" Mode="In" Type="Int32" />
+            <Parameter Name="detail_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="TShopeeOrderItemStatus" EntityType="dbShopeeAutomationV2Model.TShopeeOrderItemStatu" />
+          <FunctionImport Name="NSP_TShopeeOrderItemStatus_Delete">
+            <Parameter Name="order_item_status_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="NSP_TShopeeOrderItemStatus_Insert">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="description" Mode="In" Type="String" />
+            <Parameter Name="return_merchandise_authorization_nr" Mode="In" Type="Int32" />
+            <Parameter Name="detail_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="NSP_TShopeeOrderItemStatus_Update">
+            <Parameter Name="order_item_status_id" Mode="In" Type="Int32" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="description" Mode="In" Type="String" />
+            <Parameter Name="return_merchandise_authorization_nr" Mode="In" Type="Int32" />
             <Parameter Name="detail_id" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
@@ -1475,15 +1480,6 @@
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="detail_id" Type="Int32" />
         </EntityType>
-        <EntityType Name="TShopeeOrderItemStatu">
-          <Key>
-            <PropertyRef Name="order_item_status_id" />
-          </Key>
-          <Property Name="order_item_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="return_merchandise_authorization_nr" Type="Int32" />
-          <Property Name="detail_id" Type="Int32" />
-        </EntityType>
         <EntityType Name="TShopeeOrder">
           <Key>
             <PropertyRef Name="order_id" />
@@ -1493,6 +1489,16 @@
           <Property Name="order_placed_date" Type="DateTime" Precision="3" />
           <Property Name="total_price" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="order_status_id" Type="Int32" />
+          <Property Name="detail_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TShopeeOrderItemStatu">
+          <Key>
+            <PropertyRef Name="order_item_status_id" />
+          </Key>
+          <Property Name="order_item_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="return_merchandise_authorization_nr" Type="Int32" />
           <Property Name="detail_id" Type="Int32" />
         </EntityType>
       </Schema>
@@ -2343,43 +2349,12 @@
               </ModificationFunctionMapping>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TShopeeOrderItemStatus">
-            <EntityTypeMapping TypeName="dbShopeeAutomationV2Model.TShopeeOrderItemStatu">
-              <MappingFragment StoreEntitySet="TShopeeOrderItemStatus">
-                <ScalarProperty Name="detail_id" ColumnName="detail_id" />
-                <ScalarProperty Name="return_merchandise_authorization_nr" ColumnName="return_merchandise_authorization_nr" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="order_item_status_id" ColumnName="order_item_status_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-            <EntityTypeMapping TypeName="dbShopeeAutomationV2Model.TShopeeOrderItemStatu">
-              <ModificationFunctionMapping>
-                <DeleteFunction FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeOrderItemStatus_Delete">
-                  <ScalarProperty Name="order_item_status_id" ParameterName="order_item_status_id" />
-                </DeleteFunction>
-                <UpdateFunction FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeOrderItemStatus_Update">
-                  <ScalarProperty Name="detail_id" ParameterName="detail_id" Version="Current" />
-                  <ScalarProperty Name="return_merchandise_authorization_nr" ParameterName="return_merchandise_authorization_nr" Version="Current" />
-                  <ScalarProperty Name="description" ParameterName="description" Version="Current" />
-                  <ScalarProperty Name="order_item_status_id" ParameterName="order_item_status_id" Version="Current" />
-                </UpdateFunction>
-                <InsertFunction FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeOrderItemStatus_Insert">
-                  <ScalarProperty Name="detail_id" ParameterName="detail_id" />
-                  <ScalarProperty Name="return_merchandise_authorization_nr" ParameterName="return_merchandise_authorization_nr" />
-                  <ScalarProperty Name="description" ParameterName="description" />
-                </InsertFunction>
-              </ModificationFunctionMapping>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="NSP_TShopeeInvoice_Delete" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeInvoice_Delete" />
           <FunctionImportMapping FunctionImportName="NSP_TShopeeInvoice_Insert" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeInvoice_Insert" />
           <FunctionImportMapping FunctionImportName="NSP_TShopeeInvoice_Update" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeInvoice_Update" />
           <FunctionImportMapping FunctionImportName="NSP_TShopeeInvoiceStatus_Delete" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeInvoiceStatus_Delete" />
           <FunctionImportMapping FunctionImportName="NSP_TShopeeInvoiceStatus_Insert" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeInvoiceStatus_Insert" />
           <FunctionImportMapping FunctionImportName="NSP_TShopeeInvoiceStatus_Update" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeInvoiceStatus_Update" />
-          <FunctionImportMapping FunctionImportName="NSP_TShopeeOrderItemStatus_Delete" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeOrderItemStatus_Delete" />
-          <FunctionImportMapping FunctionImportName="NSP_TShopeeOrderItemStatus_Insert" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeOrderItemStatus_Insert" />
-          <FunctionImportMapping FunctionImportName="NSP_TShopeeOrderItemStatus_Update" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeOrderItemStatus_Update" />
           <EntitySetMapping Name="TShopeeOrders">
             <EntityTypeMapping TypeName="dbShopeeAutomationV2Model.TShopeeOrder">
               <MappingFragment StoreEntitySet="TShopeeOrder">
@@ -2417,6 +2392,40 @@
           <FunctionImportMapping FunctionImportName="NSP_TShopeeOrder_Delete" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeOrder_Delete" />
           <FunctionImportMapping FunctionImportName="NSP_TShopeeOrder_Insert" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeOrder_Insert" />
           <FunctionImportMapping FunctionImportName="NSP_TShopeeOrder_Update" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeOrder_Update" />
+          <EntitySetMapping Name="TShopeeOrderItemStatus">
+            <EntityTypeMapping TypeName="dbShopeeAutomationV2Model.TShopeeOrderItemStatu">
+              <MappingFragment StoreEntitySet="TShopeeOrderItemStatus">
+                <ScalarProperty Name="detail_id" ColumnName="detail_id" />
+                <ScalarProperty Name="return_merchandise_authorization_nr" ColumnName="return_merchandise_authorization_nr" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="order_item_status_id" ColumnName="order_item_status_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="dbShopeeAutomationV2Model.TShopeeOrderItemStatu">
+              <ModificationFunctionMapping>
+                <InsertFunction FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeOrderItemStatus_Insert">
+                  <ScalarProperty Name="detail_id" ParameterName="detail_id" />
+                  <ScalarProperty Name="return_merchandise_authorization_nr" ParameterName="return_merchandise_authorization_nr" />
+                  <ScalarProperty Name="description" ParameterName="description" />
+                  <ScalarProperty Name="name" ParameterName="name" />
+                </InsertFunction>
+                <UpdateFunction FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeOrderItemStatus_Update">
+                  <ScalarProperty Name="detail_id" ParameterName="detail_id" Version="Current" />
+                  <ScalarProperty Name="return_merchandise_authorization_nr" ParameterName="return_merchandise_authorization_nr" Version="Current" />
+                  <ScalarProperty Name="description" ParameterName="description" Version="Current" />
+                  <ScalarProperty Name="name" ParameterName="name" Version="Current" />
+                  <ScalarProperty Name="order_item_status_id" ParameterName="order_item_status_id" Version="Current" />
+                </UpdateFunction>
+                <DeleteFunction FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeOrderItemStatus_Delete">
+                  <ScalarProperty Name="order_item_status_id" ParameterName="order_item_status_id" />
+                </DeleteFunction>
+              </ModificationFunctionMapping>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="NSP_TShopeeOrderItemStatus_Delete" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeOrderItemStatus_Delete" />
+          <FunctionImportMapping FunctionImportName="NSP_TShopeeOrderItemStatus_Insert" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeOrderItemStatus_Insert" />
+          <FunctionImportMapping FunctionImportName="NSP_TShopeeOrderItemStatus_Update" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeOrderItemStatus_Update" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

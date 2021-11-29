@@ -30,6 +30,8 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            item.total_price = 0;
+
             dbStoredProcedure.orderInsert(item.order_title, item.order_placed_date, item.total_price, item.order_status_id, username);
             db.SaveChanges();
 

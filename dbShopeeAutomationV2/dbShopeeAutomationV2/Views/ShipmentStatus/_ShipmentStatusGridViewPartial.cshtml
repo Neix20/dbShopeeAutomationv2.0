@@ -38,7 +38,6 @@
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
-        settings.Columns.Add("shipment_status_id").Caption = "ID";
         settings.Columns.Add("name").Caption = "Shipment Status";
 
         // Last Updated By
@@ -46,6 +45,7 @@
         {
             col.FieldName = "Last Updated By";
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.ReadOnly = true;
         });
 
         settings.CustomUnboundColumnData = (s, e) =>

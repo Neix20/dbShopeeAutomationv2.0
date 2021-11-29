@@ -621,29 +621,28 @@ namespace dbShopeeAutomationV2.Models
         }
 
         // Order Stored Procedure
-        public static int orderInsert(DateTime? order_placed_date, Decimal? total_price, int? order_status_id, string username)
+        public static int orderInsert(string order_title, DateTime? order_placed_date, Decimal? total_price, int? order_status_id, string username)
         {
 
             // Create New Detail
-            string status = "";
+            string status = $"Order: {order_title}";
             string remark = "";
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
             int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
-            return db.NSP_TShopeeOrder_Insert(order_placed_date, total_price, order_status_id, detail_id);
+            return db.NSP_TShopeeOrder_Insert(order_title, order_placed_date, total_price, order_status_id, detail_id);
         }
 
-        public static int orderUpdate(int order_id, DateTime? order_placed_date, Decimal? total_price, int? order_status_id, string username)
+        public static int orderUpdate(int order_id, string order_title, DateTime? order_placed_date, Decimal? total_price, int? order_status_id, string username)
         {
             int detail_id = (int)db.TShopeeOrders.FirstOrDefault(it => it.order_id == order_id).detail_id;
 
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
-            detail.status = $"Order ID: {order_id}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
-            return db.NSP_TShopeeOrder_Update(order_id, order_placed_date, total_price, order_status_id, detail_id);
+            return db.NSP_TShopeeOrder_Update(order_id,order_title, order_placed_date, total_price, order_status_id, detail_id);
         }
 
         public static int orderDelete(int order_id) {

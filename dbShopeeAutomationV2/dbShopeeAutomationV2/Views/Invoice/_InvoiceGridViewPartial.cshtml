@@ -38,6 +38,34 @@
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
+        // Order ID
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "order_id";
+            col.Caption = "Order Title";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeOrders.ToList();
+            prop.TextField = "order_title";
+            prop.ValueField = "order_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+        });
+
+        // Customer ID
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "customer_id";
+            col.Caption = "Customer Email";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeCustomers.ToList();
+            prop.TextField = "email_address";
+            prop.ValueField = "customer_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+        });
+
         settings.Columns.Add(col => {
             col.FieldName = "invoice_date";
             col.Caption = "Invoice Date";
@@ -58,19 +86,46 @@
 
             col.ColumnType = MVCxGridViewColumnType.SpinEdit;
             SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
-            prop.NumberType = SpinEditNumberType.Integer;
+            prop.NumberType = SpinEditNumberType.Float;
             prop.MinValue = 0;
             prop.MaxValue = 10000000;
+            prop.Increment = 0.1M;
+            prop.DisplayFormatString = "C";
         });
 
-        settings.Columns.Add("invoice_status_id").Caption = "Invoice Status ID";
-        settings.Columns.Add("payment_method").Caption = "Payment Method";
+        // Invoice Status
+        settings.Columns.Add(col => {
+            col.FieldName = "invoice_status_id";
+            col.Caption = "Invoice Status";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeInvoiceStatus.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "invoice_status_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+        });
+
+        // Payment Method
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "payment_method_id";
+            col.Caption = "Payment Method";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeePaymentMethods.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "payment_method_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+        });
 
         // Last Updated By
         settings.Columns.Add(col =>
         {
             col.FieldName = "Last Updated By";
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.ReadOnly = true;
         });
 
         settings.CustomUnboundColumnData = (s, e) =>

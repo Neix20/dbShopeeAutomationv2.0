@@ -1550,8 +1550,12 @@ namespace dbShopeeAutomationV2.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrder_Delete", order_idParameter);
         }
     
-        public virtual int NSP_TShopeeOrder_Insert(Nullable<System.DateTime> order_placed_date, Nullable<decimal> total_price, Nullable<int> order_status_id, Nullable<int> detail_id)
+        public virtual int NSP_TShopeeOrder_Insert(string order_title, Nullable<System.DateTime> order_placed_date, Nullable<decimal> total_price, Nullable<int> order_status_id, Nullable<int> detail_id)
         {
+            var order_titleParameter = order_title != null ?
+                new ObjectParameter("order_title", order_title) :
+                new ObjectParameter("order_title", typeof(string));
+    
             var order_placed_dateParameter = order_placed_date.HasValue ?
                 new ObjectParameter("order_placed_date", order_placed_date) :
                 new ObjectParameter("order_placed_date", typeof(System.DateTime));
@@ -1568,15 +1572,19 @@ namespace dbShopeeAutomationV2.Models
                 new ObjectParameter("detail_id", detail_id) :
                 new ObjectParameter("detail_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrder_Insert", order_placed_dateParameter, total_priceParameter, order_status_idParameter, detail_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrder_Insert", order_titleParameter, order_placed_dateParameter, total_priceParameter, order_status_idParameter, detail_idParameter);
         }
     
-        public virtual int NSP_TShopeeOrder_Update(Nullable<int> order_id, Nullable<System.DateTime> order_placed_date, Nullable<decimal> total_price, Nullable<int> order_status_id, Nullable<int> detail_id)
+        public virtual int NSP_TShopeeOrder_Update(Nullable<int> order_id, string order_title, Nullable<System.DateTime> order_placed_date, Nullable<decimal> total_price, Nullable<int> order_status_id, Nullable<int> detail_id)
         {
             var order_idParameter = order_id.HasValue ?
                 new ObjectParameter("order_id", order_id) :
                 new ObjectParameter("order_id", typeof(int));
     
+            var order_titleParameter = order_title != null ?
+                new ObjectParameter("order_title", order_title) :
+                new ObjectParameter("order_title", typeof(string));
+    
             var order_placed_dateParameter = order_placed_date.HasValue ?
                 new ObjectParameter("order_placed_date", order_placed_date) :
                 new ObjectParameter("order_placed_date", typeof(System.DateTime));
@@ -1593,7 +1601,7 @@ namespace dbShopeeAutomationV2.Models
                 new ObjectParameter("detail_id", detail_id) :
                 new ObjectParameter("detail_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrder_Update", order_idParameter, order_placed_dateParameter, total_priceParameter, order_status_idParameter, detail_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrder_Update", order_idParameter, order_titleParameter, order_placed_dateParameter, total_priceParameter, order_status_idParameter, detail_idParameter);
         }
     }
 }

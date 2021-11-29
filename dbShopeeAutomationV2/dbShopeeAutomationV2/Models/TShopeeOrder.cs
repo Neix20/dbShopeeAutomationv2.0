@@ -15,6 +15,7 @@ namespace dbShopeeAutomationV2.Models
     public partial class TShopeeOrder
     {
         public int order_id { get; set; }
+        public string order_title { get; set; }
         public Nullable<System.DateTime> order_placed_date { get; set; }
         public Nullable<decimal> total_price { get; set; }
         public Nullable<int> order_status_id { get; set; }

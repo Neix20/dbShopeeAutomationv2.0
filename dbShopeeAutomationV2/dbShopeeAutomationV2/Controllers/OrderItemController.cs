@@ -29,8 +29,17 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            // Update Sub Total
+            var product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == item.product_id);
+            item.sub_total = product.sell_price * item.quantity - item.discount_fee;
+
+            // Update order Total
+            var order = db.TShopeeOrders.FirstOrDefault(it => it.order_id == item.order_id);
+            order.total_price = order.total_price + item.sub_total;
+            dbStoredProcedure.orderUpdate(order.order_id, order.order_title, order.order_placed_date, order.total_price, order.order_status_id, username);
+
             // Create New Order Item Status
-            dbStoredProcedure.orderItemStatusInsert("", 0, username);
+            dbStoredProcedure.orderItemStatusInsert($"Order Title: {order.order_title}, Product Item: {product.SKU}", 0, username);
             db.SaveChanges();
             item.order_item_status_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeOrderItemStatus') AS INT)").FirstOrDefault(); ;
 
@@ -45,6 +54,17 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult OrderItemGridViewPartialUpdate(TShopeeOrderItem item)
         {
             string username = User.Identity.Name;
+
+            item.order_item_status_id = (int)db.TShopeeOrderItems.FirstOrDefault(it => it.order_item_id == item.order_item_id).order_item_status_id;
+
+            // Update Sub Total
+            var product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == item.product_id);
+            item.sub_total = product.sell_price * item.quantity - item.discount_fee;
+
+            // Update order Total
+            var order = db.TShopeeOrders.FirstOrDefault(it => it.order_id == item.order_id);
+            order.total_price = order.total_price + item.sub_total;
+            dbStoredProcedure.orderUpdate(order.order_id, order.order_title, order.order_placed_date, order.total_price, order.order_status_id, username);
 
             dbStoredProcedure.orderItemUpdate(item.order_item_id, item.quantity, item.sub_total, item.discount_fee, item.RMA_num, item.RMA_issued_by, item.RMA_issued_date, item.order_id, item.order_item_status_id, item.product_id, username);
             db.SaveChanges();

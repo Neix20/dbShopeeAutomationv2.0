@@ -669,6 +669,7 @@
       <Parameter Name="order_id" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="NSP_TShopeeOrder_Insert">
+      <Parameter Name="order_title" Mode="In" Type="String" />
       <Parameter Name="order_placed_date" Mode="In" Type="DateTime" />
       <Parameter Name="total_price" Mode="In" Type="Decimal" />
       <Parameter Name="order_status_id" Mode="In" Type="Int32" />
@@ -676,6 +677,7 @@
     </FunctionImport>
     <FunctionImport Name="NSP_TShopeeOrder_Update">
       <Parameter Name="order_id" Mode="In" Type="Int32" />
+      <Parameter Name="order_title" Mode="In" Type="String" />
       <Parameter Name="order_placed_date" Mode="In" Type="DateTime" />
       <Parameter Name="total_price" Mode="In" Type="Decimal" />
       <Parameter Name="order_status_id" Mode="In" Type="Int32" />
@@ -735,6 +737,7 @@
       <PropertyRef Name="order_id" />
     </Key>
     <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="order_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="order_placed_date" Type="DateTime" Precision="3" />
     <Property Name="total_price" Type="Decimal" Precision="10" Scale="2" />
     <Property Name="order_status_id" Type="Int32" />

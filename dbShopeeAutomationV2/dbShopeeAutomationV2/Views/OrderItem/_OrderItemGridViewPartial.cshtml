@@ -41,12 +41,12 @@
         settings.Columns.Add(col =>
         {
             col.FieldName = "order_id";
-            col.Caption = "Order ID";
+            col.Caption = "Order Title";
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
             prop.DataSource = db.TShopeeOrders.ToList();
-            prop.TextField = "order_id";
+            prop.TextField = "order_title";
             prop.ValueField = "order_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
         });
@@ -65,45 +65,7 @@
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
         });
 
-
-        settings.Columns.Add(col =>
-        {
-            col.FieldName = "quantity";
-            col.Caption = "Quantity";
-
-            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
-            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
-            prop.NumberType = SpinEditNumberType.Integer;
-            prop.MinValue = 0;
-            prop.MaxValue = 10000000;
-        });
-
-        settings.Columns.Add(col =>
-        {
-            col.FieldName = "sub_total";
-            col.Caption = "Sub Total";
-
-            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
-            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
-            prop.NumberType = SpinEditNumberType.Float;
-            prop.MinValue = 0;
-            prop.MaxValue = 10000000;
-            prop.Increment = 0.1M;
-        });
-
-        settings.Columns.Add(col =>
-        {
-            col.FieldName = "discount_fee";
-            col.Caption = "Discount Fee";
-
-            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
-            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
-            prop.NumberType = SpinEditNumberType.Float;
-            prop.MinValue = 0;
-            prop.MaxValue = 10000000;
-            prop.Increment = 0.1M;
-        });
-
+        // RMA Number
         settings.Columns.Add(col =>
         {
             col.FieldName = "RMA_num";
@@ -116,6 +78,7 @@
             prop.MaxValue = 10000000;
         });
 
+        // RMA Issued By
         settings.Columns.Add("RMA_issued_by").Caption = "RMA Issued By";
 
         // RMA Issued Date
@@ -129,6 +92,48 @@
             DateEditProperties prop = col.PropertiesEdit as DateEditProperties;
             prop.DisplayFormatString = "yyyy-MM-dd";
             prop.DisplayFormatInEditMode = true;
+        });
+
+        // Quantity
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "quantity";
+            col.Caption = "Quantity";
+
+            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
+            prop.NumberType = SpinEditNumberType.Integer;
+            prop.MinValue = 0;
+            prop.MaxValue = 10000000;
+        });
+
+        // Discount Fee
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "discount_fee";
+            col.Caption = "Discount Fee";
+
+            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
+            prop.NumberType = SpinEditNumberType.Float;
+            prop.MinValue = 0;
+            prop.MaxValue = 10000000;
+            prop.Increment = 0.1M;
+        });
+
+        // Sub Total
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "sub_total";
+            col.Caption = "Sub Total";
+            col.ReadOnly = true;
+
+            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
+            prop.NumberType = SpinEditNumberType.Float;
+            prop.MinValue = 0;
+            prop.MaxValue = 10000000;
+            prop.Increment = 0.1M;
         });
 
         // Last Updated By

@@ -76,6 +76,7 @@
       <PropertyRef Name="order_id" />
     </Key>
     <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="order_title" Type="varchar(max)" />
     <Property Name="order_placed_date" Type="datetime" />
     <Property Name="total_price" Type="decimal" Precision="10" Scale="2" />
     <Property Name="order_status_id" Type="int" />
@@ -393,6 +394,7 @@
     <Parameter Name="order_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeOrder_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="order_title" Type="varchar(max)" Mode="In" />
     <Parameter Name="order_placed_date" Type="datetime" Mode="In" />
     <Parameter Name="total_price" Type="decimal" Mode="In" />
     <Parameter Name="order_status_id" Type="int" Mode="In" />
@@ -400,6 +402,7 @@
   </Function>
   <Function Name="NSP_TShopeeOrder_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="order_id" Type="int" Mode="In" />
+    <Parameter Name="order_title" Type="varchar(max)" Mode="In" />
     <Parameter Name="order_placed_date" Type="datetime" Mode="In" />
     <Parameter Name="total_price" Type="decimal" Mode="In" />
     <Parameter Name="order_status_id" Type="int" Mode="In" />

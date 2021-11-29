@@ -887,6 +887,7 @@
           <ScalarProperty Name="order_status_id" ColumnName="order_status_id" />
           <ScalarProperty Name="total_price" ColumnName="total_price" />
           <ScalarProperty Name="order_placed_date" ColumnName="order_placed_date" />
+          <ScalarProperty Name="order_title" ColumnName="order_title" />
           <ScalarProperty Name="order_id" ColumnName="order_id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -897,12 +898,14 @@
             <ScalarProperty Name="order_status_id" ParameterName="order_status_id" />
             <ScalarProperty Name="total_price" ParameterName="total_price" />
             <ScalarProperty Name="order_placed_date" ParameterName="order_placed_date" />
+            <ScalarProperty Name="order_title" ParameterName="order_title" />
           </InsertFunction>
           <UpdateFunction FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeOrder_Update">
             <ScalarProperty Name="detail_id" ParameterName="detail_id" Version="Current" />
             <ScalarProperty Name="order_status_id" ParameterName="order_status_id" Version="Current" />
             <ScalarProperty Name="total_price" ParameterName="total_price" Version="Current" />
             <ScalarProperty Name="order_placed_date" ParameterName="order_placed_date" Version="Current" />
+            <ScalarProperty Name="order_title" ParameterName="order_title" Version="Current" />
             <ScalarProperty Name="order_id" ParameterName="order_id" Version="Current" />
           </UpdateFunction>
           <DeleteFunction FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeOrder_Delete">

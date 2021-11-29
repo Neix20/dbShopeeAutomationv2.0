@@ -39,9 +39,8 @@
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
         settings.Columns.Add(col => {
-            col.FieldName = "order_id";
-            col.Caption = "ID";
-            col.ReadOnly = true;
+            col.FieldName = "order_title";
+            col.Caption = "Order Title";
         });
 
         // Order Placement Date
@@ -55,19 +54,6 @@
             DateEditProperties prop = col.PropertiesEdit as DateEditProperties;
             prop.DisplayFormatString = "yyyy-MM-dd";
             prop.DisplayFormatInEditMode = true;
-        });
-
-        settings.Columns.Add(col =>
-        {
-            col.FieldName = "total_price";
-            col.Caption = "Total Price";
-
-            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
-            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
-            prop.NumberType = SpinEditNumberType.Float;
-            prop.MinValue = 0;
-            prop.MaxValue = 10000000;
-            prop.Increment = 0.1M;
         });
 
         // Select Order Status
@@ -84,7 +70,19 @@
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
         });
 
-        // Customer
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "total_price";
+            col.Caption = "Total Price";
+            col.ReadOnly = true;
+
+            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
+            prop.NumberType = SpinEditNumberType.Float;
+            prop.MinValue = 0;
+            prop.MaxValue = 10000000;
+            prop.Increment = 0.1M;
+        });
 
         // Last Updated By
         settings.Columns.Add(col =>

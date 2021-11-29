@@ -33,11 +33,7 @@ namespace dbShopeeAutomationV2.Controllers
             string email_address = item.email_address;
             string phone_number = item.phone_number;
             string address = generalFunc.trimStr(Request.Form["Address"]);
-
-            // Platform ID
-            string platform_name = generalFunc.trimStr(Request.Form["Platform Name"]);
-            var plaModel = db.TShopeePlatforms.FirstOrDefault(it => it.name.ToLower().Equals(platform_name.ToLower()));
-            int platform_id = (plaModel != null) ? plaModel.platform_id : db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeePlatform') AS INT)").FirstOrDefault();
+            int platform_id = (int)item.platform_id;
 
             string username = User.Identity.Name;
 
@@ -57,11 +53,7 @@ namespace dbShopeeAutomationV2.Controllers
             string email_address = item.email_address;
             string phone_number = item.phone_number;
             string address = generalFunc.trimStr(Request.Form["Address"]);
-
-            // Platform ID
-            string platform_name = generalFunc.trimStr(Request.Form["Platform Name"]);
-            var plaModel = db.TShopeePlatforms.FirstOrDefault(it => it.name.ToLower().Equals(platform_name.ToLower()));
-            int platform_id = (plaModel != null) ? plaModel.platform_id : db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeePlatform') AS INT)").FirstOrDefault();
+            int platform_id = (int) item.platform_id;
 
             string username = User.Identity.Name;
 

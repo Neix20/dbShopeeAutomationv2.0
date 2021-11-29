@@ -10,12 +10,6 @@
         detailDict.Add(it.detail_id, it.last_updated_by);
     });
 
-    Dictionary<int, string> platformDict = new Dictionary<int, string>();
-    db.TShopeePlatforms.ToList().ForEach(it =>
-    {
-        platformDict.Add(it.platform_id, it.name);
-    });
-
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "CustomerGridView";
         settings.Width = Unit.Percentage(100);
@@ -77,8 +71,15 @@
         // Platform Name
         settings.Columns.Add(col =>
         {
-            col.FieldName = "Platform Name";
-            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.FieldName = "platform_id";
+            col.Caption = "Platform Name";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeePlatforms.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "platform_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
         });
 
         // Last Updated By
@@ -86,6 +87,7 @@
         {
             col.FieldName = "Last Updated By";
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.ReadOnly = true;
         });
 
         settings.CustomUnboundColumnData = (s, e) =>
@@ -107,12 +109,6 @@
                     e.GetListSourceFieldValue("country").ToString()
                 };
                 e.Value = String.Join(", ", tmpList.ToArray());
-            };
-
-            if (e.Column.FieldName.Equals("Platform Name"))
-            {
-                int platform_id = int.Parse(e.GetListSourceFieldValue("platform_id").ToString());
-                e.Value = platformDict[platform_id];
             };
 
             if (e.Column.FieldName.Equals("Last Updated By"))

@@ -48,6 +48,14 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult UserGridViewPartialDelete(int user_id)
         {
+            // Delete All User Role
+            var user = db.TShopeeUsers.FirstOrDefault(it => it.user_id == user_id);
+
+            db.TShopeeUserRoles.Where(it => it.username.Equals(user.username)).ToList().ForEach(it => {
+                dbStoredProcedure.userRoleDelete(it.user_role_id);
+                db.SaveChanges();
+            });
+
             dbStoredProcedure.userDelete(user_id);
             db.SaveChanges();
 

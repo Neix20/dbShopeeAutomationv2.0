@@ -38,15 +38,14 @@
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
-        settings.Columns.Add("invoice_status_id").Caption = "ID";
         settings.Columns.Add("name").Caption = "Invoice Status Name";
-        settings.Columns.Add("description").Caption = "Description";
 
         // Last Updated By
         settings.Columns.Add(col =>
         {
             col.FieldName = "Last Updated By";
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.ReadOnly = true;
         });
 
         settings.CustomUnboundColumnData = (s, e) =>

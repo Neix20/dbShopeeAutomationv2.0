@@ -66,6 +66,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            // Prevent Duplicate
             var platformNameList = db.TShopeePlatforms.Select(it => it.name.ToLower()).ToList();
             string platform = item.name;
 

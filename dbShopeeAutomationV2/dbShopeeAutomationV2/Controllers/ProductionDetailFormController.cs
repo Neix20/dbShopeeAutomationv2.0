@@ -45,7 +45,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            item = db.TShopeeProductionDetails.FirstOrDefault(it => it.production_detail_id == item.production_detail_id);
+            item.production_detail_id = db.TShopeeProductionDetails.FirstOrDefault(it => it.production_detail_id == item.production_detail_id).production_detail_id;
 
             dbStoredProcedure.productionDetailUpdate(item.production_detail_id, item.UOM, item.manufactured_date, item.expiry_date, item.quantity, (int) item.product_id, item.production_id, username);
             db.SaveChanges();

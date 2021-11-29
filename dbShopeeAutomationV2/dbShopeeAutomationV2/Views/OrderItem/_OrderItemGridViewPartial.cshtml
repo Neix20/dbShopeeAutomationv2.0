@@ -10,16 +10,6 @@
         detailDict.Add(it.detail_id, it.last_updated_by);
     });
 
-    Dictionary<int, string> productDict = new Dictionary<int, string>();
-    db.TShopeeProducts.ToList().ForEach(it => {
-        productDict.Add(it.product_id, it.SKU);
-    });
-
-    Dictionary<int, string> orderItemStatusDict = new Dictionary<int, string>();
-    db.TShopeeOrderItemStatus.ToList().ForEach(it => {
-        orderItemStatusDict.Add(it.order_item_status_id, it.name);
-    });
-
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "OrderItemGridView";
         settings.Width = Unit.Percentage(100);
@@ -47,6 +37,34 @@
         // Header Set Center
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "order_id";
+            col.Caption = "Order ID";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeOrders.ToList();
+            prop.TextField = "order_id";
+            prop.ValueField = "order_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+        });
+
+        // Product ID
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "product_id";
+            col.Caption = "Product SKU";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeProducts.ToList();
+            prop.TextField = "SKU";
+            prop.ValueField = "product_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+        });
+
 
         settings.Columns.Add(col =>
         {
@@ -113,42 +131,16 @@
             prop.DisplayFormatInEditMode = true;
         });
 
-        settings.Columns.Add(col => {
-            col.FieldName = "order_id";
-            col.Caption = "Order ID";
-        });
-
-        settings.Columns.Add(col => {
-            col.FieldName = "Order Item Status";
-            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
-        });
-
-        // Product ID
-        settings.Columns.Add(col => {
-            col.FieldName = "Product Code";
-            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
-        });
-
         // Last Updated By
         settings.Columns.Add(col =>
         {
             col.FieldName = "Last Updated By";
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.ReadOnly = true;
         });
 
         settings.CustomUnboundColumnData = (s, e) =>
         {
-            if (e.Column.FieldName.Equals("Order Item Status")) {
-                int order_item_status_id = int.Parse(e.GetListSourceFieldValue("order_item_status_id").ToString());
-                e.Value = orderItemStatusDict[order_item_status_id];
-            }
-
-            if(e.Column.FieldName.Equals("Product Code"))
-            {
-                int product_id = int.Parse(e.GetListSourceFieldValue("product_id").ToString());
-                e.Value = productDict[product_id];
-            }
-
             if (e.Column.FieldName.Equals("Last Updated By"))
             {
                 int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());

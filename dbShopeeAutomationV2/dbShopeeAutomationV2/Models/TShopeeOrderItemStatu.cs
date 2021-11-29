@@ -15,7 +15,6 @@ namespace dbShopeeAutomationV2.Models
     public partial class TShopeeOrderItemStatu
     {
         public int order_item_status_id { get; set; }
-        public string name { get; set; }
         public string description { get; set; }
         public Nullable<int> return_merchandise_authorization_nr { get; set; }
         public Nullable<int> detail_id { get; set; }

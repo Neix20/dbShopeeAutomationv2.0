@@ -30,12 +30,12 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            dbStoredProcedure.orderInsert(item.order_placed_date, item.total_price, item.order_status, username);
+            dbStoredProcedure.orderInsert(item.order_placed_date, item.total_price, item.order_status_id, username);
             db.SaveChanges();
 
             item.order_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeOrder') AS INT)").FirstOrDefault();
 
-            dbStoredProcedure.orderUpdate(item.order_id, item.order_placed_date, item.total_price, item.order_status, username);
+            dbStoredProcedure.orderUpdate(item.order_id, item.order_placed_date, item.total_price, item.order_status_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeOrders;
@@ -47,7 +47,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            dbStoredProcedure.orderUpdate(item.order_id, item.order_placed_date, item.total_price, item.order_status, username);
+            dbStoredProcedure.orderUpdate(item.order_id, item.order_placed_date, item.total_price, item.order_status_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeOrders;

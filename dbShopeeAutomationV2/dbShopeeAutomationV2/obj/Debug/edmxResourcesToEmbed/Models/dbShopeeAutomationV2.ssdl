@@ -48,7 +48,9 @@
     <Property Name="invoice_details" Type="varchar(max)" />
     <Property Name="shipping_fee" Type="decimal" Precision="10" Scale="2" />
     <Property Name="invoice_status_id" Type="int" />
-    <Property Name="payment_method" Type="varchar" MaxLength="50" />
+    <Property Name="payment_method_id" Type="int" />
+    <Property Name="order_id" Type="int" />
+    <Property Name="customer_id" Type="int" />
     <Property Name="detail_id" Type="int" />
   </EntityType>
   <EntityType Name="TShopeeInvoiceStatus">
@@ -57,7 +59,6 @@
     </Key>
     <Property Name="invoice_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="varchar" MaxLength="50" />
-    <Property Name="description" Type="varchar(max)" />
     <Property Name="detail_id" Type="int" />
   </EntityType>
   <EntityType Name="TShopeeOperation">
@@ -77,7 +78,7 @@
     <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="order_placed_date" Type="datetime" />
     <Property Name="total_price" Type="decimal" Precision="10" Scale="2" />
-    <Property Name="order_status" Type="varchar" MaxLength="50" />
+    <Property Name="order_status_id" Type="int" />
     <Property Name="detail_id" Type="int" />
   </EntityType>
   <EntityType Name="TShopeeOrderItem">
@@ -101,7 +102,6 @@
       <PropertyRef Name="order_item_status_id" />
     </Key>
     <Property Name="order_item_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="name" Type="varchar" MaxLength="50" />
     <Property Name="description" Type="varchar(max)" />
     <Property Name="return_merchandise_authorization_nr" Type="int" />
     <Property Name="detail_id" Type="int" />
@@ -345,7 +345,9 @@
     <Parameter Name="invoice_details" Type="varchar(max)" Mode="In" />
     <Parameter Name="shipping_fee" Type="decimal" Mode="In" />
     <Parameter Name="invoice_status_id" Type="int" Mode="In" />
-    <Parameter Name="payment_method" Type="varchar" Mode="In" />
+    <Parameter Name="payment_method_id" Type="int" Mode="In" />
+    <Parameter Name="order_id" Type="int" Mode="In" />
+    <Parameter Name="customer_id" Type="int" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeInvoice_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -354,7 +356,9 @@
     <Parameter Name="invoice_details" Type="varchar(max)" Mode="In" />
     <Parameter Name="shipping_fee" Type="decimal" Mode="In" />
     <Parameter Name="invoice_status_id" Type="int" Mode="In" />
-    <Parameter Name="payment_method" Type="varchar" Mode="In" />
+    <Parameter Name="payment_method_id" Type="int" Mode="In" />
+    <Parameter Name="order_id" Type="int" Mode="In" />
+    <Parameter Name="customer_id" Type="int" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeInvoiceStatus_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -362,13 +366,11 @@
   </Function>
   <Function Name="NSP_TShopeeInvoiceStatus_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="name" Type="varchar" Mode="In" />
-    <Parameter Name="description" Type="varchar(max)" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeInvoiceStatus_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="invoice_status_id" Type="int" Mode="In" />
     <Parameter Name="name" Type="varchar" Mode="In" />
-    <Parameter Name="description" Type="varchar(max)" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeOperation_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -393,14 +395,14 @@
   <Function Name="NSP_TShopeeOrder_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="order_placed_date" Type="datetime" Mode="In" />
     <Parameter Name="total_price" Type="decimal" Mode="In" />
-    <Parameter Name="order_status" Type="varchar" Mode="In" />
+    <Parameter Name="order_status_id" Type="int" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeOrder_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="order_id" Type="int" Mode="In" />
     <Parameter Name="order_placed_date" Type="datetime" Mode="In" />
     <Parameter Name="total_price" Type="decimal" Mode="In" />
-    <Parameter Name="order_status" Type="varchar" Mode="In" />
+    <Parameter Name="order_status_id" Type="int" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeOrderItem_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -435,14 +437,12 @@
     <Parameter Name="order_item_status_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeOrderItemStatus_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="name" Type="varchar" Mode="In" />
     <Parameter Name="description" Type="varchar(max)" Mode="In" />
     <Parameter Name="return_merchandise_authorization_nr" Type="int" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeOrderItemStatus_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="order_item_status_id" Type="int" Mode="In" />
-    <Parameter Name="name" Type="varchar" Mode="In" />
     <Parameter Name="description" Type="varchar(max)" Mode="In" />
     <Parameter Name="return_merchandise_authorization_nr" Type="int" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />

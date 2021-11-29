@@ -17,7 +17,7 @@ namespace dbShopeeAutomationV2.Models
         public int order_id { get; set; }
         public Nullable<System.DateTime> order_placed_date { get; set; }
         public Nullable<decimal> total_price { get; set; }
-        public string order_status { get; set; }
+        public Nullable<int> order_status_id { get; set; }
         public Nullable<int> detail_id { get; set; }
     }
 }

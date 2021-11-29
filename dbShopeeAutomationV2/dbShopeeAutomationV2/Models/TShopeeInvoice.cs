@@ -19,7 +19,9 @@ namespace dbShopeeAutomationV2.Models
         public string invoice_details { get; set; }
         public Nullable<decimal> shipping_fee { get; set; }
         public Nullable<int> invoice_status_id { get; set; }
-        public string payment_method { get; set; }
+        public Nullable<int> payment_method_id { get; set; }
+        public Nullable<int> order_id { get; set; }
+        public Nullable<int> customer_id { get; set; }
         public Nullable<int> detail_id { get; set; }
     }
 }

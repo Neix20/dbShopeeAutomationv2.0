@@ -30,7 +30,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            dbStoredProcedure.invoiceInsert(item.invoice_date, item.invoice_details, item.shipping_fee, item.invoice_status_id, item.payment_method, username);
+            dbStoredProcedure.invoiceInsert(item.invoice_date, item.invoice_details, item.shipping_fee, item.invoice_status_id, item.payment_method_id, item.order_id, item.customer_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeInvoices;
@@ -42,7 +42,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            dbStoredProcedure.invoiceUpdate(item.invoice_id, item.invoice_date, item.invoice_details, item.shipping_fee, item.invoice_status_id, item.payment_method, username);
+            dbStoredProcedure.invoiceUpdate(item.invoice_id, item.invoice_date, item.invoice_details, item.shipping_fee, item.invoice_status_id, item.payment_method_id, item.order_id, item.customer_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeInvoices;

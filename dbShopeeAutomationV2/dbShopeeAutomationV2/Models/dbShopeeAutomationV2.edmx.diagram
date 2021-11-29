@@ -4,16 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ce218236c0ee48e38070546506e3cadc" Name="Diagram1">
+      <Diagram DiagramId="ce218236c0ee48e38070546506e3cadc" Name="Diagram1" ZoomLevel="73">
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeCarrier" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeCustomer" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeDetail" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeInvoice" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeInvoiceStatu" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeOperation" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeOrder" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeOrderItem" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeOrderItemStatu" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeOrderStatu" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeePaymentMethod" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeePlatform" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
@@ -30,6 +26,10 @@
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeUser" Width="1.5" PointX="8.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeUserRole" Width="1.5" PointX="10.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeProduct" Width="1.5" PointX="12.875" PointY="11" />
+        <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeInvoice" Width="1.5" PointX="3.75" PointY="14.75" />
+        <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeInvoiceStatu" Width="1.5" PointX="7.75" PointY="14.75" />
+        <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeOrderItemStatu" Width="1.5" PointX="5.75" PointY="14.75" />
+        <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeOrder" Width="1.5" PointX="0.75" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

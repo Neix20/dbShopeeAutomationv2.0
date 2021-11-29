@@ -39,27 +39,6 @@
     <Property Name="last_updated_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="last_updated_date" Type="DateTime" Precision="3" />
   </EntityType>
-  <EntityType Name="TShopeeInvoice">
-    <Key>
-      <PropertyRef Name="invoice_id" />
-    </Key>
-    <Property Name="invoice_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="invoice_date" Type="DateTime" Precision="3" />
-    <Property Name="invoice_details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="shipping_fee" Type="Decimal" Precision="10" Scale="2" />
-    <Property Name="invoice_status_id" Type="Int32" />
-    <Property Name="payment_method" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="detail_id" Type="Int32" />
-  </EntityType>
-  <EntityType Name="TShopeeInvoiceStatu">
-    <Key>
-      <PropertyRef Name="invoice_status_id" />
-    </Key>
-    <Property Name="invoice_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="detail_id" Type="Int32" />
-  </EntityType>
   <EntityType Name="TShopeeOperation">
     <Key>
       <PropertyRef Name="operation_id" />
@@ -68,16 +47,6 @@
     <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="table_category_id" Type="Int32" />
-    <Property Name="detail_id" Type="Int32" />
-  </EntityType>
-  <EntityType Name="TShopeeOrder">
-    <Key>
-      <PropertyRef Name="order_id" />
-    </Key>
-    <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="order_placed_date" Type="DateTime" Precision="3" />
-    <Property Name="total_price" Type="Decimal" Precision="10" Scale="2" />
-    <Property Name="order_status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="detail_id" Type="Int32" />
   </EntityType>
   <EntityType Name="TShopeeOrderItem">
@@ -94,16 +63,6 @@
     <Property Name="order_id" Type="Int32" />
     <Property Name="order_item_status_id" Type="Int32" />
     <Property Name="product_id" Type="Int32" />
-    <Property Name="detail_id" Type="Int32" />
-  </EntityType>
-  <EntityType Name="TShopeeOrderItemStatu">
-    <Key>
-      <PropertyRef Name="order_item_status_id" />
-    </Key>
-    <Property Name="order_item_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="return_merchandise_authorization_nr" Type="Int32" />
     <Property Name="detail_id" Type="Int32" />
   </EntityType>
   <EntityType Name="TShopeeOrderStatu">
@@ -258,12 +217,8 @@
     <EntitySet Name="TShopeeCarriers" EntityType="Self.TShopeeCarrier" />
     <EntitySet Name="TShopeeCustomers" EntityType="Self.TShopeeCustomer" />
     <EntitySet Name="TShopeeDetails" EntityType="Self.TShopeeDetail" />
-    <EntitySet Name="TShopeeInvoices" EntityType="Self.TShopeeInvoice" />
-    <EntitySet Name="TShopeeInvoiceStatus" EntityType="Self.TShopeeInvoiceStatu" />
     <EntitySet Name="TShopeeOperations" EntityType="Self.TShopeeOperation" />
-    <EntitySet Name="TShopeeOrders" EntityType="Self.TShopeeOrder" />
     <EntitySet Name="TShopeeOrderItems" EntityType="Self.TShopeeOrderItem" />
-    <EntitySet Name="TShopeeOrderItemStatus" EntityType="Self.TShopeeOrderItemStatu" />
     <EntitySet Name="TShopeeOrderStatus" EntityType="Self.TShopeeOrderStatu" />
     <EntitySet Name="TShopeePaymentMethods" EntityType="Self.TShopeePaymentMethod" />
     <EntitySet Name="TShopeePlatforms" EntityType="Self.TShopeePlatform" />
@@ -345,40 +300,6 @@
       <Parameter Name="last_updated_by" Mode="In" Type="String" />
       <Parameter Name="last_updated_date" Mode="In" Type="DateTime" />
     </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeInvoice_Delete">
-      <Parameter Name="invoice_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeInvoice_Insert">
-      <Parameter Name="invoice_date" Mode="In" Type="DateTime" />
-      <Parameter Name="invoice_details" Mode="In" Type="String" />
-      <Parameter Name="shipping_fee" Mode="In" Type="Decimal" />
-      <Parameter Name="invoice_status_id" Mode="In" Type="Int32" />
-      <Parameter Name="payment_method" Mode="In" Type="String" />
-      <Parameter Name="detail_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeInvoice_Update">
-      <Parameter Name="invoice_id" Mode="In" Type="Int32" />
-      <Parameter Name="invoice_date" Mode="In" Type="DateTime" />
-      <Parameter Name="invoice_details" Mode="In" Type="String" />
-      <Parameter Name="shipping_fee" Mode="In" Type="Decimal" />
-      <Parameter Name="invoice_status_id" Mode="In" Type="Int32" />
-      <Parameter Name="payment_method" Mode="In" Type="String" />
-      <Parameter Name="detail_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeInvoiceStatus_Delete">
-      <Parameter Name="invoice_status_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeInvoiceStatus_Insert">
-      <Parameter Name="name" Mode="In" Type="String" />
-      <Parameter Name="description" Mode="In" Type="String" />
-      <Parameter Name="detail_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeInvoiceStatus_Update">
-      <Parameter Name="invoice_status_id" Mode="In" Type="Int32" />
-      <Parameter Name="name" Mode="In" Type="String" />
-      <Parameter Name="description" Mode="In" Type="String" />
-      <Parameter Name="detail_id" Mode="In" Type="Int32" />
-    </FunctionImport>
     <FunctionImport Name="NSP_TShopeeOperation_Delete">
       <Parameter Name="operation_id" Mode="In" Type="Int32" />
     </FunctionImport>
@@ -393,22 +314,6 @@
       <Parameter Name="title" Mode="In" Type="String" />
       <Parameter Name="description" Mode="In" Type="String" />
       <Parameter Name="table_category_id" Mode="In" Type="Int32" />
-      <Parameter Name="detail_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeOrder_Delete">
-      <Parameter Name="order_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeOrder_Insert">
-      <Parameter Name="order_placed_date" Mode="In" Type="DateTime" />
-      <Parameter Name="total_price" Mode="In" Type="Decimal" />
-      <Parameter Name="order_status" Mode="In" Type="String" />
-      <Parameter Name="detail_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeOrder_Update">
-      <Parameter Name="order_id" Mode="In" Type="Int32" />
-      <Parameter Name="order_placed_date" Mode="In" Type="DateTime" />
-      <Parameter Name="total_price" Mode="In" Type="Decimal" />
-      <Parameter Name="order_status" Mode="In" Type="String" />
       <Parameter Name="detail_id" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="NSP_TShopeeOrderItem_Delete">
@@ -437,22 +342,6 @@
       <Parameter Name="order_id" Mode="In" Type="Int32" />
       <Parameter Name="order_item_status_id" Mode="In" Type="Int32" />
       <Parameter Name="product_id" Mode="In" Type="Int32" />
-      <Parameter Name="detail_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeOrderItemStatus_Delete">
-      <Parameter Name="order_item_status_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeOrderItemStatus_Insert">
-      <Parameter Name="name" Mode="In" Type="String" />
-      <Parameter Name="description" Mode="In" Type="String" />
-      <Parameter Name="return_merchandise_authorization_nr" Mode="In" Type="Int32" />
-      <Parameter Name="detail_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeOrderItemStatus_Update">
-      <Parameter Name="order_item_status_id" Mode="In" Type="Int32" />
-      <Parameter Name="name" Mode="In" Type="String" />
-      <Parameter Name="description" Mode="In" Type="String" />
-      <Parameter Name="return_merchandise_authorization_nr" Mode="In" Type="Int32" />
       <Parameter Name="detail_id" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="NSP_TShopeeOrderStatus_Delete">
@@ -722,6 +611,76 @@
       <Parameter Name="product_variety_id" Mode="In" Type="Int32" />
       <Parameter Name="detail_id" Mode="In" Type="Int32" />
     </FunctionImport>
+    <EntitySet Name="TShopeeInvoices" EntityType="dbShopeeAutomationV2Model.TShopeeInvoice" />
+    <EntitySet Name="TShopeeInvoiceStatus" EntityType="dbShopeeAutomationV2Model.TShopeeInvoiceStatu" />
+    <EntitySet Name="TShopeeOrderItemStatus" EntityType="dbShopeeAutomationV2Model.TShopeeOrderItemStatu" />
+    <FunctionImport Name="NSP_TShopeeInvoice_Delete">
+      <Parameter Name="invoice_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeInvoice_Insert">
+      <Parameter Name="invoice_date" Mode="In" Type="DateTime" />
+      <Parameter Name="invoice_details" Mode="In" Type="String" />
+      <Parameter Name="shipping_fee" Mode="In" Type="Decimal" />
+      <Parameter Name="invoice_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="payment_method_id" Mode="In" Type="Int32" />
+      <Parameter Name="order_id" Mode="In" Type="Int32" />
+      <Parameter Name="customer_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeInvoice_Update">
+      <Parameter Name="invoice_id" Mode="In" Type="Int32" />
+      <Parameter Name="invoice_date" Mode="In" Type="DateTime" />
+      <Parameter Name="invoice_details" Mode="In" Type="String" />
+      <Parameter Name="shipping_fee" Mode="In" Type="Decimal" />
+      <Parameter Name="invoice_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="payment_method_id" Mode="In" Type="Int32" />
+      <Parameter Name="order_id" Mode="In" Type="Int32" />
+      <Parameter Name="customer_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeInvoiceStatus_Delete">
+      <Parameter Name="invoice_status_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeInvoiceStatus_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeInvoiceStatus_Update">
+      <Parameter Name="invoice_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrderItemStatus_Delete">
+      <Parameter Name="order_item_status_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrderItemStatus_Insert">
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="return_merchandise_authorization_nr" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrderItemStatus_Update">
+      <Parameter Name="order_item_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="return_merchandise_authorization_nr" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="TShopeeOrders" EntityType="dbShopeeAutomationV2Model.TShopeeOrder" />
+    <FunctionImport Name="NSP_TShopeeOrder_Delete">
+      <Parameter Name="order_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrder_Insert">
+      <Parameter Name="order_placed_date" Mode="In" Type="DateTime" />
+      <Parameter Name="total_price" Mode="In" Type="Decimal" />
+      <Parameter Name="order_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrder_Update">
+      <Parameter Name="order_id" Mode="In" Type="Int32" />
+      <Parameter Name="order_placed_date" Mode="In" Type="DateTime" />
+      <Parameter Name="total_price" Mode="In" Type="Decimal" />
+      <Parameter Name="order_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="TShopeeProduct">
     <Key>
@@ -738,6 +697,47 @@
     <Property Name="product_brand_id" Type="Int32" />
     <Property Name="product_type_id" Type="Int32" />
     <Property Name="product_variety_id" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeInvoice">
+    <Key>
+      <PropertyRef Name="invoice_id" />
+    </Key>
+    <Property Name="invoice_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="invoice_date" Type="DateTime" Precision="3" />
+    <Property Name="invoice_details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="shipping_fee" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="invoice_status_id" Type="Int32" />
+    <Property Name="payment_method_id" Type="Int32" />
+    <Property Name="order_id" Type="Int32" />
+    <Property Name="customer_id" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeInvoiceStatu">
+    <Key>
+      <PropertyRef Name="invoice_status_id" />
+    </Key>
+    <Property Name="invoice_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeOrderItemStatu">
+    <Key>
+      <PropertyRef Name="order_item_status_id" />
+    </Key>
+    <Property Name="order_item_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="return_merchandise_authorization_nr" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeOrder">
+    <Key>
+      <PropertyRef Name="order_id" />
+    </Key>
+    <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="order_placed_date" Type="DateTime" Precision="3" />
+    <Property Name="total_price" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="order_status_id" Type="Int32" />
     <Property Name="detail_id" Type="Int32" />
   </EntityType>
 </Schema>

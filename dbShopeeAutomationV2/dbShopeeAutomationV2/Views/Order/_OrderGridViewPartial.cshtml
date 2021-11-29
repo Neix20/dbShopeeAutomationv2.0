@@ -38,6 +38,12 @@
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
+        settings.Columns.Add(col => {
+            col.FieldName = "order_id";
+            col.Caption = "ID";
+            col.ReadOnly = true;
+        });
+
         // Order Placement Date
         settings.Columns.Add(col => {
             col.FieldName = "order_placed_date";
@@ -63,13 +69,29 @@
             prop.MaxValue = 10000000;
             prop.Increment = 0.1M;
         });
-        settings.Columns.Add("order_status").Caption = "Order Status";
+
+        // Select Order Status
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "order_status_id";
+            col.Caption = "Order Status";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeOrderStatus.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "order_status_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+        });
+
+        // Customer
 
         // Last Updated By
         settings.Columns.Add(col =>
         {
             col.FieldName = "Last Updated By";
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.ReadOnly = true;
         });
 
         settings.CustomUnboundColumnData = (s, e) =>

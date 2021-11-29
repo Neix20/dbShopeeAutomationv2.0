@@ -30,12 +30,8 @@ namespace dbShopeeAutomationV2.Models
         public virtual DbSet<TShopeeCarrier> TShopeeCarriers { get; set; }
         public virtual DbSet<TShopeeCustomer> TShopeeCustomers { get; set; }
         public virtual DbSet<TShopeeDetail> TShopeeDetails { get; set; }
-        public virtual DbSet<TShopeeInvoice> TShopeeInvoices { get; set; }
-        public virtual DbSet<TShopeeInvoiceStatu> TShopeeInvoiceStatus { get; set; }
         public virtual DbSet<TShopeeOperation> TShopeeOperations { get; set; }
-        public virtual DbSet<TShopeeOrder> TShopeeOrders { get; set; }
         public virtual DbSet<TShopeeOrderItem> TShopeeOrderItems { get; set; }
-        public virtual DbSet<TShopeeOrderItemStatu> TShopeeOrderItemStatus { get; set; }
         public virtual DbSet<TShopeeOrderStatu> TShopeeOrderStatus { get; set; }
         public virtual DbSet<TShopeePaymentMethod> TShopeePaymentMethods { get; set; }
         public virtual DbSet<TShopeePlatform> TShopeePlatforms { get; set; }
@@ -52,6 +48,10 @@ namespace dbShopeeAutomationV2.Models
         public virtual DbSet<TShopeeUser> TShopeeUsers { get; set; }
         public virtual DbSet<TShopeeUserRole> TShopeeUserRoles { get; set; }
         public virtual DbSet<TShopeeProduct> TShopeeProducts { get; set; }
+        public virtual DbSet<TShopeeInvoice> TShopeeInvoices { get; set; }
+        public virtual DbSet<TShopeeInvoiceStatu> TShopeeInvoiceStatus { get; set; }
+        public virtual DbSet<TShopeeOrderItemStatu> TShopeeOrderItemStatus { get; set; }
+        public virtual DbSet<TShopeeOrder> TShopeeOrders { get; set; }
     
         public virtual int NSP_TShopeeCarrier_Delete(Nullable<int> carrier_id)
         {
@@ -290,124 +290,6 @@ namespace dbShopeeAutomationV2.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeDetail_Update", detail_idParameter, statusParameter, remarkParameter, created_byParameter, created_dateParameter, last_updated_byParameter, last_updated_dateParameter);
         }
     
-        public virtual int NSP_TShopeeInvoice_Delete(Nullable<int> invoice_id)
-        {
-            var invoice_idParameter = invoice_id.HasValue ?
-                new ObjectParameter("invoice_id", invoice_id) :
-                new ObjectParameter("invoice_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeInvoice_Delete", invoice_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeInvoice_Insert(Nullable<System.DateTime> invoice_date, string invoice_details, Nullable<decimal> shipping_fee, Nullable<int> invoice_status_id, string payment_method, Nullable<int> detail_id)
-        {
-            var invoice_dateParameter = invoice_date.HasValue ?
-                new ObjectParameter("invoice_date", invoice_date) :
-                new ObjectParameter("invoice_date", typeof(System.DateTime));
-    
-            var invoice_detailsParameter = invoice_details != null ?
-                new ObjectParameter("invoice_details", invoice_details) :
-                new ObjectParameter("invoice_details", typeof(string));
-    
-            var shipping_feeParameter = shipping_fee.HasValue ?
-                new ObjectParameter("shipping_fee", shipping_fee) :
-                new ObjectParameter("shipping_fee", typeof(decimal));
-    
-            var invoice_status_idParameter = invoice_status_id.HasValue ?
-                new ObjectParameter("invoice_status_id", invoice_status_id) :
-                new ObjectParameter("invoice_status_id", typeof(int));
-    
-            var payment_methodParameter = payment_method != null ?
-                new ObjectParameter("payment_method", payment_method) :
-                new ObjectParameter("payment_method", typeof(string));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeInvoice_Insert", invoice_dateParameter, invoice_detailsParameter, shipping_feeParameter, invoice_status_idParameter, payment_methodParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeInvoice_Update(Nullable<int> invoice_id, Nullable<System.DateTime> invoice_date, string invoice_details, Nullable<decimal> shipping_fee, Nullable<int> invoice_status_id, string payment_method, Nullable<int> detail_id)
-        {
-            var invoice_idParameter = invoice_id.HasValue ?
-                new ObjectParameter("invoice_id", invoice_id) :
-                new ObjectParameter("invoice_id", typeof(int));
-    
-            var invoice_dateParameter = invoice_date.HasValue ?
-                new ObjectParameter("invoice_date", invoice_date) :
-                new ObjectParameter("invoice_date", typeof(System.DateTime));
-    
-            var invoice_detailsParameter = invoice_details != null ?
-                new ObjectParameter("invoice_details", invoice_details) :
-                new ObjectParameter("invoice_details", typeof(string));
-    
-            var shipping_feeParameter = shipping_fee.HasValue ?
-                new ObjectParameter("shipping_fee", shipping_fee) :
-                new ObjectParameter("shipping_fee", typeof(decimal));
-    
-            var invoice_status_idParameter = invoice_status_id.HasValue ?
-                new ObjectParameter("invoice_status_id", invoice_status_id) :
-                new ObjectParameter("invoice_status_id", typeof(int));
-    
-            var payment_methodParameter = payment_method != null ?
-                new ObjectParameter("payment_method", payment_method) :
-                new ObjectParameter("payment_method", typeof(string));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeInvoice_Update", invoice_idParameter, invoice_dateParameter, invoice_detailsParameter, shipping_feeParameter, invoice_status_idParameter, payment_methodParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeInvoiceStatus_Delete(Nullable<int> invoice_status_id)
-        {
-            var invoice_status_idParameter = invoice_status_id.HasValue ?
-                new ObjectParameter("invoice_status_id", invoice_status_id) :
-                new ObjectParameter("invoice_status_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeInvoiceStatus_Delete", invoice_status_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeInvoiceStatus_Insert(string name, string description, Nullable<int> detail_id)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var descriptionParameter = description != null ?
-                new ObjectParameter("description", description) :
-                new ObjectParameter("description", typeof(string));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeInvoiceStatus_Insert", nameParameter, descriptionParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeInvoiceStatus_Update(Nullable<int> invoice_status_id, string name, string description, Nullable<int> detail_id)
-        {
-            var invoice_status_idParameter = invoice_status_id.HasValue ?
-                new ObjectParameter("invoice_status_id", invoice_status_id) :
-                new ObjectParameter("invoice_status_id", typeof(int));
-    
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var descriptionParameter = description != null ?
-                new ObjectParameter("description", description) :
-                new ObjectParameter("description", typeof(string));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeInvoiceStatus_Update", invoice_status_idParameter, nameParameter, descriptionParameter, detail_idParameter);
-        }
-    
         public virtual int NSP_TShopeeOperation_Delete(Nullable<int> operation_id)
         {
             var operation_idParameter = operation_id.HasValue ?
@@ -461,61 +343,6 @@ namespace dbShopeeAutomationV2.Models
                 new ObjectParameter("detail_id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOperation_Update", operation_idParameter, titleParameter, descriptionParameter, table_category_idParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeOrder_Delete(Nullable<int> order_id)
-        {
-            var order_idParameter = order_id.HasValue ?
-                new ObjectParameter("order_id", order_id) :
-                new ObjectParameter("order_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrder_Delete", order_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeOrder_Insert(Nullable<System.DateTime> order_placed_date, Nullable<decimal> total_price, string order_status, Nullable<int> detail_id)
-        {
-            var order_placed_dateParameter = order_placed_date.HasValue ?
-                new ObjectParameter("order_placed_date", order_placed_date) :
-                new ObjectParameter("order_placed_date", typeof(System.DateTime));
-    
-            var total_priceParameter = total_price.HasValue ?
-                new ObjectParameter("total_price", total_price) :
-                new ObjectParameter("total_price", typeof(decimal));
-    
-            var order_statusParameter = order_status != null ?
-                new ObjectParameter("order_status", order_status) :
-                new ObjectParameter("order_status", typeof(string));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrder_Insert", order_placed_dateParameter, total_priceParameter, order_statusParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeOrder_Update(Nullable<int> order_id, Nullable<System.DateTime> order_placed_date, Nullable<decimal> total_price, string order_status, Nullable<int> detail_id)
-        {
-            var order_idParameter = order_id.HasValue ?
-                new ObjectParameter("order_id", order_id) :
-                new ObjectParameter("order_id", typeof(int));
-    
-            var order_placed_dateParameter = order_placed_date.HasValue ?
-                new ObjectParameter("order_placed_date", order_placed_date) :
-                new ObjectParameter("order_placed_date", typeof(System.DateTime));
-    
-            var total_priceParameter = total_price.HasValue ?
-                new ObjectParameter("total_price", total_price) :
-                new ObjectParameter("total_price", typeof(decimal));
-    
-            var order_statusParameter = order_status != null ?
-                new ObjectParameter("order_status", order_status) :
-                new ObjectParameter("order_status", typeof(string));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrder_Update", order_idParameter, order_placed_dateParameter, total_priceParameter, order_statusParameter, detail_idParameter);
         }
     
         public virtual int NSP_TShopeeOrderItem_Delete(Nullable<int> order_item_id)
@@ -619,61 +446,6 @@ namespace dbShopeeAutomationV2.Models
                 new ObjectParameter("detail_id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrderItem_Update", order_item_idParameter, quantityParameter, sub_totalParameter, discount_feeParameter, rMA_numParameter, rMA_issued_byParameter, rMA_issued_dateParameter, order_idParameter, order_item_status_idParameter, product_idParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeOrderItemStatus_Delete(Nullable<int> order_item_status_id)
-        {
-            var order_item_status_idParameter = order_item_status_id.HasValue ?
-                new ObjectParameter("order_item_status_id", order_item_status_id) :
-                new ObjectParameter("order_item_status_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrderItemStatus_Delete", order_item_status_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeOrderItemStatus_Insert(string name, string description, Nullable<int> return_merchandise_authorization_nr, Nullable<int> detail_id)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var descriptionParameter = description != null ?
-                new ObjectParameter("description", description) :
-                new ObjectParameter("description", typeof(string));
-    
-            var return_merchandise_authorization_nrParameter = return_merchandise_authorization_nr.HasValue ?
-                new ObjectParameter("return_merchandise_authorization_nr", return_merchandise_authorization_nr) :
-                new ObjectParameter("return_merchandise_authorization_nr", typeof(int));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrderItemStatus_Insert", nameParameter, descriptionParameter, return_merchandise_authorization_nrParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeOrderItemStatus_Update(Nullable<int> order_item_status_id, string name, string description, Nullable<int> return_merchandise_authorization_nr, Nullable<int> detail_id)
-        {
-            var order_item_status_idParameter = order_item_status_id.HasValue ?
-                new ObjectParameter("order_item_status_id", order_item_status_id) :
-                new ObjectParameter("order_item_status_id", typeof(int));
-    
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var descriptionParameter = description != null ?
-                new ObjectParameter("description", description) :
-                new ObjectParameter("description", typeof(string));
-    
-            var return_merchandise_authorization_nrParameter = return_merchandise_authorization_nr.HasValue ?
-                new ObjectParameter("return_merchandise_authorization_nr", return_merchandise_authorization_nr) :
-                new ObjectParameter("return_merchandise_authorization_nr", typeof(int));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrderItemStatus_Update", order_item_status_idParameter, nameParameter, descriptionParameter, return_merchandise_authorization_nrParameter, detail_idParameter);
         }
     
         public virtual int NSP_TShopeeOrderStatus_Delete(Nullable<int> order_status_id)
@@ -1594,6 +1366,234 @@ namespace dbShopeeAutomationV2.Models
                 new ObjectParameter("detail_id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProduct_Update", product_idParameter, product_codeParameter, nameParameter, descriptionParameter, sKUParameter, sKU2Parameter, buy_priceParameter, sell_priceParameter, product_brand_idParameter, product_type_idParameter, product_variety_idParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeInvoice_Delete(Nullable<int> invoice_id)
+        {
+            var invoice_idParameter = invoice_id.HasValue ?
+                new ObjectParameter("invoice_id", invoice_id) :
+                new ObjectParameter("invoice_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeInvoice_Delete", invoice_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeInvoice_Insert(Nullable<System.DateTime> invoice_date, string invoice_details, Nullable<decimal> shipping_fee, Nullable<int> invoice_status_id, Nullable<int> payment_method_id, Nullable<int> order_id, Nullable<int> customer_id, Nullable<int> detail_id)
+        {
+            var invoice_dateParameter = invoice_date.HasValue ?
+                new ObjectParameter("invoice_date", invoice_date) :
+                new ObjectParameter("invoice_date", typeof(System.DateTime));
+    
+            var invoice_detailsParameter = invoice_details != null ?
+                new ObjectParameter("invoice_details", invoice_details) :
+                new ObjectParameter("invoice_details", typeof(string));
+    
+            var shipping_feeParameter = shipping_fee.HasValue ?
+                new ObjectParameter("shipping_fee", shipping_fee) :
+                new ObjectParameter("shipping_fee", typeof(decimal));
+    
+            var invoice_status_idParameter = invoice_status_id.HasValue ?
+                new ObjectParameter("invoice_status_id", invoice_status_id) :
+                new ObjectParameter("invoice_status_id", typeof(int));
+    
+            var payment_method_idParameter = payment_method_id.HasValue ?
+                new ObjectParameter("payment_method_id", payment_method_id) :
+                new ObjectParameter("payment_method_id", typeof(int));
+    
+            var order_idParameter = order_id.HasValue ?
+                new ObjectParameter("order_id", order_id) :
+                new ObjectParameter("order_id", typeof(int));
+    
+            var customer_idParameter = customer_id.HasValue ?
+                new ObjectParameter("customer_id", customer_id) :
+                new ObjectParameter("customer_id", typeof(int));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeInvoice_Insert", invoice_dateParameter, invoice_detailsParameter, shipping_feeParameter, invoice_status_idParameter, payment_method_idParameter, order_idParameter, customer_idParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeInvoice_Update(Nullable<int> invoice_id, Nullable<System.DateTime> invoice_date, string invoice_details, Nullable<decimal> shipping_fee, Nullable<int> invoice_status_id, Nullable<int> payment_method_id, Nullable<int> order_id, Nullable<int> customer_id, Nullable<int> detail_id)
+        {
+            var invoice_idParameter = invoice_id.HasValue ?
+                new ObjectParameter("invoice_id", invoice_id) :
+                new ObjectParameter("invoice_id", typeof(int));
+    
+            var invoice_dateParameter = invoice_date.HasValue ?
+                new ObjectParameter("invoice_date", invoice_date) :
+                new ObjectParameter("invoice_date", typeof(System.DateTime));
+    
+            var invoice_detailsParameter = invoice_details != null ?
+                new ObjectParameter("invoice_details", invoice_details) :
+                new ObjectParameter("invoice_details", typeof(string));
+    
+            var shipping_feeParameter = shipping_fee.HasValue ?
+                new ObjectParameter("shipping_fee", shipping_fee) :
+                new ObjectParameter("shipping_fee", typeof(decimal));
+    
+            var invoice_status_idParameter = invoice_status_id.HasValue ?
+                new ObjectParameter("invoice_status_id", invoice_status_id) :
+                new ObjectParameter("invoice_status_id", typeof(int));
+    
+            var payment_method_idParameter = payment_method_id.HasValue ?
+                new ObjectParameter("payment_method_id", payment_method_id) :
+                new ObjectParameter("payment_method_id", typeof(int));
+    
+            var order_idParameter = order_id.HasValue ?
+                new ObjectParameter("order_id", order_id) :
+                new ObjectParameter("order_id", typeof(int));
+    
+            var customer_idParameter = customer_id.HasValue ?
+                new ObjectParameter("customer_id", customer_id) :
+                new ObjectParameter("customer_id", typeof(int));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeInvoice_Update", invoice_idParameter, invoice_dateParameter, invoice_detailsParameter, shipping_feeParameter, invoice_status_idParameter, payment_method_idParameter, order_idParameter, customer_idParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeInvoiceStatus_Delete(Nullable<int> invoice_status_id)
+        {
+            var invoice_status_idParameter = invoice_status_id.HasValue ?
+                new ObjectParameter("invoice_status_id", invoice_status_id) :
+                new ObjectParameter("invoice_status_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeInvoiceStatus_Delete", invoice_status_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeInvoiceStatus_Insert(string name, Nullable<int> detail_id)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeInvoiceStatus_Insert", nameParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeInvoiceStatus_Update(Nullable<int> invoice_status_id, string name, Nullable<int> detail_id)
+        {
+            var invoice_status_idParameter = invoice_status_id.HasValue ?
+                new ObjectParameter("invoice_status_id", invoice_status_id) :
+                new ObjectParameter("invoice_status_id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeInvoiceStatus_Update", invoice_status_idParameter, nameParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeOrderItemStatus_Delete(Nullable<int> order_item_status_id)
+        {
+            var order_item_status_idParameter = order_item_status_id.HasValue ?
+                new ObjectParameter("order_item_status_id", order_item_status_id) :
+                new ObjectParameter("order_item_status_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrderItemStatus_Delete", order_item_status_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeOrderItemStatus_Insert(string description, Nullable<int> return_merchandise_authorization_nr, Nullable<int> detail_id)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("description", description) :
+                new ObjectParameter("description", typeof(string));
+    
+            var return_merchandise_authorization_nrParameter = return_merchandise_authorization_nr.HasValue ?
+                new ObjectParameter("return_merchandise_authorization_nr", return_merchandise_authorization_nr) :
+                new ObjectParameter("return_merchandise_authorization_nr", typeof(int));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrderItemStatus_Insert", descriptionParameter, return_merchandise_authorization_nrParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeOrderItemStatus_Update(Nullable<int> order_item_status_id, string description, Nullable<int> return_merchandise_authorization_nr, Nullable<int> detail_id)
+        {
+            var order_item_status_idParameter = order_item_status_id.HasValue ?
+                new ObjectParameter("order_item_status_id", order_item_status_id) :
+                new ObjectParameter("order_item_status_id", typeof(int));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("description", description) :
+                new ObjectParameter("description", typeof(string));
+    
+            var return_merchandise_authorization_nrParameter = return_merchandise_authorization_nr.HasValue ?
+                new ObjectParameter("return_merchandise_authorization_nr", return_merchandise_authorization_nr) :
+                new ObjectParameter("return_merchandise_authorization_nr", typeof(int));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrderItemStatus_Update", order_item_status_idParameter, descriptionParameter, return_merchandise_authorization_nrParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeOrder_Delete(Nullable<int> order_id)
+        {
+            var order_idParameter = order_id.HasValue ?
+                new ObjectParameter("order_id", order_id) :
+                new ObjectParameter("order_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrder_Delete", order_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeOrder_Insert(Nullable<System.DateTime> order_placed_date, Nullable<decimal> total_price, Nullable<int> order_status_id, Nullable<int> detail_id)
+        {
+            var order_placed_dateParameter = order_placed_date.HasValue ?
+                new ObjectParameter("order_placed_date", order_placed_date) :
+                new ObjectParameter("order_placed_date", typeof(System.DateTime));
+    
+            var total_priceParameter = total_price.HasValue ?
+                new ObjectParameter("total_price", total_price) :
+                new ObjectParameter("total_price", typeof(decimal));
+    
+            var order_status_idParameter = order_status_id.HasValue ?
+                new ObjectParameter("order_status_id", order_status_id) :
+                new ObjectParameter("order_status_id", typeof(int));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrder_Insert", order_placed_dateParameter, total_priceParameter, order_status_idParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeOrder_Update(Nullable<int> order_id, Nullable<System.DateTime> order_placed_date, Nullable<decimal> total_price, Nullable<int> order_status_id, Nullable<int> detail_id)
+        {
+            var order_idParameter = order_id.HasValue ?
+                new ObjectParameter("order_id", order_id) :
+                new ObjectParameter("order_id", typeof(int));
+    
+            var order_placed_dateParameter = order_placed_date.HasValue ?
+                new ObjectParameter("order_placed_date", order_placed_date) :
+                new ObjectParameter("order_placed_date", typeof(System.DateTime));
+    
+            var total_priceParameter = total_price.HasValue ?
+                new ObjectParameter("total_price", total_price) :
+                new ObjectParameter("total_price", typeof(decimal));
+    
+            var order_status_idParameter = order_status_id.HasValue ?
+                new ObjectParameter("order_status_id", order_status_id) :
+                new ObjectParameter("order_status_id", typeof(int));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeOrder_Update", order_idParameter, order_placed_dateParameter, total_priceParameter, order_status_idParameter, detail_idParameter);
         }
     }
 }

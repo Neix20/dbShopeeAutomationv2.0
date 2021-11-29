@@ -30,7 +30,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            dbStoredProcedure.invoiceStatusInsert(item.name, item.description, username);
+            dbStoredProcedure.invoiceStatusInsert(item.name, username);
             db.SaveChanges();
 
             var model = db.TShopeeInvoiceStatus;
@@ -42,7 +42,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            dbStoredProcedure.invoiceStatusUpdate(item.invoice_status_id, item.name, item.description, username);
+            dbStoredProcedure.invoiceStatusUpdate(item.invoice_status_id, item.name, username);
             db.SaveChanges();
 
             var model = db.TShopeeInvoiceStatus;

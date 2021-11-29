@@ -47,6 +47,9 @@ namespace dbShopeeAutomationV2.Controllers
             // Product Variety => col[18]
             // Purchase Date Time => col[19]
 
+            // 1. Insert Carrier
+            // 2. Insert Payment Method
+
             int platform_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeePlatform') AS INT)").FirstOrDefault();
 
             ws.Rows.ToList().GetRange(1, ws.RowCount - 1).ForEach(row => {

@@ -63,14 +63,24 @@
                             <label>Manufacture Date: </label>
                         </div>
                         <div class="col-2">
-                            @Html.TextBoxFor(model => model.manufactured_date, "{0:yyyy-MM-dd}", new { @Class = "form-control", @PlaceHolder = "E.g. 1957-08-31", @type = "date" })
+                            @Html.DevExpress().DateEdit(settings =>
+                       {
+                           settings.Name = "manufactured_date";
+                           settings.Properties.DisplayFormatString = "yyyy-MM-dd";
+                           settings.Width = Unit.Percentage(100);
+                       }).GetHtml()
                         </div>
 
                         <div class="col-2 text-center">
                             <label>Expiry Date: </label>
                         </div>
                         <div class="col-2">
-                            @Html.TextBoxFor(model => model.expiry_date, "{0:yyyy-MM-dd}", new { @Class = "form-control", @PlaceHolder = "E.g. 1957-08-31", @type = "date" })
+                            @Html.DevExpress().DateEdit(settings =>
+                       {
+                           settings.Name = "expiry_date";
+                           settings.Properties.DisplayFormatString = "yyyy-MM-dd";
+                           settings.Width = Unit.Percentage(100);
+                       }).GetHtml()
                         </div>
 
                     </div>

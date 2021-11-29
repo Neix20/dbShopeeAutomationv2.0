@@ -39,6 +39,10 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            item.buy_price = (item.buy_price == null) ? 0 : item.buy_price;
+            item.sell_price = (item.sell_price == null) ? 0 : item.sell_price;
+            item.product_code = (item.product_code == null || item.product_code.Equals("")) ? randomProductCode() : item.product_code;
+
             dbStoredProcedure.productInsert(item.product_code, item.name, item.description, item.SKU, item.SKU2, item.buy_price, item.sell_price, item.product_brand_id, item.product_type_id, item.product_variety_id, username);
             db.SaveChanges();
 
@@ -58,6 +62,10 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult ProductGridViewPartialUpdate(TShopeeProduct item)
         {
             string username = User.Identity.Name;
+
+            item.buy_price = (item.buy_price == null) ? 0 : item.buy_price;
+            item.sell_price = (item.sell_price == null) ? 0 : item.sell_price;
+            item.product_code = (item.product_code == null || item.product_code.Equals("")) ? randomProductCode() : item.product_code;
 
             dbStoredProcedure.productUpdate(item.product_id, item.product_code, item.name, item.description, item.SKU, item.SKU2, item.buy_price, item.sell_price, item.product_brand_id, item.product_type_id, item.product_variety_id, username);
             db.SaveChanges();

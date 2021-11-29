@@ -33,6 +33,10 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            item.quantity = (item.quantity == null) ? 0 : item.quantity;
+            item.manufactured_date = (item.manufactured_date == null) ? DateTime.Now : item.manufactured_date;
+            item.expiry_date = (item.expiry_date == null) ? DateTime.Now : item.expiry_date;
+
             dbStoredProcedure.productionDetailInsert(item.UOM, item.manufactured_date, item.expiry_date, item.quantity, (int) item.product_id, item.production_id, username);
             db.SaveChanges();
 
@@ -46,6 +50,9 @@ namespace dbShopeeAutomationV2.Controllers
             string username = User.Identity.Name;
 
             item.production_detail_id = db.TShopeeProductionDetails.FirstOrDefault(it => it.production_detail_id == item.production_detail_id).production_detail_id;
+            item.quantity = (item.quantity == null) ? 0 : item.quantity;
+            item.manufactured_date = (item.manufactured_date == null) ? DateTime.Now : item.manufactured_date;
+            item.expiry_date = (item.expiry_date == null) ? DateTime.Now : item.expiry_date;
 
             dbStoredProcedure.productionDetailUpdate(item.production_detail_id, item.UOM, item.manufactured_date, item.expiry_date, item.quantity, (int) item.product_id, item.production_id, username);
             db.SaveChanges();

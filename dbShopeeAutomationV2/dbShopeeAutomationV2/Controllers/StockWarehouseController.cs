@@ -34,6 +34,9 @@ namespace dbShopeeAutomationV2.Controllers
             string address = generalFunc.trimStr(collection["Address"]);
             string username = User.Identity.Name;
 
+            int count = address.Split(new[] { ", " }, StringSplitOptions.None).Length - 1;
+            address = (count != 5) ? "address line 1, address line 2, city, 00000, state, country" : address;
+
             dbStoredProcedure.stockWarehouseInsert(name, email_address, phone_number, address, username);
             db.SaveChanges();
 
@@ -50,6 +53,9 @@ namespace dbShopeeAutomationV2.Controllers
             string phone_number = generalFunc.trimStr(collection["phone_number"]);
             string address = generalFunc.trimStr(collection["Address"]);
             string username = User.Identity.Name;
+
+            int count = address.Split(new[] { ", " }, StringSplitOptions.None).Length - 1;
+            address = (count != 5) ? "address line 1, address line 2, city, 00000, state, country" : address;
 
             dbStoredProcedure.stockWarehouseUpdate(stock_warehouse_id, name, email_address, phone_number, address, username);
             db.SaveChanges();

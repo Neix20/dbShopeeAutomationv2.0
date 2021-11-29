@@ -35,6 +35,12 @@ namespace dbShopeeAutomationV2.Controllers
             string address = generalFunc.trimStr(Request.Form["Address"]);
             int platform_id = (int)item.platform_id;
 
+            int name_count = name.Split(' ').Length - 1;
+            name = (name_count != 1) ? "first_name last_name" : name;
+
+            int address_count = address.Split(new[] { ", " }, StringSplitOptions.None).Length - 1;
+            address = (address_count != 5) ? "address line 1, address line 2, city, 00000, state, country" : address;
+
             string username = User.Identity.Name;
 
             dbStoredProcedure.customerInsert(name, dob, email_address, phone_number, address, platform_id, username);
@@ -54,6 +60,9 @@ namespace dbShopeeAutomationV2.Controllers
             string phone_number = item.phone_number;
             string address = generalFunc.trimStr(Request.Form["Address"]);
             int platform_id = (int) item.platform_id;
+
+            int count = address.Split(new[] { ", " }, StringSplitOptions.None).Length - 1;
+            address = (count != 5) ? "address line 1, address line 2, city, 00000, state, country" : address;
 
             string username = User.Identity.Name;
 

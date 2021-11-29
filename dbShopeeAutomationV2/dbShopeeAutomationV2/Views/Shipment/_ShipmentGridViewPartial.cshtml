@@ -89,7 +89,7 @@
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
-            prop.DataSource = db.TShopeeInvoices.ToList();
+            prop.DataSource = db.TShopeeInvoices.Where(it => it.invoice_status_id == 6).ToList();
             prop.TextField = "invoice_title";
             prop.ValueField = "invoice_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;

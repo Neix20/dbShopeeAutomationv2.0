@@ -81,15 +81,54 @@
             prop.DisplayFormatInEditMode = true;
         });
 
-        settings.Columns.Add("invoice_id").Caption = "Invoice ID";
-        settings.Columns.Add("carrier_id").Caption = "Carrier ID";
-        settings.Columns.Add("shipment_status").Caption = "Shipment Status";
+        // Invoice ID
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "invoice_id";
+            col.Caption = "Invoice Code";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeInvoices.ToList();
+            prop.TextField = "invoice_title";
+            prop.ValueField = "invoice_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+        });
+
+        // Carrier Id
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "carrier_id";
+            col.Caption = "Carrier";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeCarriers.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "carrier_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+        });
+
+        // Shipment Status ID
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "shipment_status_id";
+            col.Caption = "Shipment Status";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeShipmentStatus.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "shipment_status_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+        });
 
         // Last Updated By
         settings.Columns.Add(col =>
         {
             col.FieldName = "Last Updated By";
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.ReadOnly = true;
         });
 
         settings.CustomUnboundColumnData = (s, e) =>

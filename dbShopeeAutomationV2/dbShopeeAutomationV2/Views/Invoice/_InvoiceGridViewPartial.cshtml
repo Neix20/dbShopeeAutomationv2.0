@@ -38,6 +38,9 @@
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
+        // Invoice Title
+        settings.Columns.Add("invoice_title").Caption = "Invoice Code";
+
         // Order ID
         settings.Columns.Add(col =>
         {
@@ -79,20 +82,6 @@
 
         settings.Columns.Add("invoice_details").Caption = "Invoice Details";
 
-        settings.Columns.Add(col =>
-        {
-            col.FieldName = "shipping_fee";
-            col.Caption = "Shipping Fee";
-
-            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
-            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
-            prop.NumberType = SpinEditNumberType.Float;
-            prop.MinValue = 0;
-            prop.MaxValue = 10000000;
-            prop.Increment = 0.1M;
-            prop.DisplayFormatString = "C";
-        });
-
         // Invoice Status
         settings.Columns.Add(col => {
             col.FieldName = "invoice_status_id";
@@ -118,6 +107,20 @@
             prop.TextField = "name";
             prop.ValueField = "payment_method_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+        });
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "shipping_fee";
+            col.Caption = "Shipping Fee";
+
+            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
+            prop.NumberType = SpinEditNumberType.Float;
+            prop.MinValue = 0;
+            prop.MaxValue = 10000000;
+            prop.Increment = 0.1M;
+            prop.DisplayFormatString = "C";
         });
 
         // Last Updated By

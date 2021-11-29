@@ -8,7 +8,6 @@
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeCarrier" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeCustomer" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeDetail" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeOperation" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeOrderItem" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeOrderStatu" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeePaymentMethod" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
@@ -18,18 +17,17 @@
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeProductionDetail" Width="1.5" PointX="4.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeProductType" Width="1.5" PointX="10.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeProductVariety" Width="1.5" PointX="10.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeShipment" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeShipmentStatu" Width="1.5" PointX="6.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeStockItem" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeStockWarehouse" Width="1.5" PointX="12.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeTableCategory" Width="1.5" PointX="12.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeUser" Width="1.5" PointX="8.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeUserRole" Width="1.5" PointX="10.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeProduct" Width="1.5" PointX="12.875" PointY="11" />
-        <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeInvoice" Width="1.5" PointX="3.75" PointY="14.75" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeInvoiceStatu" Width="1.5" PointX="7.75" PointY="14.75" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeOrder" Width="1.5" PointX="0.75" PointY="5.75" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeOrderItemStatu" Width="1.5" PointX="3.375" PointY="5.75" />
+        <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeInvoice" Width="1.5" PointX="3.375" PointY="14.75" />
+        <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeShipment" Width="1.5" PointX="0.75" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

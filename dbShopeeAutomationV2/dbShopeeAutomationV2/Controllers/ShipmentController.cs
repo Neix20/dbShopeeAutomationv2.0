@@ -1,4 +1,5 @@
-﻿using DevExpress.Web.Mvc;
+﻿using dbShopeeAutomationV2.Models;
+using DevExpress.Web.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace dbShopeeAutomationV2.Controllers
             return View();
         }
 
-        dbShopeeAutomationV2.Models.dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2.Models.dbShopeeAutomationV2Entities();
+        dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
         [ValidateInput(false)]
         public ActionResult ShipmentGridViewPartial()
@@ -25,67 +26,36 @@ namespace dbShopeeAutomationV2.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult ShipmentGridViewPartialAddNew(dbShopeeAutomationV2.Models.TShopeeShipment item)
+        public ActionResult ShipmentGridViewPartialAddNew(TShopeeShipment item)
         {
+            string username = User.Identity.Name;
+
+            dbStoredProcedure.shipmentInsert(item.start_location, item.destination, item.tracking_id, item.created_date, item.expected_date, item.due_date, item.invoice_id, item.carrier_id, item.shipment_status_id, username);
+            db.SaveChanges();
+
             var model = db.TShopeeShipments;
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    model.Add(item);
-                    db.SaveChanges();
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            else
-                ViewData["EditError"] = "Please, correct all errors.";
             return PartialView("_ShipmentGridViewPartial", model.ToList());
         }
+
         [HttpPost, ValidateInput(false)]
-        public ActionResult ShipmentGridViewPartialUpdate(dbShopeeAutomationV2.Models.TShopeeShipment item)
+        public ActionResult ShipmentGridViewPartialUpdate(TShopeeShipment item)
         {
+            string username = User.Identity.Name;
+
+            dbStoredProcedure.shipmentUpdate(item.shipment_id, item.start_location, item.destination, item.tracking_id, item.created_date, item.expected_date, item.due_date, item.invoice_id, item.carrier_id, item.shipment_status_id, username);
+            db.SaveChanges();
+
             var model = db.TShopeeShipments;
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var modelItem = model.FirstOrDefault(it => it.shipment_id == item.shipment_id);
-                    if (modelItem != null)
-                    {
-                        this.UpdateModel(modelItem);
-                        db.SaveChanges();
-                    }
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            else
-                ViewData["EditError"] = "Please, correct all errors.";
             return PartialView("_ShipmentGridViewPartial", model.ToList());
         }
+
         [HttpPost, ValidateInput(false)]
-        public ActionResult ShipmentGridViewPartialDelete(System.Int32 shipment_id)
+        public ActionResult ShipmentGridViewPartialDelete(int shipment_id)
         {
+            dbStoredProcedure.shipmentDelete(shipment_id);
+            db.SaveChanges();
+
             var model = db.TShopeeShipments;
-            if (shipment_id >= 0)
-            {
-                try
-                {
-                    var item = model.FirstOrDefault(it => it.shipment_id == shipment_id);
-                    if (item != null)
-                        model.Remove(item);
-                    db.SaveChanges();
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
             return PartialView("_ShipmentGridViewPartial", model.ToList());
         }
     }

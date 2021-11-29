@@ -44,6 +44,7 @@
       <PropertyRef Name="invoice_id" />
     </Key>
     <Property Name="invoice_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="invoice_title" Type="varchar" MaxLength="50" />
     <Property Name="invoice_date" Type="datetime" />
     <Property Name="invoice_details" Type="varchar(max)" />
     <Property Name="shipping_fee" Type="decimal" Precision="10" Scale="2" />
@@ -59,16 +60,6 @@
     </Key>
     <Property Name="invoice_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="varchar" MaxLength="50" />
-    <Property Name="detail_id" Type="int" />
-  </EntityType>
-  <EntityType Name="TShopeeOperation">
-    <Key>
-      <PropertyRef Name="operation_id" />
-    </Key>
-    <Property Name="operation_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="title" Type="varchar" MaxLength="50" />
-    <Property Name="description" Type="varchar(max)" />
-    <Property Name="table_category_id" Type="int" />
     <Property Name="detail_id" Type="int" />
   </EntityType>
   <EntityType Name="TShopeeOrder">
@@ -209,7 +200,7 @@
     <Property Name="due_date" Type="datetime" />
     <Property Name="invoice_id" Type="int" />
     <Property Name="carrier_id" Type="int" />
-    <Property Name="shipment_status" Type="varchar" MaxLength="20" />
+    <Property Name="shipment_status_id" Type="int" />
     <Property Name="detail_id" Type="int" />
   </EntityType>
   <EntityType Name="TShopeeShipmentStatus">
@@ -246,14 +237,6 @@
     <Property Name="state" Type="varchar" MaxLength="50" />
     <Property Name="zip_code" Type="int" />
     <Property Name="country" Type="varchar" MaxLength="20" />
-    <Property Name="detail_id" Type="int" />
-  </EntityType>
-  <EntityType Name="TShopeeTableCategory">
-    <Key>
-      <PropertyRef Name="table_category_id" />
-    </Key>
-    <Property Name="table_category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="name" Type="varchar" MaxLength="20" />
     <Property Name="detail_id" Type="int" />
   </EntityType>
   <EntityType Name="TShopeeUser">
@@ -343,6 +326,7 @@
     <Parameter Name="invoice_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeInvoice_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="invoice_title" Type="varchar" Mode="In" />
     <Parameter Name="invoice_date" Type="datetime" Mode="In" />
     <Parameter Name="invoice_details" Type="varchar(max)" Mode="In" />
     <Parameter Name="shipping_fee" Type="decimal" Mode="In" />
@@ -354,6 +338,7 @@
   </Function>
   <Function Name="NSP_TShopeeInvoice_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="invoice_id" Type="int" Mode="In" />
+    <Parameter Name="invoice_title" Type="varchar" Mode="In" />
     <Parameter Name="invoice_date" Type="datetime" Mode="In" />
     <Parameter Name="invoice_details" Type="varchar(max)" Mode="In" />
     <Parameter Name="shipping_fee" Type="decimal" Mode="In" />
@@ -373,22 +358,6 @@
   <Function Name="NSP_TShopeeInvoiceStatus_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="invoice_status_id" Type="int" Mode="In" />
     <Parameter Name="name" Type="varchar" Mode="In" />
-    <Parameter Name="detail_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="NSP_TShopeeOperation_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="operation_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="NSP_TShopeeOperation_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="title" Type="varchar" Mode="In" />
-    <Parameter Name="description" Type="varchar(max)" Mode="In" />
-    <Parameter Name="table_category_id" Type="int" Mode="In" />
-    <Parameter Name="detail_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="NSP_TShopeeOperation_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="operation_id" Type="int" Mode="In" />
-    <Parameter Name="title" Type="varchar" Mode="In" />
-    <Parameter Name="description" Type="varchar(max)" Mode="In" />
-    <Parameter Name="table_category_id" Type="int" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeOrder_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -605,7 +574,7 @@
     <Parameter Name="due_date" Type="datetime" Mode="In" />
     <Parameter Name="invoice_id" Type="int" Mode="In" />
     <Parameter Name="carrier_id" Type="int" Mode="In" />
-    <Parameter Name="shipment_status" Type="varchar" Mode="In" />
+    <Parameter Name="shipment_status_id" Type="int" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeShipment_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -618,7 +587,7 @@
     <Parameter Name="due_date" Type="datetime" Mode="In" />
     <Parameter Name="invoice_id" Type="int" Mode="In" />
     <Parameter Name="carrier_id" Type="int" Mode="In" />
-    <Parameter Name="shipment_status" Type="varchar" Mode="In" />
+    <Parameter Name="shipment_status_id" Type="int" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeShipmentStatus_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -681,18 +650,6 @@
     <Parameter Name="country" Type="varchar" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
-  <Function Name="NSP_TShopeeTableCategory_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="table_category_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="NSP_TShopeeTableCategory_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="name" Type="varchar" Mode="In" />
-    <Parameter Name="detail_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="NSP_TShopeeTableCategory_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="table_category_id" Type="int" Mode="In" />
-    <Parameter Name="name" Type="varchar" Mode="In" />
-    <Parameter Name="detail_id" Type="int" Mode="In" />
-  </Function>
   <Function Name="NSP_TShopeeUser_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="user_id" Type="int" Mode="In" />
   </Function>
@@ -725,7 +682,6 @@
     <EntitySet Name="TShopeeDetail" EntityType="Self.TShopeeDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TShopeeInvoice" EntityType="Self.TShopeeInvoice" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TShopeeInvoiceStatus" EntityType="Self.TShopeeInvoiceStatus" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="TShopeeOperation" EntityType="Self.TShopeeOperation" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TShopeeOrder" EntityType="Self.TShopeeOrder" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TShopeeOrderItem" EntityType="Self.TShopeeOrderItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TShopeeOrderItemStatus" EntityType="Self.TShopeeOrderItemStatus" Schema="dbo" store:Type="Tables" />
@@ -742,7 +698,6 @@
     <EntitySet Name="TShopeeShipmentStatus" EntityType="Self.TShopeeShipmentStatus" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TShopeeStockItem" EntityType="Self.TShopeeStockItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TShopeeStockWarehouse" EntityType="Self.TShopeeStockWarehouse" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="TShopeeTableCategory" EntityType="Self.TShopeeTableCategory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TShopeeUser" EntityType="Self.TShopeeUser" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TShopeeUserRole" EntityType="Self.TShopeeUserRole" Schema="dbo" store:Type="Tables" />
   </EntityContainer>

@@ -483,9 +483,6 @@
     <Compile Include="Models\TShopeeInvoiceStatu.cs">
       <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TShopeeOperation.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\TShopeeOrder.cs">
       <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
     </Compile>
@@ -532,9 +529,6 @@
       <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeStockWarehouse.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TShopeeTableCategory.cs">
       <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeUser.cs">

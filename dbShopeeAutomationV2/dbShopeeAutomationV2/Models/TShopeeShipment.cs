@@ -23,7 +23,7 @@ namespace dbShopeeAutomationV2.Models
         public Nullable<System.DateTime> due_date { get; set; }
         public Nullable<int> invoice_id { get; set; }
         public Nullable<int> carrier_id { get; set; }
-        public string shipment_status { get; set; }
+        public Nullable<int> shipment_status_id { get; set; }
         public Nullable<int> detail_id { get; set; }
     }
 }

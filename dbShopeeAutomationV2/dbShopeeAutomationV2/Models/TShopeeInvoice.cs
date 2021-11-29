@@ -15,6 +15,7 @@ namespace dbShopeeAutomationV2.Models
     public partial class TShopeeInvoice
     {
         public int invoice_id { get; set; }
+        public string invoice_title { get; set; }
         public Nullable<System.DateTime> invoice_date { get; set; }
         public string invoice_details { get; set; }
         public Nullable<decimal> shipping_fee { get; set; }

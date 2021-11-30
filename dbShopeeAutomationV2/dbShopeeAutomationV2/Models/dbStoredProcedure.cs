@@ -237,7 +237,7 @@ namespace dbShopeeAutomationV2.Models
         }
 
         // Production Stored Procedure
-        public static int productionInsert(string title, string description, string production_status, string username)
+        public static int productionInsert(string title, string description, int? production_status_id, string username)
         {
             // Create New Detail
             string status = $"Production: {title}";
@@ -246,17 +246,17 @@ namespace dbShopeeAutomationV2.Models
             db.SaveChanges();
 
             int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
-            return db.NSP_TShopeeProduction_Insert(title, description, production_status, detail_id);
+            return db.NSP_TShopeeProduction_Insert(title, description, production_status_id, detail_id);
         }
 
-        public static int productionUpdate(int production_id, string title, string description, string production_status, string username)
+        public static int productionUpdate(int production_id, string title, string description, int? production_status_id, string username)
         {
             int detail_id = (int)db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
-            return db.NSP_TShopeeProduction_Update(production_id, title, description, production_status, detail_id);
+            return db.NSP_TShopeeProduction_Update(production_id, title, description, production_status_id, detail_id);
         }
 
         public static int productionDelete(int production_id)
@@ -266,6 +266,38 @@ namespace dbShopeeAutomationV2.Models
             db.SaveChanges();
 
             return db.NSP_TShopeeProduction_Delete(production_id);
+        }
+
+        // Production Status Stored Procedure
+        public static int productionStatusInsert(string name, string username)
+        {
+            // Create New Detail
+            string status = $"Production Status: {name}";
+            string remark = "";
+            detailInsert(status, remark, username, username);
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeProductionStatus_Insert(name, detail_id);
+        }
+            
+        public static int productionStatusUpdate(int production_status_id, string name, string username)
+        {
+            int detail_id = (int)db.TShopeeProductionStatus.FirstOrDefault(it => it.production_status_id == production_status_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeProductionStatus_Update(production_status_id, name, detail_id);
+        }
+
+        public static int productionStatusDelete(int production_status_id)
+        {
+            int detail_id = (int)db.TShopeeProductionStatus.FirstOrDefault(it => it.production_status_id == production_status_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeProductionStatus_Delete(production_status_id);
         }
 
         // Production Detail Stored Procedure

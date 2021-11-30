@@ -10,16 +10,14 @@
         detailDict.Add(it.detail_id, it.last_updated_by);
     });
 
-    var grid = Html.DevExpress().GridView(settings =>
-    {
-        settings.Name = "ProductionGridView";
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "ProductionStatusGridView";
         settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "ProductionStatus", Action = "ProductionStatusGridViewPartial" };
 
-        settings.CallbackRouteValues = new { Controller = "Production", Action = "ProductionGridViewPartial" };
-
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Production", Action = "ProductionGridViewPartialAddNew" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Production", Action = "ProductionGridViewPartialUpdate" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Production", Action = "ProductionGridViewPartialDelete" };
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "ProductionStatus", Action = "ProductionStatusGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ProductionStatus", Action = "ProductionStatusGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ProductionStatus", Action = "ProductionStatusGridViewPartialDelete" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsBehavior.ConfirmDelete = true;
 
@@ -27,35 +25,20 @@
         settings.CommandColumn.ShowNewButtonInHeader = true;
         settings.CommandColumn.ShowDeleteButton = true;
         settings.CommandColumn.ShowEditButton = true;
+        settings.SettingsSearchPanel.Visible = true;
 
-        settings.KeyFieldName = "production_id";
+        settings.KeyFieldName = "production_status_id";
 
         settings.SettingsPager.Visible = true;
         settings.Settings.ShowGroupPanel = true;
         settings.Settings.ShowFilterRow = true;
         settings.SettingsBehavior.AllowSelectByRowClick = true;
-        settings.SettingsSearchPanel.Visible = true;
 
         // Header Set Center
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
-        settings.Columns.Add("title").Caption = "Production Title";
-        settings.Columns.Add("description").Caption = "Production Description";
-
-        // Production Status
-        settings.Columns.Add(col =>
-        {
-            col.FieldName = "production_status_id";
-            col.Caption = "Production Status";
-
-            col.ColumnType = MVCxGridViewColumnType.ComboBox;
-            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
-            prop.DataSource = db.TShopeeProductionStatus.ToList();
-            prop.TextField = "name";
-            prop.ValueField = "production_status_id";
-            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
-        });
+        settings.Columns.Add("name").Caption = "Production Status Name";
 
         // Last Updated By
         settings.Columns.Add(col =>
@@ -79,8 +62,7 @@
         settings.Styles.Cell.VerticalAlign = VerticalAlign.Middle;
     });
 
-    if (ViewData["EditError"] != null)
-    {
+    if (ViewData["EditError"] != null){
         grid.SetEditErrorText((string)ViewData["EditError"]);
     }
 }

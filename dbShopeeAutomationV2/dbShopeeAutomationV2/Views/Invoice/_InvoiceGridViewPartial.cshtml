@@ -10,6 +10,11 @@
         detailDict.Add(it.detail_id, it.last_updated_by);
     });
 
+    Dictionary<int, TShopeeOrder> orderDict = new Dictionary<int, TShopeeOrder>();
+    db.TShopeeOrders.ToList().ForEach(it => {
+        orderDict.Add(it.order_id, it);
+    });
+
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "InvoiceGridView";
         settings.Width = Unit.Percentage(100);
@@ -109,6 +114,7 @@
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
         });
 
+        // Shipping Fee
         settings.Columns.Add(col =>
         {
             col.FieldName = "shipping_fee";
@@ -123,6 +129,13 @@
             prop.DisplayFormatString = "C";
         });
 
+        // Total Price
+        settings.Columns.Add(col => {
+            col.FieldName = "Invoice Total Price";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.ReadOnly = true;
+        });
+
         // Last Updated By
         settings.Columns.Add(col =>
         {
@@ -133,6 +146,12 @@
 
         settings.CustomUnboundColumnData = (s, e) =>
         {
+            if (e.Column.FieldName.Equals("Invoice Total Price")) {
+                int order_id = int.Parse(e.GetListSourceFieldValue("order_id").ToString());
+                Decimal shipping_fee = Decimal.Parse(e.GetListSourceFieldValue("shipping_fee").ToString());
+                e.Value = $"RM{orderDict[order_id].total_price - shipping_fee}";
+            }
+
             if (e.Column.FieldName.Equals("Last Updated By"))
             {
                 int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());

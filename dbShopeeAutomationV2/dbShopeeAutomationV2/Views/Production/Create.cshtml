@@ -24,8 +24,6 @@
             <div class="col px-4 py-2">
                 @using (Html.BeginForm("Create", "Production", FormMethod.Post, new { id = "createProduction" }))
                 {
-                    @Html.HiddenFor(model => model.status, new { @Value = "Incomplete" })
-
                     @Html.HiddenFor(model => model.production_id)
 
                     <div class="form-group">

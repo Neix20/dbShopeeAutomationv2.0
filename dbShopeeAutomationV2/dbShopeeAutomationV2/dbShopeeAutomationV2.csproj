@@ -409,6 +409,8 @@
     <Content Include="Views\Shared\_EcommerceLayout.cshtml" />
     <Content Include="Views\Shared\_ShipmentLayout.cshtml" />
     <Content Include="Views\Shared\_OperationLayout.cshtml" />
+    <Content Include="Views\ProductionStatus\Index.cshtml" />
+    <Content Include="Views\ProductionStatus\_ProductionStatusGridViewPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -440,6 +442,7 @@
     <Compile Include="Controllers\ProductionController.cs" />
     <Compile Include="Controllers\ProductionDetailController.cs" />
     <Compile Include="Controllers\ProductionDetailFormController.cs" />
+    <Compile Include="Controllers\ProductionStatusController.cs" />
     <Compile Include="Controllers\ProductTypeController.cs" />
     <Compile Include="Controllers\ProductVarietyController.cs" />
     <Compile Include="Controllers\ShipmentController.cs" />
@@ -511,6 +514,9 @@
       <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeProductionDetail.cs">
+      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TShopeeProductionStatu.cs">
       <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeProductType.cs">

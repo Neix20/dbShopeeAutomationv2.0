@@ -87,16 +87,6 @@
     <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="detail_id" Type="Int32" />
   </EntityType>
-  <EntityType Name="TShopeeProduction">
-    <Key>
-      <PropertyRef Name="production_id" />
-    </Key>
-    <Property Name="production_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="detail_id" Type="Int32" />
-  </EntityType>
   <EntityType Name="TShopeeProductionDetail">
     <Key>
       <PropertyRef Name="production_detail_id" />
@@ -188,7 +178,6 @@
     <EntitySet Name="TShopeePaymentMethods" EntityType="Self.TShopeePaymentMethod" />
     <EntitySet Name="TShopeePlatforms" EntityType="Self.TShopeePlatform" />
     <EntitySet Name="TShopeeProductBrands" EntityType="Self.TShopeeProductBrand" />
-    <EntitySet Name="TShopeeProductions" EntityType="Self.TShopeeProduction" />
     <EntitySet Name="TShopeeProductionDetails" EntityType="Self.TShopeeProductionDetail" />
     <EntitySet Name="TShopeeProductTypes" EntityType="Self.TShopeeProductType" />
     <EntitySet Name="TShopeeProductVarieties" EntityType="Self.TShopeeProductVariety" />
@@ -337,22 +326,6 @@
     <FunctionImport Name="NSP_TShopeeProductBrand_Update">
       <Parameter Name="product_brand_id" Mode="In" Type="Int32" />
       <Parameter Name="name" Mode="In" Type="String" />
-      <Parameter Name="detail_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeProduction_Delete">
-      <Parameter Name="production_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeProduction_Insert">
-      <Parameter Name="title" Mode="In" Type="String" />
-      <Parameter Name="description" Mode="In" Type="String" />
-      <Parameter Name="status" Mode="In" Type="String" />
-      <Parameter Name="detail_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeProduction_Update">
-      <Parameter Name="production_id" Mode="In" Type="Int32" />
-      <Parameter Name="title" Mode="In" Type="String" />
-      <Parameter Name="description" Mode="In" Type="String" />
-      <Parameter Name="status" Mode="In" Type="String" />
       <Parameter Name="detail_id" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="NSP_TShopeeProductionDetail_Delete">
@@ -623,6 +596,36 @@
       <Parameter Name="shipment_status_id" Mode="In" Type="Int32" />
       <Parameter Name="detail_id" Mode="In" Type="Int32" />
     </FunctionImport>
+    <EntitySet Name="TShopeeProductions" EntityType="dbShopeeAutomationV2Model.TShopeeProduction" />
+    <EntitySet Name="TShopeeProductionStatus" EntityType="dbShopeeAutomationV2Model.TShopeeProductionStatu" />
+    <FunctionImport Name="NSP_TShopeeProduction_Delete">
+      <Parameter Name="production_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProduction_Insert">
+      <Parameter Name="title" Mode="In" Type="String" />
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="production_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProduction_Update">
+      <Parameter Name="production_id" Mode="In" Type="Int32" />
+      <Parameter Name="title" Mode="In" Type="String" />
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="production_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductionStatus_Delete">
+      <Parameter Name="production_status_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductionStatus_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductionStatus_Update">
+      <Parameter Name="production_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="TShopeeProduct">
     <Key>
@@ -699,6 +702,24 @@
     <Property Name="invoice_id" Type="Int32" />
     <Property Name="carrier_id" Type="Int32" />
     <Property Name="shipment_status_id" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeProduction">
+    <Key>
+      <PropertyRef Name="production_id" />
+    </Key>
+    <Property Name="production_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="production_status_id" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeProductionStatu">
+    <Key>
+      <PropertyRef Name="production_status_id" />
+    </Key>
+    <Property Name="production_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="detail_id" Type="Int32" />
   </EntityType>
 </Schema>

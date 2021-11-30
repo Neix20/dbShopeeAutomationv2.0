@@ -20,42 +20,61 @@ namespace dbShopeeAutomationV2.Controllers
 
         dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
-        public void readExcelFile(string filename)
-        {
-            WorkBook wb = WorkBook.Load(filename);
-            WorkSheet ws = wb.GetWorkSheet("Shopee Report");
+        //public void readExcelFile(string filename, int platform_id, string username)
+        //{
+        //    WorkBook wb = WorkBook.Load(filename);
+        //    WorkSheet ws = wb.GetWorkSheet("Shopee Report");
 
-            // Record Rows
-            // Order Id => col[0]
-            // Order Status => col[1]
-            // Payment Method => col[2]
-            // Voucher Code => col[3]
-            // Buyer Username => col[4]
-            // Buyer Name => col[5]
-            // Buyer Mobile Phone => col[6]
-            // Product Name => col[7]
-            // Product Quantity => col[8]
-            // Product Unit Price => col[9]
-            // Order Sub Total => col[10]
-            // Shipping Fee => col[11]
-            // Extra Charges => col[12]
-            // Order Income => col[13]
-            // Carrier Name => col[14]
-            // Tracking Id => col[15]
-            // Shipping Address => col[16]
-            // Order Refund Status => col[17]
-            // Product Variety => col[18]
-            // Purchase Date Time => col[19]
+        //    // Record Rows
+        //    // Order Id => col[0]
+        //    // Order Status => col[1]
+        //    // Payment Method => col[2]
+        //    // Buyer Name => col[5]
+        //    // Buyer Mobile Phone => col[6]
+        //    // Product Name => col[7]
+        //    // Product Quantity => col[8]
+        //    // Product Unit Price => col[9]
+        //    // Order Sub Total => col[10]
+        //    // Shipping Fee => col[11]
+        //    // Extra Charges => col[12]
+        //    // Order Income => col[13]
+        //    // Carrier Name => col[14]
+        //    // Tracking Id => col[15]
+        //    // Shipping Address => col[16]
+        //    // Product Variety => col[18]
+        //    // Purchase Date Time => col[19]
 
-            // 1. Insert Carrier
-            // 2. Insert Payment Method
+        //    ws.Rows.ToList().GetRange(1, ws.RowCount - 1).ForEach(row => {
+        //        var tmp_arr = row.ToArray();
 
-            int platform_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeePlatform') AS INT)").FirstOrDefault();
+        //        // Create Customer / Buyer
+        //        string customer_name = (string) tmp_arr[5].Value;
+        //        string customer_phone_numer = (string)tmp_arr[6].Value;
+        //        dbStoredProcedure.customerInsert(customer_name, DateTime.Now, "", customer_phone_numer, "", platform_id, username);
 
-            ws.Rows.ToList().GetRange(1, ws.RowCount - 1).ForEach(row => {
-                var col = row.ToList();
-            });
-        }
+        //        // Create Carrier
+        //        string carrier_name = (string)tmp_arr[14].Value;
+        //        dbStoredProcedure.carrierInsert(carrier_name, username);
+
+        //        // Create Product Variety
+        //        string product_variety = (string)tmp_arr[18].Value;
+        //        dbStoredProcedure.productVarietyInsert(product_variety, username);
+        //        int product_variety_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProductVariety') AS INT)").FirstOrDefault();
+
+        //        // Create Product
+        //        int product_brand_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProductBrand') AS INT)").FirstOrDefault();
+        //        int product_type_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProductType') AS INT)").FirstOrDefault();
+        //        string product_name = (string)tmp_arr[7].Value;
+
+        //        // Create Order
+
+        //        // Create Order Item
+
+        //        // Create Invoice
+
+        //        // Create Shipment
+        //    });
+        //}
 
         [ValidateInput(false)]
         public ActionResult PlatformGridViewPartial()

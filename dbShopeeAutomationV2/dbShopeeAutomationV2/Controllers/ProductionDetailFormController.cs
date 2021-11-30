@@ -79,8 +79,8 @@ namespace dbShopeeAutomationV2.Controllers
             string username = User.Identity.Name;
 
             var proModel = db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id);
-            proModel.status = "Complete";
-            dbStoredProcedure.productionUpdate(proModel.production_id, proModel.title, proModel.description, proModel.status, username);
+            proModel.production_status_id = db.TShopeeProductionStatus.FirstOrDefault(it => it.name.ToLower().Equals("Complete".ToLower())).production_status_id;
+            dbStoredProcedure.productionUpdate(proModel.production_id, proModel.title, proModel.description, proModel.production_status_id, username);
             db.SaveChanges();
 
             var production_detail_list = db.TShopeeProductionDetails.Where(it => it.production_id == production_id);

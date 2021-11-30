@@ -38,14 +38,16 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            model.production_status_id = db.TShopeeProductionStatus.FirstOrDefault(it => it.name.ToLower().Equals("Incomplete".ToLower())).production_status_id;
+
             var tmpModel = db.TShopeeProductions.FirstOrDefault(it => it.production_id == model.production_id);
             if (tmpModel != null)
             {
-                dbStoredProcedure.productionUpdate(model.production_id, model.title, model.description, model.status, username);
+                dbStoredProcedure.productionUpdate(model.production_id, model.title, model.description, model.production_status_id, username);
             }
             else
             {
-                dbStoredProcedure.productionInsert(model.title, model.description, model.status, username);
+                dbStoredProcedure.productionInsert(model.title, model.description, model.production_status_id, username);
             }
             db.SaveChanges();
 
@@ -60,11 +62,22 @@ namespace dbShopeeAutomationV2.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
+        public ActionResult ProductionGridViewPartialAddNew(TShopeeProduction item)
+        {
+            string username = User.Identity.Name;
+
+            dbStoredProcedure.productionInsert(item.title, item.description, item.production_status_id, username);
+            db.SaveChanges();
+
+            return RedirectToAction("Create", "Production", new { production_id = item.production_id });
+        }
+
+        [HttpPost, ValidateInput(false)]
         public ActionResult ProductionGridViewPartialUpdate(TShopeeProduction item)
         {
             string username = User.Identity.Name;
 
-            dbStoredProcedure.productionUpdate(item.production_id, item.title, item.description, item.status, username);
+            dbStoredProcedure.productionUpdate(item.production_id, item.title, item.description, item.production_status_id, username);
             db.SaveChanges();
 
             return RedirectToAction("Create", "Production", new { production_id = item.production_id });

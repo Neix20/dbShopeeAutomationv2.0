@@ -7,10 +7,6 @@ namespace dbShopeeAutomationV2.Models
 {
     public static class dbStoredProcedure
     {
-        // Memory Optimization:
-        // 1. Do not use TShopeeDetail item as parameters, as it creates a new object each time TShopeeDetail is created.
-        // Replace TShopeeDetail item using its parameters (u will know wat I mean, future me)
-
         static dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
         // Details Stored Procedure
@@ -48,6 +44,7 @@ namespace dbShopeeAutomationV2.Models
         {
             int detail_id = (int)db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == product_brand_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Product Brand: {name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -79,6 +76,7 @@ namespace dbShopeeAutomationV2.Models
         {
             int detail_id = (int) db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == product_type_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Product Type: {name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -110,6 +108,7 @@ namespace dbShopeeAutomationV2.Models
         {
             int detail_id = (int)db.TShopeeProductVarieties.FirstOrDefault(it => it.product_variety_id == product_variety_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Product Variety: {name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 

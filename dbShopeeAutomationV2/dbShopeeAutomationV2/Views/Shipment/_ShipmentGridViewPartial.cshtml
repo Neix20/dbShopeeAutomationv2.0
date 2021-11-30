@@ -10,6 +10,8 @@
         detailDict.Add(it.detail_id, it.last_updated_by);
     });
 
+    int invoice_complete = db.TShopeeInvoiceStatus.FirstOrDefault(it => it.name.ToLower().Equals("Complete".ToLower())).invoice_status_id;
+
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "ShipmentGridView";
         settings.Width = Unit.Percentage(100);
@@ -89,7 +91,7 @@
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
-            prop.DataSource = db.TShopeeInvoices.Where(it => it.invoice_status_id == 6).ToList();
+            prop.DataSource = db.TShopeeInvoices.Where(it => it.invoice_status_id == invoice_complete).ToList();
             prop.TextField = "invoice_title";
             prop.ValueField = "invoice_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;

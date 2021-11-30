@@ -39,17 +39,22 @@ namespace dbShopeeAutomationV2.Controllers
             var product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == item.product_id);
             item.sub_total = product.sell_price * item.quantity - item.discount_fee;
 
-            // Update order Total
             var order = db.TShopeeOrders.FirstOrDefault(it => it.order_id == item.order_id);
-            order.total_price = order.total_price + item.sub_total;
-            dbStoredProcedure.orderUpdate(order.order_id, order.order_title, order.order_placed_date, order.total_price, order.order_status_id, username);
 
             // Create New Order Item Status
             dbStoredProcedure.orderItemStatusInsert($"Order Title: {order.order_title}, Product Item: {product.SKU}", "", 0, username);
             db.SaveChanges();
+
             item.order_item_status_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeOrderItemStatus') AS INT)").FirstOrDefault(); ;
 
             dbStoredProcedure.orderItemInsert(item.quantity, item.sub_total, item.discount_fee, item.RMA_num, item.RMA_issued_by, item.RMA_issued_date, item.order_id, item.order_item_status_id, item.product_id, username);
+            db.SaveChanges();
+
+            // Update order Total
+            var orderItems = db.TShopeeOrderItems.Where(it => it.order_id == item.order_id).ToList();
+            order.total_price = (decimal)orderItems.Select(x => x.sub_total).Sum();
+
+            dbStoredProcedure.orderUpdate(order.order_id, order.order_title, order.order_placed_date, order.total_price, order.order_status_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeOrderItems;
@@ -72,12 +77,16 @@ namespace dbShopeeAutomationV2.Controllers
             var product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == item.product_id);
             item.sub_total = product.sell_price * item.quantity - item.discount_fee;
 
-            // Update order Total
             var order = db.TShopeeOrders.FirstOrDefault(it => it.order_id == item.order_id);
-            order.total_price = order.total_price + item.sub_total;
-            dbStoredProcedure.orderUpdate(order.order_id, order.order_title, order.order_placed_date, order.total_price, order.order_status_id, username);
 
             dbStoredProcedure.orderItemUpdate(item.order_item_id, item.quantity, item.sub_total, item.discount_fee, item.RMA_num, item.RMA_issued_by, item.RMA_issued_date, item.order_id, item.order_item_status_id, item.product_id, username);
+            db.SaveChanges();
+
+            // Update order Total
+            var orderItems = db.TShopeeOrderItems.Where(it => it.order_id == item.order_id).ToList();
+            order.total_price = (decimal)orderItems.Select(x => x.sub_total).Sum();
+
+            dbStoredProcedure.orderUpdate(order.order_id, order.order_title, order.order_placed_date, order.total_price, order.order_status_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeOrderItems;
@@ -87,6 +96,15 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult OrderItemGridViewPartialDelete(int order_item_id)
         {
+            var order = db.TShopeeOrders.FirstOrDefault(it => it.order_id == item.order_id);
+
+            // Update order Total
+            var orderItems = db.TShopeeOrderItems.Where(it => it.order_id == item.order_id).ToList();
+            order.total_price = (decimal)orderItems.Select(x => x.sub_total).Sum();
+
+            dbStoredProcedure.orderUpdate(order.order_id, order.order_title, order.order_placed_date, order.total_price, order.order_status_id, username);
+            db.SaveChanges();
+
             int order_item_status_id = (int)db.TShopeeOrderItems.FirstOrDefault(it => it.order_item_id == order_item_id).order_item_status_id;
             dbStoredProcedure.orderItemStatusDelete(order_item_status_id);
             db.SaveChanges();

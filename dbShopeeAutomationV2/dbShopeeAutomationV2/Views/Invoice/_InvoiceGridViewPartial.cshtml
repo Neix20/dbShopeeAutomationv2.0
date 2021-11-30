@@ -15,6 +15,8 @@
         orderDict.Add(it.order_id, it);
     });
 
+    int order_complete = db.TShopeeOrderStatus.FirstOrDefault(it => it.name.ToLower().Equals("Complete".ToLower())).order_status_id;
+
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "InvoiceGridView";
         settings.Width = Unit.Percentage(100);
@@ -54,7 +56,7 @@
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
-            prop.DataSource = db.TShopeeOrders.Where(it => it.order_status_id == 6).ToList();
+            prop.DataSource = db.TShopeeOrders.Where(it => it.order_status_id == order_complete).ToList();
             prop.TextField = "order_title";
             prop.ValueField = "order_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;

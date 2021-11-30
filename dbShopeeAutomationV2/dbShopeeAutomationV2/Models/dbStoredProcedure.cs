@@ -148,6 +148,7 @@ namespace dbShopeeAutomationV2.Models
         {
             int detail_id = (int)db.TShopeeStockWarehouses.FirstOrDefault(it => it.stock_warehouse_id == stock_warehouse_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Stock Warehouse: {name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -188,6 +189,7 @@ namespace dbShopeeAutomationV2.Models
         {
             int detail_id = (int)db.TShopeeStockItems.FirstOrDefault(it => it.stock_item_id == stock_item_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Stock Item: {name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -220,6 +222,7 @@ namespace dbShopeeAutomationV2.Models
         {
             int detail_id = (int)db.TShopeeProducts.FirstOrDefault(it => it.product_id == product_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Product: {name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -252,6 +255,7 @@ namespace dbShopeeAutomationV2.Models
         {
             int detail_id = (int)db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Production: {title}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -284,6 +288,7 @@ namespace dbShopeeAutomationV2.Models
         {
             int detail_id = (int)db.TShopeeProductionStatus.FirstOrDefault(it => it.production_status_id == production_status_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Production Status: {name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -317,8 +322,12 @@ namespace dbShopeeAutomationV2.Models
 
         public static int productionDetailUpdate(int production_detail_id, string UOM, DateTime? manufactured_date, DateTime? expiry_date, int? quantity, int product_id, int? production_id, string username)
         {
+            string production_title = db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id).title;
+            string product_sku = db.TShopeeProducts.FirstOrDefault(it => it.product_id == product_id).SKU;
+
             int detail_id = (int)db.TShopeeProductionDetails.FirstOrDefault(it => it.production_detail_id == production_detail_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Production: {production_title}, Production Detail: {product_sku}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -351,6 +360,7 @@ namespace dbShopeeAutomationV2.Models
         {
             int detail_id = (int) db.TShopeePlatforms.FirstOrDefault(it => it.platform_id == platform_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Platform: {name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -383,6 +393,7 @@ namespace dbShopeeAutomationV2.Models
         {
             int detail_id = (int)db.TShopeePaymentMethods.FirstOrDefault(it => it.payment_method_id == payment_method_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Payment Method: {name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -415,6 +426,7 @@ namespace dbShopeeAutomationV2.Models
         {
             int detail_id = (int)db.TShopeeOrderItemStatus.FirstOrDefault(it => it.order_item_status_id == order_item_status_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"{name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -447,6 +459,7 @@ namespace dbShopeeAutomationV2.Models
         {
             int detail_id = (int) db.TShopeeInvoiceStatus.FirstOrDefault(it => it.invoice_status_id == invoice_status_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Invoice Status: {name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -479,6 +492,7 @@ namespace dbShopeeAutomationV2.Models
         {
             int detail_id = (int)db.TShopeeOrderStatus.FirstOrDefault(it => it.order_status_id == order_status_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Order Status: {name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -511,6 +525,7 @@ namespace dbShopeeAutomationV2.Models
         {
             int detail_id = (int) db.TShopeeShipmentStatus.FirstOrDefault(it => it.shipment_status_id == shipment_status_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Shipment Status: {name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -543,6 +558,7 @@ namespace dbShopeeAutomationV2.Models
         {
             int detail_id = (int)db.TShopeeCarriers.FirstOrDefault(it => it.carrier_id == carrier_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Carrier: {name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -635,6 +651,7 @@ namespace dbShopeeAutomationV2.Models
 
             int detail_id = (int)db.TShopeeCustomers.FirstOrDefault(it => it.customer_id == customer_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Customer: {full_name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -667,8 +684,8 @@ namespace dbShopeeAutomationV2.Models
         public static int orderUpdate(int order_id, string order_title, DateTime? order_placed_date, Decimal? total_price, int? order_status_id, string username)
         {
             int detail_id = (int)db.TShopeeOrders.FirstOrDefault(it => it.order_id == order_id).detail_id;
-
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Order: {order_title}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -706,9 +723,11 @@ namespace dbShopeeAutomationV2.Models
 
         public static int orderItemUpdate(int order_item_id, int? quantity, Decimal? sub_total, Decimal? discount_fee, int? RMA_num, string RMA_issued_by, DateTime? RMA_issued_date, int? order_id, int? order_item_status_id, int? product_id, string username)
         {
+            string product_sku = db.TShopeeProducts.FirstOrDefault(it => it.product_id == product_id).SKU;
+
             int detail_id = (int)db.TShopeeOrderItems.FirstOrDefault(it => it.order_item_id == order_item_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
-            detail.status = $"Order ID: {order_id}";
+            detail.status = $"Order ID: {order_id} Order Item: {product_sku}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -749,8 +768,8 @@ namespace dbShopeeAutomationV2.Models
         public static int invoiceUpdate(int invoice_id, string invoice_title, DateTime? invoice_date, string invoice_details, Decimal? shipping_fee, int? invoice_status_id, int? payment_method_id, int? order_id, int? customer_id, string username)
         {
             int detail_id = (int)db.TShopeeInvoices.FirstOrDefault(it => it.invoice_id == invoice_id).detail_id;
-
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Invoice Name: {invoice_title}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
@@ -783,6 +802,7 @@ namespace dbShopeeAutomationV2.Models
         {
             int detail_id = (int)db.TShopeeShipments.FirstOrDefault(it => it.shipment_id == shipment_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Shipment Tracking Code: {tracking_id}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 

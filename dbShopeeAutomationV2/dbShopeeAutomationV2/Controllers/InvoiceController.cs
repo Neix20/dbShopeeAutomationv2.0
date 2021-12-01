@@ -38,11 +38,12 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            item.invoice_date = (item.invoice_date == null) ? DateTime.Now : item.invoice_date;
+            item.invoice_created_date = (item.invoice_created_date == null) ? DateTime.Now : item.invoice_created_date;
+            item.invoice_status_id = (item.invoice_status_id == null) ? db.TShopeeInvoiceStatus.FirstOrDefault(it => it.name.ToLower().Equals("Incomplete".ToLower())).invoice_status_id : item.invoice_id;
             item.shipping_fee = (item.shipping_fee == null) ? 0 : item.shipping_fee;
             item.invoice_title = (item.invoice_title == null) ? randomCode() : item.invoice_title;
 
-            dbStoredProcedure.invoiceInsert(item.invoice_title, item.invoice_date, item.invoice_details, item.shipping_fee, item.invoice_status_id, item.payment_method_id, item.order_id, item.customer_id, username);
+            dbStoredProcedure.invoiceInsert(item.invoice_title, item.invoice_created_date, item.invoice_completed_date, item.invoice_details, item.shipping_fee, item.invoice_status_id, item.payment_method_id, item.order_id, item.customer_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeInvoices;
@@ -54,11 +55,12 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            item.invoice_date = (item.invoice_date == null) ? DateTime.Now : item.invoice_date;
+            item.invoice_created_date = (item.invoice_created_date == null) ? DateTime.Now : item.invoice_created_date;
+            item.invoice_status_id = (item.invoice_status_id == null) ? db.TShopeeInvoiceStatus.FirstOrDefault(it => it.name.ToLower().Equals("Incomplete".ToLower())).invoice_status_id : item.invoice_id;
             item.shipping_fee = (item.shipping_fee == null) ? 0 : item.shipping_fee;
             item.invoice_title = (item.invoice_title == null) ? randomCode() : item.invoice_title;
 
-            dbStoredProcedure.invoiceUpdate(item.invoice_id, item.invoice_title, item.invoice_date, item.invoice_details, item.shipping_fee, item.invoice_status_id, item.payment_method_id, item.order_id, item.customer_id, username);
+            dbStoredProcedure.invoiceUpdate(item.invoice_id, item.invoice_title, item.invoice_created_date, item.invoice_completed_date, item.invoice_details, item.shipping_fee, item.invoice_status_id, item.payment_method_id, item.order_id, item.customer_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeInvoices;

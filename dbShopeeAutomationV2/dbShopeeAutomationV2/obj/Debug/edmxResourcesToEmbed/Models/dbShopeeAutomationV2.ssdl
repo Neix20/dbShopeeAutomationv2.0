@@ -45,7 +45,8 @@
     </Key>
     <Property Name="invoice_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="invoice_title" Type="varchar" MaxLength="50" />
-    <Property Name="invoice_date" Type="datetime" />
+    <Property Name="invoice_created_date" Type="datetime" />
+    <Property Name="invoice_completed_date" Type="datetime" />
     <Property Name="invoice_details" Type="varchar(max)" />
     <Property Name="shipping_fee" Type="decimal" Precision="10" Scale="2" />
     <Property Name="invoice_status_id" Type="int" />
@@ -335,7 +336,8 @@
   </Function>
   <Function Name="NSP_TShopeeInvoice_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="invoice_title" Type="varchar" Mode="In" />
-    <Parameter Name="invoice_date" Type="datetime" Mode="In" />
+    <Parameter Name="invoice_created_date" Type="datetime" Mode="In" />
+    <Parameter Name="invoice_completed_date" Type="datetime" Mode="In" />
     <Parameter Name="invoice_details" Type="varchar(max)" Mode="In" />
     <Parameter Name="shipping_fee" Type="decimal" Mode="In" />
     <Parameter Name="invoice_status_id" Type="int" Mode="In" />
@@ -347,7 +349,8 @@
   <Function Name="NSP_TShopeeInvoice_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="invoice_id" Type="int" Mode="In" />
     <Parameter Name="invoice_title" Type="varchar" Mode="In" />
-    <Parameter Name="invoice_date" Type="datetime" Mode="In" />
+    <Parameter Name="invoice_created_date" Type="datetime" Mode="In" />
+    <Parameter Name="invoice_completed_date" Type="datetime" Mode="In" />
     <Parameter Name="invoice_details" Type="varchar(max)" Mode="In" />
     <Parameter Name="shipping_fee" Type="decimal" Mode="In" />
     <Parameter Name="invoice_status_id" Type="int" Mode="In" />

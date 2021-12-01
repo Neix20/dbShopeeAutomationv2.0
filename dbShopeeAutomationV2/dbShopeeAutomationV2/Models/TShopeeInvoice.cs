@@ -16,7 +16,8 @@ namespace dbShopeeAutomationV2.Models
     {
         public int invoice_id { get; set; }
         public string invoice_title { get; set; }
-        public Nullable<System.DateTime> invoice_date { get; set; }
+        public Nullable<System.DateTime> invoice_created_date { get; set; }
+        public Nullable<System.DateTime> invoice_completed_date { get; set; }
         public string invoice_details { get; set; }
         public Nullable<decimal> shipping_fee { get; set; }
         public Nullable<int> invoice_status_id { get; set; }
@@ -24,5 +25,10 @@ namespace dbShopeeAutomationV2.Models
         public Nullable<int> order_id { get; set; }
         public Nullable<int> customer_id { get; set; }
         public Nullable<int> detail_id { get; set; }
+
+        public TShopeeInvoice()
+        {
+
+        }
     }
 }

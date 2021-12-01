@@ -753,7 +753,7 @@ namespace dbShopeeAutomationV2.Models
 
         // Create Related Invoice Status
         // Delete Related Invoice Status 
-        public static int invoiceInsert(string invoice_title, DateTime? invoice_date, string invoice_details, Decimal? shipping_fee, int? invoice_status_id, int? payment_method_id, int? order_id, int? customer_id, string username)
+        public static int invoiceInsert(string invoice_title, DateTime? invoice_created_date, DateTime? invoice_completed_date, string invoice_details, Decimal? shipping_fee, int? invoice_status_id, int? payment_method_id, int? order_id, int? customer_id, string username)
         {
             // Create New Detail
             string status = $"Invoice Name: {invoice_title}";
@@ -762,10 +762,10 @@ namespace dbShopeeAutomationV2.Models
             db.SaveChanges();
 
             int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
-            return db.NSP_TShopeeInvoice_Insert(invoice_title, invoice_date, invoice_details, shipping_fee, invoice_status_id, payment_method_id, order_id, customer_id, detail_id);
+            return db.NSP_TShopeeInvoice_Insert(invoice_title, invoice_created_date, invoice_completed_date, invoice_details, shipping_fee, invoice_status_id, payment_method_id, order_id, customer_id, detail_id);
         }
 
-        public static int invoiceUpdate(int invoice_id, string invoice_title, DateTime? invoice_date, string invoice_details, Decimal? shipping_fee, int? invoice_status_id, int? payment_method_id, int? order_id, int? customer_id, string username)
+        public static int invoiceUpdate(int invoice_id, string invoice_title, DateTime? invoice_created_date, DateTime? invoice_completed_date, string invoice_details, Decimal? shipping_fee, int? invoice_status_id, int? payment_method_id, int? order_id, int? customer_id, string username)
         {
             int detail_id = (int)db.TShopeeInvoices.FirstOrDefault(it => it.invoice_id == invoice_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
@@ -773,7 +773,7 @@ namespace dbShopeeAutomationV2.Models
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
-            return db.NSP_TShopeeInvoice_Update(invoice_id, invoice_title, invoice_date, invoice_details, shipping_fee, invoice_status_id, payment_method_id, order_id, customer_id, detail_id);
+            return db.NSP_TShopeeInvoice_Update(invoice_id, invoice_title, invoice_created_date, invoice_completed_date, invoice_details, shipping_fee, invoice_status_id, payment_method_id, order_id, customer_id, detail_id);
         }
 
         public static int invoiceDelete(int invoice_id)

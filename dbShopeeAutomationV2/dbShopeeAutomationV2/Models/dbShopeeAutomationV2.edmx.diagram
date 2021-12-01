@@ -25,10 +25,10 @@
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeInvoiceStatu" Width="1.5" PointX="7.75" PointY="14.75" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeOrder" Width="1.5" PointX="0.75" PointY="5.75" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeOrderItemStatu" Width="1.5" PointX="3.375" PointY="5.75" />
-        <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeInvoice" Width="1.5" PointX="3.375" PointY="14.75" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeShipment" Width="1.5" PointX="0.75" PointY="11.75" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeProduction" Width="1.5" PointX="7.375" PointY="0.75" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeProductionStatu" Width="1.5" PointX="9.125" PointY="3.25" />
+        <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeInvoice" Width="1.5" PointX="3.375" PointY="14.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

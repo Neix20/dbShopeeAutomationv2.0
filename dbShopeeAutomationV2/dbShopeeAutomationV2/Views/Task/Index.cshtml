@@ -1,0 +1,70 @@
+﻿@using dbShopeeAutomationV2.Models;
+@model TShopeeInvoice
+
+@{
+    dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_TaskLayout.cshtml";
+}
+
+<section class="h-100" style="background-color: lightgray">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center">
+            <div class="col">
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body p-3">
+
+                        <!-- Insert Content Start -->
+                        <div class="text-center pt-3">
+                            <img src="~/Content/Images/check1.png" alt="Check" style="height: 100px; width: 100px">
+                            <h2 class="my-4">Task List</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-4"></div>
+                            <div class="col-4">
+                                <form id="invoiceTaskForm" action="/Task/InvoiceTaskGridViewShow" method="post">
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label"
+                                               style="font-size: 18px;">Filter</label>
+                                        <label class="col-sm-8">
+                                            @Html.TextBoxFor(model => model.invoice_completed_date, "{0:yyyy-MM-dd}",  new { @Class = "form-control", @Type="date"})
+                                        </label>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div id="invoiceTaskContent">
+                            @Html.Action("InvoiceTaskGridViewPartial")
+                        </div>
+                        <!-- Insert Content End-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(function () {
+        let invoice_date_form = $("form[id='invoiceTaskForm']");
+        const invoice_date_actionLink = invoice_date_form.attr("action");
+        const invoice_date_methodType = invoice_date_form.attr("method");
+
+        $("input[name='invoice_completed_date']").on("change", e => {
+            // Insert Ajax Jquery Submit Function
+            $.ajax({
+                type: invoice_date_methodType,
+                url: invoice_date_actionLink,
+                data: invoice_date_form.serialize(),
+                success: response => {
+                    $("#invoiceTaskContent").html(response);
+                }
+            });
+        });
+    });
+</script>

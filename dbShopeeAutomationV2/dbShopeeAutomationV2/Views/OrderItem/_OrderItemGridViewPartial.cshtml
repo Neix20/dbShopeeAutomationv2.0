@@ -10,6 +10,12 @@
         detailDict.Add(it.detail_id, it.last_updated_by);
     });
 
+    List<TShopeeProduct> tmpProductList = db.TShopeeProducts.AsEnumerable().Where(it =>
+    {
+        TShopeeStockItem tmp = db.TShopeeStockItems.FirstOrDefault(model => model.product_id == it.product_id);
+        return tmp.stock_quantity > 0;
+    }).ToList();
+
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "OrderItemGridView";
         settings.Width = Unit.Percentage(100);
@@ -59,7 +65,7 @@
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
-            prop.DataSource = db.TShopeeProducts.ToList();
+            prop.DataSource = tmpProductList.ToList();
             prop.TextField = "SKU";
             prop.ValueField = "product_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;

@@ -38,6 +38,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            // Set Production Status to incomplete
             model.production_status_id = db.TShopeeProductionStatus.FirstOrDefault(it => it.name.ToLower().Equals("Incomplete".ToLower())).production_status_id;
 
             var tmpModel = db.TShopeeProductions.FirstOrDefault(it => it.production_id == model.production_id);

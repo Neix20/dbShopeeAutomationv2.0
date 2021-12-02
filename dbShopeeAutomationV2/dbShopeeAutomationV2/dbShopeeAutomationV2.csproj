@@ -415,6 +415,8 @@
     <Content Include="Views\Shared\_TaskLayout.cshtml" />
     <Content Include="Views\Task\Index.cshtml" />
     <Content Include="Views\Task\_InvoiceTaskGridViewPartial.cshtml" />
+    <Content Include="Views\DailyTask\Index.cshtml" />
+    <Content Include="Views\DailyTask\_DailyTaskPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -432,6 +434,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CarrierController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\DailyTaskController.cs" />
     <Compile Include="Controllers\DetailController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\InvoiceStatusController.cs" />

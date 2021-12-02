@@ -94,6 +94,7 @@
         settings.Columns.Add(col => {
             col.FieldName = "invoice_status_id";
             col.Caption = "Complete?";
+            col.ReadOnly = true;
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
@@ -107,6 +108,7 @@
         {
             col.FieldName = "invoice_completed_date";
             col.Caption = "Completed Date";
+            col.ReadOnly = true;
 
             col.ColumnType = MVCxGridViewColumnType.DateEdit;
             col.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";

@@ -1,0 +1,87 @@
+﻿@using dbShopeeAutomationV2.Models;
+@using System.Collections.Generic;
+@using System.Linq;
+@model IEnumerable<TShopeeInvoice>
+
+@{
+    dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
+    int ind = 0;
+}
+
+<div class="text-center">
+    <h4>Number of Orders: <span id="num_of_order_left">@ViewData["num_of_orders_left"]</span></h4>
+</div>
+
+<div class="my-3"></div>
+
+<div class="border border-dark">
+    <table class="table table-striped">
+        <thead class="bg-dark text-white text-center">
+            <tr>
+                <th>No.</th>
+                <th>Invoice Code</th>
+                <th>Created Date</th>
+                <th>Complete?</th>
+                <th>Completed Date</th>
+                <th>Print</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            @foreach (var inv_rec in Model)
+            {
+                string tmp_id = $"invoiceRecord{ind++}";
+                string tmp_ind = $"{ind}.";
+                string tmp_com_dt = (inv_rec.invoice_completed_date == null) ? "" : inv_rec.invoice_completed_date.Value.ToString("yyyy-MM-dd");
+
+                List<SelectListItem> statusList = (from inv in db.TShopeeInvoiceStatus select new SelectListItem { Text = inv.name, Value = inv.invoice_status_id + "" }).ToList();
+                statusList.Find(it => it.Value == inv_rec.invoice_status_id + "").Selected = true;
+
+                <form id="@tmp_id" action="/DailyTask/Update" method="post">
+                    <tr>
+                        <input type="text" name="invoice_id" value="@inv_rec.invoice_id" hidden />
+                        <td>@tmp_ind</td>
+                        <td>@Html.TextBox("invoice_title", inv_rec.invoice_title, new { @Readonly = true, @Class = "form-control text-center", @Type = "text" })</td>
+                        <td>@Html.TextBox("invoice_created_date", inv_rec.invoice_created_date.Value.ToString("yyyy-MM-dd"), new { @Readonly = true, @Class = "form-control text-center", @Type = "text" })</td>
+                        <td>
+                            <div class="row px-3">
+                                <div class="col-8 mr-1">
+                                    @Html.DropDownList("invoice_status_id", statusList, new { @Readonly = true, @Class = "form-select" })
+                                </div>
+                                <div class="col-2">
+                                    <input type="submit" value="Submit" class="btn btn-primary" form="@tmp_id" />
+                                </div>
+                            </div>
+                        </td>
+                        <td>@Html.TextBox("invoice_completed_date", tmp_com_dt, new { @Readonly = true, @Class = "form-control text-center", @Type = "text" })</td>
+                        <td>@Html.ActionLink("Print", "PrintBill", "DailyTask", new { invoice_id = inv_rec.invoice_id }, new { @Class="btn btn-danger"})</td>
+                    </tr>
+                </form>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        // Css Selector
+        $("select option:selected").each((ind, elem) => {
+            // Becomes Javascript Dom
+            console.log(ind);
+            if (elem.innerHTML.toLowerCase() == "Complete".toLowerCase()) {
+                // Complete Orders
+                // 1. Set Select Disabled
+                $("select").eq(ind).attr("disabled", "active");
+                // 2. Set Button Disabled
+                $("input[type='submit']").eq(ind).attr("disabled", "active");
+            }
+            else {
+                // Incomplete orders
+                // 1. Set Print Button Disabled
+                console.log(`Disabled Link: ${ind}`);
+                $("a[href^='/DailyTask/PrintBill']").eq(ind).css("visibility", "hidden");
+            }
+        });
+
+
+    });
+</script>

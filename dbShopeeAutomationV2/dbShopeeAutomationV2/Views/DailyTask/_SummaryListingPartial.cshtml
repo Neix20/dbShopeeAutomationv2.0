@@ -1,0 +1,37 @@
+﻿@using dbShopeeAutomationV2.Models;
+@model IEnumerable<TShopeeInvoice>
+
+<div id="summary_pdf">
+    <section>
+        <div class="card">
+            <div class="card-body p-3">
+                <div class="border border-dark">
+                    <table class="table table-borderless text-center">
+                        <thead>
+                            <tr class="bg-dark">
+                                <th colspan="4" class="text-white h2">Product Summary Listing</th>
+                            </tr>
+                            <tr>
+                                <th>No.</th>
+                                <th>Name</th>
+                                <th>Variety</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var inv_rec in Model)
+                            {
+                                <tr>
+                                    <td>@inv_rec.invoice_title</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

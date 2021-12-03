@@ -122,6 +122,11 @@ namespace dbShopeeAutomationV2.Controllers
             return RedirectToAction("Index", "DailyTask");
         }
 
+        public ActionResult generateSummary(FormCollection collection)
+        {
+            return Content("");
+        }
+
         public ActionResult PrintBill(int invoice_id)
         {
             var model = db.TShopeeInvoices.FirstOrDefault(it => it.invoice_id == invoice_id);

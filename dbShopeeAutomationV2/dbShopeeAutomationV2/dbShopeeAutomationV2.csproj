@@ -413,10 +413,9 @@
     <Content Include="Views\ProductionStatus\Index.cshtml" />
     <Content Include="Views\ProductionStatus\_ProductionStatusGridViewPartial.cshtml" />
     <Content Include="Views\Shared\_TaskLayout.cshtml" />
-    <Content Include="Views\Task\Index.cshtml" />
-    <Content Include="Views\Task\_InvoiceTaskGridViewPartial.cshtml" />
     <Content Include="Views\DailyTask\Index.cshtml" />
     <Content Include="Views\DailyTask\_DailyTaskPartial.cshtml" />
+    <Content Include="Views\DailyTask\_SummaryListingPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -456,7 +455,6 @@
     <Compile Include="Controllers\ShipmentStatusController.cs" />
     <Compile Include="Controllers\StockItemController.cs" />
     <Compile Include="Controllers\StockWarehouseController.cs" />
-    <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserRoleController.cs" />
     <Compile Include="Global.asax.cs">

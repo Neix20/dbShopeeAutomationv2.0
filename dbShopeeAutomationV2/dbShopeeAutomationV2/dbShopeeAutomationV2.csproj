@@ -234,6 +234,7 @@
     <Content Include="Content\brands.min.css" />
     <Content Include="Content\fontawesome.css" />
     <Content Include="Content\fontawesome.min.css" />
+    <Content Include="Content\Images\barcode_scan.gif" />
     <Content Include="Content\Images\check1.png" />
     <Content Include="Content\Images\default_male.jpg" />
     <Content Include="Content\Images\Logo.jpg" />
@@ -422,6 +423,8 @@
     <Content Include="Views\DailyTask\_DailyTaskPartial.cshtml" />
     <Content Include="Views\DailyTask\_SummaryListingPartial.cshtml" />
     <Content Include="Views\DailyTask\_PackageListingPartial.cshtml" />
+    <Content Include="Views\Shared\_QRCodeLayout.cshtml" />
+    <Content Include="Views\ScanQRCode\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -457,6 +460,7 @@
     <Compile Include="Controllers\ProductionStatusController.cs" />
     <Compile Include="Controllers\ProductTypeController.cs" />
     <Compile Include="Controllers\ProductVarietyController.cs" />
+    <Compile Include="Controllers\ScanQRCodeController.cs" />
     <Compile Include="Controllers\ShipmentController.cs" />
     <Compile Include="Controllers\ShipmentStatusController.cs" />
     <Compile Include="Controllers\StockItemController.cs" />

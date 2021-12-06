@@ -108,31 +108,31 @@ namespace dbShopeeAutomationV2.Controllers
             return PartialView("_DailyTaskPartial", model);
         }
 
-        [HttpPost]
-        public ActionResult Update(FormCollection collection)
-        {
-            string username = User.Identity.Name;
+        //[HttpPost]
+        //public ActionResult Update(FormCollection collection)
+        //{
+        //    string username = User.Identity.Name;
 
-            int invoice_id = int.Parse(generalFunc.trimStr(collection["invoice_id"]));
-            int invoice_status_id = int.Parse(generalFunc.trimStr(collection["invoice_status_id"]));
+        //    int invoice_id = int.Parse(generalFunc.trimStr(collection["invoice_id"]));
+        //    int invoice_status_id = int.Parse(generalFunc.trimStr(collection["invoice_status_id"]));
 
-            TShopeeInvoice item = db.TShopeeInvoices.FirstOrDefault(it => it.invoice_id == invoice_id);
-            item.invoice_status_id = invoice_status_id;
+        //    TShopeeInvoice item = db.TShopeeInvoices.FirstOrDefault(it => it.invoice_id == invoice_id);
+        //    item.invoice_status_id = invoice_status_id;
 
-            int c_inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(it =>
-                it.name.ToLower().Equals("Complete".ToLower())
-            ).invoice_status_id;
+        //    int c_inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(it =>
+        //        it.name.ToLower().Equals("Complete".ToLower())
+        //    ).invoice_status_id;
 
-            if (item.invoice_status_id == c_inv_sta_id)
-            {
-                item.invoice_completed_date = DateTime.Now;
-            }
+        //    if (item.invoice_status_id == c_inv_sta_id)
+        //    {
+        //        item.invoice_completed_date = DateTime.Now;
+        //    }
 
-            dbStoredProcedure.invoiceUpdate(item.invoice_id, item.invoice_title, item.invoice_created_date, item.invoice_completed_date, item.invoice_details, item.shipping_fee, item.invoice_status_id, item.payment_method_id, item.order_id, item.customer_id, username);
-            db.SaveChanges();
+        //    dbStoredProcedure.invoiceUpdate(item.invoice_id, item.invoice_title, item.invoice_created_date, item.invoice_completed_date, item.invoice_details, item.shipping_fee, item.invoice_status_id, item.payment_method_id, item.order_id, item.customer_id, username);
+        //    db.SaveChanges();
 
-            return RedirectToAction("Index", "DailyTask");
-        }
+        //    return RedirectToAction("Index", "DailyTask");
+        //}
 
         [HttpPost]
         public ActionResult GenerateSummary()
@@ -155,10 +155,6 @@ namespace dbShopeeAutomationV2.Controllers
                 {
                     // 0. Update Invoice Status to Packaging
                     var invoice = db.TShopeeInvoices.FirstOrDefault(it => it.invoice_id == invoice_id);
-                    invoice.invoice_status_id = p_inv_sta_id;
-
-                    dbStoredProcedure.invoiceUpdate(invoice.invoice_id, invoice.invoice_title, invoice.invoice_created_date, invoice.invoice_completed_date, invoice.invoice_details, invoice.shipping_fee, invoice.invoice_status_id, invoice.payment_method_id, invoice.order_id, invoice.customer_id, username);
-                    db.SaveChanges();
 
                     // 1. Get Order ID
                     int order_id = (int)invoice.order_id;
@@ -195,6 +191,11 @@ namespace dbShopeeAutomationV2.Controllers
                             productSummaryDict.Add(product_id, productSummary);
                         }
                     }
+
+                    invoice.invoice_status_id = p_inv_sta_id;
+
+                    dbStoredProcedure.invoiceUpdate(invoice.invoice_id, invoice.invoice_title, invoice.invoice_created_date, invoice.invoice_completed_date, invoice.invoice_details, invoice.shipping_fee, invoice.invoice_status_id, invoice.payment_method_id, invoice.order_id, invoice.customer_id, username);
+                    db.SaveChanges();
                 }
 
                 // 7. Create List of productSummary
@@ -282,17 +283,6 @@ namespace dbShopeeAutomationV2.Controllers
             Decimal total_price = (Decimal) (order.total_price - invoice.shipping_fee);
 
             PackageListingSummary model = new PackageListingSummary(stockWarehouse, customer, invoice, productSummaryList, order.total_price, total_price);
-
-            // Update Invocie Status to Complete
-            int c_inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(
-                it => it.name.ToLower().Equals("Complete".ToLower())
-           ).invoice_status_id;
-            invoice.invoice_status_id = c_inv_sta_id;
-
-            string username = User.Identity.Name;
-
-            dbStoredProcedure.invoiceUpdate(invoice.invoice_id, invoice.invoice_title, invoice.invoice_created_date, invoice.invoice_completed_date, invoice.invoice_details, invoice.shipping_fee, invoice.invoice_status_id, invoice.payment_method_id, invoice.order_id, invoice.customer_id, username);
-            db.SaveChanges();
 
             return PartialView("_PackageListingPartial", model);
         }

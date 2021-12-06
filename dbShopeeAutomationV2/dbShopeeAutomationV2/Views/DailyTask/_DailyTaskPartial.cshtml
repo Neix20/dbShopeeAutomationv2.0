@@ -68,27 +68,10 @@
 </div>
 
 <div id="summary_pdf" style="display: none;"></div>
-<div id="invoice_pdf"></div>
+<div id="invoice_pdf" style="display: none;"></div>
 
 <script type="text/javascript">
     $(function () {
-        $("button").on("click", e => {
-            let invoice_id = e.currentTarget.value;
-
-            let generateInvoiceBillForm = $("form[id='generateInvoiceBillForm']")
-            const generate_invoice_bill_actionLink = generateInvoiceBillForm.attr("action");
-            const generate_invoice_bill_methodType = generateInvoiceBillForm.attr("method");
-
-            $.ajax({
-                type: generate_invoice_bill_methodType,
-                url: generate_invoice_bill_actionLink,
-                data: { "invoice_id": invoice_id },
-                success: resp => {
-                    $("#invoice_pdf").html(resp);
-                }
-            })
-        });
-
         // Select/Deselect checkboxes
         let checkbox = $('table tbody input[type="checkbox"]');
 
@@ -156,6 +139,35 @@
             });
 
             $("#selectAll").prop("checked", false);
+        });
+
+        $("button").on("click", e => {
+            let invoice_id = e.currentTarget.value;
+
+            let generateInvoiceBillForm = $("form[id='generateInvoiceBillForm']")
+            const generate_invoice_bill_actionLink = generateInvoiceBillForm.attr("action");
+            const generate_invoice_bill_methodType = generateInvoiceBillForm.attr("method");
+
+            $.ajax({
+                type: generate_invoice_bill_methodType,
+                url: generate_invoice_bill_actionLink,
+                data: { "invoice_id": invoice_id },
+                success: resp => {
+                    $("#invoice_pdf").html(resp);
+                    let invoice_code = $("#invoice_code").html();
+                    genQrCode(invoice_code);
+
+                    // Format Invoice Form
+                    $("#vend_logo").css("display", "none");
+
+                    let date = new Date(), fileName = `${date.getFullYear()}${formatTD(date.getMonth() + 1)}${formatTD(date.getDate())}_${formatTD(formatHR(date.getHours()))}${formatTD(date.getMinutes())}${formatTD(date.getSeconds())}${formatAMPM(date.getHours())}_package_listing`;
+                    createPDF("invoice_pdf", fileName);
+
+                    // After Generating Payment
+                    $("#vend_logo").css("display", "block");
+                    $("#qrcode img").remove();
+                }
+            })
         });
 
 

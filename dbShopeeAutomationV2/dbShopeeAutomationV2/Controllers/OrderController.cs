@@ -30,6 +30,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            item.order_status_id = db.TShopeeOrderStatus.FirstOrDefault(it => it.name.ToLower().Equals("Incomplete".ToLower())).order_status_id;
             item.order_placed_date = (item.order_placed_date == null) ? DateTime.Now : item.order_placed_date;
             item.total_price = 0;
 

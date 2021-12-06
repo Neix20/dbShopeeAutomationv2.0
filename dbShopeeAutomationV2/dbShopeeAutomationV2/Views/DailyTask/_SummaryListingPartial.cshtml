@@ -1,37 +1,41 @@
 ﻿@using dbShopeeAutomationV2.Models;
-@model IEnumerable<TShopeeInvoice>
+@model IList<ProductSummary>
 
-<div id="summary_pdf">
-    <section>
-        <div class="card">
-            <div class="card-body p-3">
-                <div class="border border-dark">
-                    <table class="table table-borderless text-center">
-                        <thead>
-                            <tr class="bg-dark">
-                                <th colspan="4" class="text-white h2">Product Summary Listing</th>
-                            </tr>
+<section>
+    <div class="card">
+        <div class="card-body p-3">
+            <div class="border border-dark">
+                <table class="table table-borderless text-center">
+                    <thead>
+                        <tr class="bg-dark">
+                            <th colspan="6" class="text-white h2">Product Summary Listing</th>
+                        </tr>
+                        <tr>
+                            <th>No.</th>
+                            <th>Name</th>
+                            <th>Brand</th>
+                            <th>Type</th>
+                            <th>Variety</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int ind = 0; ind < Model.ToList().Count; ind++)
+                        {
+                            var product = Model.ElementAt(ind);
+                            string no = $"{ind + 1}.";
                             <tr>
-                                <th>No.</th>
-                                <th>Name</th>
-                                <th>Variety</th>
-                                <th>Quantity</th>
+                                <td>@no</td>
+                                <td>@product.name</td>
+                                <td>@product.product_brand</td>
+                                <td>@product.product_type</td>
+                                <td>@product.product_variety</td>
+                                <td>@product.quantity</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach(var inv_rec in Model)
-                            {
-                                <tr>
-                                    <td>@inv_rec.invoice_title</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
-    </section>
-</div>
+    </div>
+</section>

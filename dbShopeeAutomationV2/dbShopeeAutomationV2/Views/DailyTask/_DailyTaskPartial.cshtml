@@ -17,13 +17,15 @@
 
 <div class="d-flex align-items-center justify-content-center">
     <div>
-        <form id="generateSummaryForm" method="get">
-            <input type="submit" class="btn btn-success" value="Generate Summary Listing" />
-        </form>
+        @using (Html.BeginForm("GenerateSummary", "DailyTask", FormMethod.Post, new { @Id = "generateSummaryForm" }))
+        {
+            <input id="generateSummaryBtn" type="submit" class="btn btn-success" value="Generate Summary Listing"
+                   disabled />
+        }
     </div>
 </div>
 
-<div class="my-1"></div>
+<div class="my-2"></div>
 
 <div class="border border-dark">
     <table class="table table-striped">
@@ -38,23 +40,26 @@
             </tr>
         </thead>
         <tbody class="text-center">
-            @for(int i = 0; i < Model.ToList().Count; i++)
+            @for (int i = 0; i < Model.ToList().Count; i++)
             {
                 var inv_rec = Model.ElementAt(i);
                 string ind = $"{i + 1}";
                 string tmp_com_dt = (inv_rec.invoice_completed_date == null) ? "" : inv_rec.invoice_completed_date.Value.ToString("yyyy-MM-dd");
                 <tr>
-                    <td><input type="checkbox" name="invoice_id_arr" value="@inv_rec.invoice_id" form="generateSummaryForm"></td>
+                    <td><input type="checkbox" name="invoice_id" value="@inv_rec.invoice_id" form="generateSummaryForm"></td>
                     <td>@inv_rec.invoice_title</td>
                     <td>@inv_rec.invoice_created_date.Value.ToString("yyyy-MM-dd")</td>
-                    <td>@statusDict[(int) inv_rec.invoice_status_id]</td>
+                    <td>@statusDict[(int)inv_rec.invoice_status_id]</td>
                     <td>@tmp_com_dt</td>
-                    <td><button class="btn btn-danger" value="@inv_rec.invoice_id">Print</button></td>
+                    <td><button class="btn btn-danger" value="@inv_rec.invoice_id" type="button">Print</button></td>
                 </tr>
-            }
+                }
         </tbody>
     </table>
 </div>
+
+<div id="summary_pdf" style="display: none;"></div>
+<div id="invoice_pdf" style="display: none;"></div>
 
 <script type="text/javascript">
     $(function () {
@@ -63,20 +68,34 @@
 
         $("#selectAll").click(function () {
             if (this.checked) {
+                let flag = false;
                 checkbox.each(function () {
                     this.checked = true;
+                    flag = true;
                 });
+                $("#generateSummaryBtn").prop("disabled", !flag);
             } else {
+                $("#generateSummaryBtn").prop("disabled", true);
                 checkbox.each(function () {
                     this.checked = false;
                 });
             }
         });
 
-        checkbox.click(function () {
+        checkbox.on("change", e => {
             if (!this.checked) {
                 $("#selectAll").prop("checked", false);
             }
+
+            let flag = false;
+            checkbox.each(function () {
+                if (this.checked) {
+                    $("#generateSummaryBtn").prop("disabled", false);
+                    flag = true;
+                }
+            });
+            $("#generateSummaryBtn").prop("disabled", !flag);
+
         });
 
         let generateSummaryForm = $("form[id='generateSummaryForm']");
@@ -85,16 +104,25 @@
 
         generateSummaryForm.submit(e => {
             e.preventDefault();
+
             console.log(generateSummaryForm.serialize());
+
+            $.ajax({
+                type: generate_summary_methodType,
+                url: generate_summary_actionLink,
+                data: generateSummaryForm.serialize(),
+                success: resp => {
+                    $("#generateSummaryBtn").prop("disabled", true);
+                    $("#summary_pdf").html(resp);
+                    createPDF("summary_pdf", "summary_listing");
+                }
+            });
+
             checkbox.each(function () {
                 this.checked = false;
             });
+
             $("#selectAll").prop("checked", false);
-            // $.ajax({
-            //     type: generate_summary_methodType,
-            //     url: generate_summary_actionLink,
-            //     data: generateSummaryForm.serialize()
-            // });
         });
 
 

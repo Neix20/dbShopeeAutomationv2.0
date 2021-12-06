@@ -282,8 +282,10 @@
     <Content Include="Scripts\fontawesome\v4-shims.min.js" />
     <Content Include="Scripts\globalize.cultures.js" />
     <Content Include="Scripts\globalize.js" />
+    <Content Include="Scripts\html2PDF.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-3.6.0.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -292,6 +294,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jspdf.min.js" />
     <Content Include="Scripts\knockout-3.0.0.debug.js" />
     <Content Include="Scripts\knockout-3.0.0.js" />
     <Content Include="packages.config" />
@@ -326,6 +329,7 @@
     </Content>
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\qrcode.min.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
@@ -477,6 +481,7 @@
     </Compile>
     <Compile Include="Models\dbStoredProcedure.cs" />
     <Compile Include="Models\generalFunc.cs" />
+    <Compile Include="Models\ProductSummary.cs" />
     <Compile Include="Models\TShopeeCarrier.cs">
       <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
     </Compile>

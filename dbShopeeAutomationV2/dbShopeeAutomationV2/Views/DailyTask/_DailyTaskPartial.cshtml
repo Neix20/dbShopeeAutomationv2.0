@@ -105,8 +105,6 @@
         generateSummaryForm.submit(e => {
             e.preventDefault();
 
-            console.log(generateSummaryForm.serialize());
-
             $.ajax({
                 type: generate_summary_methodType,
                 url: generate_summary_actionLink,
@@ -114,7 +112,8 @@
                 success: resp => {
                     $("#generateSummaryBtn").prop("disabled", true);
                     $("#summary_pdf").html(resp);
-                    createPDF("summary_pdf", "summary_listing");
+                    let date = new Date(), fileName = `${date.getFullYear()}${date.getMonth() + 1}${formatDate(date.getDate())}_summary_listing`;
+                    createPDF("summary_pdf", fileName);
                 }
             });
 

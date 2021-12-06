@@ -237,6 +237,7 @@
     <Content Include="Content\Images\check1.png" />
     <Content Include="Content\Images\default_male.jpg" />
     <Content Include="Content\Images\Logo.jpg" />
+    <Content Include="Content\Images\ntl_logo.png" />
     <Content Include="Content\importFontAwesomeFont.css" />
     <Content Include="Content\jquery-3.6.0.min.js" />
     <Content Include="Content\jquery-ui.css" />
@@ -420,6 +421,7 @@
     <Content Include="Views\DailyTask\Index.cshtml" />
     <Content Include="Views\DailyTask\_DailyTaskPartial.cshtml" />
     <Content Include="Views\DailyTask\_SummaryListingPartial.cshtml" />
+    <Content Include="Views\DailyTask\_PackageListingPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -481,6 +483,7 @@
     </Compile>
     <Compile Include="Models\dbStoredProcedure.cs" />
     <Compile Include="Models\generalFunc.cs" />
+    <Compile Include="Models\PackageListingSummary.cs" />
     <Compile Include="Models\ProductSummary.cs" />
     <Compile Include="Models\TShopeeCarrier.cs">
       <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>

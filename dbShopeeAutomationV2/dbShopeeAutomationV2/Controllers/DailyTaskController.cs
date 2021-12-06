@@ -215,11 +215,86 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost]
         public ActionResult PrintBill(int invoice_id)
         {
-            var model = db.TShopeeInvoices.FirstOrDefault(it => it.invoice_id == invoice_id);
+            // Stock Warehouse
+            var stockWarehouse = db.TShopeeStockWarehouses.ToList().ElementAt(0);
 
-            String str = $"<h1>Invoice Code: {model.invoice_title}</h1>";
+            // Invoice
+            var invoice = db.TShopeeInvoices.FirstOrDefault(it => it.invoice_id == invoice_id);
 
-            return Content(str);
+            // Customer
+            var customer = db.TShopeeCustomers.FirstOrDefault(it => it.customer_id == invoice.customer_id);
+
+            // Order
+            var order = db.TShopeeOrders.FirstOrDefault(it => it.order_id == invoice.order_id);
+
+            // Create Empty Product Summary List
+            Dictionary<int, ProductSummary> productSummaryDict = new Dictionary<int, ProductSummary>();
+
+            // 1. Get Order ID
+            int order_id = (int)invoice.order_id;
+
+            // 2. Get List of Order Item
+            List<TShopeeOrderItem> orderItemList = db.TShopeeOrderItems.Where(it => it.order_id == order_id).ToList();
+
+            // 3. Loop Through List of Order Item
+            foreach (var order_item in orderItemList)
+            {
+                int order_item_id = order_item.order_item_id;
+
+                // 4. Get Product
+                var product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == order_item.product_id);
+
+                int product_id = product.product_id;
+                int quantity = (int)order_item.quantity;
+
+                // 5. Check if Product exist in product Summary Dict
+                if (productSummaryDict.ContainsKey(product_id))
+                {
+                    productSummaryDict[product_id].addQuantity(quantity);
+                }
+                else
+                {
+                    // 6. Create New Product Summary Class
+                    string product_name = product.name;
+                    string product_brand = db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == product.product_brand_id).name;
+                    string product_type = db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == product.product_type_id).name;
+                    string product_variety = db.TShopeeProductVarieties.FirstOrDefault(it => it.product_variety_id == product.product_variety_id).name;
+
+                    var productSummary = new ProductSummary(product_id, product_name, product_brand, product_type, product_variety, product.sell_price, quantity);
+
+                    productSummary.calculateSubTotal();
+
+                    productSummaryDict.Add(product_id, productSummary);
+                }
+            }
+
+
+            // 7. Create List of productSummary
+            IList<ProductSummary> productSummaryList = new List<ProductSummary>();
+
+            // 8. Loop Throught Dictionary to Populate List of ProductSummary
+            foreach (var kvp in productSummaryDict)
+            {
+                productSummaryList.Add(kvp.Value);
+            }
+
+            // Total Price
+            Decimal total_price = (Decimal) (order.total_price - invoice.shipping_fee);
+
+            PackageListingSummary model = new PackageListingSummary(stockWarehouse, customer, invoice, productSummaryList, order.total_price, total_price);
+
+            // Update Invocie Status to Complete
+            int c_inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(
+                it => it.name.ToLower().Equals("Complete".ToLower())
+           ).invoice_status_id;
+            invoice.invoice_status_id = c_inv_sta_id;
+
+            string username = User.Identity.Name;
+
+            dbStoredProcedure.invoiceUpdate(invoice.invoice_id, invoice.invoice_title, invoice.invoice_created_date, invoice.invoice_completed_date, invoice.invoice_details, invoice.shipping_fee, invoice.invoice_status_id, invoice.payment_method_id, invoice.order_id, invoice.customer_id, username);
+            db.SaveChanges();
+
+            return PartialView("_PackageListingPartial", model);
         }
 
 

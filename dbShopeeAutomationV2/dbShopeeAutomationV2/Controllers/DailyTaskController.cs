@@ -14,11 +14,15 @@ namespace dbShopeeAutomationV2.Controllers
 
         public int numOfOrdersLeft(IEnumerable<TShopeeInvoice> invoiceList)
         {
-            int inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(it =>
-                it.name.ToLower().Equals("Incomplete".ToLower())
+            int inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(
+                it => it.name.ToLower().Equals("Incomplete".ToLower())
             ).invoice_status_id;
 
-            return invoiceList.Where(it => it.invoice_status_id == inv_sta_id).ToList().Count;
+            int p_inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(
+                it => it.name.ToLower().Equals("Packaging".ToLower())
+            ).invoice_status_id;
+
+            return invoiceList.Where(it => it.invoice_status_id == inv_sta_id || it.invoice_status_id == p_inv_sta_id).ToList().Count;
         }
 
         // GET: DailyTask
@@ -29,8 +33,12 @@ namespace dbShopeeAutomationV2.Controllers
 
         public ActionResult DailyTaskPartial()
         {
-            int inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(it =>
-                it.name.ToLower().Equals("Incomplete".ToLower())
+            int inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(
+                it => it.name.ToLower().Equals("Incomplete".ToLower())
+            ).invoice_status_id;
+
+            int p_inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(
+                it => it.name.ToLower().Equals("Packaging".ToLower())
             ).invoice_status_id;
 
             var model = db.TShopeeInvoices.AsEnumerable().Where(
@@ -39,9 +47,9 @@ namespace dbShopeeAutomationV2.Controllers
                     if (it.invoice_completed_date != null)
                     {
                         DateTime tmp = (DateTime)it.invoice_completed_date;
-                        return it.invoice_status_id == inv_sta_id || tmp.Date == DateTime.Now.Date;
+                        return tmp.Date == DateTime.Now.Date;
                     }
-                    return it.invoice_status_id == inv_sta_id;
+                    return it.invoice_status_id == inv_sta_id || it.invoice_status_id == p_inv_sta_id;
                 }
             );
 
@@ -57,8 +65,12 @@ namespace dbShopeeAutomationV2.Controllers
 
             if (((DateTime)item.invoice_completed_date).Date == DateTime.Now.Date)
             {
-                int inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(it =>
-                    it.name.ToLower().Equals("Incomplete".ToLower())
+                int inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(
+                    it => it.name.ToLower().Equals("Incomplete".ToLower())
+                ).invoice_status_id;
+
+                int p_inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(
+                    it => it.name.ToLower().Equals("Packaging".ToLower())
                 ).invoice_status_id;
 
                 model = db.TShopeeInvoices.AsEnumerable().Where(
@@ -67,9 +79,9 @@ namespace dbShopeeAutomationV2.Controllers
                         if (it.invoice_completed_date != null)
                         {
                             DateTime tmp = (DateTime)it.invoice_completed_date;
-                            return it.invoice_status_id == inv_sta_id || tmp.Date == DateTime.Now.Date;
+                            return tmp.Date == DateTime.Now.Date;
                         }
-                        return it.invoice_status_id == inv_sta_id;
+                        return it.invoice_status_id == inv_sta_id || it.invoice_status_id == p_inv_sta_id;
                     }
                 );
 
@@ -134,10 +146,22 @@ namespace dbShopeeAutomationV2.Controllers
                 // Create Empty Product Summary List
                 Dictionary<int, ProductSummary> productSummaryDict = new Dictionary<int, ProductSummary>();
 
+                // Packaging Invoice Status ID
+                int p_inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(it => it.name.ToLower().Equals("Packaging".ToLower())).invoice_status_id;
+
+                string username = User.Identity.Name;
+
                 foreach (var invoice_id in invoice_id_arr)
                 {
+                    // 0. Update Invoice Status to Packaging
+                    var invoice = db.TShopeeInvoices.FirstOrDefault(it => it.invoice_id == invoice_id);
+                    invoice.invoice_status_id = p_inv_sta_id;
+
+                    dbStoredProcedure.invoiceUpdate(invoice.invoice_id, invoice.invoice_title, invoice.invoice_created_date, invoice.invoice_completed_date, invoice.invoice_details, invoice.shipping_fee, invoice.invoice_status_id, invoice.payment_method_id, invoice.order_id, invoice.customer_id, username);
+                    db.SaveChanges();
+
                     // 1. Get Order ID
-                    int order_id = (int)db.TShopeeInvoices.FirstOrDefault(it => it.invoice_id == invoice_id).order_id;
+                    int order_id = (int)invoice.order_id;
 
                     // 2. Get List of Order Item
                     List<TShopeeOrderItem> orderItemList = db.TShopeeOrderItems.Where(it => it.order_id == order_id).ToList();
@@ -188,6 +212,7 @@ namespace dbShopeeAutomationV2.Controllers
             return Content("");
         }
 
+        [HttpPost]
         public ActionResult PrintBill(int invoice_id)
         {
             var model = db.TShopeeInvoices.FirstOrDefault(it => it.invoice_id == invoice_id);

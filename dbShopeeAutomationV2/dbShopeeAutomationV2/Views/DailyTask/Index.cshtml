@@ -58,6 +58,7 @@
 
         $("input[name='invoice_completed_date']").on("change", e => {
             // Insert Ajax Jquery Submit Function
+            console.log(invoice_date_form.serialize());
             $.ajax({
                 type: invoice_date_methodType,
                 url: invoice_date_actionLink,

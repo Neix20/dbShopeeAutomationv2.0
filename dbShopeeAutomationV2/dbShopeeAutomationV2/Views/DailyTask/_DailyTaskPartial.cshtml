@@ -19,10 +19,19 @@
     <div>
         @using (Html.BeginForm("GenerateSummary", "DailyTask", FormMethod.Post, new { @Id = "generateSummaryForm" }))
         {
+            @Html.AntiForgeryToken()
+
             <input id="generateSummaryBtn" type="submit" class="btn btn-success" value="Generate Summary Listing"
                    disabled />
         }
     </div>
+</div>
+
+<div style="display: none;">
+    @using (Html.BeginForm("PrintBill", "DailyTask", FormMethod.Post, new { @Id = "generateInvoiceBillForm" }))
+    {
+        @Html.AntiForgeryToken()
+    }
 </div>
 
 <div class="my-2"></div>
@@ -59,10 +68,27 @@
 </div>
 
 <div id="summary_pdf" style="display: none;"></div>
-<div id="invoice_pdf" style="display: none;"></div>
+<div id="invoice_pdf"></div>
 
 <script type="text/javascript">
     $(function () {
+        $("button").on("click", e => {
+            let invoice_id = e.currentTarget.value;
+
+            let generateInvoiceBillForm = $("form[id='generateInvoiceBillForm']")
+            const generate_invoice_bill_actionLink = generateInvoiceBillForm.attr("action");
+            const generate_invoice_bill_methodType = generateInvoiceBillForm.attr("method");
+
+            $.ajax({
+                type: generate_invoice_bill_methodType,
+                url: generate_invoice_bill_actionLink,
+                data: { "invoice_id": invoice_id },
+                success: resp => {
+                    $("#invoice_pdf").html(resp);
+                }
+            })
+        });
+
         // Select/Deselect checkboxes
         let checkbox = $('table tbody input[type="checkbox"]');
 
@@ -98,6 +124,10 @@
 
         });
 
+        formatTD = x => (x < 10) ? `0${x}` : x + "";
+        formatAMPM = x => (x < 12) ? "AM" : "PM";
+        formatHR = x => (x >= 12) ? x % 12 : x;
+
         let generateSummaryForm = $("form[id='generateSummaryForm']");
         const generate_summary_actionLink = generateSummaryForm.attr("action");
         const generate_summary_methodType = generateSummaryForm.attr("method");
@@ -111,9 +141,13 @@
                 data: generateSummaryForm.serialize(),
                 success: resp => {
                     $("#generateSummaryBtn").prop("disabled", true);
+
                     $("#summary_pdf").html(resp);
-                    let date = new Date(), fileName = `${date.getFullYear()}${date.getMonth() + 1}${formatDate(date.getDate())}_summary_listing`;
+                    let date = new Date(), fileName = `${date.getFullYear()}${formatTD(date.getMonth() + 1)}${formatTD(date.getDate())}_${formatTD(formatHR(date.getHours()))}${formatTD(date.getMinutes())}${formatTD(date.getSeconds())}${formatAMPM(date.getHours())}_summary_listing`;
+
                     createPDF("summary_pdf", fileName);
+
+                    setTimeout(_ => { location.reload(); }, 5000);
                 }
             });
 

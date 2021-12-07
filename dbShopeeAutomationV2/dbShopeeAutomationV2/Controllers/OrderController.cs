@@ -19,7 +19,8 @@ namespace dbShopeeAutomationV2.Controllers
         public int orderStatusID(string name)
         {
             var orderStatus = db.TShopeeOrderStatus.FirstOrDefault(it => it.name.ToLower().Equals(name.ToLower()));
-            return (orderStatus == null) ? db.TShopeeOrderStatus.ToList().ElementAt(0).order_status_id : orderStatus.order_status_id;
+            orderStatus = (orderStatus == null) ? db.TShopeeOrderStatus.ToList().ElementAt(0) : orderStatus;
+            return orderStatus.order_status_id;
         }
 
         dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();

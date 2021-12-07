@@ -624,7 +624,6 @@ namespace dbShopeeAutomationV2.Models
         // Order Stored Procedure
         public static int orderInsert(string order_title, DateTime? order_placed_date, Decimal? total_price, int? order_status_id, string username)
         {
-
             // Create New Detail
             string status = $"Order: {order_title}";
             string remark = "";

@@ -5,64 +5,90 @@
     ViewBag.Title = "Product Form";
     Layout = "~/Views/Shared/_ProductionLayout.cshtml";
     dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
+
+    int product_brand_count = db.TShopeeProductBrands.ToList().Count;
+    int product_type_count = db.TShopeeProductTypes.ToList().Count;
+    int product_variety_count = db.TShopeeProductVarieties.ToList().Count;
+    int stock_warehouse_count = db.TShopeeStockWarehouses.ToList().Count;
 }
 
-<div class="p-3">
-
-    <div class="border border-dark">
-        <div class="row">
-            <div class="col">
-                <div class="bg-dark text-center h1 text-white">@ViewBag.Title</div>
+@if (product_brand_count <= 0 || product_type_count <= 0 || product_variety_count <= 0 || stock_warehouse_count <= 0)
+{
+    <div class="p-3">
+        @if (product_brand_count <= 0)
+        {
+            <div class="text-danger h2">There is no existing Product Brand. Please make a product brand before you proceed! </div>
+        }
+        @if (product_type_count <= 0)
+        {
+            <div class="text-danger h2">There is no existing Product Type. Please make a product type before you proceed! </div>
+        }
+        @if (product_variety_count <= 0)
+        {
+            <div class="text-danger h2">There is no existing Product Variety. Please make a product variety before you proceed! </div>
+        }
+        @if (stock_warehouse_count <= 0)
+        {
+            <div class="text-danger h2">There is no existing Stock Warehouse. Please make a Stock Warehouse before you proceed! </div>
+        }
+    </div>
+}
+else
+{
+    <div class="p-3">
+        <div class="border border-dark">
+            <div class="row">
+                <div class="col">
+                    <div class="bg-dark text-center h1 text-white">@ViewBag.Title</div>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col px-4">
-                @using (Html.BeginForm("ProductGridViewPartialAddNew", "Product", FormMethod.Post, new { @id = "createProductForm" }))
+            <div class="row">
+                <div class="col px-4">
+                    @using (Html.BeginForm("ProductGridViewPartialAddNew", "Product", FormMethod.Post, new { @id = "createProductForm" }))
                 {
+                        @Html.HiddenFor(model => model.product_id, new { @Value = 0 });
 
-                    @Html.HiddenFor(model => model.product_id, new { @Value = 0 });
-
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label>Product Name</label>
-                                @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Product Name</label>
+                                    @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Product Code</label>
+                                    @Html.TextBoxFor(model => model.product_code, new { @class = "form-control", @Value = ViewData["product_code"] })
+                                </div>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label>Product Code</label>
-                                @Html.TextBoxFor(model => model.product_code, new { @class = "form-control", @Value = ViewData["product_code"] })
+
+                        <div class="form-group">
+                            <label>Product Description</label>
+                            @Html.TextAreaFor(model => model.description, new { @class = "form-control" })
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Product SKU</label>
+                                    @Html.TextBoxFor(model => model.SKU, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Product SKU2</label>
+                                    @Html.TextBoxFor(model => model.SKU2, new { @class = "form-control" })
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label>Product Description</label>
-                        @Html.TextAreaFor(model => model.description, new { @class = "form-control" })
-                    </div>
-
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label>Product SKU</label>
-                                @Html.TextBoxFor(model => model.SKU, new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label>Product SKU2</label>
-                                @Html.TextBoxFor(model => model.SKU2, new { @class = "form-control" })
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label>Product Buy Price</label>
-                                @Html.DevExpress().SpinEdit(settings =>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Product Buy Price</label>
+                                    @Html.DevExpress().SpinEdit(settings =>
                            {
                                settings.Name = "buy_price";
                                settings.Properties.DisplayFormatString = "C";
@@ -70,12 +96,12 @@
                                settings.Properties.MaxValue = 10000000;
                                settings.Properties.Increment = 0.1M;
                            }).Bind(Model).GetHtml()
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label>Product Sell Price</label>
-                                @Html.DevExpress().SpinEdit(settings =>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Product Sell Price</label>
+                                    @Html.DevExpress().SpinEdit(settings =>
                            {
                                settings.Name = "sell_price";
                                settings.Properties.DisplayFormatString = "C";
@@ -83,15 +109,15 @@
                                settings.Properties.MaxValue = 10000000;
                                settings.Properties.Increment = 0.1M;
                            }).Bind(Model).GetHtml()
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label>Product Brand</label>
-                                @Html.DevExpress().ComboBox(settings =>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>Product Brand</label>
+                                    @Html.DevExpress().ComboBox(settings =>
                            {
                                settings.Name = "product_brand_id";
                                settings.Width = 240;
@@ -102,12 +128,12 @@
                                settings.Properties.ValueField = "product_brand_id";
                                settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
                            }).BindList(db.TShopeeProductBrands.ToList()).GetHtml()
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label>Product Type</label>
-                                @Html.DevExpress().ComboBox(settings =>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>Product Type</label>
+                                    @Html.DevExpress().ComboBox(settings =>
                            {
                                settings.Name = "product_type_id";
                                settings.Width = 240;
@@ -118,12 +144,12 @@
                                settings.Properties.ValueField = "product_type_id";
                                settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
                            }).BindList(db.TShopeeProductTypes.ToList()).GetHtml()
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label>Product Variety</label>
-                                @Html.DevExpress().ComboBox(settings =>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>Product Variety</label>
+                                    @Html.DevExpress().ComboBox(settings =>
                            {
                                settings.Name = "product_variety_id";
                                settings.Width = 240;
@@ -134,15 +160,15 @@
                                settings.Properties.ValueField = "product_variety_id";
                                settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
                            }).BindList(db.TShopeeProductVarieties.ToList()).GetHtml()
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label>Stock Warehouse Location</label>
-                                @Html.DevExpress().ComboBox(settings =>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>Stock Warehouse Location</label>
+                                    @Html.DevExpress().ComboBox(settings =>
                            {
                                settings.Name = "Stock Warehouse Location";
                                settings.Width = 240;
@@ -153,58 +179,59 @@
                                settings.Properties.ValueField = "stock_warehouse_id";
                                settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
                            }).BindList(db.TShopeeStockWarehouses.ToList()).GetHtml()
+                                </div>
                             </div>
                         </div>
+                    }
+
+                    <div class="my-3"></div>
+
+                    <input class="btn btn-outline-primary" type="submit" value="Create New Product"
+                           form="createProductForm" />
+
+                    <div class="my-3"></div>
+
+                    <div id="productFormContent">
+                        @Html.Action("ProductGridViewPartial")
                     </div>
-                }
 
-                <div class="my-3"></div>
+                    <div class="my-3"></div>
 
-                <input class="btn btn-outline-primary" type="submit" value="Create New Product"
-                       form="createProductForm" />
-
-                <div class="my-3"></div>
-
-                <div id="productFormContent">
-                    @Html.Action("ProductGridViewPartial")
                 </div>
-
-                <div class="my-3"></div>
-
             </div>
+
         </div>
 
     </div>
 
-</div>
+    <script type="text/javascript">
+        // Product Form
+        $("form[id='createProductForm']").submit(e => {
+            e.preventDefault();
+            let form = $("form[id='createProductForm']");
+            const actionLink = form.attr("action");
+            const methodType = form.attr("method");
 
-<script type="text/javascript">
-    // Product Form
-    $("form[id='createProductForm']").submit(e => {
-        e.preventDefault();
-        let form = $("form[id='createProductForm']");
-        const actionLink = form.attr("action");
-        const methodType = form.attr("method");
+            $.ajax({
+                type: methodType,
+                url: actionLink,
+                data: form.serialize(),
+                success: response => {
+                    $("#productFormContent").html(response);
+                }
+            });
 
-        $.ajax({
-            type: methodType,
-            url: actionLink,
-            data: form.serialize(),
-            success: response => {
-                $("#productFormContent").html(response);
-            }
+            // Reset Value
+            $("input[name='product_code']").val("");
+            $("input[name='name']").val("");
+            $("textarea[name='description']").val("");
+            $("input[name='SKU']").val("");
+            $("input[name='SKU2']").val("");
+            $("input[name='buy_price']").val(0);
+            $("input[name='sell_price']").val(0);
+            $("input[name='product_brand']").val("");
+            $("input[name='product_type']").val("");
+            $("input[name='product_variety']").val("");
         });
-
-        // Reset Value
-        $("input[name='product_code']").val("");
-        $("input[name='name']").val("");
-        $("textarea[name='description']").val("");
-        $("input[name='SKU']").val("");
-        $("input[name='SKU2']").val("");
-        $("input[name='buy_price']").val(0);
-        $("input[name='sell_price']").val(0);
-        $("input[name='product_brand']").val("");
-        $("input[name='product_type']").val("");
-        $("input[name='product_variety']").val("");
-    });
-</script>
+    </script>
+}

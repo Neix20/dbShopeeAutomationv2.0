@@ -30,6 +30,8 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            item.name = (item.name == null) ? "carrier" : item.name;
+
             dbStoredProcedure.carrierInsert(item.name, username);
             db.SaveChanges();
 
@@ -41,6 +43,8 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult CarrierGridViewPartialUpdate(TShopeeCarrier item)
         {
             string username = User.Identity.Name;
+
+            item.name = (item.name == null) ? "carrier" : item.name;
 
             dbStoredProcedure.carrierUpdate(item.carrier_id, item.name, username);
             db.SaveChanges();

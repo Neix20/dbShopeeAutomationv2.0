@@ -36,7 +36,6 @@ namespace dbShopeeAutomationV2.Models
             db.SaveChanges();
 
             int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
-
             return db.NSP_TShopeeProductBrand_Insert(name, detail_id);
         }
 
@@ -125,41 +124,24 @@ namespace dbShopeeAutomationV2.Models
         }
 
         // Stock Warehouse Stored Procedure
-        public static int stockWarehouseInsert(string name, string email_address, string phone_number, string address, string username)
+        public static int stockWarehouseInsert(string name, string email_address, string phone_number, string address_line_1, string address_line_2, string city, int? zip_code, string state, string country, string username)
         {
             string status = $"Stock Warehouse: {name}";
             string remark = "";
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            string[] address_arr = address.Split(new[] { ", " }, StringSplitOptions.None);
-
-            string address_line_1 = address_arr[0];
-            string address_line_2 = address_arr[1];
-            string city = address_arr[2];
-            int zip_code = int.Parse(address_arr[3]);
-            string state = address_arr[4];
-            string country = address_arr[5];
             int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
             return db.NSP_TShopeeStockWarehouse_Insert(name, email_address, phone_number, address_line_1, address_line_2, city, state, zip_code, country, detail_id);
         }
 
-        public static int stockWarehouseUpdate(int stock_warehouse_id, string name, string email_address, string phone_number, string address, string username)
+        public static int stockWarehouseUpdate(int stock_warehouse_id, string name, string email_address, string phone_number, string address_line_1, string address_line_2, string city, int? zip_code, string state, string country, string username)
         {
             int detail_id = (int)db.TShopeeStockWarehouses.FirstOrDefault(it => it.stock_warehouse_id == stock_warehouse_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
             detail.status = $"Stock Warehouse: {name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
-
-            string[] address_arr = address.Split(new[] { ", " }, StringSplitOptions.None);
-
-            string address_line_1 = address_arr[0];
-            string address_line_2 = address_arr[1];
-            string city = address_arr[2];
-            int zip_code = int.Parse(address_arr[3]);
-            string state = address_arr[4];
-            string country = address_arr[5];
 
             return db.NSP_TShopeeStockWarehouse_Update(stock_warehouse_id, name, email_address, phone_number, address_line_1, address_line_2, city, state, zip_code, country, detail_id);
         }

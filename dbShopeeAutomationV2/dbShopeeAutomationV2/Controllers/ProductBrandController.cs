@@ -28,7 +28,11 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult ProductBrandGridViewPartialAddNew(TShopeeProductBrand item)
         {
-            dbStoredProcedure.productBrandInsert(item.name, User.Identity.Name);
+            string username = User.Identity.Name;
+
+            item.name = (item.name == null) ? "product_brand" : item.name;
+
+            dbStoredProcedure.productBrandInsert(item.name, username);
             db.SaveChanges();
 
             var model = db.TShopeeProductBrands;
@@ -39,6 +43,8 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult ProductBrandGridViewPartialUpdate(TShopeeProductBrand item)
         {
             string username = User.Identity.Name;
+
+            item.name = (item.name == null) ? "product_brand" : item.name;
 
             dbStoredProcedure.productBrandUpdate(item.product_brand_id, item.name, username);
             db.SaveChanges();

@@ -30,6 +30,8 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            item.name = (item.name == null) ? "production_status" : item.name;
+
             dbStoredProcedure.productionStatusInsert(item.name, username);
             db.SaveChanges();
 
@@ -41,6 +43,8 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult ProductionStatusGridViewPartialUpdate(TShopeeProductionStatu item)
         {
             string username = User.Identity.Name;
+
+            item.name = (item.name == null) ? "production_status" : item.name;
 
             dbStoredProcedure.productionStatusUpdate(item.production_status_id, item.name, username);
             db.SaveChanges();

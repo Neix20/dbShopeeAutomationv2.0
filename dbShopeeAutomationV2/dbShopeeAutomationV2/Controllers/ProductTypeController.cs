@@ -30,6 +30,8 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            item.name = (item.name == null) ? "product_type" : item.name;
+
             dbStoredProcedure.productTypeInsert(item.name, username);
             db.SaveChanges();
 
@@ -40,6 +42,8 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult ProductTypeGridViewPartialUpdate(TShopeeProductType item)
         {
             string username = User.Identity.Name;
+
+            item.name = (item.name == null) ? "product_type" : item.name;
 
             dbStoredProcedure.productTypeUpdate(item.product_type_id, item.name, username);
             db.SaveChanges();

@@ -15,7 +15,7 @@ namespace dbShopeeAutomationV2.Controllers
         // GET: Account
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "Production");
+            return RedirectToAction("Index", "DailyTask");
         }
 
         [AllowAnonymous]

@@ -5,6 +5,24 @@
     Layout = "~/Views/Shared/_TaskLayout.cshtml";
 }
 
+<style>
+    /* Mobile Phone */
+    @@media (max-width: 767px) {
+        th:nth-child(3),
+        th:nth-child(4),
+        th:nth-child(5),
+        td:nth-child(3),
+        td:nth-child(4),
+        td:nth-child(5) {
+            display: none;
+            width: 0;
+            height: 0;
+            opacity: 0;
+            visibility: collapse;
+        }
+    }
+</style>
+
 <!-- To Copy Start -->
 <section class="h-100" style="background-color: lightgray">
     <div class="container py-5 h-100">
@@ -20,10 +38,11 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-4"></div>
-                            <div class="col-4"></div>
-                            <div class="col-4">
-                                <form id="invoiceTaskForm" action="/DailyTask/Show" method="post">
+                            <div class="col-8">
+                                <form id="invoiceTaskForm" action="/DailyTask/Show" method="post"></form>
+                                @using (Html.BeginForm("Show", "DailyTask", FormMethod.Post, new { @Id = "invoiceTaskForm" }))
+                                {
+                                    @Html.AntiForgeryToken()
                                     <div class="form-group row">
                                         <label class="col-sm-4 col-form-label"
                                                style="font-size: 18px;">Filter</label>
@@ -31,8 +50,9 @@
                                             @Html.TextBoxFor(model => model.invoice_completed_date, "{0:yyyy-MM-dd}", new { @Class = "form-control", @Type = "date" })
                                         </label>
                                     </div>
-                                </form>
+                                }
                             </div>
+                            <div class="col-4"></div>
                         </div>
                         <hr />
 

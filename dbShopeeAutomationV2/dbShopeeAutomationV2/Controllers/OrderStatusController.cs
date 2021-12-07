@@ -29,6 +29,7 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult OrderStatusGridViewPartialAddNew(TShopeeOrderStatu item)
         {
             string username = User.Identity.Name;
+            item.name = (item.name == null) ? "order_status" : item.name;
 
             dbStoredProcedure.orderStatusInsert(item.name, username);
             db.SaveChanges();
@@ -41,6 +42,7 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult OrderStatusGridViewPartialUpdate(TShopeeOrderStatu item)
         {
             string username = User.Identity.Name;
+            item.name = (item.name == null) ? "order_status" : item.name;
 
             dbStoredProcedure.orderStatusUpdate(item.order_status_id, item.name, username);
             db.SaveChanges();

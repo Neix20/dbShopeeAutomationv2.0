@@ -10,7 +10,9 @@
         detailDict.Add(it.detail_id, it.last_updated_by);
     });
 
-    int invoice_complete = db.TShopeeInvoiceStatus.FirstOrDefault(it => it.name.ToLower().Equals("Complete".ToLower())).invoice_status_id;
+    var invoiceStatus = db.TShopeeInvoiceStatus.FirstOrDefault(it => it.name.ToLower().Equals("Complete".ToLower()));
+
+    int invoice_complete = (invoiceStatus != null) ? invoiceStatus.invoice_status_id : 0;
 
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "ShipmentGridView";

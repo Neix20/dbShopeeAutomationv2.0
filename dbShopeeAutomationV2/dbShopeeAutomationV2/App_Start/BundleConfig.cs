@@ -16,7 +16,7 @@ namespace dbShopeeAutomationV2.App_Start
 
             bundles.Add(new ScriptBundle("~/bundles/jsPDF").Include("~/Scripts/jspdf.min.js", "~/Scripts/html2PDF.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/QRCode").Include("~/Scripts/qrcode.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/QRCode").Include("~/Scripts/qrcode.min.js", "~/Scripts/html5-qrcode.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.min.css", "~/Content/site.css"));
 

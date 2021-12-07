@@ -15,7 +15,11 @@
         orderDict.Add(it.order_id, it);
     });
 
-    int order_complete = db.TShopeeOrderStatus.FirstOrDefault(it => it.name.ToLower().Equals("Complete".ToLower())).order_status_id;
+    var orderStatus = db.TShopeeOrderStatus.FirstOrDefault(
+        it => it.name.ToLower().Equals("Complete".ToLower())
+    );
+
+    int order_complete = (orderStatus != null) ? orderStatus.order_status_id : 0;
 
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "InvoiceGridView";

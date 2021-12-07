@@ -88,17 +88,12 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            // Prevent Duplicate
-            var platformNameList = db.TShopeePlatforms.Select(it => it.name.ToLower()).ToList();
-            string platform = item.name;
+            item.name = (item.name == null) ? "platform_name" : item.name;
 
-            if (!platformNameList.Contains(platform.ToLower()))
-            {
-                dbStoredProcedure.platformInsert(platform, username);
-                db.SaveChanges();
-            }
+            dbStoredProcedure.platformInsert(item.name, username);
+            db.SaveChanges();
 
-            int platform_id = db.TShopeePlatforms.FirstOrDefault(it => it.name.ToLower().Equals(platform.ToLower())).platform_id;
+            int platform_id = db.TShopeePlatforms.FirstOrDefault(it => it.name.ToLower().Equals(item.name.ToLower())).platform_id;
 
             // File Upload / Read Excel
             var file = Request.Files["fileUpload"];
@@ -121,6 +116,8 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult PlatformGridViewPartialUpdate(TShopeePlatform item)
         {
             string username = User.Identity.Name;
+
+            item.name = (item.name == null) ? "platform_name" : item.name;
 
             dbStoredProcedure.platformUpdate(item.platform_id, item.name, username);
             db.SaveChanges();

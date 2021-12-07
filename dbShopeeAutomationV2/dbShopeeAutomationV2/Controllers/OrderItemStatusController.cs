@@ -30,7 +30,11 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            dbStoredProcedure.orderItemStatusInsert(item.name, item.description, 0, username);
+            item.name = (item.name == null) ? "order_item_status" : item.name;
+            item.description = (item.description == null) ? "order_item_description" : item.description;
+            item.return_merchandise_authorization_nr = (item.return_merchandise_authorization_nr == null) ? 0 : item.return_merchandise_authorization_nr;
+
+            dbStoredProcedure.orderItemStatusInsert(item.name, item.description, item.return_merchandise_authorization_nr, username);
             db.SaveChanges();
 
             var model = db.TShopeeOrderItemStatus;
@@ -41,6 +45,10 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult OrderItemStatusGridViewPartialUpdate(TShopeeOrderItemStatu item)
         {
             string username = User.Identity.Name;
+
+            item.name = (item.name == null) ? "order_item_status" : item.name;
+            item.description = (item.description == null) ? "order_item_description" : item.description;
+            item.return_merchandise_authorization_nr = (item.return_merchandise_authorization_nr == null) ? 0 : item.return_merchandise_authorization_nr;
 
             dbStoredProcedure.orderItemStatusUpdate(item.order_item_status_id, item.name, item.description, item.return_merchandise_authorization_nr, username);
             db.SaveChanges();

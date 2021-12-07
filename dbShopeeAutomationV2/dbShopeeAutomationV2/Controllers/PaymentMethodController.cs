@@ -30,6 +30,8 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            item.name = (item.name == null) ? "payment_method" : item.name;
+
             dbStoredProcedure.paymentMethodInsert(item.name, username);
             db.SaveChanges();
 
@@ -41,6 +43,8 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult PaymentMethodGridViewPartialUpdate(TShopeePaymentMethod item)
         {
             string username = User.Identity.Name;
+
+            item.name = (item.name == null) ? "payment_method" : item.name;
 
             dbStoredProcedure.paymentMethodUpdate(item.payment_method_id, item.name, username);
             db.SaveChanges();

@@ -12,15 +12,16 @@ namespace dbShopeeAutomationV2.Controllers
 
         dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
+        public int invoiceStatusID(string name)
+        {
+            var invoice = db.TShopeeInvoiceStatus.FirstOrDefault(it => it.name.ToLower().Equals(name.ToLower()));
+            return (invoice != null) ? invoice.invoice_status_id : 0;
+        }
+
         public int numOfOrdersLeft(IEnumerable<TShopeeInvoice> invoiceList)
         {
-            int inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(
-                it => it.name.ToLower().Equals("Incomplete".ToLower())
-            ).invoice_status_id;
-
-            int p_inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(
-                it => it.name.ToLower().Equals("Packaging".ToLower())
-            ).invoice_status_id;
+            int inv_sta_id = invoiceStatusID("Incomplete");
+            int p_inv_sta_id = invoiceStatusID("Packaging");
 
             return invoiceList.Where(it => it.invoice_status_id == inv_sta_id || it.invoice_status_id == p_inv_sta_id).ToList().Count;
         }
@@ -33,13 +34,8 @@ namespace dbShopeeAutomationV2.Controllers
 
         public ActionResult DailyTaskPartial()
         {
-            int inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(
-                it => it.name.ToLower().Equals("Incomplete".ToLower())
-            ).invoice_status_id;
-
-            int p_inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(
-                it => it.name.ToLower().Equals("Packaging".ToLower())
-            ).invoice_status_id;
+            int inv_sta_id = invoiceStatusID("Incomplete");
+            int p_inv_sta_id = invoiceStatusID("Packaging");
 
             var model = db.TShopeeInvoices.AsEnumerable().Where(
                 it =>
@@ -65,13 +61,8 @@ namespace dbShopeeAutomationV2.Controllers
 
             if (((DateTime)item.invoice_completed_date).Date == DateTime.Now.Date)
             {
-                int inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(
-                    it => it.name.ToLower().Equals("Incomplete".ToLower())
-                ).invoice_status_id;
-
-                int p_inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(
-                    it => it.name.ToLower().Equals("Packaging".ToLower())
-                ).invoice_status_id;
+                int inv_sta_id = invoiceStatusID("Incomplete");
+                int p_inv_sta_id = invoiceStatusID("Packaging");
 
                 model = db.TShopeeInvoices.AsEnumerable().Where(
                     it =>
@@ -108,32 +99,6 @@ namespace dbShopeeAutomationV2.Controllers
             return PartialView("_DailyTaskPartial", model);
         }
 
-        //[HttpPost]
-        //public ActionResult Update(FormCollection collection)
-        //{
-        //    string username = User.Identity.Name;
-
-        //    int invoice_id = int.Parse(generalFunc.trimStr(collection["invoice_id"]));
-        //    int invoice_status_id = int.Parse(generalFunc.trimStr(collection["invoice_status_id"]));
-
-        //    TShopeeInvoice item = db.TShopeeInvoices.FirstOrDefault(it => it.invoice_id == invoice_id);
-        //    item.invoice_status_id = invoice_status_id;
-
-        //    int c_inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(it =>
-        //        it.name.ToLower().Equals("Complete".ToLower())
-        //    ).invoice_status_id;
-
-        //    if (item.invoice_status_id == c_inv_sta_id)
-        //    {
-        //        item.invoice_completed_date = DateTime.Now;
-        //    }
-
-        //    dbStoredProcedure.invoiceUpdate(item.invoice_id, item.invoice_title, item.invoice_created_date, item.invoice_completed_date, item.invoice_details, item.shipping_fee, item.invoice_status_id, item.payment_method_id, item.order_id, item.customer_id, username);
-        //    db.SaveChanges();
-
-        //    return RedirectToAction("Index", "DailyTask");
-        //}
-
         [HttpPost]
         public ActionResult GenerateSummary()
         {
@@ -147,7 +112,7 @@ namespace dbShopeeAutomationV2.Controllers
                 Dictionary<int, ProductSummary> productSummaryDict = new Dictionary<int, ProductSummary>();
 
                 // Packaging Invoice Status ID
-                int p_inv_sta_id = db.TShopeeInvoiceStatus.FirstOrDefault(it => it.name.ToLower().Equals("Packaging".ToLower())).invoice_status_id;
+                int p_inv_sta_id = invoiceStatusID("Packaging");
 
                 string username = User.Identity.Name;
 

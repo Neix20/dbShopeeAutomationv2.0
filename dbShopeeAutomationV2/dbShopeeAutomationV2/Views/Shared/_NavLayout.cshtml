@@ -25,12 +25,43 @@
     .profile-pic img.img-circle {
         border-radius: 50%;
     }
+
+    .navbar-fixed-top {
+        min-width: 0px;
+    }
+
+    .nav-item:first-child, .nav-item:nth-child(3), .nav-item:nth-child(4),
+    .nav-item:nth-child(5), .nav-item:last-child {
+        display: none;
+    }
+
+    /* Mobile Phone Rotate Right */
+    @@media (min-width: 768px) {
+        .nav-item:nth-child(2) {
+            display: none;
+        }
+
+        .nav-item:nth-child(3), .nav-item:nth-child(4), .nav-item:nth-child(5) {
+            display: block;
+        }
+    }
+
+    /* Desktop */
+    @@media (min-width: 1200px) {
+        .nav-item:first-child, .nav-item:nth-child(2), .nav-item:nth-child(3),
+        .nav-item:nth-child(4), .nav-item:nth-child(5), .nav-item:last-child,
+        .profile-pic {
+            display: block;
+        }
+    }
 </style>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mt-3">
+
+
+<nav class="navbar navbar-expand navbar-dark bg-dark mt-3 ">
     <div class="container-fluid">
         <a class="navbar-brand" href="/DailyTask">NTL Asia</a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse navbar-expand" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" href="/DailyTask">Tasks</a>
@@ -58,9 +89,12 @@
                 <li>
                     <div class="profile-pic">
                         <img src="~/Content/Images/default_male.jpg" alt="user-img" width="36" class="img-circle">
-                        &nbsp;&nbsp;<span class="text-white font-medium">@uName</span>
-                        &nbsp;&nbsp;<a class="btn btn-secondary" href="/Account/SignOut">Logout</a>
+                        &nbsp;&nbsp;<span class="text-white font-medium profile-name">@uName</span>
                     </div>
+                </li>
+                <li class="mx-1"></li>
+                <li>
+                    <a class="btn btn-secondary" href="/Account/SignOut">Logout</a>
                 </li>
             </ul>
         </div>

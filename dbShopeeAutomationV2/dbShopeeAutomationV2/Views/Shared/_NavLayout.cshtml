@@ -64,14 +64,14 @@
 
 <nav class="navbar navbar-expand navbar-dark bg-dark mt-3 ">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/DailyTask">NTL Asia</a>
+        @Html.ActionLink("NTL Asia", "Index", "DailyTask", null, new { @Class = "navbar-brand"})
         <div class="collapse navbar-collapse navbar-expand" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="/DailyTask">Tasks</a>
+                    @Html.ActionLink("Tasks", "Index", "DailyTask", null, new { @Class = "nav-link"})
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/ScanQRCode">Scan QRCode</a>
+                    @Html.ActionLink("Scan QRCode", "Index", "ScanQRCode", null, new { @Class = "nav-link" })
                 </li>
                 @foreach (var kvp in propDict)
                 {
@@ -82,8 +82,10 @@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             @foreach (var prop in kvp.Value)
                             {
-                                string str = $"/{Regex.Replace(prop, @" ", "")}";
-                                <li><a class="dropdown-item" href="@str">@prop</a></li>
+                                string str = $"{Regex.Replace(prop, @" ", "")}";
+                                <li>
+                                    @Html.ActionLink(prop, "Index", str, null, new { @Class="dropdown-item"})
+                                </li>
                             }
                         </ul>
                     </li>
@@ -98,7 +100,7 @@
                 </li>
                 <li class="mx-1"></li>
                 <li>
-                    <a class="btn btn-secondary" href="/Account/SignOut">Logout</a>
+                    @Html.ActionLink("Logout", "SignOut", "Account", null, new { @Class="btn btn-secondary"})
                 </li>
             </ul>
         </div>

@@ -34,7 +34,10 @@ namespace dbShopeeAutomationV2.Controllers
                 // Hypothesis: Need to await for FormsAuthentication, before continuing to roles.IsUserInRole
                 // Also, if it works, don't touch it.
                 FormsAuthentication.SetAuthCookie(model.username, false);
-                if (!Roles.IsUserInRole("Admin"))
+
+                string[] role_arr = Roles.GetRolesForUser(model.username);
+
+                if (!role_arr.Contains("Admin".ToLower()))
                 {
                     ViewData["login_error"] = "Error 403: You do not have authority to access this webpage";
                     return View();
@@ -49,6 +52,7 @@ namespace dbShopeeAutomationV2.Controllers
                     return RedirectToAction("Index");
                 }
             }
+
             ViewData["login_error"] = "Error 400: Invalid Username or Password";
             return View();
         }

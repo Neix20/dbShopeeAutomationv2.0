@@ -10,17 +10,6 @@
         detailDict.Add(it.detail_id, it.last_updated_by);
     });
 
-    Dictionary<int, String> warehouseDict = new Dictionary<int, String>();
-    db.TShopeeStockWarehouses.ToList().ForEach(it =>
-    {
-        warehouseDict.Add(it.stock_warehouse_id, it.name);
-    });
-
-    Dictionary<int, String> productDict = new Dictionary<int, String>();
-    db.TShopeeProducts.ToList().ForEach(it => {
-        productDict.Add(it.product_id, it.SKU);
-    });
-
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "StockItemGridView";
         settings.Width = Unit.Percentage(100);

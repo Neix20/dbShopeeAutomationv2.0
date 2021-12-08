@@ -40,8 +40,12 @@ namespace dbShopeeAutomationV2.Controllers
 
             item.name = (item.name == null) ? "product_name" : item.name;
             item.description = (item.description == null) ? "product_description" : item.description;
-            item.SKU = (item.SKU == null) ? "product_name/SKU" : item.SKU;
-            item.SKU2 = (item.SKU2 == null) ? "product_name/SKU2" : item.SKU2;
+
+            string product_brand = db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == item.product_brand_id).name;
+            string product_variety = db.TShopeeProductVarieties.FirstOrDefault(it => it.product_variety_id == item.product_variety_id).name;
+            item.SKU = (item.SKU == null) ? generalFunc.GenSKU(product_brand, product_variety) : item.SKU;
+            item.SKU2 = (item.SKU2 == null) ? $"{item.SKU}2" : item.SKU2;
+
             item.buy_price = (item.buy_price == null) ? 0 : item.buy_price;
             item.sell_price = (item.sell_price == null) ? 0 : item.sell_price;
             item.product_code = (item.product_code == null || item.product_code.Equals("")) ? generalFunc.Random10DigitCode() : item.product_code;
@@ -49,8 +53,7 @@ namespace dbShopeeAutomationV2.Controllers
             dbStoredProcedure.productInsert(item.product_code, item.name, item.description, item.SKU, item.SKU2, item.buy_price, item.sell_price, item.product_brand_id, item.product_type_id, item.product_variety_id, username);
             db.SaveChanges();
 
-            // Error! Unable to delete Stock Item with multiple SKU (However, in hindsight, SKU Should never be same)
-            int product_id = db.TShopeeProducts.FirstOrDefault(it => it.SKU.Equals(item.SKU)).product_id;
+            int product_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduct') AS INT)").FirstOrDefault();
 
             string warehouse_title = generalFunc.trimStr(Request.Form["Stock Warehouse Location"]);
             int warehouse_id = stockWarehouseID(warehouse_title);
@@ -69,8 +72,12 @@ namespace dbShopeeAutomationV2.Controllers
 
             item.name = (item.name == null) ? "product_name" : item.name;
             item.description = (item.description == null) ? "product_description" : item.description;
-            item.SKU = (item.SKU == null) ? "product_name/SKU" : item.SKU;
-            item.SKU2 = (item.SKU2 == null) ? "product_name/SKU2" : item.SKU2;
+
+            string product_brand = db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == item.product_brand_id).name;
+            string product_variety = db.TShopeeProductVarieties.FirstOrDefault(it => it.product_variety_id == item.product_variety_id).name;
+            item.SKU = (item.SKU == null) ? generalFunc.GenSKU(product_brand, product_variety) : item.SKU;
+            item.SKU2 = (item.SKU2 == null) ? $"{item.SKU}2" : item.SKU2;
+
             item.buy_price = (item.buy_price == null) ? 0 : item.buy_price;
             item.sell_price = (item.sell_price == null) ? 0 : item.sell_price;
             item.product_code = (item.product_code == null || item.product_code.Equals("")) ? generalFunc.Random10DigitCode() : item.product_code;

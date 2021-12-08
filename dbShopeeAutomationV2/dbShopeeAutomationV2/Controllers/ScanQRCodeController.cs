@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace dbShopeeAutomationV2.Controllers
 {
-    public class ScanQRCodeController : Controller
+    public class ScanQRCodeController : AdminController
     {
         dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 

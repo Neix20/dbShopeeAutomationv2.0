@@ -1,5 +1,4 @@
 @using dbShopeeAutomationV2.Models;
-@using System.Collections.Generic;
 
 @{
     dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
@@ -32,7 +31,21 @@
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
-        settings.Columns.Add("username").Caption = "Username";
+        // Username
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "username";
+            col.Caption = "Username";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeUsers.ToList();
+            prop.TextField = "username";
+            prop.ValueField = "username";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
+        });
+
         settings.Columns.Add("role").Caption = "Role";
 
         // Cell Styles Center

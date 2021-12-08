@@ -39,5 +39,10 @@ namespace dbShopeeAutomationV2.Models
             for (int i = 0; i < 4; i++) str += $"{rand.Next(0, 10) + 1}";
             return str;
         }
+
+        public static string GenSKU(string str, string str2)
+        {
+            return $"{str.Substring(0, 3)}/{str2.Substring(0, 3)}";
+        }
     }
 }

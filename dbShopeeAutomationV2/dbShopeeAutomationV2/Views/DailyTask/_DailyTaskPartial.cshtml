@@ -60,7 +60,7 @@
                     <td>@inv_rec.invoice_created_date.Value.ToString("yyyy-MM-dd")</td>
                     <td>@statusDict[(int)inv_rec.invoice_status_id]</td>
                     <td>@tmp_com_dt</td>
-                    <td><button class="btn btn-danger" value="@inv_rec.invoice_id" type="button">Print</button></td>
+                    <td><button class="btn btn-danger print_bill_btn" value="@inv_rec.invoice_id" type="button">Print</button></td>
                 </tr>
                 }
         </tbody>
@@ -150,7 +150,7 @@
             $("#selectAll").prop("checked", false);
         });
 
-        $("button").on("click", e => {
+        $(".print_bill_btn").on("click", e => {
             let invoice_id = e.currentTarget.value;
 
             let generateInvoiceBillForm = $("form[id='generateInvoiceBillForm']")

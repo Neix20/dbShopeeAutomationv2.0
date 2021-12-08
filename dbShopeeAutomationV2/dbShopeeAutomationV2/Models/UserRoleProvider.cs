@@ -49,7 +49,7 @@ namespace dbShopeeAutomationV2.Models
         public override string[] GetRolesForUser(string username)
         {
             dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
-            string[] roleArr = db.TShopeeUserRoles.Where(it => it.username.Equals(username)).Select(x => x.role).ToArray();
+            string[] roleArr = db.TShopeeUserRoles.Where(it => it.username.Equals(username)).Select(x => x.role.ToLower()).ToArray();
             return roleArr;
         }
 

@@ -28,6 +28,8 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult UserRoleGridViewPartialAddNew(TShopeeUserRole item)
         {
+            item.role = (item.role == null) ? "Admin" : item.role;
+
             dbStoredProcedure.userRoleInsert(item.username, item.role);
             db.SaveChanges();
 
@@ -38,6 +40,8 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult UserRoleGridViewPartialUpdate(TShopeeUserRole item)
         {
+            item.role = (item.role == null) ? "Admin" : item.role;
+
             dbStoredProcedure.userRoleUpdate(item.user_role_id, item.username, item.role);
             db.SaveChanges();
 

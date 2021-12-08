@@ -30,6 +30,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            item.invoice_details = (item.invoice_details == null) ? "Invoice Details" : item.invoice_details;
             item.invoice_created_date = (item.invoice_created_date == null) ? DateTime.Now : item.invoice_created_date;
             item.shipping_fee = (item.shipping_fee == null) ? 0 : item.shipping_fee;
             item.invoice_title = (item.invoice_title == null) ? generalFunc.Random10DigitCode() : item.invoice_title;
@@ -46,6 +47,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            item.invoice_details = (item.invoice_details == null) ? "Invoice Details" : item.invoice_details;
             item.invoice_created_date = (item.invoice_created_date == null) ? DateTime.Now : item.invoice_created_date;
             item.shipping_fee = (item.shipping_fee == null) ? 0 : item.shipping_fee;
             item.invoice_title = (item.invoice_title == null) ? generalFunc.Random10DigitCode() : item.invoice_title;

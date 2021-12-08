@@ -77,8 +77,7 @@
             if (elem.innerHTML.toLowerCase() == "Complete".toLowerCase()) {
                 // Enable Disable
                 let checkbox_elem = $(`tbody tr:nth-child(${ind + 1}) input[type="checkbox"]`);
-                checkbox_elem.attr("disabled", true);
-                checkbox_elem.css("display", "none");
+                checkbox_elem.remove();
             }
         });
 

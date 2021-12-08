@@ -31,6 +31,10 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            item.name = (item.name == null) ? "Stock Item Name" : item.name;
+            item.description = (item.description == null) ? "Stock Item Description" : item.description;
+            item.stock_quantity = (item.stock_quantity == null) ? 0 : item.stock_quantity;
+
             dbStoredProcedure.stockItemInsert(item.name, item.description, (int)item.stock_quantity, (int)item.product_id, (int)item.stock_warehouse_id, username);
             db.SaveChanges();
 
@@ -42,6 +46,10 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult StockItemGridViewPartialUpdate(TShopeeStockItem item)
         {
             string username = User.Identity.Name;
+
+            item.name = (item.name == null) ? "Stock Item Name" : item.name;
+            item.description = (item.description == null) ? "Stock Item Description" : item.description;
+            item.stock_quantity = (item.stock_quantity == null) ? 0 : item.stock_quantity;
 
             dbStoredProcedure.stockItemUpdate(item.stock_item_id, item.name, item.description, (int)item.stock_quantity, (int)item.product_id, (int)item.stock_warehouse_id, username);
             db.SaveChanges();

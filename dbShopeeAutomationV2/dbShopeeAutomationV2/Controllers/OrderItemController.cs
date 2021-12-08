@@ -43,7 +43,7 @@ namespace dbShopeeAutomationV2.Controllers
             var order = db.TShopeeOrders.FirstOrDefault(it => it.order_id == item.order_id);
 
             // Create New Order Item Status
-            dbStoredProcedure.orderItemStatusInsert($"Order Title: {order.order_title}, Product Item: {product.SKU}", "", 0, username);
+            dbStoredProcedure.orderItemStatusInsert($"Order Title: {order.order_title}, Product Item: {product.SKU}", "Order Item Description", 0, username);
             db.SaveChanges();
 
             item.order_item_status_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeOrderItemStatus') AS INT)").FirstOrDefault(); ;

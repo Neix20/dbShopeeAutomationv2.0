@@ -25,10 +25,5 @@ namespace dbShopeeAutomationV2.Models
         public Nullable<int> order_id { get; set; }
         public Nullable<int> customer_id { get; set; }
         public Nullable<int> detail_id { get; set; }
-
-        public TShopeeInvoice()
-        {
-
-        }
     }
 }

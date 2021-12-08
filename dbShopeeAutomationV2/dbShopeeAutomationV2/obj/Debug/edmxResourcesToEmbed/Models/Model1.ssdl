@@ -1,0 +1,728 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NTL_ERPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="TShopeeCarrier">
+    <Key>
+      <PropertyRef Name="carrier_id" />
+    </Key>
+    <Property Name="carrier_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="20" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeCustomer">
+    <Key>
+      <PropertyRef Name="customer_id" />
+    </Key>
+    <Property Name="customer_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="first_name" Type="varchar" MaxLength="20" />
+    <Property Name="last_name" Type="varchar" MaxLength="20" />
+    <Property Name="dob" Type="datetime" />
+    <Property Name="email_address" Type="varchar" MaxLength="20" />
+    <Property Name="phone_number" Type="varchar" MaxLength="20" />
+    <Property Name="address_line_1" Type="varchar" MaxLength="50" />
+    <Property Name="address_line_2" Type="varchar" MaxLength="50" />
+    <Property Name="city" Type="varchar" MaxLength="50" />
+    <Property Name="state" Type="varchar" MaxLength="50" />
+    <Property Name="zip_code" Type="int" />
+    <Property Name="country" Type="varchar" MaxLength="20" />
+    <Property Name="platform_id" Type="int" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeDetail">
+    <Key>
+      <PropertyRef Name="detail_id" />
+    </Key>
+    <Property Name="detail_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="status" Type="varchar(max)" />
+    <Property Name="remark" Type="varchar(max)" />
+    <Property Name="created_by" Type="varchar" MaxLength="100" />
+    <Property Name="created_date" Type="datetime" />
+    <Property Name="last_updated_by" Type="varchar" MaxLength="100" />
+    <Property Name="last_updated_date" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TShopeeInvoice">
+    <Key>
+      <PropertyRef Name="invoice_id" />
+    </Key>
+    <Property Name="invoice_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="invoice_title" Type="varchar" MaxLength="50" />
+    <Property Name="invoice_created_date" Type="datetime" />
+    <Property Name="invoice_completed_date" Type="datetime" />
+    <Property Name="invoice_details" Type="varchar(max)" />
+    <Property Name="shipping_fee" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="invoice_status_id" Type="int" />
+    <Property Name="payment_method_id" Type="int" />
+    <Property Name="order_id" Type="int" />
+    <Property Name="customer_id" Type="int" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeInvoiceStatus">
+    <Key>
+      <PropertyRef Name="invoice_status_id" />
+    </Key>
+    <Property Name="invoice_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeOrder">
+    <Key>
+      <PropertyRef Name="order_id" />
+    </Key>
+    <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="order_title" Type="varchar(max)" />
+    <Property Name="order_placed_date" Type="datetime" />
+    <Property Name="total_price" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="order_status_id" Type="int" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeOrderItem">
+    <Key>
+      <PropertyRef Name="order_item_id" />
+    </Key>
+    <Property Name="order_item_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="quantity" Type="int" />
+    <Property Name="sub_total" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="discount_fee" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="RMA_num" Type="int" />
+    <Property Name="RMA_issued_by" Type="varchar" MaxLength="50" />
+    <Property Name="RMA_issued_date" Type="datetime" />
+    <Property Name="order_id" Type="int" />
+    <Property Name="order_item_status_id" Type="int" />
+    <Property Name="product_id" Type="int" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeOrderItemStatus">
+    <Key>
+      <PropertyRef Name="order_item_status_id" />
+    </Key>
+    <Property Name="order_item_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="description" Type="varchar(max)" />
+    <Property Name="return_merchandise_authorization_nr" Type="int" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeOrderStatus">
+    <Key>
+      <PropertyRef Name="order_status_id" />
+    </Key>
+    <Property Name="order_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeePaymentMethod">
+    <Key>
+      <PropertyRef Name="payment_method_id" />
+    </Key>
+    <Property Name="payment_method_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeePlatform">
+    <Key>
+      <PropertyRef Name="platform_id" />
+    </Key>
+    <Property Name="platform_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeProduct">
+    <Key>
+      <PropertyRef Name="product_id" />
+    </Key>
+    <Property Name="product_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="product_code" Type="varchar" MaxLength="20" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="description" Type="varchar(max)" />
+    <Property Name="SKU" Type="varchar" MaxLength="20" />
+    <Property Name="SKU2" Type="varchar" MaxLength="20" />
+    <Property Name="buy_price" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="sell_price" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="product_brand_id" Type="int" />
+    <Property Name="product_type_id" Type="int" />
+    <Property Name="product_variety_id" Type="int" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeProductBrand">
+    <Key>
+      <PropertyRef Name="product_brand_id" />
+    </Key>
+    <Property Name="product_brand_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeProduction">
+    <Key>
+      <PropertyRef Name="production_id" />
+    </Key>
+    <Property Name="production_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="title" Type="varchar(max)" />
+    <Property Name="description" Type="varchar(max)" />
+    <Property Name="production_status_id" Type="int" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeProductionDetail">
+    <Key>
+      <PropertyRef Name="production_detail_id" />
+    </Key>
+    <Property Name="production_detail_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UOM" Type="varchar" MaxLength="100" />
+    <Property Name="manufactured_date" Type="datetime" />
+    <Property Name="expiry_date" Type="datetime" />
+    <Property Name="quantity" Type="int" />
+    <Property Name="production_id" Type="int" />
+    <Property Name="product_id" Type="int" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeProductionStatus">
+    <Key>
+      <PropertyRef Name="production_status_id" />
+    </Key>
+    <Property Name="production_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeProductType">
+    <Key>
+      <PropertyRef Name="product_type_id" />
+    </Key>
+    <Property Name="product_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeProductVariety">
+    <Key>
+      <PropertyRef Name="product_variety_id" />
+    </Key>
+    <Property Name="product_variety_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeShipment">
+    <Key>
+      <PropertyRef Name="shipment_id" />
+    </Key>
+    <Property Name="shipment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="start_location" Type="varchar(max)" />
+    <Property Name="destination" Type="varchar(max)" />
+    <Property Name="tracking_id" Type="varchar" MaxLength="20" />
+    <Property Name="created_date" Type="datetime" />
+    <Property Name="expected_date" Type="datetime" />
+    <Property Name="due_date" Type="datetime" />
+    <Property Name="invoice_id" Type="int" />
+    <Property Name="carrier_id" Type="int" />
+    <Property Name="shipment_status_id" Type="int" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeShipmentStatus">
+    <Key>
+      <PropertyRef Name="shipment_status_id" />
+    </Key>
+    <Property Name="shipment_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="20" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeStockItem">
+    <Key>
+      <PropertyRef Name="stock_item_id" />
+    </Key>
+    <Property Name="stock_item_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="description" Type="varchar(max)" />
+    <Property Name="stock_quantity" Type="int" />
+    <Property Name="product_id" Type="int" />
+    <Property Name="stock_warehouse_id" Type="int" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeStockWarehouse">
+    <Key>
+      <PropertyRef Name="stock_warehouse_id" />
+    </Key>
+    <Property Name="stock_warehouse_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="email_address" Type="varchar" MaxLength="50" />
+    <Property Name="phone_number" Type="varchar" MaxLength="20" />
+    <Property Name="address_line_1" Type="varchar" MaxLength="50" />
+    <Property Name="address_line_2" Type="varchar" MaxLength="50" />
+    <Property Name="city" Type="varchar" MaxLength="50" />
+    <Property Name="state" Type="varchar" MaxLength="50" />
+    <Property Name="zip_code" Type="int" />
+    <Property Name="country" Type="varchar" MaxLength="20" />
+    <Property Name="detail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="TShopeeUser">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="varchar(max)" />
+    <Property Name="password" Type="varchar(max)" />
+    <Property Name="email" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="TShopeeUserRole">
+    <Key>
+      <PropertyRef Name="user_role_id" />
+    </Key>
+    <Property Name="user_role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="varchar(max)" />
+    <Property Name="role" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Function Name="NSP_TShopeeCarrier_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="carrier_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeCarrier_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeCarrier_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="carrier_id" Type="int" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeCustomer_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="customer_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeCustomer_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="first_name" Type="varchar" Mode="In" />
+    <Parameter Name="last_name" Type="varchar" Mode="In" />
+    <Parameter Name="dob" Type="datetime" Mode="In" />
+    <Parameter Name="email_address" Type="varchar" Mode="In" />
+    <Parameter Name="phone_number" Type="varchar" Mode="In" />
+    <Parameter Name="address_line_1" Type="varchar" Mode="In" />
+    <Parameter Name="address_line_2" Type="varchar" Mode="In" />
+    <Parameter Name="city" Type="varchar" Mode="In" />
+    <Parameter Name="state" Type="varchar" Mode="In" />
+    <Parameter Name="zip_code" Type="int" Mode="In" />
+    <Parameter Name="country" Type="varchar" Mode="In" />
+    <Parameter Name="platform_id" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeCustomer_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="customer_id" Type="int" Mode="In" />
+    <Parameter Name="first_name" Type="varchar" Mode="In" />
+    <Parameter Name="last_name" Type="varchar" Mode="In" />
+    <Parameter Name="dob" Type="datetime" Mode="In" />
+    <Parameter Name="email_address" Type="varchar" Mode="In" />
+    <Parameter Name="phone_number" Type="varchar" Mode="In" />
+    <Parameter Name="address_line_1" Type="varchar" Mode="In" />
+    <Parameter Name="address_line_2" Type="varchar" Mode="In" />
+    <Parameter Name="city" Type="varchar" Mode="In" />
+    <Parameter Name="state" Type="varchar" Mode="In" />
+    <Parameter Name="zip_code" Type="int" Mode="In" />
+    <Parameter Name="country" Type="varchar" Mode="In" />
+    <Parameter Name="platform_id" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeDetail_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeDetail_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="status" Type="varchar(max)" Mode="In" />
+    <Parameter Name="remark" Type="varchar(max)" Mode="In" />
+    <Parameter Name="created_by" Type="varchar" Mode="In" />
+    <Parameter Name="created_date" Type="datetime" Mode="In" />
+    <Parameter Name="last_updated_by" Type="varchar" Mode="In" />
+    <Parameter Name="last_updated_date" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeDetail_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+    <Parameter Name="status" Type="varchar(max)" Mode="In" />
+    <Parameter Name="remark" Type="varchar(max)" Mode="In" />
+    <Parameter Name="created_by" Type="varchar" Mode="In" />
+    <Parameter Name="created_date" Type="datetime" Mode="In" />
+    <Parameter Name="last_updated_by" Type="varchar" Mode="In" />
+    <Parameter Name="last_updated_date" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeInvoice_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="invoice_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeInvoice_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="invoice_title" Type="varchar" Mode="In" />
+    <Parameter Name="invoice_created_date" Type="datetime" Mode="In" />
+    <Parameter Name="invoice_completed_date" Type="datetime" Mode="In" />
+    <Parameter Name="invoice_details" Type="varchar(max)" Mode="In" />
+    <Parameter Name="shipping_fee" Type="decimal" Mode="In" />
+    <Parameter Name="invoice_status_id" Type="int" Mode="In" />
+    <Parameter Name="payment_method_id" Type="int" Mode="In" />
+    <Parameter Name="order_id" Type="int" Mode="In" />
+    <Parameter Name="customer_id" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeInvoice_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="invoice_id" Type="int" Mode="In" />
+    <Parameter Name="invoice_title" Type="varchar" Mode="In" />
+    <Parameter Name="invoice_created_date" Type="datetime" Mode="In" />
+    <Parameter Name="invoice_completed_date" Type="datetime" Mode="In" />
+    <Parameter Name="invoice_details" Type="varchar(max)" Mode="In" />
+    <Parameter Name="shipping_fee" Type="decimal" Mode="In" />
+    <Parameter Name="invoice_status_id" Type="int" Mode="In" />
+    <Parameter Name="payment_method_id" Type="int" Mode="In" />
+    <Parameter Name="order_id" Type="int" Mode="In" />
+    <Parameter Name="customer_id" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeInvoiceStatus_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="invoice_status_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeInvoiceStatus_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeInvoiceStatus_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="invoice_status_id" Type="int" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeOrder_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="order_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeOrder_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="order_title" Type="varchar(max)" Mode="In" />
+    <Parameter Name="order_placed_date" Type="datetime" Mode="In" />
+    <Parameter Name="total_price" Type="decimal" Mode="In" />
+    <Parameter Name="order_status_id" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeOrder_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="order_id" Type="int" Mode="In" />
+    <Parameter Name="order_title" Type="varchar(max)" Mode="In" />
+    <Parameter Name="order_placed_date" Type="datetime" Mode="In" />
+    <Parameter Name="total_price" Type="decimal" Mode="In" />
+    <Parameter Name="order_status_id" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeOrderItem_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="order_item_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeOrderItem_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="quantity" Type="int" Mode="In" />
+    <Parameter Name="sub_total" Type="decimal" Mode="In" />
+    <Parameter Name="discount_fee" Type="decimal" Mode="In" />
+    <Parameter Name="RMA_num" Type="int" Mode="In" />
+    <Parameter Name="RMA_issued_by" Type="varchar" Mode="In" />
+    <Parameter Name="RMA_issued_date" Type="datetime" Mode="In" />
+    <Parameter Name="order_id" Type="int" Mode="In" />
+    <Parameter Name="order_item_status_id" Type="int" Mode="In" />
+    <Parameter Name="product_id" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeOrderItem_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="order_item_id" Type="int" Mode="In" />
+    <Parameter Name="quantity" Type="int" Mode="In" />
+    <Parameter Name="sub_total" Type="decimal" Mode="In" />
+    <Parameter Name="discount_fee" Type="decimal" Mode="In" />
+    <Parameter Name="RMA_num" Type="int" Mode="In" />
+    <Parameter Name="RMA_issued_by" Type="varchar" Mode="In" />
+    <Parameter Name="RMA_issued_date" Type="datetime" Mode="In" />
+    <Parameter Name="order_id" Type="int" Mode="In" />
+    <Parameter Name="order_item_status_id" Type="int" Mode="In" />
+    <Parameter Name="product_id" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeOrderItemStatus_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="order_item_status_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeOrderItemStatus_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="description" Type="varchar(max)" Mode="In" />
+    <Parameter Name="return_merchandise_authorization_nr" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeOrderItemStatus_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="order_item_status_id" Type="int" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="description" Type="varchar(max)" Mode="In" />
+    <Parameter Name="return_merchandise_authorization_nr" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeOrderStatus_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="order_status_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeOrderStatus_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeOrderStatus_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="order_status_id" Type="int" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeePaymentMethod_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="payment_method_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeePaymentMethod_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeePaymentMethod_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="payment_method_id" Type="int" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeePlatform_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="platform_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeePlatform_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeePlatform_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="platform_id" Type="int" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProduct_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="product_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProduct_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="product_code" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="description" Type="varchar(max)" Mode="In" />
+    <Parameter Name="SKU" Type="varchar" Mode="In" />
+    <Parameter Name="SKU2" Type="varchar" Mode="In" />
+    <Parameter Name="buy_price" Type="decimal" Mode="In" />
+    <Parameter Name="sell_price" Type="decimal" Mode="In" />
+    <Parameter Name="product_brand_id" Type="int" Mode="In" />
+    <Parameter Name="product_type_id" Type="int" Mode="In" />
+    <Parameter Name="product_variety_id" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProduct_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="product_id" Type="int" Mode="In" />
+    <Parameter Name="product_code" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="description" Type="varchar(max)" Mode="In" />
+    <Parameter Name="SKU" Type="varchar" Mode="In" />
+    <Parameter Name="SKU2" Type="varchar" Mode="In" />
+    <Parameter Name="buy_price" Type="decimal" Mode="In" />
+    <Parameter Name="sell_price" Type="decimal" Mode="In" />
+    <Parameter Name="product_brand_id" Type="int" Mode="In" />
+    <Parameter Name="product_type_id" Type="int" Mode="In" />
+    <Parameter Name="product_variety_id" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProductBrand_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="product_brand_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProductBrand_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProductBrand_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="product_brand_id" Type="int" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProduction_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="production_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProduction_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="title" Type="varchar(max)" Mode="In" />
+    <Parameter Name="description" Type="varchar(max)" Mode="In" />
+    <Parameter Name="production_status_id" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProduction_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="production_id" Type="int" Mode="In" />
+    <Parameter Name="title" Type="varchar(max)" Mode="In" />
+    <Parameter Name="description" Type="varchar(max)" Mode="In" />
+    <Parameter Name="production_status_id" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProductionDetail_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="production_detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProductionDetail_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UOM" Type="varchar" Mode="In" />
+    <Parameter Name="manufactured_date" Type="datetime" Mode="In" />
+    <Parameter Name="expiry_date" Type="datetime" Mode="In" />
+    <Parameter Name="quantity" Type="int" Mode="In" />
+    <Parameter Name="production_id" Type="int" Mode="In" />
+    <Parameter Name="product_id" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProductionDetail_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="production_detail_id" Type="int" Mode="In" />
+    <Parameter Name="UOM" Type="varchar" Mode="In" />
+    <Parameter Name="manufactured_date" Type="datetime" Mode="In" />
+    <Parameter Name="expiry_date" Type="datetime" Mode="In" />
+    <Parameter Name="quantity" Type="int" Mode="In" />
+    <Parameter Name="production_id" Type="int" Mode="In" />
+    <Parameter Name="product_id" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProductionStatus_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="production_status_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProductionStatus_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProductionStatus_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="production_status_id" Type="int" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProductType_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="product_type_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProductType_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProductType_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="product_type_id" Type="int" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProductVariety_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="product_variety_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProductVariety_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeProductVariety_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="product_variety_id" Type="int" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeShipment_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="shipment_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeShipment_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="start_location" Type="varchar(max)" Mode="In" />
+    <Parameter Name="destination" Type="varchar(max)" Mode="In" />
+    <Parameter Name="tracking_id" Type="varchar" Mode="In" />
+    <Parameter Name="created_date" Type="datetime" Mode="In" />
+    <Parameter Name="expected_date" Type="datetime" Mode="In" />
+    <Parameter Name="due_date" Type="datetime" Mode="In" />
+    <Parameter Name="invoice_id" Type="int" Mode="In" />
+    <Parameter Name="carrier_id" Type="int" Mode="In" />
+    <Parameter Name="shipment_status_id" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeShipment_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="shipment_id" Type="int" Mode="In" />
+    <Parameter Name="start_location" Type="varchar(max)" Mode="In" />
+    <Parameter Name="destination" Type="varchar(max)" Mode="In" />
+    <Parameter Name="tracking_id" Type="varchar" Mode="In" />
+    <Parameter Name="created_date" Type="datetime" Mode="In" />
+    <Parameter Name="expected_date" Type="datetime" Mode="In" />
+    <Parameter Name="due_date" Type="datetime" Mode="In" />
+    <Parameter Name="invoice_id" Type="int" Mode="In" />
+    <Parameter Name="carrier_id" Type="int" Mode="In" />
+    <Parameter Name="shipment_status_id" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeShipmentStatus_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="shipment_status_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeShipmentStatus_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeShipmentStatus_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="shipment_status_id" Type="int" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeStockItem_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="stock_item_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeStockItem_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="description" Type="varchar(max)" Mode="In" />
+    <Parameter Name="stock_quantity" Type="int" Mode="In" />
+    <Parameter Name="product_id" Type="int" Mode="In" />
+    <Parameter Name="stock_warehouse_id" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeStockItem_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="stock_item_id" Type="int" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="description" Type="varchar(max)" Mode="In" />
+    <Parameter Name="stock_quantity" Type="int" Mode="In" />
+    <Parameter Name="product_id" Type="int" Mode="In" />
+    <Parameter Name="stock_warehouse_id" Type="int" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeStockWarehouse_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="stock_warehouse_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeStockWarehouse_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="email_address" Type="varchar" Mode="In" />
+    <Parameter Name="phone_number" Type="varchar" Mode="In" />
+    <Parameter Name="address_line_1" Type="varchar" Mode="In" />
+    <Parameter Name="address_line_2" Type="varchar" Mode="In" />
+    <Parameter Name="city" Type="varchar" Mode="In" />
+    <Parameter Name="state" Type="varchar" Mode="In" />
+    <Parameter Name="zip_code" Type="int" Mode="In" />
+    <Parameter Name="country" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeStockWarehouse_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="stock_warehouse_id" Type="int" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="email_address" Type="varchar" Mode="In" />
+    <Parameter Name="phone_number" Type="varchar" Mode="In" />
+    <Parameter Name="address_line_1" Type="varchar" Mode="In" />
+    <Parameter Name="address_line_2" Type="varchar" Mode="In" />
+    <Parameter Name="city" Type="varchar" Mode="In" />
+    <Parameter Name="state" Type="varchar" Mode="In" />
+    <Parameter Name="zip_code" Type="int" Mode="In" />
+    <Parameter Name="country" Type="varchar" Mode="In" />
+    <Parameter Name="detail_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeUser_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="user_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeUser_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="varchar(max)" Mode="In" />
+    <Parameter Name="password" Type="varchar(max)" Mode="In" />
+    <Parameter Name="email" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeUser_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="user_id" Type="int" Mode="In" />
+    <Parameter Name="username" Type="varchar(max)" Mode="In" />
+    <Parameter Name="password" Type="varchar(max)" Mode="In" />
+    <Parameter Name="email" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeUserRole_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="user_role_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeUserRole_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="varchar(max)" Mode="In" />
+    <Parameter Name="role" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="NSP_TShopeeUserRole_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="user_role_id" Type="int" Mode="In" />
+    <Parameter Name="username" Type="varchar(max)" Mode="In" />
+    <Parameter Name="role" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="NTL_ERPModelStoreContainer">
+    <EntitySet Name="TShopeeCarrier" EntityType="Self.TShopeeCarrier" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeCustomer" EntityType="Self.TShopeeCustomer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeDetail" EntityType="Self.TShopeeDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeInvoice" EntityType="Self.TShopeeInvoice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeInvoiceStatus" EntityType="Self.TShopeeInvoiceStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeOrder" EntityType="Self.TShopeeOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeOrderItem" EntityType="Self.TShopeeOrderItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeOrderItemStatus" EntityType="Self.TShopeeOrderItemStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeOrderStatus" EntityType="Self.TShopeeOrderStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeePaymentMethod" EntityType="Self.TShopeePaymentMethod" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeePlatform" EntityType="Self.TShopeePlatform" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeProduct" EntityType="Self.TShopeeProduct" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeProductBrand" EntityType="Self.TShopeeProductBrand" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeProduction" EntityType="Self.TShopeeProduction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeProductionDetail" EntityType="Self.TShopeeProductionDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeProductionStatus" EntityType="Self.TShopeeProductionStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeProductType" EntityType="Self.TShopeeProductType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeProductVariety" EntityType="Self.TShopeeProductVariety" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeShipment" EntityType="Self.TShopeeShipment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeShipmentStatus" EntityType="Self.TShopeeShipmentStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeStockItem" EntityType="Self.TShopeeStockItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeStockWarehouse" EntityType="Self.TShopeeStockWarehouse" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeUser" EntityType="Self.TShopeeUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TShopeeUserRole" EntityType="Self.TShopeeUserRole" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

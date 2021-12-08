@@ -1,20 +1,66 @@
-﻿
+﻿@using dbShopeeAutomationV2.Models;
+
 @{
     ViewBag.Title = "Shipment Form";
     Layout = "~/Views/Shared/_ShipmentLayout.cshtml";
+
+    dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
+
+    int invoice_count = db.TShopeeInvoices.ToList().Count;
+    int carrier_count = db.TShopeeCarriers.ToList().Count;
+    int shipment_status_count = db.TShopeeShipmentStatus.ToList().Count;
 }
 
-<div class="p-3">
-    <div class="border border-dark">
-        <div class="row">
-            <div class="col">
-                <div class="bg-dark text-center h1 text-white">@ViewBag.Title</div>
+@if (invoice_count <= 0 || carrier_count <= 0 || shipment_status_count <= 0)
+{
+    <div class="p-3">
+        <div class="warning_div border border-danger">
+            <div class="row">
+                <div class="col">
+                    <div class="text-white text-center fw-bold h2 bg-danger">
+                        Error!
+                    </div>
+                </div>
+            </div>
+            <div class="text-black h4">
+                <ul>
+                    @if (invoice_count <= 0)
+                    {
+                        <li>There are no existing invoice! Please make an invoice before you proceed! </li>
+                    }
+                    @if (carrier_count <= 0)
+                    {
+                        <li>There are no existing carriers! Please make a carrier before you proceed! </li>
+                    }
+                    @if (shipment_status_count <= 0)
+                    {
+                        <li>There are no existing shipment Status! Please make a shipment status before you proceed! </li>
+                    }
+                </ul>
             </div>
         </div>
+    </div>
+}
+else
+{
+    <div class="p-3">
+        <div class="border border-dark">
+            <div class="row">
+                <div class="col">
+                    <div class="bg-dark text-center h1 text-white">@ViewBag.Title</div>
+                </div>
+            </div>
 
-        <div class="p-3">
-            @Html.Action("ShipmentGridViewPartial")
+            <div class="p-3">
+                @Html.Action("ShipmentGridViewPartial")
+            </div>
         </div>
     </div>
-</div>
+
+    <div class="p-1">
+        <ul>
+            <li class="fst-italic">If you are unable to select a specific invoice, please check and ensure invoice status is marked as 'Complete'.</li>
+        </ul>
+    </div>
+}
 

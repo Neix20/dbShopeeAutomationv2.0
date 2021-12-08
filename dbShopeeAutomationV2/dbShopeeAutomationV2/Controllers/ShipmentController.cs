@@ -16,14 +16,6 @@ namespace dbShopeeAutomationV2.Controllers
             return View();
         }
 
-        public static string randomCode(int length = 10)
-        {
-            Random rand = new Random();
-            string str = "";
-            for (int i = 0; i < length; i++) str += $"{rand.Next(0, 10) + 1}";
-            return str;
-        }
-
         dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
         [ValidateInput(false)]
@@ -38,7 +30,9 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            item.tracking_id = (item.tracking_id == null) ? randomCode() : item.tracking_id;
+            item.start_location = (item.start_location == null) ? "start_location" : item.start_location; 
+            item.tracking_id = (item.tracking_id == null) ? generalFunc.Random10DigitCode() : item.tracking_id;
+            item.destination = (item.destination == null) ? "destination" : item.destination;
             item.created_date = (item.created_date == null) ? DateTime.Now : item.created_date;
             item.expected_date = (item.expected_date == null) ? DateTime.Now : item.expected_date;
             item.due_date = (item.due_date == null) ? DateTime.Now : item.due_date;
@@ -55,7 +49,9 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            item.tracking_id = (item.tracking_id == null) ? randomCode() : item.tracking_id;
+            item.start_location = (item.start_location == null) ? "start_location" : item.start_location;
+            item.tracking_id = (item.tracking_id == null) ? generalFunc.Random10DigitCode() : item.tracking_id;
+            item.destination = (item.destination == null) ? "destination" : item.destination;
             item.created_date = (item.created_date == null) ? DateTime.Now : item.created_date;
             item.expected_date = (item.expected_date == null) ? DateTime.Now : item.expected_date;
             item.due_date = (item.due_date == null) ? DateTime.Now : item.due_date;

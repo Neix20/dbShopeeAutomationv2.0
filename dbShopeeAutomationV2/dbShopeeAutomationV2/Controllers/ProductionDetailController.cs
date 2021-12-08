@@ -30,6 +30,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            item.UOM = (item.UOM == null) ? "UOM" : item.UOM;
             item.quantity = (item.quantity == null) ? 0 : item.quantity;
             item.manufactured_date = (item.manufactured_date == null) ? DateTime.Now : item.manufactured_date;
             item.expiry_date = (item.expiry_date == null) ? DateTime.Now : item.expiry_date;
@@ -46,6 +47,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            item.UOM = (item.UOM == null) ? "UOM" : item.UOM;
             item.quantity = (item.quantity == null) ? 0 : item.quantity;
             item.manufactured_date = (item.manufactured_date == null) ? DateTime.Now : item.manufactured_date;
             item.expiry_date = (item.expiry_date == null) ? DateTime.Now : item.expiry_date;

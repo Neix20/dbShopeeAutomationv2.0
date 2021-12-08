@@ -10,12 +10,15 @@
         detailDict.Add(it.detail_id, it.last_updated_by);
     });
 
+    int inc_pro_sta_id = db.TShopeeProductionStatus.FirstOrDefault(it => it.name.ToLower().Equals("Incomplete".ToLower())).production_status_id;
+
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "ProductionDetailFormGridView";
         settings.Width = Unit.Percentage(100);
         settings.CallbackRouteValues = new { Controller = "ProductionDetail", Action = "ProductionDetailGridViewPartial"};
 
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "ProductionDetail", Action = "ProductionDetailGridViewPartialAddNew" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ProductionDetail", Action = "ProductionDetailGridViewPartialUpdate" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ProductionDetail", Action = "ProductionDetailGridViewPartialDelete" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
@@ -46,7 +49,7 @@
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
-            prop.DataSource = db.TShopeeProductions.ToList();
+            prop.DataSource = db.TShopeeProductions.Where(it => it.production_status_id == inc_pro_sta_id).ToList();
             prop.TextField = "title";
             prop.ValueField = "production_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;

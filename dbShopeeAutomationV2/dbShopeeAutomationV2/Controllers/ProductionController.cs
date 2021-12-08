@@ -18,6 +18,12 @@ namespace dbShopeeAutomationV2.Controllers
             return View();
         }
 
+        public int productionStatusID(string name)
+        {
+            var productionStatus = db.TShopeeProductionStatus.FirstOrDefault(it => it.name.ToLower().Equals(name.ToLower()));
+            return (productionStatus == null) ? 0 : productionStatus.production_status_id;
+        }
+
         public ActionResult Create(int? production_id)
         {
             TShopeeProduction tmp_model;
@@ -40,7 +46,7 @@ namespace dbShopeeAutomationV2.Controllers
 
             model.title = (model.title == null) ? "production_title" : model.title;
             model.description = (model.description == null) ? "production_description" : model.description;
-            model.production_status_id = db.TShopeeProductionStatus.FirstOrDefault(it => it.name.ToLower().Equals("Incomplete".ToLower())).production_status_id;
+            model.production_status_id = productionStatusID("Incomplete");
 
             var tmpModel = db.TShopeeProductions.FirstOrDefault(it => it.production_id == model.production_id);
             if (tmpModel != null)
@@ -70,6 +76,7 @@ namespace dbShopeeAutomationV2.Controllers
 
             item.title = (item.title == null) ? "production_title" : item.title;
             item.description = (item.description == null) ? "production_description" : item.description;
+            item.production_status_id = productionStatusID("Incomplete");
 
             dbStoredProcedure.productionInsert(item.title, item.description, item.production_status_id, username);
             db.SaveChanges();

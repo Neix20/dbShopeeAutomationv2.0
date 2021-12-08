@@ -16,6 +16,12 @@ namespace dbShopeeAutomationV2.Controllers
             return View();
         }
 
+        public int orderStatusID(string name)
+        {
+            var orderStatus = db.TShopeeOrderStatus.FirstOrDefault(it => it.name.ToLower().Equals(name.ToLower()));
+            return (orderStatus == null) ? 0 : orderStatus.order_status_id;
+        }
+
         dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
         [ValidateInput(false)]
@@ -33,6 +39,7 @@ namespace dbShopeeAutomationV2.Controllers
             item.order_title = (item.order_title == null) ? "order_title" : item.order_title;
             item.order_placed_date = (item.order_placed_date == null) ? DateTime.Now : item.order_placed_date;
             item.total_price = 0;
+            item.order_status_id = orderStatusID("Incomplete");
 
             dbStoredProcedure.orderInsert(item.order_title, item.order_placed_date, item.total_price, item.order_status_id, username);
             db.SaveChanges();

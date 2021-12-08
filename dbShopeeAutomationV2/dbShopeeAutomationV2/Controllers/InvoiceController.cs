@@ -16,6 +16,12 @@ namespace dbShopeeAutomationV2.Controllers
             return View();
         }
 
+        public int invoiceStatusID(string name)
+        {
+            var invoiceStatus = db.TShopeeInvoiceStatus.FirstOrDefault(it => it.name.ToLower().Equals(name.ToLower()));
+            return (invoiceStatus == null) ? 0 : invoiceStatus.invoice_status_id;
+        }
+
         dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
         [ValidateInput(false)]
@@ -32,6 +38,7 @@ namespace dbShopeeAutomationV2.Controllers
 
             item.invoice_details = (item.invoice_details == null) ? "Invoice Details" : item.invoice_details;
             item.invoice_created_date = (item.invoice_created_date == null) ? DateTime.Now : item.invoice_created_date;
+            item.invoice_status_id = invoiceStatusID("Incomplete");
             item.shipping_fee = (item.shipping_fee == null) ? 0 : item.shipping_fee;
             item.invoice_title = (item.invoice_title == null) ? generalFunc.Random10DigitCode() : item.invoice_title;
 

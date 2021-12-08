@@ -11,8 +11,19 @@
 @if (order_status_count <= 0)
 {
     <div class="p-3">
-        <div class="text-danger h2">
-            Warning! There is no existing Order Status. Please insert an Order Status before you proceeed!
+        <div class="warning_div border border-danger">
+            <div class="row">
+                <div class="col">
+                    <div class="text-white text-center fw-bold h2 bg-danger">
+                        Error!
+                    </div>
+                </div>
+            </div>
+            <div class="text-black h4">
+                <ul>
+                    <li>There is no existing Order Status. Please insert an Order Status before you proceeed!</li>
+                </ul>
+            </div>
         </div>
     </div>
 }

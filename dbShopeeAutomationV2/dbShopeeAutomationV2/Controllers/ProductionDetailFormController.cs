@@ -15,7 +15,6 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult Index(int? production_id)
         {
             ViewData["production_id"] = (production_id == null) ? 1 : production_id;
-
             return View();
         }
 
@@ -36,8 +35,6 @@ namespace dbShopeeAutomationV2.Controllers
             item.quantity = (item.quantity == null) ? 0 : item.quantity;
             item.manufactured_date = (item.manufactured_date == null) ? DateTime.Now : item.manufactured_date;
             item.expiry_date = (item.expiry_date == null) ? DateTime.Now : item.expiry_date;
-
-
 
             dbStoredProcedure.productionDetailInsert(item.UOM, item.manufactured_date, item.expiry_date, item.quantity, (int) item.product_id, item.production_id, username);
             db.SaveChanges();

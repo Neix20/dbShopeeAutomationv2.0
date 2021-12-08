@@ -43,7 +43,6 @@ namespace dbShopeeAutomationV2.Controllers
 
             string phone_number = (item.phone_number == null) ? generalFunc.GenPhoneNum() : item.phone_number;
 
-            item.platform_id = (item.platform_id == null) ? db.TShopeePlatforms.ToList().ElementAt(0).platform_id : item.platform_id;
             int platform_id = (int)item.platform_id;
 
             string address = generalFunc.trimStr(Request.Form["Address"]);
@@ -90,7 +89,6 @@ namespace dbShopeeAutomationV2.Controllers
 
             string phone_number = (item.phone_number == null) ? generalFunc.GenPhoneNum() : item.phone_number;
 
-            item.platform_id = (item.platform_id == null) ? db.TShopeePlatforms.ToList().ElementAt(0).platform_id : item.platform_id;
             int platform_id = (int)item.platform_id;
 
             string address = generalFunc.trimStr(Request.Form["Address"]);

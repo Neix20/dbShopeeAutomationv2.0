@@ -38,7 +38,8 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            // Set Production Status to incomplete
+            model.title = (model.title == null) ? "production_title" : model.title;
+            model.description = (model.description == null) ? "production_description" : model.description;
             model.production_status_id = db.TShopeeProductionStatus.FirstOrDefault(it => it.name.ToLower().Equals("Incomplete".ToLower())).production_status_id;
 
             var tmpModel = db.TShopeeProductions.FirstOrDefault(it => it.production_id == model.production_id);
@@ -67,6 +68,9 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            item.title = (item.title == null) ? "production_title" : item.title;
+            item.description = (item.description == null) ? "production_description" : item.description;
+
             dbStoredProcedure.productionInsert(item.title, item.description, item.production_status_id, username);
             db.SaveChanges();
 
@@ -77,6 +81,9 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult ProductionGridViewPartialUpdate(TShopeeProduction item)
         {
             string username = User.Identity.Name;
+
+            item.title = (item.title == null) ? "production_title" : item.title;
+            item.description = (item.description == null) ? "production_description" : item.description;
 
             dbStoredProcedure.productionUpdate(item.production_id, item.title, item.description, item.production_status_id, username);
             db.SaveChanges();

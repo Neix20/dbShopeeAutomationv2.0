@@ -15,22 +15,35 @@
 @if (product_brand_count <= 0 || product_type_count <= 0 || product_variety_count <= 0 || stock_warehouse_count <= 0)
 {
     <div class="p-3">
-        @if (product_brand_count <= 0)
-        {
-            <div class="text-danger h2">There is no existing Product Brand. Please make a product brand before you proceed! </div>
-        }
-        @if (product_type_count <= 0)
-        {
-            <div class="text-danger h2">There is no existing Product Type. Please make a product type before you proceed! </div>
-        }
-        @if (product_variety_count <= 0)
-        {
-            <div class="text-danger h2">There is no existing Product Variety. Please make a product variety before you proceed! </div>
-        }
-        @if (stock_warehouse_count <= 0)
-        {
-            <div class="text-danger h2">There is no existing Stock Warehouse. Please make a Stock Warehouse before you proceed! </div>
-        }
+        <div class="warning_div border border-danger">
+            <div class="row">
+                <div class="col">
+                    <div class="text-white text-center fw-bold h2 bg-danger">
+                        Error!
+                    </div>
+                </div>
+            </div>
+            <div class="text-black h4">
+                <ul>
+                    @if (product_brand_count <= 0)
+                    {
+                        <li>There is no existing Product Brand. Please make a product brand before you proceed! </li>
+                    }
+                    @if (product_type_count <= 0)
+                    {
+                        <li>There is no existing Product Type. Please make a product type before you proceed! </li>
+                    }
+                    @if (product_variety_count <= 0)
+                    {
+                        <li>There is no existing Product Variety. Please make a product variety before you proceed! </li>
+                    }
+                    @if (stock_warehouse_count <= 0)
+                    {
+                        <li>There is no existing Stock Warehouse. Please make a Stock Warehouse before you proceed! </li>
+                    }
+                </ul>
+            </div>
+        </div>
     </div>
 }
 else

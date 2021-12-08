@@ -4,32 +4,55 @@
 @{
     ViewBag.Title = "Production Detail Form";
     Layout = "~/Views/Shared/_ProductionLayout.cshtml";
+
     dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
+    int product_count = db.TShopeeProducts.ToList().Count;
 }
 
-<div class="p-3">
-    <div class="border border-dark">
-        <div class="row">
-            <div class="col">
-                <div class="bg-dark text-center h1 text-white">@ViewBag.Title</div>
+@if (product_count <= 0)
+{
+    <div class="p-3">
+        <div class="warning_div border border-danger">
+            <div class="row">
+                <div class="col">
+                    <div class="text-white text-center fw-bold h2 bg-danger">
+                        Error!
+                    </div>
+                </div>
+            </div>
+            <div class="text-black h4">
+                <ul>
+                    <li>There are no existing products. Please make a product before you proceed!</li>
+                </ul>
             </div>
         </div>
+    </div>
+}
+else
+{
+    <div class="p-3">
+        <div class="border border-dark">
+            <div class="row">
+                <div class="col">
+                    <div class="bg-dark text-center h1 text-white">@ViewBag.Title</div>
+                </div>
+            </div>
 
-        <div class="row">
-            <div class="col px-4 py-2">
-                @using (Html.BeginForm("ProductionDetailFormGridViewPartialAddNew", "ProductionDetailForm", FormMethod.Post, new { id = "createProductionDetail" }))
+            <div class="row">
+                <div class="col px-4 py-2">
+                    @using (Html.BeginForm("ProductionDetailFormGridViewPartialAddNew", "ProductionDetailForm", FormMethod.Post, new { id = "createProductionDetail" }))
                 {
-                    @Html.HiddenFor(model => model.production_id, new { @Value = ViewData["production_id"] })
-                    @Html.HiddenFor(model => model.UOM, new { @Value = "-" })
+                        @Html.HiddenFor(model => model.production_id, new { @Value = ViewData["production_id"] })
+                        @Html.HiddenFor(model => model.UOM, new { @Value = "-" })
 
-                    <div class="row">
+                        <div class="row">
 
-                        <!--Change to Select Option-->
-                        <div class="col-2">
-                            <label>Product SKU: </label>
-                        </div>
-                        <div class="col-2">
-                            @Html.DevExpress().ComboBox(settings =>
+                            <!--Change to Select Option-->
+                            <div class="col-2">
+                                <label>Product SKU: </label>
+                            </div>
+                            <div class="col-2">
+                                @Html.DevExpress().ComboBox(settings =>
                            {
                                settings.Name = "product_id";
                                settings.Width = 180;
@@ -40,78 +63,78 @@
                                settings.Properties.ValueField = "product_id";
                                settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
                            }).BindList(db.TShopeeProducts.ToList()).GetHtml()
-                        </div>
+                            </div>
 
-                        <div class="col-2 text-center">
-                            <label>Quantity: </label>
-                        </div>
-                        <div class="col-2">
-                            @Html.DevExpress().SpinEdit(settings =>
+                            <div class="col-2 text-center">
+                                <label>Quantity: </label>
+                            </div>
+                            <div class="col-2">
+                                @Html.DevExpress().SpinEdit(settings =>
                        {
                            settings.Name = "quantity";
                            settings.Properties.MinValue = 0;
                            settings.Properties.MaxValue = 10000000;
                        }).Bind(Model).GetHtml()
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="mt-1"></div>
+                        <div class="mt-1"></div>
 
-                    <div class="row">
+                        <div class="row">
 
-                        <div class="col-2">
-                            <label>Manufacture Date: </label>
-                        </div>
-                        <div class="col-2">
-                            @Html.DevExpress().DateEdit(settings =>
+                            <div class="col-2">
+                                <label>Manufacture Date: </label>
+                            </div>
+                            <div class="col-2">
+                                @Html.DevExpress().DateEdit(settings =>
                        {
                            settings.Name = "manufactured_date";
                            settings.Properties.DisplayFormatString = "yyyy-MM-dd";
                            settings.Width = Unit.Percentage(100);
                        }).GetHtml()
-                        </div>
+                            </div>
 
-                        <div class="col-2 text-center">
-                            <label>Expiry Date: </label>
-                        </div>
-                        <div class="col-2">
-                            @Html.DevExpress().DateEdit(settings =>
+                            <div class="col-2 text-center">
+                                <label>Expiry Date: </label>
+                            </div>
+                            <div class="col-2">
+                                @Html.DevExpress().DateEdit(settings =>
                        {
                            settings.Name = "expiry_date";
                            settings.Properties.DisplayFormatString = "yyyy-MM-dd";
                            settings.Width = Unit.Percentage(100);
                        }).GetHtml()
+                            </div>
+
                         </div>
 
-                    </div>
+                        <div class="my-3"></div>
+
+                        <div class="row">
+                            <div class="col-2">
+                                <input type="submit" class="btn btn-outline-primary" value="Add New Production Detail" form="createProductionDetail" />
+                            </div>
+                        </div>
+
+                        <div id="productionDetailFormContent">
+                            @Html.Action("ProductionDetailFormGridViewPartial", new { production_id = ViewData["production_id"] })
+                        </div>
+                    }
 
                     <div class="my-3"></div>
 
-                    <div class="row">
-                        <div class="col-2">
-                            <input type="submit" class="btn btn-outline-primary" value="Add New Production Detail" form="createProductionDetail" />
-                        </div>
-                    </div>
-
-                    <div id="productionDetailFormContent">
-                        @Html.Action("ProductionDetailFormGridViewPartial", new { production_id = ViewData["production_id"] })
-                    </div>
-                }
-
-                <div class="my-3"></div>
-
-                @using (Html.BeginForm("completeProduction", "ProductionDetailForm", FormMethod.Post, new { @id = "completeProductionForm" }))
+                    @using (Html.BeginForm("completeProduction", "ProductionDetailForm", FormMethod.Post, new { @id = "completeProductionForm" }))
                 {
-                    <input type="text" name="production_id" value="@ViewData["production_id"]" hidden />
-                    <input type="submit" class="btn btn-primary" value="Complete Production" form="completeProductionForm" />
-                }
+                        <input type="text" name="production_id" value="@ViewData["production_id"]" hidden />
+                        <input type="submit" class="btn btn-primary" value="Complete Production" form="completeProductionForm" />
+                    }
+                </div>
             </div>
         </div>
+
     </div>
 
-</div>
-
-<script type="text/javascript">
+    <script type="text/javascript">
     $(function () {
         $("form[id='createProductionDetail']").submit(e => {
             e.preventDefault();
@@ -133,6 +156,7 @@
             $("input[name='expiry_date']").val("");
         });
     });
-</script>
+    </script>
+}
 
 

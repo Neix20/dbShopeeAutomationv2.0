@@ -95,9 +95,16 @@ namespace dbShopeeAutomationV2.Controllers
             dbStoredProcedure.productDelete(product_id);
             db.SaveChanges();
 
-            int stock_item_id = db.TShopeeStockItems.FirstOrDefault(it => it.product_id == product_id).stock_item_id;
-            dbStoredProcedure.stockItemDelete(stock_item_id);
-            db.SaveChanges();
+            IEnumerable<TShopeeStockItem> stock_item_list = db.TShopeeStockItems.Where(it => it.product_id == product_id);
+            if(stock_item_list != null)
+            {
+                stock_item_list.ToList().ForEach(it =>
+                {
+                    int stock_item_id = it.stock_item_id;
+                    dbStoredProcedure.stockItemDelete(stock_item_id);
+                    db.SaveChanges();
+                });
+            }
 
             var model = db.TShopeeProducts;
             return PartialView("_ProductGridViewPartial", model.ToList());

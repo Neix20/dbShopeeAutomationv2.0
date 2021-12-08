@@ -1,20 +1,54 @@
-﻿
+﻿@using dbShopeeAutomationV2.Models;
+
 @{
     ViewBag.Title = "Stock Item Form";
     Layout = "~/Views/Shared/_ProductionLayout.cshtml";
+
+    dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
+    int product_count = db.TShopeeProducts.ToList().Count;
+    int stock_warehouse_count = db.TShopeeStockWarehouses.ToList().Count;
 }
 
-<div class="p-3">
-    <div class="border border-dark">
-        <div class="row">
-            <div class="col">
-                <div class="bg-dark text-center h1 text-white">@ViewBag.Title</div>
+@if (product_count <= 0 || stock_warehouse_count <= 0)
+{
+    <div class="p-3">
+        <div class="warning_div border border-danger">
+            <div class="row">
+                <div class="col">
+                    <div class="text-white text-center fw-bold h2 bg-danger">
+                        Error!
+                    </div>
+                </div>
+            </div>
+            <div class="text-black h4">
+                <ul>
+                    @if (product_count <= 0)
+                    {
+                        <li>There are no existing products! Please make a product before you proceed! </li>
+                    }
+                    @if (stock_warehouse_count <= 0)
+                    {
+                        <li>There are no existing stock warehouses! Please make a stock warehouse before you proceed! </li>
+                    }
+                </ul>
             </div>
         </div>
+    </div>
+}
+else
+{
+    <div class="p-3">
+        <div class="border border-dark">
+            <div class="row">
+                <div class="col">
+                    <div class="bg-dark text-center h1 text-white">@ViewBag.Title</div>
+                </div>
+            </div>
 
-        <div class="p-3">
-            @Html.Action("StockItemGridViewPartial")
+            <div class="p-3">
+                @Html.Action("StockItemGridViewPartial")
+            </div>
         </div>
     </div>
-</div>
+}
 

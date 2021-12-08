@@ -100,7 +100,6 @@
         settings.Columns.Add(col => {
             col.FieldName = "invoice_status_id";
             col.Caption = "Complete?";
-            col.ReadOnly = true;
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;

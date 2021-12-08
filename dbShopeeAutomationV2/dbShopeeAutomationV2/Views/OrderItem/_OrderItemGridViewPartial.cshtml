@@ -10,11 +10,18 @@
         detailDict.Add(it.detail_id, it.last_updated_by);
     });
 
+    // 1. Cannot Select From Empty Stock Item
+    // 2. Cannot Select From Completed Order List
+
     List<TShopeeProduct> tmpProductList = db.TShopeeProducts.AsEnumerable().Where(it =>
     {
         TShopeeStockItem tmp = db.TShopeeStockItems.FirstOrDefault(model => model.product_id == it.product_id);
         return tmp.stock_quantity > 0;
     }).ToList();
+
+    int inc_ord_sta_id = db.TShopeeOrderStatus.FirstOrDefault(
+        it => it.name.ToLower().Equals("Incomplete".ToLower())
+    ).order_status_id;
 
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "OrderItemGridView";
@@ -51,10 +58,11 @@
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
-            prop.DataSource = db.TShopeeOrders.ToList();
+            prop.DataSource = db.TShopeeOrders.Where(it => it.order_status_id == inc_ord_sta_id).ToList();
             prop.TextField = "order_title";
             prop.ValueField = "order_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
         });
 
         // Product ID
@@ -69,6 +77,7 @@
             prop.TextField = "SKU";
             prop.ValueField = "product_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
         });
 
         // RMA Number

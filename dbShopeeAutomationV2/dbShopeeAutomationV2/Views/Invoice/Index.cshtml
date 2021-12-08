@@ -1,20 +1,71 @@
-﻿
+﻿@using dbShopeeAutomationV2.Models;
+
 @{
     ViewBag.Title = "Invoice Form";
     Layout = "~/Views/Shared/_EcommerceLayout.cshtml";
+
+    dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
+
+    int order_count = db.TShopeeOrders.ToList().Count;
+    int customer_count = db.TShopeeCustomers.ToList().Count;
+    int invoice_status_count = db.TShopeeInvoiceStatus.ToList().Count;
+    int payment_method_count = db.TShopeePaymentMethods.ToList().Count;
 }
 
-<div class="p-3">
-    <div class="border border-dark">
-        <div class="row">
-            <div class="col">
-                <div class="bg-dark text-center h1 text-white">@ViewBag.Title</div>
+@if (order_count <= 0 || customer_count <= 0 || invoice_status_count <= 0 || payment_method_count <= 0)
+{
+    <div class="p-3">
+        <div class="warning_div border border-danger">
+            <div class="row">
+                <div class="col">
+                    <div class="text-white text-center fw-bold h2 bg-danger">
+                        Error!
+                    </div>
+                </div>
+            </div>
+            <div class="text-black h4">
+                <ul>
+                    @if (order_count <= 0)
+                    {
+                        <li>There are no existing orders! Please make an order before you proceed! </li>
+                    }
+                    @if (customer_count <= 0)
+                    {
+                        <li>There are no existing customers! Please make a customer before you proceed! </li>
+                    }
+                    @if (invoice_status_count <= 0)
+                    {
+                        <li>There are no existing invoice Status! Please make an invoice Status before you proceed! </li>
+                    }
+                    @if (payment_method_count <= 0)
+                    {
+                        <li>There are no existing payment Methods! Please make a payment method before you proceed! </li>
+                    }
+                </ul>
             </div>
         </div>
+    </div>
+}
+else
+{
+    <div class="p-3">
+        <div class="border border-dark">
+            <div class="row">
+                <div class="col">
+                    <div class="bg-dark text-center h1 text-white">@ViewBag.Title</div>
+                </div>
+            </div>
 
-        <div class="p-3">
-            @Html.Action("InvoiceGridViewPartial")
+            <div class="p-3">
+                @Html.Action("InvoiceGridViewPartial")
+            </div>
         </div>
     </div>
-</div>
+
+    <div class="p-1">
+        <ul>
+            <li class="fst-italic">If you are unable to select a specific orders, please check and ensure order status is marked as 'Complete'.</li>
+        </ul>
+    </div>
+}
 

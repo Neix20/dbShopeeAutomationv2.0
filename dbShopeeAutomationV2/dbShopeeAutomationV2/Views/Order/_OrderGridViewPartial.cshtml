@@ -68,6 +68,7 @@
             prop.TextField = "name";
             prop.ValueField = "order_status_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
         });
 
         settings.Columns.Add(col =>

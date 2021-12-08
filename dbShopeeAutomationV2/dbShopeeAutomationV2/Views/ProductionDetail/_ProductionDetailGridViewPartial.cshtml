@@ -10,17 +10,6 @@
         detailDict.Add(it.detail_id, it.last_updated_by);
     });
 
-    Dictionary<int, string> productDict = new Dictionary<int, string>();
-    db.TShopeeProducts.ToList().ForEach(it =>
-    {
-        productDict.Add(it.product_id, it.SKU);
-    });
-
-    Dictionary<int, string> productionDict = new Dictionary<int, string>();
-    db.TShopeeProductions.ToList().ForEach(it => {
-        productionDict.Add(it.production_id, it.title);
-    });
-
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "ProductionDetailFormGridView";
@@ -61,6 +50,7 @@
             prop.TextField = "title";
             prop.ValueField = "production_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
         });
 
         // Product SKU
@@ -75,6 +65,7 @@
             prop.TextField = "SKU";
             prop.ValueField = "product_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
         });
 
         // Quantity

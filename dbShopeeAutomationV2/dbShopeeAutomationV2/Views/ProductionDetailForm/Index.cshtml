@@ -62,6 +62,7 @@ else
                                settings.Properties.TextField = "SKU";
                                settings.Properties.ValueField = "product_id";
                                settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                               settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
                            }).BindList(db.TShopeeProducts.ToList()).GetHtml()
                             </div>
 

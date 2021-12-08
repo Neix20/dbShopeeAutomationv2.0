@@ -64,6 +64,7 @@
             prop.TextField = "order_title";
             prop.ValueField = "order_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
         });
 
         // Customer ID
@@ -78,6 +79,7 @@
             prop.TextField = "email_address";
             prop.ValueField = "customer_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
         });
 
         settings.Columns.Add(col => {
@@ -106,6 +108,7 @@
             prop.TextField = "name";
             prop.ValueField = "invoice_status_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
         });
 
         settings.Columns.Add(col =>
@@ -133,6 +136,7 @@
             prop.TextField = "name";
             prop.ValueField = "payment_method_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
         });
 
         // Shipping Fee

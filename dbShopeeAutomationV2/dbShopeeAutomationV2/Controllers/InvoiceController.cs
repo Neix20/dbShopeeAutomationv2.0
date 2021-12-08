@@ -16,14 +16,6 @@ namespace dbShopeeAutomationV2.Controllers
             return View();
         }
 
-        public static string randomCode(int length = 10)
-        {
-            Random rand = new Random();
-            string str = "";
-            for (int i = 0; i < length; i++) str += $"{rand.Next(0, 10) + 1}";
-            return str;
-        }
-
         dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
         [ValidateInput(false)]
@@ -39,9 +31,8 @@ namespace dbShopeeAutomationV2.Controllers
             string username = User.Identity.Name;
 
             item.invoice_created_date = (item.invoice_created_date == null) ? DateTime.Now : item.invoice_created_date;
-            item.invoice_status_id = db.TShopeeInvoiceStatus.FirstOrDefault(it => it.name.ToLower().Equals("Incomplete".ToLower())).invoice_status_id;
             item.shipping_fee = (item.shipping_fee == null) ? 0 : item.shipping_fee;
-            item.invoice_title = (item.invoice_title == null) ? randomCode() : item.invoice_title;
+            item.invoice_title = (item.invoice_title == null) ? generalFunc.Random10DigitCode() : item.invoice_title;
 
             dbStoredProcedure.invoiceInsert(item.invoice_title, item.invoice_created_date, item.invoice_completed_date, item.invoice_details, item.shipping_fee, item.invoice_status_id, item.payment_method_id, item.order_id, item.customer_id, username);
             db.SaveChanges();
@@ -57,7 +48,7 @@ namespace dbShopeeAutomationV2.Controllers
 
             item.invoice_created_date = (item.invoice_created_date == null) ? DateTime.Now : item.invoice_created_date;
             item.shipping_fee = (item.shipping_fee == null) ? 0 : item.shipping_fee;
-            item.invoice_title = (item.invoice_title == null) ? randomCode() : item.invoice_title;
+            item.invoice_title = (item.invoice_title == null) ? generalFunc.Random10DigitCode() : item.invoice_title;
 
             dbStoredProcedure.invoiceUpdate(item.invoice_id, item.invoice_title, item.invoice_created_date, item.invoice_completed_date, item.invoice_details, item.shipping_fee, item.invoice_status_id, item.payment_method_id, item.order_id, item.customer_id, username);
             db.SaveChanges();

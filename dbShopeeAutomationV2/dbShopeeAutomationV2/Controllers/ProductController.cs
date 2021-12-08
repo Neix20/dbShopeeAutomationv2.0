@@ -49,6 +49,7 @@ namespace dbShopeeAutomationV2.Controllers
             dbStoredProcedure.productInsert(item.product_code, item.name, item.description, item.SKU, item.SKU2, item.buy_price, item.sell_price, item.product_brand_id, item.product_type_id, item.product_variety_id, username);
             db.SaveChanges();
 
+            // Error! Unable to delete Stock Item with multiple SKU (However, in hindsight, SKU Should never be same)
             int product_id = db.TShopeeProducts.FirstOrDefault(it => it.SKU.Equals(item.SKU)).product_id;
 
             string warehouse_title = generalFunc.trimStr(Request.Form["Stock Warehouse Location"]);

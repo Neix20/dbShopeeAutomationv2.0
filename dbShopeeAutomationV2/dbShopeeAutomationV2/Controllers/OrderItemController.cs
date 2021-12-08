@@ -33,6 +33,7 @@ namespace dbShopeeAutomationV2.Controllers
             item.sub_total = (item.sub_total == null) ? 0 : item.sub_total;
             item.discount_fee = (item.discount_fee == null) ? 0 : item.discount_fee;
             item.RMA_num = (item.RMA_num == null) ? 0 : item.RMA_num;
+            item.RMA_issued_by = (item.RMA_issued_by == null) ? "rma_issued_by" : item.RMA_issued_by;
             item.RMA_issued_date = (item.RMA_issued_date == null) ? DateTime.Now : item.RMA_issued_date;
 
             // Update Sub Total

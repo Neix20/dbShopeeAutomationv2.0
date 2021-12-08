@@ -140,6 +140,7 @@ else
                                settings.Properties.TextField = "name";
                                settings.Properties.ValueField = "product_brand_id";
                                settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                               settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
                            }).BindList(db.TShopeeProductBrands.ToList()).GetHtml()
                                 </div>
                             </div>
@@ -156,6 +157,7 @@ else
                                settings.Properties.TextField = "name";
                                settings.Properties.ValueField = "product_type_id";
                                settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                               settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
                            }).BindList(db.TShopeeProductTypes.ToList()).GetHtml()
                                 </div>
                             </div>
@@ -163,16 +165,17 @@ else
                                 <div class="form-group">
                                     <label>Product Variety</label>
                                     @Html.DevExpress().ComboBox(settings =>
-                           {
-                               settings.Name = "product_variety_id";
-                               settings.Width = 240;
-                               settings.SelectedIndex = 0;
-                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                               settings.Properties.TextField = "name";
-                               settings.Properties.ValueField = "product_variety_id";
-                               settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
-                           }).BindList(db.TShopeeProductVarieties.ToList()).GetHtml()
+                               {
+                                   settings.Name = "product_variety_id";
+                                   settings.Width = 240;
+                                   settings.SelectedIndex = 0;
+                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                   settings.Properties.TextField = "name";
+                                   settings.Properties.ValueField = "product_variety_id";
+                                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                                   settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                               }).BindList(db.TShopeeProductVarieties.ToList()).GetHtml()
                                 </div>
                             </div>
                         </div>
@@ -191,6 +194,7 @@ else
                                settings.Properties.TextField = "name";
                                settings.Properties.ValueField = "stock_warehouse_id";
                                settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                               settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
                            }).BindList(db.TShopeeStockWarehouses.ToList()).GetHtml()
                                 </div>
                             </div>

@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewBag.Title = "Scan QRCode";
+    Layout = "~/Views/Shared/_QRCodeLayout.cshtml";
+}
+
+<style>
+    .img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .qr_div_width {
+        width: 600px;
+    }
+
+    /* Mobile Phone */
+    @@media (max-width: 767px) {
+        .qr_div_width {
+            width: 300px;
+        }
+    }
+</style>
+
+<div class="d-flex align-items-center justify-content-center">
+    <div class="p-3">
+        <div class="border border-dark">
+            <div class="container">
+
+                <div class="row">
+                    <div class="bg-dark text-center text-white h1">@ViewBag.Title</div>
+                </div>
+
+                <div class="text-center">
+                    <div id="reader"></div>
+                </div>
+
+                <div class="my-2"></div>
+
+                @using (Html.BeginForm("SubmitCode", "ScanQRCode", FormMethod.Post, new { @Id = "QRCodeForm" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="row w-100">
+                        <div class="col-8">
+                            <input type="text" placeholder="Insert Invoice Code" class="form-control"
+                                   name="invoice_title" />
+                        </div>
+                        <div class="col-4">
+                            <input type="submit" class="btn btn-success form-control" value="Submit QRCode" />
+                        </div>
+                    </div>
+                }
+                <div class="text-center h4" id="resp_msg"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        function onScanSuccess(decodedText, decodedResult) {
+            $("input[name='invoice_title']").val(`${decodedText}`);
+        }
+
+        var html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess);
+
+        $("form[id='QRCodeForm']").submit(e => {
+            e.preventDefault();
+
+            let qrCodeForm = $("form[id='QRCodeForm']");
+            const qrCodeForm_actionLink = qrCodeForm.attr("action");
+            const qrCodeForm_methodType = qrCodeForm.attr("method");
+
+            $.ajax({
+                url: qrCodeForm_actionLink,
+                type: qrCodeForm_methodType,
+                data: qrCodeForm.serialize(),
+                success: resp => {
+                    $("#resp_msg").html(resp);
+                },
+                error: resp => {
+                    $("#resp_msg").html(resp);
+                }
+            });
+        });
+    });
+</script>
+

@@ -1,0 +1,77 @@
+﻿@model dbShopeeAutomationV2.Models.TShopeeUser
+
+@{
+    ViewBag.Title = "Login page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .div_width {
+        height: 100%;
+        width: 330px;
+    }
+
+    /* Desktop */
+    @@media (min-width: 768px) {
+        .div_width {
+            height: 100%;
+            width: 600px;
+        }
+    }
+</style>
+
+@using (Html.BeginForm("Login", "Account", new { returnUrl = Request.QueryString["ReturnUrl"] }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.email, new { @Value = "trash@gmail.com" })
+
+    <div class="d-flex align-items-center justify-content-center mt-3">
+        <div>
+            <div>
+                <img src="~/Content/Images/Logo.jpg" style="height: 200px; width: 200px;" alt="VMS Portal Login Logo Image" />
+            </div>
+            <div class="my-2"></div>
+            <div class="border border-dark p-3 div_width">
+                <div class="h4">
+                    VMS Portal login
+                </div>
+                <div class="row mt-2">
+                    <div class="col-3">
+                        <label for="username" class="col-form-label">Username</label>
+                    </div>
+                    <div class="col-9">
+                        @Html.TextBoxFor(model => model.username, new { @Class = "form-control", @Type = "text", @Required = "true" })
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-3">
+                        <label for="password" class="col-form-label">Password</label>
+                    </div>
+                    <div class="col-9">
+                        @Html.TextBoxFor(model => model.password, new { @Class = "form-control", @Type = "password", @Required = "true" })
+                    </div>
+                </div>
+                <div class="text-danger">@ViewData["login_error"]</div>
+                <div class="row mt-2">
+                    <div class="col-3">
+                        <button class="btn btn-dark">Login</button>
+                    </div>
+                    <div class="col-4">
+                        <button class="btn btn-dark">Forgot Password</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    console.log($(".div_width").width())
+</script>

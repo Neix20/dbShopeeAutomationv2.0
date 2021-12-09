@@ -19,7 +19,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44376</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -237,7 +237,6 @@
     <Content Include="Content\Images\barcode_scan.gif" />
     <Content Include="Content\Images\check1.png" />
     <Content Include="Content\Images\default_male.jpg" />
-    <Content Include="Content\Images\Logo.jpg" />
     <Content Include="Content\Images\ntl_logo.png" />
     <Content Include="Content\importFontAwesomeFont.css" />
     <Content Include="Content\jquery-3.6.0.min.js" />
@@ -330,6 +329,7 @@
     <Content Include="Models\dbShopeeAutomationV2.edmx.diagram">
       <DependentUpon>dbShopeeAutomationV2.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\NTL_ERP.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\qrcode.min.js" />

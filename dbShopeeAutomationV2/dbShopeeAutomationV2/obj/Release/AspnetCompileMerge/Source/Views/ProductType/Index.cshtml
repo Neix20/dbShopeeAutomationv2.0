@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Product Type Form";
+    Layout = "~/Views/Shared/_ProductionLayout.cshtml";
+}
+
+<div class="p-3">
+    <div class="border border-dark">
+        <div class="row">
+            <div class="col">
+                <div class="bg-dark text-center h1 text-white">@ViewBag.Title</div>
+            </div>
+        </div>
+
+        <div class="p-3">
+            @Html.Action("ProductTypeGridViewPartial")
+        </div>
+    </div>
+</div>

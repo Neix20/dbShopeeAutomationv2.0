@@ -3,13 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="~/Content/Images/ntl_logo.png" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/css/fontawesome")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/jsPDF")
-    @Scripts.Render("~/bundles/QRCode")
 
     @Html.DevExpress().GetStyleSheets(
         new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
@@ -78,9 +76,6 @@
     </style>
 </head>
 <body>
-    <div class="header_style h2">
-        <strong>VMS OPS Portal</strong>
-    </div>
     @RenderBody()
     <div class="my-4"></div>
     <div class="footer_style text-center">

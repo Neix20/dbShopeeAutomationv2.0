@@ -1,0 +1,111 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    IDictionary<string, List<string>> propDict = new Dictionary<string, List<string>>(){
+        {"E-commerce", new List<string>(){"Customer", "Invoice", "Invoice Status", "Order", "Order Item", "Order Item Status",
+                                            "Order Status", "Payment Method", "Platform"}},
+        {"Production", new List<string>(){"Product", "Product Brand", "Product Type", "Product Variety", "Production", "Production Status",
+                                            "Production Detail", "Stock Item", "Stock Warehouse"}},
+        {"Shipment", new List<string>(){"Carrier", "Shipment", "Shipment Status"}},
+        {"Operations", new List<string>(){"Detail", "User", "User Role"}}
+    };
+
+    string uName = (User.Identity.IsAuthenticated) ? User.Identity.Name : "Admin";
+}
+
+<style>
+    .navbar-nav {
+        flex-direction: row;
+    }
+
+    .nav-item > a {
+        margin: 0px 15px;
+    }
+
+    .profile-pic img.img-circle {
+        border-radius: 50%;
+    }
+
+    .navbar-fixed-top {
+        min-width: 0px;
+    }
+
+    .nav-item:first-child,
+    .nav-item:nth-child(3),
+    .nav-item:nth-child(4),
+    .nav-item:nth-child(5),
+    .nav-item:last-child,
+    .profile-pic {
+        display: none;
+    }
+
+    /* Mobile Phone Rotate Right */
+    @@media (min-width: 768px) {
+        .nav-item:nth-child(2) {
+            display: none;
+        }
+
+        .nav-item:nth-child(3), .nav-item:nth-child(4), .nav-item:nth-child(5), .nav-item:last-child {
+            display: block;
+        }
+    }
+
+    /* Desktop */
+    @@media (min-width: 1200px) {
+        .nav-item:first-child, .nav-item:nth-child(2), .nav-item:nth-child(3),
+        .nav-item:nth-child(4), .nav-item:nth-child(5), .nav-item:last-child,
+        .profile-pic {
+            display: block;
+        }
+    }
+</style>
+
+
+
+<nav class="navbar navbar-expand navbar-dark bg-dark mt-3 ">
+    <div class="container-fluid">
+        @Html.ActionLink("NTL Asia", "Index", "DailyTask", null, new { @Class = "navbar-brand"})
+        <div class="collapse navbar-collapse navbar-expand" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    @Html.ActionLink("Tasks", "Index", "DailyTask", null, new { @Class = "nav-link"})
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Scan QRCode", "Index", "ScanQRCode", null, new { @Class = "nav-link" })
+                </li>
+                @foreach (var kvp in propDict)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            @kvp.Key
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @foreach (var prop in kvp.Value)
+                            {
+                                string str = $"{Regex.Replace(prop, @" ", "")}";
+                                <li>
+                                    @Html.ActionLink(prop, "Index", str, null, new { @Class="dropdown-item"})
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+            </ul>
+            <ul class="navbar-nav">
+                <li>
+                    <div class="profile-pic">
+                        <img src="~/Content/Images/default_male.jpg" alt="user-img" width="36" class="img-circle">
+                        &nbsp;&nbsp;<span class="text-white font-medium profile-name">@uName</span>
+                    </div>
+                </li>
+                <li class="mx-1"></li>
+                <li>
+                    @Html.ActionLink("Logout", "SignOut", "Account", null, new { @Class="btn btn-secondary"})
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+@RenderBody()
+@RenderSection("tmp_script", required: true)

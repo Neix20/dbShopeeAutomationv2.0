@@ -1,0 +1,184 @@
+﻿@using dbShopeeAutomationV2.Models;
+@using System.Collections.Generic;
+@model IEnumerable<TShopeeInvoice>
+
+@{
+    dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
+
+    Dictionary<int, string> statusDict = new Dictionary<int, string>();
+    db.TShopeeInvoiceStatus.ToList().ForEach(it => statusDict.Add(it.invoice_status_id, it.name));
+}
+
+<div class="text-center">
+    <h4>Number of Orders: <span id="num_of_order_left">0</span></h4>
+</div>
+
+<div class="my-2"></div>
+
+<div class="d-flex align-items-center justify-content-center">
+    <div>
+        @using (Html.BeginForm("GenerateSummary", "DailyTask", FormMethod.Post, new { @Id = "generateSummaryForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <input id="generateSummaryBtn" type="submit" class="btn btn-success" value="Generate Summary Listing"
+                   disabled />
+        }
+    </div>
+</div>
+
+<div style="display: none;">
+    @using (Html.BeginForm("PrintBill", "DailyTask", FormMethod.Post, new { @Id = "generateInvoiceBillForm" }))
+    {
+        @Html.AntiForgeryToken()
+    }
+</div>
+
+<div class="my-2"></div>
+
+<div class="border border-dark">
+    <table class="table table-striped">
+        <thead class="bg-dark text-white text-center">
+            <tr>
+                <th><input type="checkbox" id="selectAll"></th>
+                <th>Invoice Code</th>
+                <th>Created Date</th>
+                <th>Complete?</th>
+                <th>Completed Date</th>
+                <th>Print</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            @for (int i = 0; i < Model.ToList().Count; i++)
+            {
+                var inv_rec = Model.ElementAt(i);
+                string ind = $"{i + 1}";
+                string tmp_com_dt = (inv_rec.invoice_completed_date == null) ? "" : inv_rec.invoice_completed_date.Value.ToString("yyyy-MM-dd");
+                <tr>
+                    <td><input type="checkbox" name="invoice_id" value="@inv_rec.invoice_id" form="generateSummaryForm"></td>
+                    <td>@inv_rec.invoice_title</td>
+                    <td>@inv_rec.invoice_created_date.Value.ToString("yyyy-MM-dd")</td>
+                    <td>@statusDict[(int)inv_rec.invoice_status_id]</td>
+                    <td>@tmp_com_dt</td>
+                    <td><button class="btn btn-danger print_bill_btn" value="@inv_rec.invoice_id" type="button">Print</button></td>
+                </tr>
+                }
+        </tbody>
+    </table>
+</div>
+
+<div id="summary_pdf" style="display: none;"></div>
+<div id="invoice_pdf" style="display: none;"></div>
+
+<script type="text/javascript">
+    $(function () {
+        // Loop Through Complete Status
+        $("tbody tr td:nth-child(4)").each((ind, elem) => {
+            if (elem.innerHTML.toLowerCase() == "Complete".toLowerCase()) {
+                // Enable Disable
+                let checkbox_elem = $(`tbody tr:nth-child(${ind + 1}) input[type="checkbox"]`);
+                checkbox_elem.remove();
+            }
+        });
+
+        // Select/Deselect checkboxes
+        let checkbox = $('table tbody input[type="checkbox"]');
+
+        $("#selectAll").click(function () {
+            if (this.checked) {
+                let flag = false;
+                checkbox.each(function () {
+                    this.checked = true;
+                    flag = true;
+                });
+                $("#generateSummaryBtn").prop("disabled", !flag);
+            } else {
+                $("#generateSummaryBtn").prop("disabled", true);
+                checkbox.each(function () {
+                    this.checked = false;
+                });
+            }
+        });
+
+        checkbox.on("change", e => {
+            if (!this.checked) {
+                $("#selectAll").prop("checked", false);
+            }
+
+            let flag = false;
+            checkbox.each(function () {
+                if (this.checked) {
+                    $("#generateSummaryBtn").prop("disabled", false);
+                    flag = true;
+                }
+            });
+            $("#generateSummaryBtn").prop("disabled", !flag);
+
+        });
+
+        formatTD = x => (x < 10) ? `0${x}` : x + "";
+        formatAMPM = x => (x < 12) ? "AM" : "PM";
+        formatHR = x => (x >= 12) ? x % 12 : x;
+
+        let generateSummaryForm = $("form[id='generateSummaryForm']");
+        const generate_summary_actionLink = generateSummaryForm.attr("action");
+        const generate_summary_methodType = generateSummaryForm.attr("method");
+
+        generateSummaryForm.submit(e => {
+            e.preventDefault();
+
+            $.ajax({
+                type: generate_summary_methodType,
+                url: generate_summary_actionLink,
+                data: generateSummaryForm.serialize(),
+                success: resp => {
+                    $("#generateSummaryBtn").prop("disabled", true);
+
+                    $("#summary_pdf").html(resp);
+                    let date = new Date(), fileName = `${date.getFullYear()}${formatTD(date.getMonth() + 1)}${formatTD(date.getDate())}_${formatTD(formatHR(date.getHours()))}${formatTD(date.getMinutes())}${formatTD(date.getSeconds())}${formatAMPM(date.getHours())}_summary_listing`;
+
+                    createPDF("summary_pdf", fileName);
+
+                    setTimeout(_ => { location.reload(); }, 5000);
+                }
+            });
+
+            checkbox.each(function () {
+                this.checked = false;
+            });
+
+            $("#selectAll").prop("checked", false);
+        });
+
+        $(".print_bill_btn").on("click", e => {
+            let invoice_id = e.currentTarget.value;
+
+            let generateInvoiceBillForm = $("form[id='generateInvoiceBillForm']")
+            const generate_invoice_bill_actionLink = generateInvoiceBillForm.attr("action");
+            const generate_invoice_bill_methodType = generateInvoiceBillForm.attr("method");
+
+            $.ajax({
+                type: generate_invoice_bill_methodType,
+                url: generate_invoice_bill_actionLink,
+                data: { "invoice_id": invoice_id },
+                success: resp => {
+                    $("#invoice_pdf").html(resp);
+                    let invoice_code = $("#invoice_code").html();
+                    genQrCode(invoice_code);
+
+                    // Format Invoice Form
+                    $("#vend_logo").css("display", "none");
+
+                    let date = new Date(), fileName = `${date.getFullYear()}${formatTD(date.getMonth() + 1)}${formatTD(date.getDate())}_${formatTD(formatHR(date.getHours()))}${formatTD(date.getMinutes())}${formatTD(date.getSeconds())}${formatAMPM(date.getHours())}_package_listing`;
+                    createPDF("invoice_pdf", fileName);
+
+                    // After Generating Payment
+                    $("#vend_logo").css("display", "block");
+                    $("#qrcode img").remove();
+                }
+            })
+        });
+
+
+    });
+</script>

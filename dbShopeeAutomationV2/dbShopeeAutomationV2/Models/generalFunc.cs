@@ -42,6 +42,8 @@ namespace dbShopeeAutomationV2.Models
 
         public static string GenSKU(string str, string str2)
         {
+            str = (str.Length < 3) ? "str1" : str;
+            str2 = (str2.Length < 3) ? "str2" : str2;
             return $"{str.Substring(0, 3)}/{str2.Substring(0, 3)}";
         }
     }

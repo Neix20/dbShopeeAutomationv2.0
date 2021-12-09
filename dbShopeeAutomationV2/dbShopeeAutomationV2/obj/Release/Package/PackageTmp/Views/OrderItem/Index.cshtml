@@ -1,0 +1,62 @@
+﻿@using dbShopeeAutomationV2.Models;
+
+@{
+    ViewBag.Title = "Order Item Form";
+    Layout = "~/Views/Shared/_EcommerceLayout.cshtml";
+
+    dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
+
+    int order_count = db.TShopeeOrders.ToList().Count;
+    int product_count = db.TShopeeProducts.ToList().Count;
+}
+
+@if (order_count <= 0 || product_count <= 0)
+{
+    <div class="p-3">
+        <div class="warning_div border border-danger">
+            <div class="row">
+                <div class="col">
+                    <div class="text-white text-center fw-bold h2 bg-danger">
+                        Error!
+                    </div>
+                </div>
+            </div>
+            <div class="text-black h4">
+                <ul>
+                    @if (order_count <= 0)
+                    {
+                        <li>There are no existing orders! Please make an order before you proceed! </li>
+                    }
+                    @if (product_count <= 0)
+                    {
+                        <li>There are no existing products! Please make a product before you proceed! </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="p-3">
+        <div class="border border-dark">
+            <div class="row">
+                <div class="col">
+                    <div class="bg-dark text-center h1 text-white">@ViewBag.Title</div>
+                </div>
+            </div>
+
+            <div class="p-3">
+                @Html.Action("OrderItemGridViewPartial")
+            </div>
+        </div>
+    </div>
+
+    <div class="p-1">
+        <ul>
+            <li class="fst-italic">If you are unable to select a specific orders, please check and ensure order status is marked as 'Incomplete'.</li>
+            <li class="fst-italic">If you are unable to select a specific product, please check and ensure stock item count is not 0.</li>
+        </ul>
+    </div>
+}
+

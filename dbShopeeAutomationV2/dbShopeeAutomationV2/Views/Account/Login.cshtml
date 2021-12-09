@@ -26,6 +26,10 @@
     }
 </style>
 
+<div class="header_style h2">
+    <strong>NTL Asia Portal</strong>
+</div>
+
 @using (Html.BeginForm("Login", "Account", new { returnUrl = Request.QueryString["ReturnUrl"] }, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
@@ -35,12 +39,12 @@
     <div class="d-flex align-items-center justify-content-center mt-3">
         <div>
             <div>
-                <img src="~/Content/Images/Logo.jpg" style="height: 200px; width: 200px;" alt="VMS Portal Login Logo Image" />
+                <img src="~/Content/Images/ntl_logo.png" style="height: 200px; width: 200px;" alt="NTL Asia Portal Login Logo Image" />
             </div>
             <div class="my-2"></div>
             <div class="border border-dark p-3 div_width">
                 <div class="h4">
-                    VMS Portal login
+                    NTL Asia Portal Login
                 </div>
                 <div class="row mt-2">
                     <div class="col-3">
@@ -71,7 +75,3 @@
         </div>
     </div>
 }
-
-<script>
-    console.log($(".div_width").width())
-</script>

@@ -1,0 +1,150 @@
+﻿@using dbShopeeAutomationV2.Models;
+@model PackageListingSummary
+
+<style>
+    .img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .align-container {
+        position: relative;
+    }
+    
+    .align-container .align-left {
+        text-align: left;
+    }
+    
+    .align-container .align-right {
+        text-align: right;
+    }
+
+    tr th,
+    tr td {
+        text-align: center;
+    }
+
+    tr th:last-child,
+    tr td:last-child {
+        text-align: left;
+    }
+
+    .invoice_footer {
+        width: 100%;
+        text-align: center;
+        color: #777;
+        border-top: 1px solid #aaa;
+        padding: 8px 0;
+    }
+</style>
+
+<section>
+    <div class="card">
+        <div class="card-body">
+            <div class="row align-container">
+                <div class="col-6">
+                    <div class="d-flex">
+                        <img alt="Company Logo" src="~/Content/Images/ntl_logo.png" id="vend_logo" />
+                        <div id="qrcode"></div>
+                    </div>
+                </div>
+                <div class="col-6 align-right">
+                    <div class="h3 fw-bold">@Model.stockWarehouse.name</div>
+                    <div>@Model.stockWarehouse.address_line_1, @Model.stockWarehouse.address_line_2</div>
+                    <div>@Model.stockWarehouse.city, @Model.stockWarehouse.zip_code</div>
+                    <div>@Model.stockWarehouse.state, @Model.stockWarehouse.country</div>
+                    <div>@Model.stockWarehouse.phone_number</div>
+                    <div>@Model.stockWarehouse.email_address</div>
+                </div>
+            </div>
+            <hr />
+            <div class="row align-container">
+                <div class="col-6 h4 fw-bold">Shipping To</div>
+                <div class="col-6 h4 fw-bold align-right">Invoice</div>
+            </div>
+            <div class="row align-container">
+                <div class="col-6">
+                    <div>@Model.customer.first_name @Model.customer.last_name</div>
+                    <div>@Model.customer.address_line_1, @Model.customer.address_line_2</div>
+                    <div>@Model.customer.city, @Model.customer.zip_code</div>
+                    <div>@Model.customer.state, @Model.customer.country</div>
+                </div>
+                <div class="col-6 align-right">
+                    <div id="invoice_code">@Model.invoice.invoice_title</div>
+                    <div>@Model.invoice.invoice_created_date</div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="h3 fw-bold">Order Summary</div>
+
+            <table class="table table-borderless">
+                <thead class="border-bottom bg-dark text-white">
+                    <tr>
+                        <th>No.</th>
+                        <th>Item</th>
+                        <th>Brand</th>
+                        <th>Type</th>
+                        <th>Variety</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int ind = 0; ind < Model.productSummaryList.Count; ind++)
+                    {
+                        string no = $"{ind + 1}.";
+                        var item = Model.productSummaryList.ElementAt(ind);
+                        <tr>
+                            <td>@no</td>
+                            <td>@item.name</td>
+                            <td>@item.product_brand</td>
+                            <td>@item.product_type</td>
+                            <td>@item.product_variety</td>
+                            <td>RM @item.product_price</td>
+                            <td>@item.quantity</td>
+                            <td>RM @item.sub_total</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Subtotal</strong></td>
+                        <td>@Model.sub_total</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Shipping</strong></td>
+                        <td>@Model.invoice.shipping_fee</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Total</strong></td>
+                        <td>@Model.total_price</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="invoice_footer">
+                Invoice was created on a computer and is valid without the signature and seal.
+            </div>
+        </div>
+    </div>
+</section>

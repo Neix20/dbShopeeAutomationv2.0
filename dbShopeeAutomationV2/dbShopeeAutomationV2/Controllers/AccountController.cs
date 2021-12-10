@@ -60,10 +60,22 @@ namespace dbShopeeAutomationV2.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult SignUp()
+        {
+            return View();
+        }
+
         [HttpPost]
         public bool CheckUsernameExist(TShopeeUser model)
         {
             return db.TShopeeUsers.Select(x => x.username).Contains(model.username);
+        }
+
+        [HttpPost]
+        public bool CheckUsernameNotExist(TShopeeUser model)
+        {
+            return !CheckUsernameExist(model);
         }
 
         [HttpPost]
@@ -73,6 +85,21 @@ namespace dbShopeeAutomationV2.Controllers
             dataItem.password = model.password;
 
             dbStoredProcedure.userUpdate(dataItem.user_id, dataItem.username, dataItem.password, dataItem.email);
+            db.SaveChanges();
+
+            return Content("/DailyTask/Index");
+        }
+
+        [HttpPost]
+        public ActionResult SignUp(TShopeeUser model)
+        {
+            // Create New User
+            dbStoredProcedure.userInsert(model.username, model.password, model.email);
+            db.SaveChanges();
+
+            // Assign Role To User
+            string userRole = generalFunc.trimStr(Request.Form["userRole"]);
+            dbStoredProcedure.userRoleInsert(model.username, userRole);
             db.SaveChanges();
 
             return Content("/DailyTask/Index");

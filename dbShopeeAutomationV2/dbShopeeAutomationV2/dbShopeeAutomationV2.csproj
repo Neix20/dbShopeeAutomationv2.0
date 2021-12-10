@@ -426,6 +426,7 @@
     <Content Include="Views\DailyTask\_PackageListingPartial.cshtml" />
     <Content Include="Views\Shared\_QRCodeLayout.cshtml" />
     <Content Include="Views\ScanQRCode\Index.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

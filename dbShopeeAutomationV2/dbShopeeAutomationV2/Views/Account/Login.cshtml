@@ -6,10 +6,12 @@
 }
 
 <style>
-    img {
+    .logo_img {
         display: block;
         margin-left: auto;
         margin-right: auto;
+        height: 200px;
+        width: 200px;
     }
 
     .div_width {
@@ -24,54 +26,95 @@
             width: 600px;
         }
     }
+
+    .btn_div div {
+        margin-right: 10px;
+    }
+
+        .btn_div div:last-child {
+            margin-right: 0px;
+        }
 </style>
 
 <div class="header_style h2">
     <strong>NTL Asia Portal</strong>
 </div>
 
-@using (Html.BeginForm("Login", "Account", new { returnUrl = Request.QueryString["ReturnUrl"] }, FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
+<div class="d-flex align-items-center justify-content-center mt-3">
+    <div>
+        <div class="my-2">
+            <img src="~/Content/Images/ntl_logo.png" alt="NTL Asia Portal Login Logo Image" class="logo_img" />
+        </div>
 
-    @Html.HiddenFor(model => model.email, new { @Value = "trash@gmail.com" })
-
-    <div class="d-flex align-items-center justify-content-center mt-3">
-        <div>
-            <div>
-                <img src="~/Content/Images/ntl_logo.png" style="height: 200px; width: 200px;" alt="NTL Asia Portal Login Logo Image" />
+        <div class="border border-dark p-3 div_width">
+            <div class="h4">
+                NTL Asia Portal
             </div>
-            <div class="my-2"></div>
-            <div class="border border-dark p-3 div_width">
-                <div class="h4">
-                    NTL Asia Portal Login
-                </div>
-                <div class="row mt-2">
-                    <div class="col-3">
-                        <label for="username" class="col-form-label">Username</label>
+            @using (Html.BeginForm("Login", "Account", new { returnUrl = Request.QueryString["ReturnUrl"] }, FormMethod.Post, new { @Id = "loginForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="my-2">
+                    <div class="row align-items-center">
+                        <div class="col-3">
+                            <label for="username" class="col-form-label">Username</label>
+                        </div>
+                        <div class="col-9">
+                            @Html.TextBoxFor(model => model.username, new { @Class = "form-control", @Type = "text", @Required = "true" })
+                        </div>
                     </div>
-                    <div class="col-9">
-                        @Html.TextBoxFor(model => model.username, new { @Class = "form-control", @Type = "text", @Required = "true" })
-                    </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-3">
-                        <label for="password" class="col-form-label">Password</label>
-                    </div>
-                    <div class="col-9">
-                        @Html.TextBoxFor(model => model.password, new { @Class = "form-control", @Type = "password", @Required = "true" })
-                    </div>
-                </div>
-                <div class="text-danger">@ViewData["login_error"]</div>
-                <div class="row mt-2">
-                    <div class="col-3">
-                        <button class="btn btn-dark">Login</button>
-                    </div>
-                    <div class="col-4">
-                        <button class="btn btn-dark">Forgot Password</button>
+                    <div class="mt-2"></div>
+                    <div class="row align-items-center">
+                        <div class="col-3">
+                            <label for="password" class="col-form-label">Password</label>
+                        </div>
+                        <div class="col-9">
+                            @Html.TextBoxFor(model => model.password, new { @Class = "form-control", @Type = "password", @Required = "true" })
+                        </div>
                     </div>
                 </div>
+            }
+            <div class="text-danger" id="loginErrorDiv">@ViewData["login_error"]</div>
+        </div>
+
+        <div class="my-2">
+            <div class="d-flex btn_div">
+                <div style="width: 20%">
+                    <button class="btn btn-primary w-100" form="loginForm" type="submit">Login</button>
+                </div>
+                <div style="width: 50%">
+                    @Html.ActionLink("Forgot password", "ForgotPassword", "Account", null, new { @Class = "btn btn-danger w-100" })
+                </div>
+                @*<div style="width: 30%">
+                        <a href="#" class="btn btn-success w-100">Sign Up</a>
+                    </div>*@
             </div>
         </div>
+
     </div>
-}
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        let loginForm = $("form[id='loginForm']");
+        const loginForm_actionLink = loginForm.attr("action");
+        const loginForm_methodType = loginForm.attr("method");
+
+        loginForm.submit(e => {
+            e.preventDefault();
+            $.ajax({
+                url: loginForm_actionLink,
+                type: loginForm_methodType,
+                data: loginForm.serialize(),
+                success: response => {
+                    $("form[id='loginForm'] input[name='username']").val("");
+                    $("form[id='loginForm'] input[name='password']").val("");
+                    if (response.includes("Error"))
+                        $("#loginErrorDiv").html(response);
+                    else
+                        window.location.href = response;
+                }
+            });
+        });
+    });
+</script>

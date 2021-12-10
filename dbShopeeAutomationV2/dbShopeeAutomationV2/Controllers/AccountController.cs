@@ -25,36 +25,57 @@ namespace dbShopeeAutomationV2.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(TShopeeUser model, string returnUrl = "")
+        public ActionResult Login(TShopeeUser model)
         {
+            string returnUrl = Request.QueryString["returnUrl"];
+
             var dataItem = db.TShopeeUsers.FirstOrDefault(it => it.username.Equals(model.username) && it.password.Equals(model.password));
-            if (dataItem != null)
+            if(dataItem != null)
             {
-                // Issue 1: Have to login twice to check admin access priviledge
-                // Hypothesis: Need to await for FormsAuthentication, before continuing to roles.IsUserInRole
-                // Also, if it works, don't touch it.
                 FormsAuthentication.SetAuthCookie(model.username, false);
 
                 string[] role_arr = Roles.GetRolesForUser(model.username);
 
                 if (!role_arr.Contains("Admin".ToLower()))
                 {
-                    ViewData["login_error"] = "Error 403: You do not have authority to access this webpage";
-                    return View();
+                    return Content($"Error 403: You do not have authority to access this webpage");
                 }
 
                 if (Url.IsLocalUrl(returnUrl))
                 {
-                    return Redirect(returnUrl);
+                    return Content(returnUrl);
                 }
                 else
                 {
-                    return RedirectToAction("Index");
+                    return Content("/DailyTask/Index");
                 }
             }
 
-            ViewData["login_error"] = "Error 400: Invalid Username or Password";
+            return Content($"Error 400: Invalid Username or Password");
+        }
+
+        [AllowAnonymous]
+        public ActionResult ForgotPassword()
+        {
             return View();
+        }
+
+        [HttpPost]
+        public bool CheckUsernameExist(TShopeeUser model)
+        {
+            return db.TShopeeUsers.Select(x => x.username).Contains(model.username);
+        }
+
+        [HttpPost]
+        public ActionResult ForgotPassword(TShopeeUser model)
+        {
+            var dataItem = db.TShopeeUsers.FirstOrDefault(it => it.username.Equals(model.username));
+            dataItem.password = model.password;
+
+            dbStoredProcedure.userUpdate(dataItem.user_id, dataItem.username, dataItem.password, dataItem.email);
+            db.SaveChanges();
+
+            return Content("/DailyTask/Index");
         }
 
         [Authorize]

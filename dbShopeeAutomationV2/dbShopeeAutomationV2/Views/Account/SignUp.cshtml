@@ -43,7 +43,7 @@
 <div class="d-flex align-items-center justify-content-center mt-3">
     <div>
         <div class="my-2">
-            <img src="../images/ntl_logo.png" alt="NTL Asia Portal Login Logo Image" class="logo_img" />
+            <img src="~/Content/Images/ntl_logo.png" alt="NTL Asia Portal Login Logo Image" class="logo_img" />
         </div>
 
         <div id="checkUsernameDiv">
@@ -97,7 +97,7 @@
                                 <label for="password" class="col-form-label">Password</label>
                             </div>
                             <div class="col-9">
-                                @Html.TextBoxFor(model => model.password, new { @Class = "form-control", @Type = "text", @Required = "true" })
+                                @Html.TextBoxFor(model => model.password, new { @Class = "form-control", @Type = "password", @Required = "true" })
                             </div>
                         </div>
                     </div>
@@ -187,7 +187,7 @@
                     } else {
                         $("form[id='signUpForm'] input[name='username']").val(username);
                         checkUsernameDiv.css("display", "none");
-                        checkPasswordDiv.css("display", "block");
+                        signUpDiv.css("display", "block");
                     }
                 }
             });
@@ -202,45 +202,53 @@
         // New Password
         $(`${signUpFormID} input[name='password']`).on("change", _ => {
             let pswd = $(`${signUpFormID} input[name='password']`).val(),
-                rpt_pswd = $(`${signUpFormID} input[name='repeatPassword']`).val();
+                rpt_pswd = $(`${signUpFormID} input[name='repeatPassword']`).val(),
+                email = $(`${signUpFormID} input[name='email']`).val(),
+                userRole = $(`${signUpFormID} input[name='userRole']`).val();
 
             let error_str = (pswd != rpt_pswd && pswd != "" && rpt_pswd != "") ? "Error! Both passwords are not the same!" : "";
             $("#signUpErrorDiv").html(error_str);
 
-            $("#signUpBtn").attr("disabled", pswd != rpt_pswd);
+            $("#signUpBtn").attr("disabled", pswd != rpt_pswd || email.length <= 0 || userRole.length <= 0);
         });
 
         // Repeat Password
         $(`${signUpFormID} input[name='repeatPassword']`).on("change", _ => {
             let pswd = $(`${signUpFormID} input[name='password']`).val(),
-                rpt_pswd = $(`${signUpFormID} input[name='repeatPassword']`).val();
+                rpt_pswd = $(`${signUpFormID} input[name='repeatPassword']`).val(),
+                email = $(`${signUpFormID} input[name='email']`).val(),
+                userRole = $(`${signUpFormID} input[name='userRole']`).val();
 
             let error_str = (pswd != rpt_pswd && pswd != "" && rpt_pswd != "") ? "Error! Both passwords are not the same!" : "";
             $("#signUpErrorDiv").html(error_str);
 
-            $("#signUpBtn").attr("disabled", pswd != rpt_pswd);
+            $("#signUpBtn").attr("disabled", pswd != rpt_pswd || email.length <= 0 || userRole.length <= 0);
         });
 
         // Email
         $(`${signUpFormID} input[name='email']`).on("change", _ => {
             let pswd = $(`${signUpFormID} input[name='password']`).val(),
-                rpt_pswd = $(`${signUpFormID} input[name='repeatPassword']`).val();
+                rpt_pswd = $(`${signUpFormID} input[name='repeatPassword']`).val(),
+                email = $(`${signUpFormID} input[name='email']`).val(),
+                userRole = $(`${signUpFormID} input[name='userRole']`).val();
 
             let error_str = (pswd != rpt_pswd && pswd != "" && rpt_pswd != "") ? "Error! Both passwords are not the same!" : "";
             $("#signUpErrorDiv").html(error_str);
 
-            $("#signUpBtn").attr("disabled", pswd != rpt_pswd);
+            $("#signUpBtn").attr("disabled", pswd != rpt_pswd || email.length <= 0 || userRole.length <= 0);
         });
 
         // User Role
         $(`${signUpFormID} input[name='userRole']`).on("change", _ => {
             let pswd = $(`${signUpFormID} input[name='password']`).val(),
-                rpt_pswd = $(`${signUpFormID} input[name='repeatPassword']`).val();
+                rpt_pswd = $(`${signUpFormID} input[name='repeatPassword']`).val(),
+                email = $(`${signUpFormID} input[name='email']`).val(),
+                userRole = $(`${signUpFormID} input[name='userRole']`).val();
 
             let error_str = (pswd != rpt_pswd && pswd != "" && rpt_pswd != "") ? "Error! Both passwords are not the same!" : "";
             $("#signUpErrorDiv").html(error_str);
 
-            $("#signUpBtn").attr("disabled", pswd != rpt_pswd);
+            $("#signUpBtn").attr("disabled", pswd != rpt_pswd || email.length <= 0 || userRole.length <= 0);
         });
 
         signUpForm.submit(e => {

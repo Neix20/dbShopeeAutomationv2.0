@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        @using (Html.BeginForm("PlatformGridViewPartialAddNew", "Platform", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("PlatformGridViewPartialAddNew", "Platform", FormMethod.Post, new { enctype = "multipart/form-data", @Id="platformForm"}))
         {
             @Html.HiddenFor(model => model.platform_id, new { @Value = 0 })
             @Html.HiddenFor(model => model.detail_id, new { @Value = 0 })
@@ -48,3 +48,30 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        let form = $("form[id='platformForm']");
+        const actionLink = form.attr("action");
+        const methodType = form.attr("method");
+
+        form.submit(e => {
+            e.preventDefault();
+
+            let fData = new FormData(form[0]);
+
+            $.ajax({
+                url: actionLink,
+                type: methodType,
+                enctype: 'multipart/form-data',
+                processData: false,  // Important!
+                contentType: false,
+                cache: false,
+                data: fData,
+                success: resp => {
+                    $("#platformFormContent").html(resp);
+                }
+            });
+        })
+    });
+</script>

@@ -28,8 +28,9 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult CustomerGridViewPartialAddNew(TShopeeCustomer item)
         {
             string name = generalFunc.trimStr(Request.Form["Name"]);
+            name = (name == "") ? "first_name last_name" : name;
             int name_count = name.Split(' ').Length - 1;
-            name = (name_count != 1) ? "first_name last_name" : name;
+            name = (name_count < 1) ? $"{name} " : name;
 
             string[] name_arr = name.Split(new[] { " " }, StringSplitOptions.None);
 
@@ -74,8 +75,9 @@ namespace dbShopeeAutomationV2.Controllers
             int customer_id = item.customer_id;
 
             string name = generalFunc.trimStr(Request.Form["Name"]);
+            name = (name == "") ? "first_name last_name" : name;
             int name_count = name.Split(' ').Length - 1;
-            name = (name_count != 1) ? "first_name last_name" : name;
+            name = (name_count < 1) ? $"{name} " : name;
 
             string[] name_arr = name.Split(new[] { " " }, StringSplitOptions.None);
 

@@ -80,9 +80,10 @@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             @foreach (var prop in kvp.Value)
                             {
-                                string str = $"{Regex.Replace(prop, @" ", "")}";
+                                string controller = $"{Regex.Replace(prop, @" ", "")}";
+                                if (prop.Equals("Production")) { controller = "ProductionV2"; }
                                 <li>
-                                    @Html.ActionLink(prop, "Index", str, null, new { @Class="dropdown-item"})
+                                    @Html.ActionLink(prop, "Index", controller, null, new { @Class="dropdown-item"})
                                 </li>
                             }
                         </ul>

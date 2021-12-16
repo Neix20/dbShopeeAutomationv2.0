@@ -96,7 +96,7 @@
 
 <script type="text/javascript">
     $(function () {
-        let loginForm = $("form[id='loginForm']");
+        let loginFormStr = `form[id='loginForm']`, loginForm = $(loginFormStr);
         const loginForm_actionLink = loginForm.attr("action");
         const loginForm_methodType = loginForm.attr("method");
 
@@ -107,8 +107,8 @@
                 type: loginForm_methodType,
                 data: loginForm.serialize(),
                 success: response => {
-                    $("form[id='loginForm'] input[name='username']").val("");
-                    $("form[id='loginForm'] input[name='password']").val("");
+                    $(`${loginFormStr} input[name='username']`).val("");
+                    $(`${loginFormStr} input[name='password']`).val("");
                     if (response.includes("Error"))
                         $("#loginErrorDiv").html(response);
                     else

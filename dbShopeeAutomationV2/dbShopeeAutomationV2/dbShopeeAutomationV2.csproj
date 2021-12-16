@@ -427,8 +427,9 @@
     <Content Include="Views\Shared\_QRCodeLayout.cshtml" />
     <Content Include="Views\ScanQRCode\Index.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Trash\Index.cshtml" />
     <Content Include="Views\Account\SignUp.cshtml" />
+    <Content Include="Views\ProductionV2\Index.cshtml" />
+    <Content Include="Views\ProductionV2\_ProductionGridView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -462,6 +463,7 @@
     <Compile Include="Controllers\ProductionDetailController.cs" />
     <Compile Include="Controllers\ProductionDetailFormController.cs" />
     <Compile Include="Controllers\ProductionStatusController.cs" />
+    <Compile Include="Controllers\ProductionV2Controller.cs" />
     <Compile Include="Controllers\ProductTypeController.cs" />
     <Compile Include="Controllers\ProductVarietyController.cs" />
     <Compile Include="Controllers\ScanQRCodeController.cs" />
@@ -469,7 +471,6 @@
     <Compile Include="Controllers\ShipmentStatusController.cs" />
     <Compile Include="Controllers\StockItemController.cs" />
     <Compile Include="Controllers\StockWarehouseController.cs" />
-    <Compile Include="Controllers\TrashController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserRoleController.cs" />
     <Compile Include="Global.asax.cs">

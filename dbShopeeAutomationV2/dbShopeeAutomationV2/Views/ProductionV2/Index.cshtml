@@ -1,16 +1,15 @@
 ﻿@using dbShopeeAutomationV2.Models;
 
 @{
-    ViewBag.Title = "Order Item Form";
-    Layout = "~/Views/Shared/_EcommerceLayout.cshtml";
+    ViewBag.Title = "Production Form";
+    Layout = "~/Views/Shared/_ProductionLayout.cshtml";
 
     dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
-
-    int order_count = db.TShopeeOrders.ToList().Count;
-    int product_count = db.TShopeeProducts.ToList().Count;
+    int production_status_count = db.TShopeeProductionStatus.ToList().Count;
+    int product_count = db.TShopeeProducts.ToList().Count();
 }
 
-@if (order_count <= 0 || product_count <= 0)
+@if (production_status_count <= 0)
 {
     <div class="p-3">
         <div class="warning_div border border-danger">
@@ -23,14 +22,7 @@
             </div>
             <div class="text-black h4">
                 <ul>
-                    @if (order_count <= 0)
-                    {
-                        <li>There are no existing orders! Please make an order before you proceed! </li>
-                    }
-                    @if (product_count <= 0)
-                    {
-                        <li>There are no existing products! Please make a product before you proceed! </li>
-                    }
+                    <li>There is no existing Production Status. Please make a production status before you proceed!</li>
                 </ul>
             </div>
         </div>
@@ -47,15 +39,18 @@ else
             </div>
 
             <div class="p-3">
-                @Html.Action("OrderItemGridViewPartial")
+                @Html.Action("ProductionGridView")
             </div>
         </div>
     </div>
 
-    <div class="p-1">
-        <ul>
-            <li class="fst-italic">If you are unable to select a specific product, please check and ensure stock item count is not 0.</li>
-        </ul>
-    </div>
+    if (product_count <= 0)
+    {
+        <div class="p-1">
+            <ul>
+                <li class="fst-italic">There are no products created.</li>
+            </ul>
+        </div>
+    }
 }
 

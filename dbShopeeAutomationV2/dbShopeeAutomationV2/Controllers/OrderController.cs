@@ -55,7 +55,6 @@ namespace dbShopeeAutomationV2.Controllers
 
             item.order_title = (item.order_title == null) ? "order_title" : item.order_title;
             item.order_placed_date = (item.order_placed_date == null) ? DateTime.Now : item.order_placed_date;
-            item.total_price = 0;
 
             dbStoredProcedure.orderUpdate(item.order_id, item.order_title, item.order_placed_date, item.total_price, item.order_status_id, username);
             db.SaveChanges();

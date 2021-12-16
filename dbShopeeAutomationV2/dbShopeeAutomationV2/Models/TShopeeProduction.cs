@@ -19,6 +19,11 @@ namespace dbShopeeAutomationV2.Models
             this.production_id = production_id;
         }
 
+        public TShopeeProduction()
+        {
+
+        }
+
         public int production_id { get; set; }
         public string title { get; set; }
         public string description { get; set; }

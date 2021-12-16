@@ -125,7 +125,7 @@ else
                     <div class="my-3"></div>
 
                     @using (Html.BeginForm("completeProduction", "ProductionDetailForm", FormMethod.Post, new { @id = "completeProductionForm" }))
-                {
+                    {
                         <input type="text" name="production_id" value="@ViewData["production_id"]" hidden />
                         <input type="submit" class="btn btn-primary" value="Complete Production" form="completeProductionForm" />
                     }

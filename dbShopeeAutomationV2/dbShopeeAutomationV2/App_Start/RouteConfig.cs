@@ -5,16 +5,20 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace dbShopeeAutomationV2 {
-    public class RouteConfig {
-        public static void RegisterRoutes(RouteCollection routes) {
+namespace dbShopeeAutomationV2
+{
+    public class RouteConfig
+    {
+        public static void RegisterRoutes(RouteCollection routes)
+        {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("{resource}.ashx/{*pathInfo}");
 
             routes.MapRoute(
                 name: "Default", // Route name
                 url: "{controller}/{action}/{id}", // URL with parameters
-                defaults: new {
+                defaults: new
+                {
                     controller = "DailyTask",
                     action = "Index",
                     id = UrlParameter.Optional

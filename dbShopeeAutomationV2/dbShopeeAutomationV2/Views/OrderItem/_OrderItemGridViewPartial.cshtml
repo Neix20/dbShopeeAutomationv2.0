@@ -19,10 +19,6 @@
         return tmp.stock_quantity > 0;
     }).ToList();
 
-    int inc_ord_sta_id = db.TShopeeOrderStatus.FirstOrDefault(
-        it => it.name.ToLower().Equals("Incomplete".ToLower())
-    ).order_status_id;
-
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "OrderItemGridView";
         settings.Width = Unit.Percentage(100);
@@ -58,7 +54,7 @@
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
-            prop.DataSource = db.TShopeeOrders.Where(it => it.order_status_id == inc_ord_sta_id).ToList();
+            prop.DataSource = db.TShopeeOrders.ToList();
             prop.TextField = "order_title";
             prop.ValueField = "order_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;

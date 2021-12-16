@@ -42,8 +42,9 @@ namespace dbShopeeAutomationV2.Controllers
             item.description = (item.description == null) ? "product_description" : item.description;
 
             string product_brand = db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == item.product_brand_id).name;
+            string product_type = db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == item.product_type_id).name;
             string product_variety = db.TShopeeProductVarieties.FirstOrDefault(it => it.product_variety_id == item.product_variety_id).name;
-            item.SKU = (item.SKU == null) ? generalFunc.GenSKU(product_brand, product_variety) : item.SKU;
+            item.SKU = (item.SKU == null) ? generalFunc.GenSKU(product_brand, product_type, product_variety) : item.SKU;
             item.SKU2 = (item.SKU2 == null) ? $"{item.SKU}2" : item.SKU2;
 
             item.buy_price = (item.buy_price == null) ? 0 : item.buy_price;
@@ -74,8 +75,9 @@ namespace dbShopeeAutomationV2.Controllers
             item.description = (item.description == null) ? "product_description" : item.description;
 
             string product_brand = db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == item.product_brand_id).name;
+            string product_type = db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == item.product_type_id).name;
             string product_variety = db.TShopeeProductVarieties.FirstOrDefault(it => it.product_variety_id == item.product_variety_id).name;
-            item.SKU = (item.SKU == null) ? generalFunc.GenSKU(product_brand, product_variety) : item.SKU;
+            item.SKU = (item.SKU == null) ? generalFunc.GenSKU(product_brand, product_type, product_variety) : item.SKU;
             item.SKU2 = (item.SKU2 == null) ? $"{item.SKU}2" : item.SKU2;
 
             item.buy_price = (item.buy_price == null) ? 0 : item.buy_price;

@@ -37,7 +37,7 @@ namespace dbShopeeAutomationV2.Controllers
             item.manufactured_date = (item.manufactured_date == null) ? DateTime.Now : item.manufactured_date;
             item.expiry_date = (item.expiry_date == null) ? DateTime.Now : item.expiry_date;
 
-            dbStoredProcedure.productionDetailInsert(item.UOM, item.manufactured_date, item.expiry_date, item.quantity, (int) item.product_id, item.production_id, username);
+            dbStoredProcedure.productionDetailInsert(item.UOM, item.manufactured_date, item.expiry_date, item.quantity, (int) item.product_id, (int) item.production_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeProductionDetails.Where(it => it.production_id == item.production_id);

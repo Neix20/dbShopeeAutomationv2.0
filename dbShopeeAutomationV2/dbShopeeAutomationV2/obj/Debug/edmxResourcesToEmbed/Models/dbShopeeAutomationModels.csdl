@@ -1,0 +1,914 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbShopeeAutomationV2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="TShopeeCarrier">
+    <Key>
+      <PropertyRef Name="carrier_id" />
+    </Key>
+    <Property Name="carrier_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeCustomer">
+    <Key>
+      <PropertyRef Name="customer_id" />
+    </Key>
+    <Property Name="customer_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="first_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="last_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="dob" Type="DateTime" Precision="3" />
+    <Property Name="email_address" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="phone_number" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="address_line_1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="address_line_2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="zip_code" Type="Int32" />
+    <Property Name="country" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="platform_id" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeDetail">
+    <Key>
+      <PropertyRef Name="detail_id" />
+    </Key>
+    <Property Name="detail_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="created_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="created_date" Type="DateTime" Precision="3" />
+    <Property Name="last_updated_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="last_updated_date" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="TShopeeInvoice">
+    <Key>
+      <PropertyRef Name="invoice_id" />
+    </Key>
+    <Property Name="invoice_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="invoice_title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="invoice_created_date" Type="DateTime" Precision="3" />
+    <Property Name="invoice_completed_date" Type="DateTime" Precision="3" />
+    <Property Name="invoice_details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="shipping_fee" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="invoice_status_id" Type="Int32" />
+    <Property Name="payment_method_id" Type="Int32" />
+    <Property Name="order_id" Type="Int32" />
+    <Property Name="customer_id" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeInvoiceStatu">
+    <Key>
+      <PropertyRef Name="invoice_status_id" />
+    </Key>
+    <Property Name="invoice_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeOrder">
+    <Key>
+      <PropertyRef Name="order_id" />
+    </Key>
+    <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="order_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="order_placed_date" Type="DateTime" Precision="3" />
+    <Property Name="total_price" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="order_status_id" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeOrderItem">
+    <Key>
+      <PropertyRef Name="order_item_id" />
+    </Key>
+    <Property Name="order_item_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="quantity" Type="Int32" />
+    <Property Name="sub_total" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="discount_fee" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="RMA_num" Type="Int32" />
+    <Property Name="RMA_issued_by" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RMA_issued_date" Type="DateTime" Precision="3" />
+    <Property Name="order_id" Type="Int32" />
+    <Property Name="order_item_status_id" Type="Int32" />
+    <Property Name="product_id" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeOrderItemStatu">
+    <Key>
+      <PropertyRef Name="order_item_status_id" />
+    </Key>
+    <Property Name="order_item_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="return_merchandise_authorization_nr" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeOrderStatu">
+    <Key>
+      <PropertyRef Name="order_status_id" />
+    </Key>
+    <Property Name="order_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeePaymentMethod">
+    <Key>
+      <PropertyRef Name="payment_method_id" />
+    </Key>
+    <Property Name="payment_method_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeePlatform">
+    <Key>
+      <PropertyRef Name="platform_id" />
+    </Key>
+    <Property Name="platform_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeProduct">
+    <Key>
+      <PropertyRef Name="product_id" />
+    </Key>
+    <Property Name="product_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="product_code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SKU" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SKU2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="buy_price" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="sell_price" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="product_brand_id" Type="Int32" />
+    <Property Name="product_model_id" Type="Int32" />
+    <Property Name="product_category_id" Type="Int32" />
+    <Property Name="product_type_id" Type="Int32" />
+    <Property Name="product_variety_id" Type="Int32" />
+    <Property Name="product_status_id" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeProductBrand">
+    <Key>
+      <PropertyRef Name="product_brand_id" />
+    </Key>
+    <Property Name="product_brand_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeProductCategory">
+    <Key>
+      <PropertyRef Name="product_category_id" />
+    </Key>
+    <Property Name="product_category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeProductComponent">
+    <Key>
+      <PropertyRef Name="product_component_id" />
+    </Key>
+    <Property Name="product_component_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="master_product_id" Type="Int32" />
+    <Property Name="sub_product_id" Type="Int32" />
+    <Property Name="quantity" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeProduction">
+    <Key>
+      <PropertyRef Name="production_id" />
+    </Key>
+    <Property Name="production_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="total_usage" Type="Decimal" Precision="10" Scale="6" />
+    <Property Name="production_status_id" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeProductionDetail">
+    <Key>
+      <PropertyRef Name="production_detail_id" />
+    </Key>
+    <Property Name="production_detail_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UOM" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="manufactured_date" Type="DateTime" Precision="3" />
+    <Property Name="expiry_date" Type="DateTime" Precision="3" />
+    <Property Name="height" Type="Decimal" Precision="10" Scale="6" />
+    <Property Name="width" Type="Decimal" Precision="10" Scale="6" />
+    <Property Name="length" Type="Decimal" Precision="10" Scale="6" />
+    <Property Name="quantity" Type="Decimal" Precision="10" Scale="6" />
+    <Property Name="cannot_be_used" Type="Int32" />
+    <Property Name="can_be_used" Type="Int32" />
+    <Property Name="production_id" Type="Int32" />
+    <Property Name="product_id" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeProductionStatu">
+    <Key>
+      <PropertyRef Name="production_status_id" />
+    </Key>
+    <Property Name="production_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeProductModel">
+    <Key>
+      <PropertyRef Name="product_model_id" />
+    </Key>
+    <Property Name="product_model_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeProductStatu">
+    <Key>
+      <PropertyRef Name="product_status_id" />
+    </Key>
+    <Property Name="product_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeProductType">
+    <Key>
+      <PropertyRef Name="product_type_id" />
+    </Key>
+    <Property Name="product_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeProductVariety">
+    <Key>
+      <PropertyRef Name="product_variety_id" />
+    </Key>
+    <Property Name="product_variety_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeShipment">
+    <Key>
+      <PropertyRef Name="shipment_id" />
+    </Key>
+    <Property Name="shipment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="start_location" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="destination" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="tracking_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="created_date" Type="DateTime" Precision="3" />
+    <Property Name="expected_date" Type="DateTime" Precision="3" />
+    <Property Name="due_date" Type="DateTime" Precision="3" />
+    <Property Name="invoice_id" Type="Int32" />
+    <Property Name="carrier_id" Type="Int32" />
+    <Property Name="shipment_status_id" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeShipmentStatu">
+    <Key>
+      <PropertyRef Name="shipment_status_id" />
+    </Key>
+    <Property Name="shipment_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeStockItem">
+    <Key>
+      <PropertyRef Name="stock_item_id" />
+    </Key>
+    <Property Name="stock_item_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="stock_quantity" Type="Decimal" Precision="10" Scale="6" />
+    <Property Name="product_id" Type="Int32" />
+    <Property Name="stock_warehouse_id" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeStockWarehouse">
+    <Key>
+      <PropertyRef Name="stock_warehouse_id" />
+    </Key>
+    <Property Name="stock_warehouse_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="email_address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="phone_number" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="address_line_1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="address_line_2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="zip_code" Type="Int32" />
+    <Property Name="country" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeSupplier">
+    <Key>
+      <PropertyRef Name="supplier_id" />
+    </Key>
+    <Property Name="supplier_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="nation" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeSupplierShipment">
+    <Key>
+      <PropertyRef Name="supplier_shipment_id" />
+    </Key>
+    <Property Name="supplier_shipment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="received_date" Type="DateTime" Precision="3" />
+    <Property Name="supplier_tracking_id" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="NTL_tracking_id" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="height" Type="Decimal" Precision="10" Scale="6" />
+    <Property Name="width" Type="Decimal" Precision="10" Scale="6" />
+    <Property Name="length" Type="Decimal" Precision="10" Scale="6" />
+    <Property Name="supplier_id" Type="Int32" />
+    <Property Name="product_id" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeUser">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="TShopeeUserRole">
+    <Key>
+      <PropertyRef Name="user_role_id" />
+    </Key>
+    <Property Name="user_role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityContainer Name="dbShopeeAutomationV2Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TShopeeCarriers" EntityType="Self.TShopeeCarrier" />
+    <EntitySet Name="TShopeeCustomers" EntityType="Self.TShopeeCustomer" />
+    <EntitySet Name="TShopeeDetails" EntityType="Self.TShopeeDetail" />
+    <EntitySet Name="TShopeeInvoices" EntityType="Self.TShopeeInvoice" />
+    <EntitySet Name="TShopeeInvoiceStatus" EntityType="Self.TShopeeInvoiceStatu" />
+    <EntitySet Name="TShopeeOrders" EntityType="Self.TShopeeOrder" />
+    <EntitySet Name="TShopeeOrderItems" EntityType="Self.TShopeeOrderItem" />
+    <EntitySet Name="TShopeeOrderItemStatus" EntityType="Self.TShopeeOrderItemStatu" />
+    <EntitySet Name="TShopeeOrderStatus" EntityType="Self.TShopeeOrderStatu" />
+    <EntitySet Name="TShopeePaymentMethods" EntityType="Self.TShopeePaymentMethod" />
+    <EntitySet Name="TShopeePlatforms" EntityType="Self.TShopeePlatform" />
+    <EntitySet Name="TShopeeProducts" EntityType="Self.TShopeeProduct" />
+    <EntitySet Name="TShopeeProductBrands" EntityType="Self.TShopeeProductBrand" />
+    <EntitySet Name="TShopeeProductCategories" EntityType="Self.TShopeeProductCategory" />
+    <EntitySet Name="TShopeeProductComponents" EntityType="Self.TShopeeProductComponent" />
+    <EntitySet Name="TShopeeProductions" EntityType="Self.TShopeeProduction" />
+    <EntitySet Name="TShopeeProductionDetails" EntityType="Self.TShopeeProductionDetail" />
+    <EntitySet Name="TShopeeProductionStatus" EntityType="Self.TShopeeProductionStatu" />
+    <EntitySet Name="TShopeeProductModels" EntityType="Self.TShopeeProductModel" />
+    <EntitySet Name="TShopeeProductStatus" EntityType="Self.TShopeeProductStatu" />
+    <EntitySet Name="TShopeeProductTypes" EntityType="Self.TShopeeProductType" />
+    <EntitySet Name="TShopeeProductVarieties" EntityType="Self.TShopeeProductVariety" />
+    <EntitySet Name="TShopeeShipments" EntityType="Self.TShopeeShipment" />
+    <EntitySet Name="TShopeeShipmentStatus" EntityType="Self.TShopeeShipmentStatu" />
+    <EntitySet Name="TShopeeStockItems" EntityType="Self.TShopeeStockItem" />
+    <EntitySet Name="TShopeeStockWarehouses" EntityType="Self.TShopeeStockWarehouse" />
+    <EntitySet Name="TShopeeSuppliers" EntityType="Self.TShopeeSupplier" />
+    <EntitySet Name="TShopeeSupplierShipments" EntityType="Self.TShopeeSupplierShipment" />
+    <EntitySet Name="TShopeeUsers" EntityType="Self.TShopeeUser" />
+    <EntitySet Name="TShopeeUserRoles" EntityType="Self.TShopeeUserRole" />
+    <FunctionImport Name="NSP_TShopeeCarrier_Delete">
+      <Parameter Name="carrier_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeCarrier_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeCarrier_Update">
+      <Parameter Name="carrier_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeCustomer_Delete">
+      <Parameter Name="customer_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeCustomer_Insert">
+      <Parameter Name="first_name" Mode="In" Type="String" />
+      <Parameter Name="last_name" Mode="In" Type="String" />
+      <Parameter Name="dob" Mode="In" Type="DateTime" />
+      <Parameter Name="email_address" Mode="In" Type="String" />
+      <Parameter Name="phone_number" Mode="In" Type="String" />
+      <Parameter Name="address_line_1" Mode="In" Type="String" />
+      <Parameter Name="address_line_2" Mode="In" Type="String" />
+      <Parameter Name="city" Mode="In" Type="String" />
+      <Parameter Name="state" Mode="In" Type="String" />
+      <Parameter Name="zip_code" Mode="In" Type="Int32" />
+      <Parameter Name="country" Mode="In" Type="String" />
+      <Parameter Name="platform_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeCustomer_Update">
+      <Parameter Name="customer_id" Mode="In" Type="Int32" />
+      <Parameter Name="first_name" Mode="In" Type="String" />
+      <Parameter Name="last_name" Mode="In" Type="String" />
+      <Parameter Name="dob" Mode="In" Type="DateTime" />
+      <Parameter Name="email_address" Mode="In" Type="String" />
+      <Parameter Name="phone_number" Mode="In" Type="String" />
+      <Parameter Name="address_line_1" Mode="In" Type="String" />
+      <Parameter Name="address_line_2" Mode="In" Type="String" />
+      <Parameter Name="city" Mode="In" Type="String" />
+      <Parameter Name="state" Mode="In" Type="String" />
+      <Parameter Name="zip_code" Mode="In" Type="Int32" />
+      <Parameter Name="country" Mode="In" Type="String" />
+      <Parameter Name="platform_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeDetail_Delete">
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeDetail_Insert">
+      <Parameter Name="status" Mode="In" Type="String" />
+      <Parameter Name="remark" Mode="In" Type="String" />
+      <Parameter Name="created_by" Mode="In" Type="String" />
+      <Parameter Name="created_date" Mode="In" Type="DateTime" />
+      <Parameter Name="last_updated_by" Mode="In" Type="String" />
+      <Parameter Name="last_updated_date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeDetail_Update">
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+      <Parameter Name="status" Mode="In" Type="String" />
+      <Parameter Name="remark" Mode="In" Type="String" />
+      <Parameter Name="created_by" Mode="In" Type="String" />
+      <Parameter Name="created_date" Mode="In" Type="DateTime" />
+      <Parameter Name="last_updated_by" Mode="In" Type="String" />
+      <Parameter Name="last_updated_date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeInvoice_Delete">
+      <Parameter Name="invoice_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeInvoice_Insert">
+      <Parameter Name="invoice_title" Mode="In" Type="String" />
+      <Parameter Name="invoice_created_date" Mode="In" Type="DateTime" />
+      <Parameter Name="invoice_completed_date" Mode="In" Type="DateTime" />
+      <Parameter Name="invoice_details" Mode="In" Type="String" />
+      <Parameter Name="shipping_fee" Mode="In" Type="Decimal" />
+      <Parameter Name="invoice_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="payment_method_id" Mode="In" Type="Int32" />
+      <Parameter Name="order_id" Mode="In" Type="Int32" />
+      <Parameter Name="customer_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeInvoice_Update">
+      <Parameter Name="invoice_id" Mode="In" Type="Int32" />
+      <Parameter Name="invoice_title" Mode="In" Type="String" />
+      <Parameter Name="invoice_created_date" Mode="In" Type="DateTime" />
+      <Parameter Name="invoice_completed_date" Mode="In" Type="DateTime" />
+      <Parameter Name="invoice_details" Mode="In" Type="String" />
+      <Parameter Name="shipping_fee" Mode="In" Type="Decimal" />
+      <Parameter Name="invoice_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="payment_method_id" Mode="In" Type="Int32" />
+      <Parameter Name="order_id" Mode="In" Type="Int32" />
+      <Parameter Name="customer_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeInvoiceStatus_Delete">
+      <Parameter Name="invoice_status_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeInvoiceStatus_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeInvoiceStatus_Update">
+      <Parameter Name="invoice_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrder_Delete">
+      <Parameter Name="order_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrder_Insert">
+      <Parameter Name="order_title" Mode="In" Type="String" />
+      <Parameter Name="order_placed_date" Mode="In" Type="DateTime" />
+      <Parameter Name="total_price" Mode="In" Type="Decimal" />
+      <Parameter Name="order_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrder_Update">
+      <Parameter Name="order_id" Mode="In" Type="Int32" />
+      <Parameter Name="order_title" Mode="In" Type="String" />
+      <Parameter Name="order_placed_date" Mode="In" Type="DateTime" />
+      <Parameter Name="total_price" Mode="In" Type="Decimal" />
+      <Parameter Name="order_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrderItem_Delete">
+      <Parameter Name="order_item_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrderItem_Insert">
+      <Parameter Name="quantity" Mode="In" Type="Int32" />
+      <Parameter Name="sub_total" Mode="In" Type="Decimal" />
+      <Parameter Name="discount_fee" Mode="In" Type="Decimal" />
+      <Parameter Name="RMA_num" Mode="In" Type="Int32" />
+      <Parameter Name="RMA_issued_by" Mode="In" Type="String" />
+      <Parameter Name="RMA_issued_date" Mode="In" Type="DateTime" />
+      <Parameter Name="order_id" Mode="In" Type="Int32" />
+      <Parameter Name="order_item_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrderItem_Update">
+      <Parameter Name="order_item_id" Mode="In" Type="Int32" />
+      <Parameter Name="quantity" Mode="In" Type="Int32" />
+      <Parameter Name="sub_total" Mode="In" Type="Decimal" />
+      <Parameter Name="discount_fee" Mode="In" Type="Decimal" />
+      <Parameter Name="RMA_num" Mode="In" Type="Int32" />
+      <Parameter Name="RMA_issued_by" Mode="In" Type="String" />
+      <Parameter Name="RMA_issued_date" Mode="In" Type="DateTime" />
+      <Parameter Name="order_id" Mode="In" Type="Int32" />
+      <Parameter Name="order_item_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrderItemStatus_Delete">
+      <Parameter Name="order_item_status_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrderItemStatus_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="return_merchandise_authorization_nr" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrderItemStatus_Update">
+      <Parameter Name="order_item_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="return_merchandise_authorization_nr" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrderStatus_Delete">
+      <Parameter Name="order_status_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrderStatus_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeOrderStatus_Update">
+      <Parameter Name="order_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeePaymentMethod_Delete">
+      <Parameter Name="payment_method_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeePaymentMethod_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeePaymentMethod_Update">
+      <Parameter Name="payment_method_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeePlatform_Delete">
+      <Parameter Name="platform_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeePlatform_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeePlatform_Update">
+      <Parameter Name="platform_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProduct_Delete">
+      <Parameter Name="product_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProduct_Insert">
+      <Parameter Name="product_code" Mode="In" Type="String" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="SKU" Mode="In" Type="String" />
+      <Parameter Name="SKU2" Mode="In" Type="String" />
+      <Parameter Name="buy_price" Mode="In" Type="Decimal" />
+      <Parameter Name="sell_price" Mode="In" Type="Decimal" />
+      <Parameter Name="product_brand_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_model_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_category_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_type_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_variety_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProduct_Update">
+      <Parameter Name="product_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_code" Mode="In" Type="String" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="SKU" Mode="In" Type="String" />
+      <Parameter Name="SKU2" Mode="In" Type="String" />
+      <Parameter Name="buy_price" Mode="In" Type="Decimal" />
+      <Parameter Name="sell_price" Mode="In" Type="Decimal" />
+      <Parameter Name="product_brand_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_model_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_category_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_type_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_variety_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductBrand_Delete">
+      <Parameter Name="product_brand_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductBrand_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductBrand_Update">
+      <Parameter Name="product_brand_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductCategory_Delete">
+      <Parameter Name="product_category_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductCategory_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductCategory_Update">
+      <Parameter Name="product_category_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductComponent_Delete">
+      <Parameter Name="product_component_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductComponent_Insert">
+      <Parameter Name="master_product_id" Mode="In" Type="Int32" />
+      <Parameter Name="sub_product_id" Mode="In" Type="Int32" />
+      <Parameter Name="quantity" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductComponent_Update">
+      <Parameter Name="product_component_id" Mode="In" Type="Int32" />
+      <Parameter Name="master_product_id" Mode="In" Type="Int32" />
+      <Parameter Name="sub_product_id" Mode="In" Type="Int32" />
+      <Parameter Name="quantity" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProduction_Delete">
+      <Parameter Name="production_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProduction_Insert">
+      <Parameter Name="title" Mode="In" Type="String" />
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="total_usage" Mode="In" Type="Decimal" />
+      <Parameter Name="production_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProduction_Update">
+      <Parameter Name="production_id" Mode="In" Type="Int32" />
+      <Parameter Name="title" Mode="In" Type="String" />
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="total_usage" Mode="In" Type="Decimal" />
+      <Parameter Name="production_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductionDetail_Delete">
+      <Parameter Name="production_detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductionDetail_Insert">
+      <Parameter Name="UOM" Mode="In" Type="String" />
+      <Parameter Name="manufactured_date" Mode="In" Type="DateTime" />
+      <Parameter Name="expiry_date" Mode="In" Type="DateTime" />
+      <Parameter Name="height" Mode="In" Type="Decimal" />
+      <Parameter Name="width" Mode="In" Type="Decimal" />
+      <Parameter Name="length" Mode="In" Type="Decimal" />
+      <Parameter Name="quantity" Mode="In" Type="Decimal" />
+      <Parameter Name="cannot_be_used" Mode="In" Type="Int32" />
+      <Parameter Name="can_be_used" Mode="In" Type="Int32" />
+      <Parameter Name="production_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductionDetail_Update">
+      <Parameter Name="production_detail_id" Mode="In" Type="Int32" />
+      <Parameter Name="UOM" Mode="In" Type="String" />
+      <Parameter Name="manufactured_date" Mode="In" Type="DateTime" />
+      <Parameter Name="expiry_date" Mode="In" Type="DateTime" />
+      <Parameter Name="height" Mode="In" Type="Decimal" />
+      <Parameter Name="width" Mode="In" Type="Decimal" />
+      <Parameter Name="length" Mode="In" Type="Decimal" />
+      <Parameter Name="quantity" Mode="In" Type="Decimal" />
+      <Parameter Name="cannot_be_used" Mode="In" Type="Int32" />
+      <Parameter Name="can_be_used" Mode="In" Type="Int32" />
+      <Parameter Name="production_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductionStatus_Delete">
+      <Parameter Name="production_status_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductionStatus_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductionStatus_Update">
+      <Parameter Name="production_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductModel_Delete">
+      <Parameter Name="product_model_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductModel_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductModel_Update">
+      <Parameter Name="product_model_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductStatus_Delete">
+      <Parameter Name="product_status_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductStatus_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductStatus_Update">
+      <Parameter Name="product_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductType_Delete">
+      <Parameter Name="product_type_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductType_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductType_Update">
+      <Parameter Name="product_type_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductVariety_Delete">
+      <Parameter Name="product_variety_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductVariety_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductVariety_Update">
+      <Parameter Name="product_variety_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeShipment_Delete">
+      <Parameter Name="shipment_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeShipment_Insert">
+      <Parameter Name="start_location" Mode="In" Type="String" />
+      <Parameter Name="destination" Mode="In" Type="String" />
+      <Parameter Name="tracking_id" Mode="In" Type="String" />
+      <Parameter Name="created_date" Mode="In" Type="DateTime" />
+      <Parameter Name="expected_date" Mode="In" Type="DateTime" />
+      <Parameter Name="due_date" Mode="In" Type="DateTime" />
+      <Parameter Name="invoice_id" Mode="In" Type="Int32" />
+      <Parameter Name="carrier_id" Mode="In" Type="Int32" />
+      <Parameter Name="shipment_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeShipment_Update">
+      <Parameter Name="shipment_id" Mode="In" Type="Int32" />
+      <Parameter Name="start_location" Mode="In" Type="String" />
+      <Parameter Name="destination" Mode="In" Type="String" />
+      <Parameter Name="tracking_id" Mode="In" Type="String" />
+      <Parameter Name="created_date" Mode="In" Type="DateTime" />
+      <Parameter Name="expected_date" Mode="In" Type="DateTime" />
+      <Parameter Name="due_date" Mode="In" Type="DateTime" />
+      <Parameter Name="invoice_id" Mode="In" Type="Int32" />
+      <Parameter Name="carrier_id" Mode="In" Type="Int32" />
+      <Parameter Name="shipment_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeShipmentStatus_Delete">
+      <Parameter Name="shipment_status_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeShipmentStatus_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeShipmentStatus_Update">
+      <Parameter Name="shipment_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeStockItem_Delete">
+      <Parameter Name="stock_item_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeStockItem_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="stock_quantity" Mode="In" Type="Decimal" />
+      <Parameter Name="product_id" Mode="In" Type="Int32" />
+      <Parameter Name="stock_warehouse_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeStockItem_Update">
+      <Parameter Name="stock_item_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="stock_quantity" Mode="In" Type="Decimal" />
+      <Parameter Name="product_id" Mode="In" Type="Int32" />
+      <Parameter Name="stock_warehouse_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeStockWarehouse_Delete">
+      <Parameter Name="stock_warehouse_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeStockWarehouse_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="email_address" Mode="In" Type="String" />
+      <Parameter Name="phone_number" Mode="In" Type="String" />
+      <Parameter Name="address_line_1" Mode="In" Type="String" />
+      <Parameter Name="address_line_2" Mode="In" Type="String" />
+      <Parameter Name="city" Mode="In" Type="String" />
+      <Parameter Name="state" Mode="In" Type="String" />
+      <Parameter Name="zip_code" Mode="In" Type="Int32" />
+      <Parameter Name="country" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeStockWarehouse_Update">
+      <Parameter Name="stock_warehouse_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="email_address" Mode="In" Type="String" />
+      <Parameter Name="phone_number" Mode="In" Type="String" />
+      <Parameter Name="address_line_1" Mode="In" Type="String" />
+      <Parameter Name="address_line_2" Mode="In" Type="String" />
+      <Parameter Name="city" Mode="In" Type="String" />
+      <Parameter Name="state" Mode="In" Type="String" />
+      <Parameter Name="zip_code" Mode="In" Type="Int32" />
+      <Parameter Name="country" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeSupplier_Delete">
+      <Parameter Name="supplier_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeSupplier_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="code" Mode="In" Type="String" />
+      <Parameter Name="nation" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeSupplier_Update">
+      <Parameter Name="supplier_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="code" Mode="In" Type="String" />
+      <Parameter Name="nation" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeSupplierShipment_Delete">
+      <Parameter Name="supplier_shipment_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeSupplierShipment_Insert">
+      <Parameter Name="received_date" Mode="In" Type="DateTime" />
+      <Parameter Name="supplier_tracking_id" Mode="In" Type="String" />
+      <Parameter Name="NTL_tracking_id" Mode="In" Type="String" />
+      <Parameter Name="height" Mode="In" Type="Decimal" />
+      <Parameter Name="width" Mode="In" Type="Decimal" />
+      <Parameter Name="length" Mode="In" Type="Decimal" />
+      <Parameter Name="supplier_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeSupplierShipment_Update">
+      <Parameter Name="supplier_shipment_id" Mode="In" Type="Int32" />
+      <Parameter Name="received_date" Mode="In" Type="DateTime" />
+      <Parameter Name="supplier_tracking_id" Mode="In" Type="String" />
+      <Parameter Name="NTL_tracking_id" Mode="In" Type="String" />
+      <Parameter Name="height" Mode="In" Type="Decimal" />
+      <Parameter Name="width" Mode="In" Type="Decimal" />
+      <Parameter Name="length" Mode="In" Type="Decimal" />
+      <Parameter Name="supplier_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeUser_Delete">
+      <Parameter Name="user_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeUser_Insert">
+      <Parameter Name="username" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+      <Parameter Name="email" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeUser_Update">
+      <Parameter Name="user_id" Mode="In" Type="Int32" />
+      <Parameter Name="username" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+      <Parameter Name="email" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeUserRole_Delete">
+      <Parameter Name="user_role_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeUserRole_Insert">
+      <Parameter Name="username" Mode="In" Type="String" />
+      <Parameter Name="role" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeUserRole_Update">
+      <Parameter Name="user_role_id" Mode="In" Type="Int32" />
+      <Parameter Name="username" Mode="In" Type="String" />
+      <Parameter Name="role" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+</Schema>

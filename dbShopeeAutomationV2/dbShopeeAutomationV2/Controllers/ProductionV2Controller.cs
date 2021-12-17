@@ -40,7 +40,7 @@ namespace dbShopeeAutomationV2.Controllers
             item.description = (item.description == null) ? "production_description" : item.description;
             item.production_status_id = productionStatusID("Incomplete");
 
-            dbStoredProcedure.productionInsert(item.title, item.description, item.production_status_id, username);
+            dbStoredProcedure.productionInsert(item.title, item.description, item.total_usage, item.production_status_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeProductions;
@@ -76,7 +76,7 @@ namespace dbShopeeAutomationV2.Controllers
                 db.SaveChanges();
             }
 
-            dbStoredProcedure.productionUpdate(item.production_id, item.title, item.description, item.production_status_id, username);
+            dbStoredProcedure.productionUpdate(item.production_id, item.title, item.description, item.total_usage, item.production_status_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeProductions;

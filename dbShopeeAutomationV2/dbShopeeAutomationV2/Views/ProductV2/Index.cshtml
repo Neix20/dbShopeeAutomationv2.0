@@ -1,0 +1,79 @@
+﻿@using dbShopeeAutomationV2.Models;
+@model TShopeeProduct
+
+@{
+    ViewBag.Title = "Product Form";
+    Layout = "~/Views/Shared/_ProductionLayout.cshtml";
+    dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
+
+    int product_brand_count = db.TShopeeProductBrands.ToList().Count;
+    int product_category_count = db.TShopeeProductCategories.ToList().Count;
+    int product_model_count = db.TShopeeProductModels.ToList().Count;
+    int product_status_count = db.TShopeeProductStatus.ToList().Count;
+    int product_type_count = db.TShopeeProductTypes.ToList().Count;
+    int product_variety_count = db.TShopeeProductVarieties.ToList().Count;
+    int stock_warehouse_count = db.TShopeeStockWarehouses.ToList().Count;
+}
+
+@if (product_brand_count <= 0 || product_category_count <= 0 || product_model_count <= 0 || product_status_count <= 0 || product_type_count <= 0 || product_variety_count <= 0 || stock_warehouse_count <= 0)
+{
+    <div class="p-3">
+        <div class="warning_div border border-danger">
+            <div class="row">
+                <div class="col">
+                    <div class="text-white text-center fw-bold h2 bg-danger">
+                        Error!
+                    </div>
+                </div>
+            </div>
+            <div class="text-black h4">
+                <ul>
+                    @if (product_brand_count <= 0)
+                    {
+                        <li>There is no existing Product Brand. Please make a product brand before you proceed! </li>
+                    }
+                    @if (product_category_count <= 0)
+                    {
+                        <li>There is no existing Product Category. Please make a product category before you proceed! </li>
+                    }
+                    @if (product_model_count <= 0)
+                    {
+                        <li>There is no existing Product Model. Please make a product model before you proceed! </li>
+                    }
+                    @if (product_status_count <= 0)
+                    {
+                        <li>There is no existing Product Status. Please make a product status before you proceed! </li>
+                    }
+                    @if (product_type_count <= 0)
+                    {
+                        <li>There is no existing Product Type. Please make a product type before you proceed! </li>
+                    }
+                    @if (product_variety_count <= 0)
+                    {
+                        <li>There is no existing Product Variety. Please make a product variety before you proceed! </li>
+                    }
+                    @if (stock_warehouse_count <= 0)
+                    {
+                        <li>There is no existing Stock Warehouse. Please make a Stock Warehouse before you proceed! </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="p-3">
+        <div class="border border-dark">
+            <div class="row">
+                <div class="col">
+                    <div class="bg-dark text-center h1 text-white">@ViewBag.Title</div>
+                </div>
+            </div>
+
+            <div class="p-3">
+                @Html.Action("ProductGridViewPartial")
+            </div>
+        </div>
+    </div>
+}

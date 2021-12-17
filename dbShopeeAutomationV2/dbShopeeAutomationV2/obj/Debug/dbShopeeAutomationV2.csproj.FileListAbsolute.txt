@@ -288,4 +288,3 @@ D:\Github\dbShopeeAutomationv2.0\dbShopeeAutomationV2\dbShopeeAutomationV2\obj\D
 D:\Github\dbShopeeAutomationv2.0\dbShopeeAutomationV2\dbShopeeAutomationV2\obj\Debug\dbShopeeAutomationV2.pdb
 D:\Github\dbShopeeAutomationv2.0\dbShopeeAutomationV2\dbShopeeAutomationV2\bin\IronXL.dll
 D:\Github\dbShopeeAutomationv2.0\dbShopeeAutomationV2\dbShopeeAutomationV2\bin\IronXL.xml
-D:\Github\dbShopeeAutomationv2.0\dbShopeeAutomationV2\dbShopeeAutomationV2\obj\Debug\dbShopeeAutomationV2.csprojResolveAssemblyReference.cache

@@ -1,5 +1,5 @@
-﻿using dbShopeeAutomationV2.Models;
-using DevExpress.Web.Mvc;
+﻿using DevExpress.Web.Mvc;
+using dbShopeeAutomationV2.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +8,11 @@ using System.Web.Mvc;
 
 namespace dbShopeeAutomationV2.Controllers
 {
-    public class ProductController : Controller
+    public class ProductV2Controller : Controller
     {
-        // GET: Product
+        // GET: ProductV2
         public ActionResult Index()
         {
-            ViewData["product_code"] = generalFunc.Random10DigitCode();
             return View();
         }
 
@@ -26,18 +25,12 @@ namespace dbShopeeAutomationV2.Controllers
             return PartialView("_ProductGridViewPartial", model.ToList());
         }
 
-        public int stockWarehouseID(string title)
-        {
-            var stock_warehouse = db.TShopeeStockWarehouses.FirstOrDefault(it => it.name.ToLower().Equals(title.ToLower()));
-            stock_warehouse = (stock_warehouse == null) ? db.TShopeeStockWarehouses.ToList().ElementAt(0) : stock_warehouse;
-            return stock_warehouse.stock_warehouse_id;
-        }
-
         [HttpPost, ValidateInput(false)]
         public ActionResult ProductGridViewPartialAddNew(TShopeeProduct item)
         {
             string username = User.Identity.Name;
 
+            item.product_code = (item.product_code == null || item.product_code.Equals("")) ? generalFunc.Random10DigitCode() : item.product_code;
             item.name = (item.name == null) ? "product_name" : item.name;
             item.description = (item.description == null) ? "product_description" : item.description;
 
@@ -49,17 +42,13 @@ namespace dbShopeeAutomationV2.Controllers
 
             item.buy_price = (item.buy_price == null) ? 0 : item.buy_price;
             item.sell_price = (item.sell_price == null) ? 0 : item.sell_price;
-            item.product_code = (item.product_code == null || item.product_code.Equals("")) ? generalFunc.Random10DigitCode() : item.product_code;
 
-            dbStoredProcedure.productInsert(item.product_code, item.name, item.description, item.SKU, item.SKU2, item.buy_price, item.sell_price, item.product_brand_id, item.product_type_id, item.product_variety_id, username);
-            db.SaveChanges();
-
-            int product_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduct') AS INT)").FirstOrDefault();
-
-            string warehouse_title = generalFunc.trimStr(Request.Form["Stock Warehouse Location"]);
-            int warehouse_id = stockWarehouseID(warehouse_title);
-
-            dbStoredProcedure.stockItemInsert(item.name, item.description, 0, product_id, warehouse_id, username);
+            dbStoredProcedure.productInsert(
+                item.product_code, item.name,
+                item.description, item.SKU, item.SKU2,
+                item.buy_price, item.sell_price,
+                item.product_brand_id, item.product_model_id, item.product_category_id,
+                item.product_type_id, item.product_variety_id, item.product_status_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeProducts;
@@ -71,6 +60,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            item.product_code = (item.product_code == null || item.product_code.Equals("")) ? generalFunc.Random10DigitCode() : item.product_code;
             item.name = (item.name == null) ? "product_name" : item.name;
             item.description = (item.description == null) ? "product_description" : item.description;
 
@@ -82,9 +72,13 @@ namespace dbShopeeAutomationV2.Controllers
 
             item.buy_price = (item.buy_price == null) ? 0 : item.buy_price;
             item.sell_price = (item.sell_price == null) ? 0 : item.sell_price;
-            item.product_code = (item.product_code == null || item.product_code.Equals("")) ? generalFunc.Random10DigitCode() : item.product_code;
 
-            dbStoredProcedure.productUpdate(item.product_id, item.product_code, item.name, item.description, item.SKU, item.SKU2, item.buy_price, item.sell_price, item.product_brand_id, item.product_type_id, item.product_variety_id, username);
+            dbStoredProcedure.productUpdate(
+                item.product_id, item.product_code, item.name, 
+                item.description, item.SKU, item.SKU2, 
+                item.buy_price, item.sell_price, 
+                item.product_brand_id, item.product_model_id, item.product_category_id, 
+                item.product_type_id, item.product_variety_id, item.product_status_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeProducts;
@@ -96,17 +90,6 @@ namespace dbShopeeAutomationV2.Controllers
         {
             dbStoredProcedure.productDelete(product_id);
             db.SaveChanges();
-
-            IEnumerable<TShopeeStockItem> stock_item_list = db.TShopeeStockItems.Where(it => it.product_id == product_id);
-            if(stock_item_list != null)
-            {
-                stock_item_list.ToList().ForEach(it =>
-                {
-                    int stock_item_id = it.stock_item_id;
-                    dbStoredProcedure.stockItemDelete(stock_item_id);
-                    db.SaveChanges();
-                });
-            }
 
             var model = db.TShopeeProducts;
             return PartialView("_ProductGridViewPartial", model.ToList());

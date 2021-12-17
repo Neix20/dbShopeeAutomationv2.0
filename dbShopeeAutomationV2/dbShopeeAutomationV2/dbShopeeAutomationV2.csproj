@@ -251,15 +251,15 @@
     <Content Include="Content\v4-shims.css" />
     <Content Include="Content\v4-shims.min.css" />
     <Content Include="Global.asax" />
-    <Content Include="Models\dbShopeeAutomationV2.Context.tt">
+    <Content Include="Models\dbShopeeAutomationModels.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>dbShopeeAutomationV2.edmx</DependentUpon>
-      <LastGenOutput>dbShopeeAutomationV2.Context.cs</LastGenOutput>
+      <DependentUpon>dbShopeeAutomationModels.edmx</DependentUpon>
+      <LastGenOutput>dbShopeeAutomationModels.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\dbShopeeAutomationV2.tt">
+    <Content Include="Models\dbShopeeAutomationModels.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>dbShopeeAutomationV2.edmx</DependentUpon>
-      <LastGenOutput>dbShopeeAutomationV2.cs</LastGenOutput>
+      <DependentUpon>dbShopeeAutomationModels.edmx</DependentUpon>
+      <LastGenOutput>dbShopeeAutomationModels.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -322,12 +322,12 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <EntityDeploy Include="Models\dbShopeeAutomationV2.edmx">
+    <EntityDeploy Include="Models\dbShopeeAutomationModels.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>dbShopeeAutomationV2.Designer.cs</LastGenOutput>
+      <LastGenOutput>dbShopeeAutomationModels.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\dbShopeeAutomationV2.edmx.diagram">
-      <DependentUpon>dbShopeeAutomationV2.edmx</DependentUpon>
+    <Content Include="Models\dbShopeeAutomationModels.edmx.diagram">
+      <DependentUpon>dbShopeeAutomationModels.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\NTL_ERP.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -364,9 +364,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_NavLayout.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Production\Index.cshtml" />
-    <Content Include="Views\Production\_ProductionGridViewPartial.cshtml" />
-    <Content Include="Views\Production\Create.cshtml" />
     <Content Include="Views\ProductBrand\Index.cshtml" />
     <Content Include="Views\ProductBrand\_ProductBrandGridViewPartial.cshtml" />
     <Content Include="Views\Detail\Index.cshtml" />
@@ -379,8 +376,6 @@
     <Content Include="Views\StockWarehouse\_StockWarehouseGridViewPartial.cshtml" />
     <Content Include="Views\StockItem\Index.cshtml" />
     <Content Include="Views\StockItem\_StockItemGridViewPartial.cshtml" />
-    <Content Include="Views\Product\Index.cshtml" />
-    <Content Include="Views\Product\_ProductGridViewPartial.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\_CustomerGridViewPartial.cshtml" />
     <Content Include="Views\PaymentMethod\Index.cshtml" />
@@ -403,10 +398,6 @@
     <Content Include="Views\OrderItem\_OrderItemGridViewPartial.cshtml" />
     <Content Include="Views\Platform\Index.cshtml" />
     <Content Include="Views\Platform\_PlatformGridViewPartial.cshtml" />
-    <Content Include="Views\ProductionDetailForm\Index.cshtml" />
-    <Content Include="Views\ProductionDetailForm\_ProductionDetailFormGridViewPartial.cshtml" />
-    <Content Include="Views\ProductionDetail\Index.cshtml" />
-    <Content Include="Views\ProductionDetail\_ProductionDetailGridViewPartial.cshtml" />
     <Content Include="Views\ShipmentStatus\Index.cshtml" />
     <Content Include="Views\Carrier\Index.cshtml" />
     <Content Include="Views\ShipmentStatus\_ShipmentStatusGridViewPartial.cshtml" />
@@ -430,6 +421,13 @@
     <Content Include="Views\Account\SignUp.cshtml" />
     <Content Include="Views\ProductionV2\Index.cshtml" />
     <Content Include="Views\ProductionV2\_ProductionGridView.cshtml" />
+    <Content Include="Views\ProductV2\Index.cshtml" />
+    <Content Include="Views\ProductV2\_ProductGridViewPartial.cshtml" />
+    <Content Include="Views\ProductModel\Index.cshtml" />
+    <Content Include="Views\ProductModel\_ProductModelGridViewPartial.cshtml" />
+    <Content Include="Views\ProductCategory\Index.cshtml" />
+    <Content Include="Views\ProductCategory\_ProductCategoryGridViewPartial.cshtml" />
+    <Content Include="Views\ProductStatus\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -458,13 +456,13 @@
     <Compile Include="Controllers\PaymentMethodController.cs" />
     <Compile Include="Controllers\PlatformController.cs" />
     <Compile Include="Controllers\ProductBrandController.cs" />
-    <Compile Include="Controllers\ProductController.cs" />
-    <Compile Include="Controllers\ProductionController.cs" />
-    <Compile Include="Controllers\ProductionDetailController.cs" />
-    <Compile Include="Controllers\ProductionDetailFormController.cs" />
+    <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\ProductionStatusController.cs" />
     <Compile Include="Controllers\ProductionV2Controller.cs" />
+    <Compile Include="Controllers\ProductModelController.cs" />
+    <Compile Include="Controllers\ProductStatusController.cs" />
     <Compile Include="Controllers\ProductTypeController.cs" />
+    <Compile Include="Controllers\ProductV2Controller.cs" />
     <Compile Include="Controllers\ProductVarietyController.cs" />
     <Compile Include="Controllers\ScanQRCodeController.cs" />
     <Compile Include="Controllers\ShipmentController.cs" />
@@ -476,96 +474,114 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\dbShopeeAutomationV2.Context.cs">
+    <Compile Include="Models\dbShopeeAutomationModels.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>dbShopeeAutomationV2.Context.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\dbShopeeAutomationV2.cs">
+    <Compile Include="Models\dbShopeeAutomationModels.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\dbShopeeAutomationV2.Designer.cs">
+    <Compile Include="Models\dbShopeeAutomationModels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>dbShopeeAutomationV2.edmx</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\dbStoredProcedure.cs" />
     <Compile Include="Models\generalFunc.cs" />
     <Compile Include="Models\PackageListingSummary.cs" />
     <Compile Include="Models\ProductSummary.cs" />
     <Compile Include="Models\TShopeeCarrier.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeCustomer.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeDetail.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeInvoice.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeInvoiceStatu.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeOrder.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeOrderItem.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeOrderItemStatu.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeOrderStatu.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeePaymentMethod.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeePlatform.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeProduct.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeProductBrand.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TShopeeProductCategory.cs">
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TShopeeProductComponent.cs">
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeProduction.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeProductionDetail.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeProductionStatu.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TShopeeProductModel.cs">
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TShopeeProductStatu.cs">
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeProductType.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeProductVariety.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeShipment.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeShipmentStatu.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeStockItem.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeStockWarehouse.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TShopeeSupplier.cs">
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TShopeeSupplierShipment.cs">
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeUser.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TShopeeUserRole.cs">
-      <DependentUpon>dbShopeeAutomationV2.tt</DependentUpon>
+      <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserRoleProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

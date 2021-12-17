@@ -12,19 +12,16 @@ namespace dbShopeeAutomationV2.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TShopeeProductionDetail
+    public partial class TShopeeSupplierShipment
     {
-        public int production_detail_id { get; set; }
-        public string UOM { get; set; }
-        public Nullable<System.DateTime> manufactured_date { get; set; }
-        public Nullable<System.DateTime> expiry_date { get; set; }
+        public int supplier_shipment_id { get; set; }
+        public Nullable<System.DateTime> received_date { get; set; }
+        public string supplier_tracking_id { get; set; }
+        public string NTL_tracking_id { get; set; }
         public Nullable<decimal> height { get; set; }
         public Nullable<decimal> width { get; set; }
         public Nullable<decimal> length { get; set; }
-        public Nullable<decimal> quantity { get; set; }
-        public Nullable<int> cannot_be_used { get; set; }
-        public Nullable<int> can_be_used { get; set; }
-        public Nullable<int> production_id { get; set; }
+        public Nullable<int> supplier_id { get; set; }
         public Nullable<int> product_id { get; set; }
         public Nullable<int> detail_id { get; set; }
     }

@@ -12,13 +12,12 @@ namespace dbShopeeAutomationV2.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TShopeeProduction
+    public partial class TShopeeProductComponent
     {
-        public int production_id { get; set; }
-        public string title { get; set; }
-        public string description { get; set; }
-        public Nullable<decimal> total_usage { get; set; }
-        public Nullable<int> production_status_id { get; set; }
+        public int product_component_id { get; set; }
+        public Nullable<int> master_product_id { get; set; }
+        public Nullable<int> sub_product_id { get; set; }
+        public Nullable<int> quantity { get; set; }
         public Nullable<int> detail_id { get; set; }
     }
 }

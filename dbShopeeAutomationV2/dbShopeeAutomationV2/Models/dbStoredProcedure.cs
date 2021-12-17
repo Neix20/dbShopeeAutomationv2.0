@@ -9,6 +9,7 @@ namespace dbShopeeAutomationV2.Models
     {
         static dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
+        // Details Section
         // Details Stored Procedure
         public static int detailInsert(string status, string remark, string created_by, string last_updated_by)
         {
@@ -19,12 +20,44 @@ namespace dbShopeeAutomationV2.Models
         public static int detailUpdate(int detail_id, string status, string remark, string created_by, DateTime? created_date, string last_updated_by)
         {
             DateTime currentTime = DateTime.Now;
-            return db.NSP_TShopeeDetail_Update(detail_id ,status, remark, created_by, created_date, last_updated_by, currentTime);
+            return db.NSP_TShopeeDetail_Update(detail_id, status, remark, created_by, created_date, last_updated_by, currentTime);
         }
 
         public static int detailDelete(int detail_id)
         {
             return db.NSP_TShopeeDetail_Delete(detail_id);
+        }
+
+        // User Stored Procedure
+        public static int userInsert(string username, string password, string email)
+        {
+            return db.NSP_TShopeeUser_Insert(username, password, email);
+        }
+
+        public static int userUpdate(int user_id, string username, string password, string email)
+        {
+            return db.NSP_TShopeeUser_Update(user_id, username, password, email);
+        }
+
+        public static int userDelete(int user_id)
+        {
+            return db.NSP_TShopeeUser_Delete(user_id);
+        }
+
+        // User Role Stored Procedure
+        public static int userRoleInsert(string username, string role)
+        {
+            return db.NSP_TShopeeUserRole_Insert(username, role);
+        }
+
+        public static int userRoleUpdate(int user_role_id, string username, string role)
+        {
+            return db.NSP_TShopeeUserRole_Update(user_role_id, username, role);
+        }
+
+        public static int userRoleDelete(int user_role_id)
+        {
+            return db.NSP_TShopeeUserRole_Delete(user_role_id);
         }
 
         // Product Brand Stored Procedure
@@ -52,11 +85,107 @@ namespace dbShopeeAutomationV2.Models
 
         public static int productBrandDelete(int product_brand_id)
         {
-            int detail_id = (int) db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == product_brand_id).detail_id;
+            int detail_id = (int)db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == product_brand_id).detail_id;
             detailDelete(detail_id);
             db.SaveChanges();
 
             return db.NSP_TShopeeProductBrand_Delete(product_brand_id);
+        }
+
+        // Product Category
+        public static int productCategoryInsert(string name, string username)
+        {
+            string status = $"Product Category: {name}";
+            string remark = "";
+            detailInsert(status, remark, username, username);
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeProductCategory_Insert(name, detail_id);
+        }
+
+        public static int productCategoryUpdate(int product_category_id, string name, string username)
+        {
+            int detail_id = (int)db.TShopeeProductCategories.FirstOrDefault(it => it.product_category_id == product_category_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Product Category: {name}";
+            detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeProductCategory_Update(product_category_id, name, detail_id);
+        }
+
+        public static int productCategoryDelete(int product_category_id)
+        {
+            int detail_id = (int)db.TShopeeProductCategories.FirstOrDefault(it => it.product_category_id == product_category_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeProductCategory_Delete(product_category_id);
+        }
+
+        // Product Model
+        public static int productModelInsert(string name, string username)
+        {
+            string status = $"Product Model: {name}";
+            string remark = "";
+            detailInsert(status, remark, username, username);
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeProductModel_Insert(name, detail_id);
+        }
+
+        public static int productModelUpdate(int product_model_id, string name, string username)
+        {
+            int detail_id = (int)db.TShopeeProductModels.FirstOrDefault(it => it.product_model_id == product_model_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Product Model: {name}";
+            detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeProductModel_Update(product_model_id, name, detail_id);
+        }
+
+        public static int productModelDelete(int product_model_id)
+        {
+            int detail_id = (int)db.TShopeeProductModels.FirstOrDefault(it => it.product_model_id == product_model_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeProductModel_Delete(product_model_id);
+        }
+
+        // Product Status
+        public static int productStatusInsert(string name, string username)
+        {
+            string status = $"Product Status: {name}";
+            string remark = "";
+            detailInsert(status, remark, username, username);
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeProductStatus_Insert(name, detail_id);
+        }
+
+        public static int productStatusUpdate(int product_status_id, string name, string username)
+        {
+            int detail_id = (int)db.TShopeeProductStatus.FirstOrDefault(it => it.product_status_id == product_status_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Product Status: {name}";
+            detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeProductStatus_Update(product_status_id, name, detail_id);
+        }
+
+        public static int productStatusDelete(int product_status_id)
+        {
+            int detail_id = (int)db.TShopeeProductStatus.FirstOrDefault(it => it.product_status_id == product_status_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeProductStatus_Delete(product_status_id);
         }
 
         // Product Types Stored Procedure
@@ -73,7 +202,7 @@ namespace dbShopeeAutomationV2.Models
 
         public static int productTypeUpdate(int product_type_id, string name, string username)
         {
-            int detail_id = (int) db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == product_type_id).detail_id;
+            int detail_id = (int)db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == product_type_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
             detail.status = $"Product Type: {name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
@@ -84,7 +213,7 @@ namespace dbShopeeAutomationV2.Models
 
         public static int productTypeDelete(int product_type_id)
         {
-            int detail_id = (int) db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == product_type_id).detail_id;
+            int detail_id = (int)db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == product_type_id).detail_id;
             detailDelete(detail_id);
             db.SaveChanges();
 
@@ -188,7 +317,12 @@ namespace dbShopeeAutomationV2.Models
         }
 
         // Product Stored Procedure
-        public static int productInsert(string product_code, string name, string description, string SKU, string SKU2, Decimal? buy_price, Decimal? sell_price, int? product_brand_id, int? product_type_id, int? product_variety_id, string username)
+        public static int productInsert(
+            string product_code, string name, 
+            string description, string SKU, string SKU2, 
+            Decimal? buy_price, Decimal? sell_price, 
+            int? product_brand_id, int? product_model_id, int? product_category_id,
+            int? product_type_id, int? product_variety_id, int? product_status_id, string username)
         {
             // Create New Detail
             string status = $"Product: {name}";
@@ -197,10 +331,20 @@ namespace dbShopeeAutomationV2.Models
             db.SaveChanges();
 
             int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
-            return db.NSP_TShopeeProduct_Insert(product_code, name, description, SKU, SKU2, buy_price, sell_price, product_brand_id, product_type_id, product_variety_id, detail_id);
+            return db.NSP_TShopeeProduct_Insert(
+                product_code, name, 
+                description, SKU, SKU2, 
+                buy_price, sell_price, 
+                product_brand_id, product_model_id, product_category_id,
+                product_type_id, product_variety_id, product_status_id, detail_id);
         }
 
-        public static int productUpdate(int product_id, string product_code, string name, string description, string SKU, string SKU2, Decimal? buy_price, Decimal? sell_price, int? product_brand_id, int? product_type_id, int? product_variety_id, string username)
+        public static int productUpdate(
+            int product_id, string product_code, string name, 
+            string description, string SKU, string SKU2, 
+            Decimal? buy_price, Decimal? sell_price,
+            int? product_brand_id, int? product_model_id, int? product_category_id,
+            int? product_type_id, int? product_variety_id, int? product_status_id, string username)
         {
             int detail_id = (int)db.TShopeeProducts.FirstOrDefault(it => it.product_id == product_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
@@ -208,7 +352,12 @@ namespace dbShopeeAutomationV2.Models
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
-            return db.NSP_TShopeeProduct_Update(product_id, product_code, name, description, SKU, SKU2, buy_price, sell_price, product_brand_id, product_type_id, product_variety_id, detail_id);
+            return db.NSP_TShopeeProduct_Update(
+                product_id, product_code, name, 
+                description, SKU, SKU2, 
+                buy_price, sell_price,
+                product_brand_id, product_model_id, product_category_id,
+                product_type_id, product_variety_id, product_status_id, detail_id);
         }
 
         public static int productDelete(int product_id)
@@ -220,37 +369,43 @@ namespace dbShopeeAutomationV2.Models
             return db.NSP_TShopeeProduct_Delete(product_id);
         }
 
-        // Production Stored Procedure
-        public static int productionInsert(string title, string description, int? production_status_id, string username)
+        // Product Component
+        public static int productComponentInsert(int? master_product_id, int? sub_product_id, int? quantity, string username)
         {
+            string master_product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == master_product_id).name;
+            string sub_product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == sub_product_id).name;
+            
             // Create New Detail
-            string status = $"Production: {title}";
+            string status = $"Master product: {master_product}, Sub Product: {sub_product}";
             string remark = "";
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
             int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
-            return db.NSP_TShopeeProduction_Insert(title, description, production_status_id, detail_id);
+            return db.NSP_TShopeeProductComponent_Insert(master_product_id, sub_product_id, quantity, detail_id);
         }
 
-        public static int productionUpdate(int production_id, string title, string description, int? production_status_id, string username)
+        public static int productComponentUpdate(int product_component_id, int? master_product_id, int? sub_product_id, int? quantity, string username)
         {
-            int detail_id = (int)db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id).detail_id;
+            string master_product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == master_product_id).name;
+            string sub_product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == sub_product_id).name;
+
+            int detail_id = (int)db.TShopeeProductComponents.FirstOrDefault(it => it.product_component_id == product_component_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
-            detail.status = $"Production: {title}";
+            detail.status = $"Master product: {master_product}, Sub Product: {sub_product}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
-            return db.NSP_TShopeeProduction_Update(production_id, title, description, production_status_id, detail_id);
+            return db.NSP_TShopeeProductComponent_Update(product_component_id, master_product_id, sub_product_id, quantity, detail_id);
         }
 
-        public static int productionDelete(int production_id)
+        public static int productComponentDelete(int product_component_id)
         {
-            int detail_id = (int)db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id).detail_id;
+            int detail_id = (int)db.TShopeeProductComponents.FirstOrDefault(it => it.product_component_id == product_component_id).detail_id;
             detailDelete(detail_id);
             db.SaveChanges();
 
-            return db.NSP_TShopeeProduction_Delete(production_id);
+            return db.NSP_TShopeeProductComponent_Delete(product_component_id);
         }
 
         // Production Status Stored Procedure
@@ -265,7 +420,7 @@ namespace dbShopeeAutomationV2.Models
             int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
             return db.NSP_TShopeeProductionStatus_Insert(name, detail_id);
         }
-            
+
         public static int productionStatusUpdate(int production_status_id, string name, string username)
         {
             int detail_id = (int)db.TShopeeProductionStatus.FirstOrDefault(it => it.production_status_id == production_status_id).detail_id;
@@ -286,8 +441,49 @@ namespace dbShopeeAutomationV2.Models
             return db.NSP_TShopeeProductionStatus_Delete(production_status_id);
         }
 
+        // Production Stored Procedure
+        public static int productionInsert(
+            string title, string description, Decimal? total_usage, int? production_status_id, string username
+        )
+        {
+            // Create New Detail
+            string status = $"Production: {title}";
+            string remark = "";
+            detailInsert(status, remark, username, username);
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeProduction_Insert(title, description, total_usage, production_status_id, detail_id);
+        }
+
+        public static int productionUpdate(
+            int production_id, string title, string description, Decimal? total_usage, int? production_status_id, string username
+        )
+        {
+            int detail_id = (int)db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Production: {title}";
+            detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeProduction_Update(production_id, title, description, total_usage, production_status_id, detail_id);
+        }
+
+        public static int productionDelete(int production_id)
+        {
+            int detail_id = (int)db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeProduction_Delete(production_id);
+        }
+
         // Production Detail Stored Procedure
-        public static int productionDetailInsert(string UOM, DateTime? manufactured_date, DateTime? expiry_date, int? quantity, int product_id, int? production_id, string username)
+        public static int productionDetailInsert(
+            string UOM, DateTime? manufactured_date, DateTime? expiry_date,
+            Decimal? height, Decimal? width, Decimal? length, Decimal? quantity,
+            int? cannot_be_used, int? can_be_used, int? production_id, int? product_id, string username
+        )
         {
             string production_title = db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id).title;
             string product_sku = db.TShopeeProducts.FirstOrDefault(it => it.product_id == product_id).SKU;
@@ -299,10 +495,17 @@ namespace dbShopeeAutomationV2.Models
             db.SaveChanges();
 
             int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
-            return db.NSP_TShopeeProductionDetail_Insert(UOM, manufactured_date, expiry_date, quantity, production_id, product_id, detail_id);
+            return db.NSP_TShopeeProductionDetail_Insert(
+                UOM, manufactured_date, expiry_date,
+                height, width, length,
+                quantity, cannot_be_used, can_be_used,
+                production_id, product_id, detail_id);
         }
 
-        public static int productionDetailUpdate(int production_detail_id, string UOM, DateTime? manufactured_date, DateTime? expiry_date, int? quantity, int product_id, int? production_id, string username)
+        public static int productionDetailUpdate(
+            int production_detail_id, string UOM, DateTime? manufactured_date, DateTime? expiry_date,
+            Decimal? height, Decimal? width, Decimal? length, Decimal? quantity, 
+            int? cannot_be_used, int? can_be_used, int? production_id, int? product_id, string username)
         {
             string production_title = db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id).title;
             string product_sku = db.TShopeeProducts.FirstOrDefault(it => it.product_id == product_id).SKU;
@@ -313,7 +516,10 @@ namespace dbShopeeAutomationV2.Models
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
-            return db.NSP_TShopeeProductionDetail_Update(production_detail_id, UOM, manufactured_date, expiry_date, quantity, production_id, product_id, detail_id);
+            return db.NSP_TShopeeProductionDetail_Update(
+                production_detail_id, UOM, manufactured_date, expiry_date,
+                height, width, length, quantity, 
+                cannot_be_used, can_be_used, production_id, product_id, detail_id);
         }
 
         public static int productionDetailDelete(int production_detail_id)
@@ -323,6 +529,85 @@ namespace dbShopeeAutomationV2.Models
             db.SaveChanges();
 
             return db.NSP_TShopeeProductionDetail_Delete(production_detail_id);
+        }
+
+        // Supplier Stored Procedure
+        public static int supplierInsert(string name, string code, string nation, string username)
+        {
+            // Create New Detail
+            string status = $"Supplier: {name}";
+            string remark = "";
+            detailInsert(status, remark, username, username);
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeSupplier_Insert(name, code, nation, detail_id);
+        }
+
+        public static int supplierUpdate(int supplier_id, string name, string code, string nation, string username)
+        {
+            int detail_id = (int)db.TShopeeSuppliers.FirstOrDefault(it => it.supplier_id == supplier_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Supplier: {name}";
+            detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeSupplier_Update(supplier_id, name, code, nation, detail_id);
+        }
+
+        public static int supplierDelete(int supplier_id)
+        {
+            int detail_id = (int)db.TShopeeSuppliers.FirstOrDefault(it => it.supplier_id == supplier_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeSupplier_Delete(supplier_id);
+        }
+
+        // Supplier Shipment Stored Procedure
+        public static int supplierShipmentInsert(
+            DateTime? received_date, string supplier_tracking_id, string NTL_tracking_id, 
+            Decimal? height, Decimal? width, Decimal? length, 
+            int? supplier_id, int? product_id, string username)
+        {
+            // Create New Detail
+            string status = $"Supplier Shipment: {supplier_tracking_id}";
+            string remark = "";
+            detailInsert(status, remark, username, username);
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeSupplierShipment_Insert(
+                received_date, supplier_tracking_id, NTL_tracking_id,
+                height, width, length,
+                supplier_id, product_id, detail_id
+            );
+        }
+
+        public static int supplierShipmentUpdate(
+            int supplier_shipment_id, DateTime? received_date, string supplier_tracking_id, string NTL_tracking_id,
+            Decimal? height, Decimal? width, Decimal? length,
+            int? supplier_id, int? product_id, string username)
+        {
+            int detail_id = (int)db.TShopeeSupplierShipments.FirstOrDefault(it => it.supplier_shipment_id == supplier_shipment_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Supplier Shipment: {supplier_tracking_id}";
+            detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeSupplierShipment_Update(
+                supplier_shipment_id, received_date, supplier_tracking_id, NTL_tracking_id,
+                height, width, length,
+                supplier_id, product_id, detail_id);
+        }
+
+        public static int supplierShipmentDelete(int supplier_shipment_id)
+        {
+            int detail_id = (int)db.TShopeeSupplierShipments.FirstOrDefault(it => it.supplier_shipment_id == supplier_shipment_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeSupplierShipment_Delete(supplier_shipment_id);
         }
 
         // Platform Stored Procedure
@@ -340,7 +625,7 @@ namespace dbShopeeAutomationV2.Models
 
         public static int platformUpdate(int platform_id, string name, string username)
         {
-            int detail_id = (int) db.TShopeePlatforms.FirstOrDefault(it => it.platform_id == platform_id).detail_id;
+            int detail_id = (int)db.TShopeePlatforms.FirstOrDefault(it => it.platform_id == platform_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
             detail.status = $"Platform: {name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
@@ -439,7 +724,7 @@ namespace dbShopeeAutomationV2.Models
 
         public static int invoiceStatusUpdate(int invoice_status_id, string name, string username)
         {
-            int detail_id = (int) db.TShopeeInvoiceStatus.FirstOrDefault(it => it.invoice_status_id == invoice_status_id).detail_id;
+            int detail_id = (int)db.TShopeeInvoiceStatus.FirstOrDefault(it => it.invoice_status_id == invoice_status_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
             detail.status = $"Invoice Status: {name}";
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
@@ -488,104 +773,6 @@ namespace dbShopeeAutomationV2.Models
             db.SaveChanges();
 
             return db.NSP_TShopeeOrderStatus_Delete(order_status_id);
-        }
-
-        // Shipment Status Stored Procedure
-        public static int shipmentStatusInsert(string name, string username)
-        {
-            // Create New Detail
-            string status = $"Shipment Status: {name}";
-            string remark = "";
-            detailInsert(status, remark, username, username);
-            db.SaveChanges();
-
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
-            return db.NSP_TShopeeShipmentStatus_Insert(name, detail_id);
-        }
-
-        public static int shipmentStatusUpdate(int shipment_status_id, string name, string username)
-        {
-            int detail_id = (int) db.TShopeeShipmentStatus.FirstOrDefault(it => it.shipment_status_id == shipment_status_id).detail_id;
-            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
-            detail.status = $"Shipment Status: {name}";
-            detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
-            db.SaveChanges();
-
-            return db.NSP_TShopeeShipmentStatus_Update(shipment_status_id, name, detail_id);
-        }
-
-        public static int shipmentStatusDelete(int shipment_status_id)
-        {
-            int detail_id = (int)db.TShopeeShipmentStatus.FirstOrDefault(it => it.shipment_status_id == shipment_status_id).detail_id;
-            detailDelete(detail_id);
-            db.SaveChanges();
-
-            return db.NSP_TShopeeShipmentStatus_Delete(shipment_status_id);
-        }
-
-        // Carrier Stored Procedure
-        public static int carrierInsert(string name, string username)
-        {
-            // Create New Detail
-            string status = $"Carrier: {name}";
-            string remark = "";
-            detailInsert(status, remark, username, username);
-            db.SaveChanges();
-
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
-            return db.NSP_TShopeeCarrier_Insert(name, detail_id);
-        }
-
-        public static int carrierUpdate(int carrier_id, string name, string username)
-        {
-            int detail_id = (int)db.TShopeeCarriers.FirstOrDefault(it => it.carrier_id == carrier_id).detail_id;
-            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
-            detail.status = $"Carrier: {name}";
-            detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
-            db.SaveChanges();
-
-            return db.NSP_TShopeeCarrier_Update(carrier_id, name, detail_id);
-        }
-
-        public static int carrierDelete(int carrier_id)
-        {
-            int detail_id = (int)db.TShopeeCarriers.FirstOrDefault(it => it.carrier_id == carrier_id).detail_id;
-            detailDelete(detail_id);
-            db.SaveChanges();
-
-            return db.NSP_TShopeeCarrier_Delete(carrier_id);
-        }
-
-        // User Stored Procedure
-        public static int userInsert(string username, string password, string email)
-        {
-            return db.NSP_TShopeeUser_Insert(username, password, email);
-        }
-
-        public static int userUpdate(int user_id, string username, string password, string email)
-        {
-            return db.NSP_TShopeeUser_Update(user_id, username, password, email);
-        }
-
-        public static int userDelete(int user_id)
-        {
-            return db.NSP_TShopeeUser_Delete(user_id);
-        }
-
-        // User Role Stored Procedure
-        public static int userRoleInsert(string username, string role)
-        {
-            return db.NSP_TShopeeUserRole_Insert(username, role);
-        }
-
-        public static int userRoleUpdate(int user_role_id, string username, string role)
-        {
-            return db.NSP_TShopeeUserRole_Update(user_role_id, username, role);
-        }
-
-        public static int userRoleDelete(int user_role_id)
-        {
-            return db.NSP_TShopeeUserRole_Delete(user_role_id);
         }
 
         // Customer Stored Procedure
@@ -642,10 +829,11 @@ namespace dbShopeeAutomationV2.Models
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
-            return db.NSP_TShopeeOrder_Update(order_id,order_title, order_placed_date, total_price, order_status_id, detail_id);
+            return db.NSP_TShopeeOrder_Update(order_id, order_title, order_placed_date, total_price, order_status_id, detail_id);
         }
 
-        public static int orderDelete(int order_id) {
+        public static int orderDelete(int order_id)
+        {
             int detail_id = (int)db.TShopeeOrders.FirstOrDefault(it => it.order_id == order_id).detail_id;
             detailDelete(detail_id);
             db.SaveChanges();
@@ -736,6 +924,74 @@ namespace dbShopeeAutomationV2.Models
             db.SaveChanges();
 
             return db.NSP_TShopeeInvoice_Delete(invoice_id);
+        }
+
+        // Shipment
+
+        // Shipment Status Stored Procedure
+        public static int shipmentStatusInsert(string name, string username)
+        {
+            // Create New Detail
+            string status = $"Shipment Status: {name}";
+            string remark = "";
+            detailInsert(status, remark, username, username);
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeShipmentStatus_Insert(name, detail_id);
+        }
+
+        public static int shipmentStatusUpdate(int shipment_status_id, string name, string username)
+        {
+            int detail_id = (int)db.TShopeeShipmentStatus.FirstOrDefault(it => it.shipment_status_id == shipment_status_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Shipment Status: {name}";
+            detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeShipmentStatus_Update(shipment_status_id, name, detail_id);
+        }
+
+        public static int shipmentStatusDelete(int shipment_status_id)
+        {
+            int detail_id = (int)db.TShopeeShipmentStatus.FirstOrDefault(it => it.shipment_status_id == shipment_status_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeShipmentStatus_Delete(shipment_status_id);
+        }
+
+        // Carrier Stored Procedure
+        public static int carrierInsert(string name, string username)
+        {
+            // Create New Detail
+            string status = $"Carrier: {name}";
+            string remark = "";
+            detailInsert(status, remark, username, username);
+            db.SaveChanges();
+
+            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            return db.NSP_TShopeeCarrier_Insert(name, detail_id);
+        }
+
+        public static int carrierUpdate(int carrier_id, string name, string username)
+        {
+            int detail_id = (int)db.TShopeeCarriers.FirstOrDefault(it => it.carrier_id == carrier_id).detail_id;
+            TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
+            detail.status = $"Carrier: {name}";
+            detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeCarrier_Update(carrier_id, name, detail_id);
+        }
+
+        public static int carrierDelete(int carrier_id)
+        {
+            int detail_id = (int)db.TShopeeCarriers.FirstOrDefault(it => it.carrier_id == carrier_id).detail_id;
+            detailDelete(detail_id);
+            db.SaveChanges();
+
+            return db.NSP_TShopeeCarrier_Delete(carrier_id);
         }
 
         // Shipment Stored Procedure

@@ -17,7 +17,7 @@ namespace dbShopeeAutomationV2.Models
         public int stock_item_id { get; set; }
         public string name { get; set; }
         public string description { get; set; }
-        public Nullable<int> stock_quantity { get; set; }
+        public Nullable<decimal> stock_quantity { get; set; }
         public Nullable<int> product_id { get; set; }
         public Nullable<int> stock_warehouse_id { get; set; }
         public Nullable<int> detail_id { get; set; }

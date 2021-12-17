@@ -428,6 +428,15 @@
     <Content Include="Views\ProductCategory\Index.cshtml" />
     <Content Include="Views\ProductCategory\_ProductCategoryGridViewPartial.cshtml" />
     <Content Include="Views\ProductStatus\Index.cshtml" />
+    <Content Include="Views\ProductStatus\_ProductStatusGridViewPartial.cshtml" />
+    <Content Include="Views\ProductionDetail\Index.cshtml" />
+    <Content Include="Views\ProductionDetail\_ProductionDetailGridViewPartial.cshtml" />
+    <Content Include="Views\Supplier\Index.cshtml" />
+    <Content Include="Views\Supplier\_SupplierGridViewPartial.cshtml" />
+    <Content Include="Views\SupplierShipment\Index.cshtml" />
+    <Content Include="Views\SupplierShipment\_SupplierShipmentGridViewPartial.cshtml" />
+    <Content Include="Views\ProductExcel\Index.cshtml" />
+    <Content Include="Views\ProductComponent\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -457,6 +466,9 @@
     <Compile Include="Controllers\PlatformController.cs" />
     <Compile Include="Controllers\ProductBrandController.cs" />
     <Compile Include="Controllers\ProductCategoryController.cs" />
+    <Compile Include="Controllers\ProductComponentController.cs" />
+    <Compile Include="Controllers\ProductExcelController.cs" />
+    <Compile Include="Controllers\ProductionDetailController.cs" />
     <Compile Include="Controllers\ProductionStatusController.cs" />
     <Compile Include="Controllers\ProductionV2Controller.cs" />
     <Compile Include="Controllers\ProductModelController.cs" />
@@ -469,6 +481,8 @@
     <Compile Include="Controllers\ShipmentStatusController.cs" />
     <Compile Include="Controllers\StockItemController.cs" />
     <Compile Include="Controllers\StockWarehouseController.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
+    <Compile Include="Controllers\SupplierShipmentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserRoleController.cs" />
     <Compile Include="Global.asax.cs">

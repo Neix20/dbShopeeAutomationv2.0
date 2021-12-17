@@ -35,7 +35,7 @@ namespace dbShopeeAutomationV2.Controllers
             item.description = (item.description == null) ? "Stock Item Description" : item.description;
             item.stock_quantity = (item.stock_quantity == null) ? 0 : item.stock_quantity;
 
-            dbStoredProcedure.stockItemInsert(item.name, item.description, (int)item.stock_quantity, (int)item.product_id, (int)item.stock_warehouse_id, username);
+            dbStoredProcedure.stockItemInsert(item.name, item.description, item.stock_quantity, item.product_id, item.stock_warehouse_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeStockItems;
@@ -51,7 +51,7 @@ namespace dbShopeeAutomationV2.Controllers
             item.description = (item.description == null) ? "Stock Item Description" : item.description;
             item.stock_quantity = (item.stock_quantity == null) ? 0 : item.stock_quantity;
 
-            dbStoredProcedure.stockItemUpdate(item.stock_item_id, item.name, item.description, (int)item.stock_quantity, (int)item.product_id, (int)item.stock_warehouse_id, username);
+            dbStoredProcedure.stockItemUpdate(item.stock_item_id, item.name, item.description, item.stock_quantity, item.product_id, item.stock_warehouse_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeStockItems;

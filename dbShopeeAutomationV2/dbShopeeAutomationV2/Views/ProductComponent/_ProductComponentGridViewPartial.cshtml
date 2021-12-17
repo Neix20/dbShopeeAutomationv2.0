@@ -1,0 +1,33 @@
+@{
+	var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "ProductComponentGridView";
+        settings.CallbackRouteValues = new { Controller = "ProductComponent", Action = "ProductComponentGridViewPartial" };
+		
+				settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "ProductComponent", Action = "ProductComponentGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ProductComponent", Action = "ProductComponentGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ProductComponent", Action = "ProductComponentGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+		
+		settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+				
+		settings.KeyFieldName = "product_component_id";
+		
+		settings.SettingsPager.Visible = true;
+		settings.Settings.ShowGroupPanel = true;
+		settings.Settings.ShowFilterRow = true;
+		settings.SettingsBehavior.AllowSelectByRowClick = true;
+		
+				settings.Columns.Add("master_product_id");
+				settings.Columns.Add("sub_product_id");
+				settings.Columns.Add("quantity");
+				settings.Columns.Add("detail_id");
+			});
+		if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+	}
+@grid.Bind(Model).GetHtml()

@@ -22,7 +22,7 @@
         settings.SettingsBehavior.ConfirmDelete = true;
 
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
         settings.CommandColumn.ShowDeleteButton = true;
         settings.CommandColumn.ShowEditButton = true;
 
@@ -74,10 +74,11 @@
             prop.DisplayFormatString = "C";
         });
 
+        // Product Brand
         settings.Columns.Add(col =>
         {
             col.FieldName = "product_brand_id";
-            col.Caption = "Product Brand";
+            col.Caption = "Brand";
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
@@ -88,11 +89,80 @@
             prop.ValidationSettings.RequiredField.IsRequired = true;
         });
 
-        settings.Columns.Add("product_model_id");
-        settings.Columns.Add("product_category_id");
-        settings.Columns.Add("product_type_id");
-        settings.Columns.Add("product_variety_id");
-        settings.Columns.Add("product_status_id");
+        // Product Category
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "product_category_id";
+            col.Caption = "Category";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeProductCategories.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "product_category_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
+        });
+
+        // Product Model
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "product_model_id";
+            col.Caption = "Model";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeProductModels.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "product_model_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
+        });
+
+        // Product Type
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "product_type_id";
+            col.Caption = "Type";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeProductTypes.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "product_type_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
+        });
+
+        // Product Variety
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "product_variety_id";
+            col.Caption = "Variety";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeProductVarieties.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "product_variety_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
+        });
+
+        // Product Status
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "product_status_id";
+            col.Caption = "Status";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeProductStatus.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "product_status_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
+        });
 
         // Last Updated By
         settings.Columns.Add(col =>

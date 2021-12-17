@@ -285,7 +285,8 @@ namespace dbShopeeAutomationV2.Models
         }
 
         // Stock Item Stored Procedure
-        public static int stockItemInsert(string name, string description, int quantity, int product_id, int warehouse_id, string username)
+        public static int stockItemInsert(
+            string name, string description, Decimal? quantity, int? product_id, int? warehouse_id, string username)
         {
             string status = $"Stock Item: {name}";
             string remark = "";
@@ -296,7 +297,7 @@ namespace dbShopeeAutomationV2.Models
             return db.NSP_TShopeeStockItem_Insert(name, description, quantity, product_id, warehouse_id, detail_id);
         }
 
-        public static int stockItemUpdate(int stock_item_id, string name, string description, int quantity, int product_id, int warehouse_id, string username)
+        public static int stockItemUpdate(int stock_item_id, string name, string description, Decimal? quantity, int? product_id, int? warehouse_id, string username)
         {
             int detail_id = (int)db.TShopeeStockItems.FirstOrDefault(it => it.stock_item_id == stock_item_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);

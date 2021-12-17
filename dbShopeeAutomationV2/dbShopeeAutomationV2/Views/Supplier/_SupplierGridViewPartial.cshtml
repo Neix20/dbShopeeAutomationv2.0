@@ -11,13 +11,13 @@
     });
 
     var grid = Html.DevExpress().GridView(settings => {
-        settings.Name = "ProductModelGridView";
+        settings.Name = "SupplierGridView";
         settings.Width = Unit.Percentage(100);
-        settings.CallbackRouteValues = new { Controller = "ProductModel", Action = "ProductModelGridViewPartial" };
+        settings.CallbackRouteValues = new { Controller = "Supplier", Action = "SupplierGridViewPartial" };
 
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "ProductModel", Action = "ProductModelGridViewPartialAddNew" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ProductModel", Action = "ProductModelGridViewPartialUpdate" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ProductModel", Action = "ProductModelGridViewPartialDelete" };
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Supplier", Action = "SupplierGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Supplier", Action = "SupplierGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Supplier", Action = "SupplierGridViewPartialDelete" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsBehavior.ConfirmDelete = true;
 
@@ -26,7 +26,7 @@
         settings.CommandColumn.ShowDeleteButton = true;
         settings.CommandColumn.ShowEditButton = true;
 
-        settings.KeyFieldName = "product_model_id";
+        settings.KeyFieldName = "supplier_id";
 
         settings.SettingsPager.Visible = true;
         settings.Settings.ShowGroupPanel = true;
@@ -38,7 +38,9 @@
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
-        settings.Columns.Add("name").Caption = "Product Model";
+        settings.Columns.Add("name").Caption = "Supplier";
+        settings.Columns.Add("code").Caption = "NTL Code";
+        settings.Columns.Add("nation").Caption = "Locality";
 
         // Last Updated By
         settings.Columns.Add(columns =>

@@ -47,9 +47,10 @@
 
             col.ColumnType = MVCxGridViewColumnType.SpinEdit;
             SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
-            prop.NumberType = SpinEditNumberType.Integer;
+            prop.NumberType = SpinEditNumberType.Float;
             prop.MinValue = 0;
             prop.MaxValue = 10000000;
+            prop.Increment = 0.1M;
         });
 
         // Product SKU
@@ -57,7 +58,6 @@
         {
             col.FieldName = "product_id";
             col.Caption = "Product SKU";
-            col.ReadOnly = true;
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
@@ -73,7 +73,6 @@
         {
             col.FieldName = "stock_warehouse_id";
             col.Caption = "Stock Warehouse Title";
-            col.ReadOnly = true;
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;

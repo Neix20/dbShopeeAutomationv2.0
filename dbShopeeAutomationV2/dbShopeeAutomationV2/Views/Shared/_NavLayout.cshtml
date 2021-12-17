@@ -4,8 +4,10 @@
     IDictionary<string, List<string>> propDict = new Dictionary<string, List<string>>(){
         {"E-commerce", new List<string>(){"Customer", "Invoice", "Invoice Status", "Order", "Order Item", "Order Item Status",
                                             "Order Status", "Payment Method", "Platform"}},
-        {"Production", new List<string>(){"Product", "Product Brand", "Product Type", "Product Variety", "Production", "Production Status",
-                                            "Production Detail", "Stock Item", "Stock Warehouse"}},
+        {"Production", new List<string>(){
+            "Product Brand", "Product Category", "Product Model", "Product Type", "Product Variety",
+            "Product", "Product Status", "Product Component", "Production", "Production Status", "Production Detail",
+            "Supplier", "Supplier Shipment", "Stock Warehouse", "Stock Item", "Upload Excel"}},
         {"Shipment", new List<string>(){"Carrier", "Shipment", "Shipment Status"}},
         {"Operations", new List<string>(){"Detail", "User", "User Role"}}
     };
@@ -62,11 +64,11 @@
 
 <nav class="navbar navbar-expand navbar-dark bg-dark">
     <div class="container-fluid">
-        @Html.ActionLink("NTL Asia", "Index", "DailyTask", null, new { @Class = "navbar-brand"})
+        @Html.ActionLink("NTL Asia", "Index", "DailyTask", null, new { @Class = "navbar-brand" })
         <div class="collapse navbar-collapse navbar-expand" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    @Html.ActionLink("Tasks", "Index", "DailyTask", null, new { @Class = "nav-link"})
+                    @Html.ActionLink("Tasks", "Index", "DailyTask", null, new { @Class = "nav-link" })
                 </li>
                 <li class="nav-item">
                     @Html.ActionLink("Scan QRCode", "Index", "ScanQRCode", null, new { @Class = "nav-link" })
@@ -81,9 +83,18 @@
                             @foreach (var prop in kvp.Value)
                             {
                                 string controller = $"{Regex.Replace(prop, @" ", "")}";
-                                if (prop.Equals("Production")) { controller = "ProductionV2"; }
+
+                                if (kvp.Key.Equals("Production") && prop.Equals("Upload Excel"))
+                                {
+                                    controller = "ProductExcel";
+                                }
+                                else if (prop.Equals("Production") || prop.Equals("Product"))
+                                {
+                                    controller = $"{prop}V2";
+                                }
+
                                 <li>
-                                    @Html.ActionLink(prop, "Index", controller, null, new { @Class="dropdown-item"})
+                                    @Html.ActionLink(prop, "Index", controller, null, new { @Class = "dropdown-item" })
                                 </li>
                             }
                         </ul>
@@ -99,7 +110,7 @@
                 </li>
                 <li class="mx-1"></li>
                 <li>
-                    @Html.ActionLink("Logout", "SignOut", "Account", null, new { @Class="btn btn-secondary"})
+                    @Html.ActionLink("Logout", "SignOut", "Account", null, new { @Class = "btn btn-secondary" })
                 </li>
             </ul>
         </div>

@@ -437,6 +437,7 @@
     <Content Include="Views\SupplierShipment\_SupplierShipmentGridViewPartial.cshtml" />
     <Content Include="Views\ProductExcel\Index.cshtml" />
     <Content Include="Views\ProductComponent\Index.cshtml" />
+    <Content Include="Views\ProductComponent\_ProductComponentGridViewPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

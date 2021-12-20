@@ -21,28 +21,24 @@ namespace dbShopeeAutomationV2.Controllers
 
         public string readExcelFile(string fileName, string username)
         {
-            string str = "";
-
             // Create WorkBook
             WorkBook wb = WorkBook.Load(fileName);
 
-            // Read 'Supplier Info' Worksheet
-            str += getSupplierInfo(wb, username);
-            str += getRawMaterialTrackingInfo(wb, username);
+            //// Read 'Supplier Info' Worksheet
+            //getSupplierInfo(wb, username);
 
+            //// Read 'Raw Material Tracking Info' Worksheet
+            //getRawMaterialTrackingInfo(wb, username);
+
+            // Testing
+            string str = getInventoryOverview(wb, username);
             return $"<div class='border border-success p-3 text-center'>{str}</div>";
         }
 
         // 1.
-        public string getSupplierInfo(WorkBook wb, string username)
+        public void getSupplierInfo(WorkBook wb, string username)
         {
-            string str = "";
-
             WorkSheet ws = wb.GetWorkSheet("Supplier Info");
-
-            // Header
-            string header = "Supplier";
-            str += $"<div class='row align-items-center'><div class='col fw-bold h4'>{header}</div></div>";
 
             // Get List of Supplier Name from Entity Framework
             IEnumerable<string> supplierList = db.TShopeeSuppliers.Select(it => it.name);
@@ -62,22 +58,14 @@ namespace dbShopeeAutomationV2.Controllers
                 dbStoredProcedure.supplierInsert(supplier_name, supplier_code, supplier_nation, username);
             }
             db.SaveChanges();
-
-            return str;
         }
 
         // 2.
-        public string getRawMaterialTrackingInfo(WorkBook wb, string username)
+        public void getRawMaterialTrackingInfo(WorkBook wb, string username)
         {
-            string str = "";
-
             WorkSheet ws = wb.GetWorkSheet("Raw Material Tracking Info");
 
-            str += checkBrandCategoryType(ws, username);
-
-            // Header
-            string header = "Product (Material)";
-            str += $"<div class='row align-items-center'><div class='col fw-bold h4'>{header}</div></div>";
+            checkBrandCategoryType(ws, username);
 
             // Get Only Rows without headers
             foreach (var row in ws.Rows.ToList().GetRange(4, ws.RowCount - 4))
@@ -151,19 +139,11 @@ namespace dbShopeeAutomationV2.Controllers
                     supplier_id, product_id, username);
             }
             db.SaveChanges();
-
-            return str;
         }
 
         // Get All Brands
-        public string checkBrandCategoryType(WorkSheet ws, string username)
+        public void checkBrandCategoryType(WorkSheet ws, string username)
         {
-            string str = "";
-
-            // Header
-            string header = "Check Brand, Category and Type";
-            str += $"<div class='row align-items-center'><div class='col fw-bold h4'>{header}</div></div>";
-
             // Get List of Brand name from Entity Framework
             IEnumerable<string> brandList = db.TShopeeProductBrands.Select(it => it.name.ToLower());
 
@@ -193,6 +173,31 @@ namespace dbShopeeAutomationV2.Controllers
                     dbStoredProcedure.productTypeInsert(type_name, username);
             }
             db.SaveChanges();
+        }
+
+        // 4.
+        public string getInventoryOverview(WorkBook wb, string username)
+        {
+            WorkSheet ws = wb.GetWorkSheet("Inventory Overview");
+
+            string str = "";
+
+            // Get Rows Without Headers
+            string model_name = "", panel = "";
+            foreach (var row in ws.Rows.ToList().GetRange(3, ws.RowCount - 3))
+            {
+                var tmp_arr = row.ToArray();
+
+                model_name = (tmp_arr[1].Text == "") ? model_name : tmp_arr[1].Text;
+                panel = (tmp_arr[2].Text == "") ? panel : tmp_arr[2].Text;
+
+                List<string> tdList = new List<string>();
+                tdList.Add(model_name);
+                tdList.Add(panel);
+                tdList = tdList.Select(x => $"<div class='col'>{x}</div>").ToList();
+                string tdListStr = String.Join("", tdList);
+                str += $"<div class='row align-items-center'>{tdListStr}</div>";
+            }
 
             return str;
         }
@@ -217,8 +222,7 @@ namespace dbShopeeAutomationV2.Controllers
                 //readExcelFile(file_path, username);
                 //return Content($"File {file.FileName} Uploaded Successfully!");
 
-                string str = readExcelFile(file_path, username);
-                return Content(str);
+                return Content(readExcelFile(file_path, username));
             }
 
             return Content($"Error! File {file.FileName} was not uploaded successfully...");

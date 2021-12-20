@@ -84,6 +84,11 @@ namespace dbShopeeAutomationV2.Controllers
             {
                 var tmp_arr = row.ToArray();
 
+                // Product name
+                string product_name = (string)tmp_arr[3].Value;
+
+                if (product_name.Equals("")) continue;
+
                 // Product Category
                 string product_category = (string)tmp_arr[1].Value;
                 int product_category_id = dbStatusFunction.productCategoryID(product_category);
@@ -92,12 +97,11 @@ namespace dbShopeeAutomationV2.Controllers
                 string product_brand = (string)tmp_arr[2].Value;
                 int product_brand_id = dbStatusFunction.productBrandID(product_brand);
 
-                // Product name
-                string product_name = (string)tmp_arr[3].Value;
                 string product_description = product_name;
 
                 string product_sku2 = (string)tmp_arr[4].Value;
 
+                // Product Status
                 string product_status = (string)tmp_arr[8].Value;
                 int product_status_id = dbStatusFunction.productStatusID(product_status);
 
@@ -111,8 +115,8 @@ namespace dbShopeeAutomationV2.Controllers
                 int product_variety_id = dbStatusFunction.productVarietyID("Material");
 
                 // Buy Price => tmp_arr[14].Value
-                string buy_price = (string)tmp_arr[14].Value;
-                Decimal product_buy_price = Decimal.Parse(buy_price);
+                double buy_price = tmp_arr[14].DoubleValue;
+                Decimal product_buy_price = Decimal.Parse(buy_price.ToString());
 
                 // Insert New Product (Material)
                 dbStoredProcedure.productInsert(
@@ -122,9 +126,29 @@ namespace dbShopeeAutomationV2.Controllers
                     product_brand_id, product_model_id, product_category_id,
                     product_type_id, product_variety_id, product_status_id, username);
 
-
-
                 // Create Supplier Shipment
+                DateTime? ss_r_dt = tmp_arr[5].DateTimeValue;
+
+                string ss_tra_id = (string)tmp_arr[6].Value;
+                string ss_ntl_tra_id = (string)tmp_arr[7].Value;
+
+                // Supplier
+                string ss_supplier = (string)tmp_arr[9].Value;
+                int supplier_id = dbStatusFunction.supplierID(ss_supplier);
+
+                string roll_size = (string)tmp_arr[13].Value;
+                Decimal[] hwl_arr = generalFunc.parseRollSize(roll_size);
+                Decimal height = hwl_arr[0];
+                Decimal width = hwl_arr[1];
+                Decimal length = hwl_arr[2];
+
+                int product_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduct') AS INT)").FirstOrDefault();
+
+                // Insert Supplier Shipment
+                dbStoredProcedure.supplierShipmentInsert(
+                    ss_r_dt, ss_tra_id, ss_ntl_tra_id,
+                    height, width, length,
+                    supplier_id, product_id, username);
             }
             db.SaveChanges();
 

@@ -504,6 +504,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dbShopeeAutomationModels.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\dbStatusFunction.cs" />
     <Compile Include="Models\dbStoredProcedure.cs" />
     <Compile Include="Models\generalFunc.cs" />
     <Compile Include="Models\PackageListingSummary.cs" />

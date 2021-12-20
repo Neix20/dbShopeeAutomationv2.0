@@ -12,16 +12,10 @@ namespace dbShopeeAutomationV2.Controllers
 
         dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
-        public int invoiceStatusID(string name)
-        {
-            var invoice = db.TShopeeInvoiceStatus.FirstOrDefault(it => it.name.ToLower().Equals(name.ToLower()));
-            return (invoice != null) ? invoice.invoice_status_id : 0;
-        }
-
         public int numOfOrdersLeft(IEnumerable<TShopeeInvoice> invoiceList)
         {
-            int inv_sta_id = invoiceStatusID("Incomplete");
-            int p_inv_sta_id = invoiceStatusID("Packaging");
+            int inv_sta_id = dbStatusFunction.invoiceStatusID("Incomplete");
+            int p_inv_sta_id = dbStatusFunction.invoiceStatusID("Packaging");
 
             return invoiceList.Where(it => it.invoice_status_id == inv_sta_id || it.invoice_status_id == p_inv_sta_id).ToList().Count;
         }
@@ -34,8 +28,8 @@ namespace dbShopeeAutomationV2.Controllers
 
         public ActionResult DailyTaskPartial()
         {
-            int inv_sta_id = invoiceStatusID("Incomplete");
-            int p_inv_sta_id = invoiceStatusID("Packaging");
+            int inv_sta_id = dbStatusFunction.invoiceStatusID("Incomplete");
+            int p_inv_sta_id = dbStatusFunction.invoiceStatusID("Packaging");
 
             var model = db.TShopeeInvoices.AsEnumerable().Where(
                 it =>
@@ -61,8 +55,8 @@ namespace dbShopeeAutomationV2.Controllers
 
             if (((DateTime)item.invoice_completed_date).Date == DateTime.Now.Date)
             {
-                int inv_sta_id = invoiceStatusID("Incomplete");
-                int p_inv_sta_id = invoiceStatusID("Packaging");
+                int inv_sta_id = dbStatusFunction.invoiceStatusID("Incomplete");
+                int p_inv_sta_id = dbStatusFunction.invoiceStatusID("Packaging");
 
                 model = db.TShopeeInvoices.AsEnumerable().Where(
                     it =>
@@ -112,7 +106,7 @@ namespace dbShopeeAutomationV2.Controllers
                 Dictionary<int, ProductSummary> productSummaryDict = new Dictionary<int, ProductSummary>();
 
                 // Packaging Invoice Status ID
-                int p_inv_sta_id = invoiceStatusID("Packaging");
+                int p_inv_sta_id = dbStatusFunction.invoiceStatusID("Packaging");
 
                 string username = User.Identity.Name;
 

@@ -16,12 +16,6 @@ namespace dbShopeeAutomationV2.Controllers
             return View();
         }
 
-        public int productionStatusID(string name)
-        {
-            var productionStatus = db.TShopeeProductionStatus.FirstOrDefault(it => it.name.ToLower().Equals(name.ToLower()));
-            return (productionStatus == null) ? 0 : productionStatus.production_status_id;
-        }
-
         dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
         [ValidateInput(false)]
@@ -38,7 +32,7 @@ namespace dbShopeeAutomationV2.Controllers
 
             item.title = (item.title == null) ? "production_title" : item.title;
             item.description = (item.description == null) ? "production_description" : item.description;
-            item.production_status_id = productionStatusID("Incomplete");
+            item.production_status_id = dbStatusFunction.productionStatusID("Incomplete");
 
             dbStoredProcedure.productionInsert(item.title, item.description, item.total_usage, item.production_status_id, username);
             db.SaveChanges();
@@ -56,7 +50,7 @@ namespace dbShopeeAutomationV2.Controllers
             item.description = (item.description == null) ? "production_description" : item.description;
 
             // If Production Status is Marked As Complete
-            int c_pro_sta_id = productionStatusID("Complete");
+            int c_pro_sta_id = dbStatusFunction.productionStatusID("Complete");
 
             if (item.production_status_id == c_pro_sta_id)
             {

@@ -67,11 +67,6 @@ namespace dbShopeeAutomationV2.Controllers
         }
 
         // 2.
-        public int productStatusID(string name)
-        {
-            return -1;
-        }
-
         public string getRawMaterialTrackingInfo(WorkBook wb, string username)
         {
             string str = "";
@@ -89,9 +84,44 @@ namespace dbShopeeAutomationV2.Controllers
             {
                 var tmp_arr = row.ToArray();
 
-                // Create Product Model
+                // Product Category
+                string product_category = (string)tmp_arr[1].Value;
+                int product_category_id = dbStatusFunction.productCategoryID(product_category);
+
+                // Product Brand
+                string product_brand = (string)tmp_arr[2].Value;
+                int product_brand_id = dbStatusFunction.productBrandID(product_brand);
+
+                // Product name
                 string product_name = (string)tmp_arr[3].Value;
+                string product_description = product_name;
+
                 string product_sku2 = (string)tmp_arr[4].Value;
+
+                string product_status = (string)tmp_arr[8].Value;
+                int product_status_id = dbStatusFunction.productStatusID(product_status);
+
+                string product_code = (string)tmp_arr[11].Value;
+                string product_sku = product_code;
+
+                string product_type = (string)tmp_arr[12].Value;
+                int product_type_id = dbStatusFunction.productTypeID(product_type);
+
+                int product_model_id = dbStatusFunction.productModelID("Normal");
+                int product_variety_id = dbStatusFunction.productVarietyID("Material");
+
+                // Buy Price => tmp_arr[14].Value
+                string buy_price = (string)tmp_arr[14].Value;
+                Decimal product_buy_price = Decimal.Parse(buy_price);
+
+                // Insert New Product (Material)
+                dbStoredProcedure.productInsert(
+                    product_code, product_name,
+                    product_description, product_sku, product_sku2,
+                    product_buy_price, 0,
+                    product_brand_id, product_model_id, product_category_id,
+                    product_type_id, product_variety_id, product_status_id, username);
+
 
 
                 // Create Supplier Shipment

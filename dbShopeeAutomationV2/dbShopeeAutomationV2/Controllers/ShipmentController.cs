@@ -16,12 +16,6 @@ namespace dbShopeeAutomationV2.Controllers
             return View();
         }
 
-        public int shipmentStatusID(string name)
-        {
-            var shipmentStatus = db.TShopeeShipmentStatus.FirstOrDefault(it => it.name.ToLower().Equals(name.ToLower()));
-            return (shipmentStatus == null) ? 0 : shipmentStatus.shipment_status_id;
-        }
-
         dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
         [ValidateInput(false)]
@@ -43,7 +37,7 @@ namespace dbShopeeAutomationV2.Controllers
             item.expected_date = (item.expected_date == null) ? DateTime.Now : item.expected_date;
             item.due_date = (item.due_date == null) ? DateTime.Now : item.due_date;
 
-            item.shipment_status_id = shipmentStatusID("Incomplete");
+            item.shipment_status_id = dbStatusFunction.shipmentStatusID("Incomplete");
 
             dbStoredProcedure.shipmentInsert(item.start_location, item.destination, item.tracking_id, item.created_date, item.expected_date, item.due_date, item.invoice_id, item.carrier_id, item.shipment_status_id, username);
             db.SaveChanges();

@@ -17,12 +17,6 @@ namespace dbShopeeAutomationV2.Controllers
             return View();
         }
 
-        public int invoiceStatusID(string name)
-        {
-            var invoiceStatus = db.TShopeeInvoiceStatus.FirstOrDefault(it => it.name.ToLower().Equals(name.ToLower()));
-            return (invoiceStatus == null) ? -1 : invoiceStatus.invoice_status_id;
-        }
-
         [HttpPost]
         public ActionResult SubmitCode(string invoice_title)
         {
@@ -30,7 +24,7 @@ namespace dbShopeeAutomationV2.Controllers
 
             if(model == null) return Content("Error! Invalid Invoice Code!");
 
-            int c_inv_sta_id = invoiceStatusID("Complete");
+            int c_inv_sta_id = dbStatusFunction.invoiceStatusID("Complete");
 
             if (c_inv_sta_id == -1) return Content("Error! Invoice Status Code for 'Complete' does not exist!");
             

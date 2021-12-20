@@ -19,7 +19,7 @@ namespace dbShopeeAutomationV2
                 url: "{controller}/{action}/{id}", // URL with parameters
                 defaults: new
                 {
-                    controller = "DailyTask",
+                    controller = "ProductExcel",
                     action = "Index",
                     id = UrlParameter.Optional
                 } // Parameter defaults

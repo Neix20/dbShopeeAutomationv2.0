@@ -76,25 +76,22 @@
                 @foreach (var kvp in propDict)
                 {
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" 
+                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             @kvp.Key
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             @foreach (var prop in kvp.Value)
                             {
-                                string controller = $"{Regex.Replace(prop, @" ", "")}";
+                                string controllerLink = $"{Regex.Replace(prop, @" ", "")}";
 
                                 if (kvp.Key.Equals("Production") && prop.Equals("Upload Excel"))
                                 {
-                                    controller = "ProductExcel";
-                                }
-                                else if (prop.Equals("Production") || prop.Equals("Product"))
-                                {
-                                    controller = $"{prop}V2";
+                                    controllerLink = "ProductExcel";
                                 }
 
                                 <li>
-                                    @Html.ActionLink(prop, "Index", controller, null, new { @Class = "dropdown-item" })
+                                    @Html.ActionLink(prop, "Index", controllerLink, null, new { @Class = "dropdown-item" })
                                 </li>
                             }
                         </ul>

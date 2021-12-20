@@ -368,8 +368,8 @@
     <Content Include="Views\ProductBrand\_ProductBrandGridViewPartial.cshtml" />
     <Content Include="Views\Detail\Index.cshtml" />
     <Content Include="Views\Detail\_DetailGridViewPartial.cshtml" />
-    <Content Include="Views\ProductType\Index.cshtml" />
-    <Content Include="Views\ProductType\_ProductTypeGridViewPartial.cshtml" />
+    <Content Include="Views\ProductVariety\ProductType\Index.cshtml" />
+    <Content Include="Views\ProductVariety\ProductType\_ProductTypeGridViewPartial.cshtml" />
     <Content Include="Views\ProductVariety\Index.cshtml" />
     <Content Include="Views\ProductVariety\_ProductVarietyGridViewPartial.cshtml" />
     <Content Include="Views\StockWarehouse\Index.cshtml" />
@@ -419,10 +419,6 @@
     <Content Include="Views\ScanQRCode\Index.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\SignUp.cshtml" />
-    <Content Include="Views\ProductionV2\Index.cshtml" />
-    <Content Include="Views\ProductionV2\_ProductionGridView.cshtml" />
-    <Content Include="Views\ProductV2\Index.cshtml" />
-    <Content Include="Views\ProductV2\_ProductGridViewPartial.cshtml" />
     <Content Include="Views\ProductModel\Index.cshtml" />
     <Content Include="Views\ProductModel\_ProductModelGridViewPartial.cshtml" />
     <Content Include="Views\ProductCategory\Index.cshtml" />
@@ -438,6 +434,10 @@
     <Content Include="Views\ProductExcel\Index.cshtml" />
     <Content Include="Views\ProductComponent\Index.cshtml" />
     <Content Include="Views\ProductComponent\_ProductComponentGridViewPartial.cshtml" />
+    <Content Include="Views\Production\Index.cshtml" />
+    <Content Include="Views\Production\_ProductionGridViewPartial.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\_ProductGridViewPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -468,14 +468,14 @@
     <Compile Include="Controllers\ProductBrandController.cs" />
     <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\ProductComponentController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductExcelController.cs" />
+    <Compile Include="Controllers\ProductionController.cs" />
     <Compile Include="Controllers\ProductionDetailController.cs" />
     <Compile Include="Controllers\ProductionStatusController.cs" />
-    <Compile Include="Controllers\ProductionV2Controller.cs" />
     <Compile Include="Controllers\ProductModelController.cs" />
     <Compile Include="Controllers\ProductStatusController.cs" />
     <Compile Include="Controllers\ProductTypeController.cs" />
-    <Compile Include="Controllers\ProductV2Controller.cs" />
     <Compile Include="Controllers\ProductVarietyController.cs" />
     <Compile Include="Controllers\ScanQRCodeController.cs" />
     <Compile Include="Controllers\ShipmentController.cs" />

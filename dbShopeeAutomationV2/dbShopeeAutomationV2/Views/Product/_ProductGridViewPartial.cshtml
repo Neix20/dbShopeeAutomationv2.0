@@ -13,11 +13,11 @@
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "ProductGridView";
         settings.Width = Unit.Percentage(100);
-        settings.CallbackRouteValues = new { Controller = "ProductV2", Action = "ProductGridViewPartial" };
 
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "ProductV2", Action = "ProductGridViewPartialAddNew" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ProductV2", Action = "ProductGridViewPartialUpdate" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ProductV2", Action = "ProductGridViewPartialDelete" };
+        settings.CallbackRouteValues = new { Controller = "Product", Action = "ProductGridViewPartial" };
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Product", Action = "ProductGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Product", Action = "ProductGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Product", Action = "ProductGridViewPartialDelete" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsBehavior.ConfirmDelete = true;
 
@@ -37,7 +37,6 @@
         // Header Set Center
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
-
 
         settings.Columns.Add("product_code").Caption = "Code";
         settings.Columns.Add("name").Caption = "Name";

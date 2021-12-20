@@ -19,7 +19,7 @@ namespace dbShopeeAutomationV2.Controllers
 
         dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
-        public string readExcelFile(string fileName, string username)
+        public void readExcelFile(string fileName, string username)
         {
             // Create WorkBook
             WorkBook wb = WorkBook.Load(fileName);
@@ -31,8 +31,7 @@ namespace dbShopeeAutomationV2.Controllers
             //getRawMaterialTrackingInfo(wb, username);
 
             // Testing
-            string str = getInventoryOverview(wb, username);
-            return $"<div class='border border-success p-3 text-center'>{str}</div>";
+            getInventoryOverview(wb, username);
         }
 
         // 1.
@@ -150,7 +149,7 @@ namespace dbShopeeAutomationV2.Controllers
             // Get List of Category name from Entity Framework
             IEnumerable<string> categoryList = db.TShopeeProductCategories.Select(it => it.name.ToLower());
 
-            // Get List of Type
+            // Get List of Type name from Entity Framework
             IEnumerable<string> typeList = db.TShopeeProductTypes.Select(it => it.name.ToLower());
 
             // Get Rows without Headers
@@ -176,30 +175,32 @@ namespace dbShopeeAutomationV2.Controllers
         }
 
         // 4.
-        public string getInventoryOverview(WorkBook wb, string username)
+        public void getInventoryOverview(WorkBook wb, string username)
         {
             WorkSheet ws = wb.GetWorkSheet("Inventory Overview");
 
-            string str = "";
+            // Get List of model name from Entity Framework
+            IEnumerable<string> modelList = db.TShopeeProductModels.Select(x => x.name.ToLower());
+
+            // Get List of Variety Name from Entity Framework
+            IEnumerable<string> varietyList = db.TShopeeProductVarieties.Select(x => x.name.ToLower());
 
             // Get Rows Without Headers
-            string model_name = "", panel = "";
+            string model_name = "", panel_name = "";
             foreach (var row in ws.Rows.ToList().GetRange(3, ws.RowCount - 3))
             {
                 var tmp_arr = row.ToArray();
 
                 model_name = (tmp_arr[1].Text == "") ? model_name : tmp_arr[1].Text;
-                panel = (tmp_arr[2].Text == "") ? panel : tmp_arr[2].Text;
+                panel_name = (tmp_arr[2].Text == "") ? panel_name : tmp_arr[2].Text;
 
-                List<string> tdList = new List<string>();
-                tdList.Add(model_name);
-                tdList.Add(panel);
-                tdList = tdList.Select(x => $"<div class='col'>{x}</div>").ToList();
-                string tdListStr = String.Join("", tdList);
-                str += $"<div class='row align-items-center'>{tdListStr}</div>";
+                if (!model_name.Equals("") && !modelList.Contains(model_name.ToLower()))
+                    dbStoredProcedure.productModelInsert(model_name, username);
+
+                if (!panel_name.Equals("") && !varietyList.Contains(panel_name.ToLower()))
+                    dbStoredProcedure.productVarietyInsert(panel_name, username);
             }
-
-            return str;
+            db.SaveChanges();
         }
 
         [HttpPost]
@@ -219,10 +220,10 @@ namespace dbShopeeAutomationV2.Controllers
                 if (System.IO.File.Exists(file_path)) System.IO.File.Delete(file_path);
                 file.SaveAs(file_path);
 
-                //readExcelFile(file_path, username);
-                //return Content($"File {file.FileName} Uploaded Successfully!");
+                readExcelFile(file_path, username);
+                return Content($"File {file.FileName} Uploaded Successfully!");
 
-                return Content(readExcelFile(file_path, username));
+                //return Content(readExcelFile(file_path, username));
             }
 
             return Content($"Error! File {file.FileName} was not uploaded successfully...");

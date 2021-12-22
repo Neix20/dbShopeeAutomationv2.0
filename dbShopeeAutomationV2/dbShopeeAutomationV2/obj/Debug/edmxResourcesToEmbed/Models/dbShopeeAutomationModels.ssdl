@@ -150,6 +150,7 @@
     </Key>
     <Property Name="product_brand_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="code" Type="varchar" MaxLength="20" />
     <Property Name="detail_id" Type="int" />
   </EntityType>
   <EntityType Name="TShopeeProductCategory">
@@ -158,6 +159,7 @@
     </Key>
     <Property Name="product_category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="code" Type="varchar" MaxLength="20" />
     <Property Name="detail_id" Type="int" />
   </EntityType>
   <EntityType Name="TShopeeProductComponent">
@@ -177,6 +179,7 @@
     <Property Name="production_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="title" Type="varchar(max)" />
     <Property Name="description" Type="varchar(max)" />
+    <Property Name="created_date" Type="datetime" />
     <Property Name="total_usage" Type="decimal" Precision="10" Scale="6" />
     <Property Name="production_status_id" Type="int" />
     <Property Name="detail_id" Type="int" />
@@ -212,7 +215,8 @@
       <PropertyRef Name="product_model_id" />
     </Key>
     <Property Name="product_model_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="name" Type="varchar(max)" />
+    <Property Name="code" Type="varchar" MaxLength="20" />
     <Property Name="detail_id" Type="int" />
   </EntityType>
   <EntityType Name="TShopeeProductStatus">
@@ -229,6 +233,7 @@
     </Key>
     <Property Name="product_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="code" Type="varchar" MaxLength="20" />
     <Property Name="detail_id" Type="int" />
   </EntityType>
   <EntityType Name="TShopeeProductVariety">
@@ -237,6 +242,7 @@
     </Key>
     <Property Name="product_variety_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="code" Type="varchar" MaxLength="20" />
     <Property Name="detail_id" Type="int" />
   </EntityType>
   <EntityType Name="TShopeeShipment">
@@ -297,7 +303,7 @@
     </Key>
     <Property Name="supplier_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="varchar(max)" />
-    <Property Name="code" Type="varchar" MaxLength="10" />
+    <Property Name="code" Type="varchar" MaxLength="20" />
     <Property Name="nation" Type="varchar" MaxLength="20" />
     <Property Name="detail_id" Type="int" />
   </EntityType>
@@ -578,11 +584,13 @@
   </Function>
   <Function Name="NSP_TShopeeProductBrand_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="code" Type="varchar" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeProductBrand_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="product_brand_id" Type="int" Mode="In" />
     <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="code" Type="varchar" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeProductCategory_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -590,11 +598,13 @@
   </Function>
   <Function Name="NSP_TShopeeProductCategory_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="code" Type="varchar" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeProductCategory_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="product_category_id" Type="int" Mode="In" />
     <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="code" Type="varchar" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeProductComponent_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -619,6 +629,7 @@
   <Function Name="NSP_TShopeeProduction_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="title" Type="varchar(max)" Mode="In" />
     <Parameter Name="description" Type="varchar(max)" Mode="In" />
+    <Parameter Name="created_date" Type="datetime" Mode="In" />
     <Parameter Name="total_usage" Type="decimal" Mode="In" />
     <Parameter Name="production_status_id" Type="int" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
@@ -627,6 +638,7 @@
     <Parameter Name="production_id" Type="int" Mode="In" />
     <Parameter Name="title" Type="varchar(max)" Mode="In" />
     <Parameter Name="description" Type="varchar(max)" Mode="In" />
+    <Parameter Name="created_date" Type="datetime" Mode="In" />
     <Parameter Name="total_usage" Type="decimal" Mode="In" />
     <Parameter Name="production_status_id" Type="int" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
@@ -679,12 +691,14 @@
     <Parameter Name="product_model_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeProductModel_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar(max)" Mode="In" />
+    <Parameter Name="code" Type="varchar" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeProductModel_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="product_model_id" Type="int" Mode="In" />
-    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar(max)" Mode="In" />
+    <Parameter Name="code" Type="varchar" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeProductStatus_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -704,11 +718,13 @@
   </Function>
   <Function Name="NSP_TShopeeProductType_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="code" Type="varchar" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeProductType_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="product_type_id" Type="int" Mode="In" />
     <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="code" Type="varchar" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeProductVariety_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -716,11 +732,13 @@
   </Function>
   <Function Name="NSP_TShopeeProductVariety_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="code" Type="varchar" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeProductVariety_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="product_variety_id" Type="int" Mode="In" />
     <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="code" Type="varchar" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeShipment_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">

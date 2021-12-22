@@ -41,6 +41,22 @@
         settings.Columns.Add("title").Caption = "Title";
         settings.Columns.Add("description").Caption = "Description";
 
+        // Created Date
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "created_date";
+            column.Caption = "Production Date";
+            column.ColumnType = MVCxGridViewColumnType.DateEdit;
+            column.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
+
+            DateEditProperties prop = column.PropertiesEdit as DateEditProperties;
+            prop.DisplayFormatString = "yyyy-MM-dd";
+            prop.DisplayFormatInEditMode = true;
+
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
+        });
+
         // Total Usage
         settings.Columns.Add(col =>
         {

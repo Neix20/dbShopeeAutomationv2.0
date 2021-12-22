@@ -39,6 +39,12 @@ namespace dbShopeeAutomationV2.Models
             return (productModel == null) ? -1 : productModel.product_model_id;
         }
 
+        public static int productModelCodeID(string code)
+        {
+            var productModel = db.TShopeeProductModels.FirstOrDefault(it => it.code == code);
+            return (productModel == null) ? -1 : productModel.product_model_id;
+        }
+
         public static int productTypeID(string name)
         {
             var productType = db.TShopeeProductTypes.FirstOrDefault(it => it.name.ToLower().Equals(name.ToLower()));
@@ -48,6 +54,12 @@ namespace dbShopeeAutomationV2.Models
         public static int productVarietyID(string name)
         {
             var productVariety = db.TShopeeProductVarieties.FirstOrDefault(it => it.name.ToLower().Equals(name.ToLower()));
+            return (productVariety == null) ? -1 : productVariety.product_variety_id;
+        }
+
+        public static int productVarietyCodeID(string code)
+        {
+            var productVariety = db.TShopeeProductVarieties.FirstOrDefault(it => it.code == code);
             return (productVariety == null) ? -1 : productVariety.product_variety_id;
         }
 

@@ -33,8 +33,9 @@ namespace dbShopeeAutomationV2.Controllers
             item.title = (item.title == null) ? "production_title" : item.title;
             item.description = (item.description == null) ? "production_description" : item.description;
             item.production_status_id = dbStatusFunction.productionStatusID("Incomplete");
+            item.created_date = (item.created_date == null) ? DateTime.Now : item.created_date;
 
-            dbStoredProcedure.productionInsert(item.title, item.description, item.total_usage, item.production_status_id, username);
+            dbStoredProcedure.productionInsert(item.title, item.description, item.created_date, item.total_usage, item.production_status_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeProductions;
@@ -48,6 +49,7 @@ namespace dbShopeeAutomationV2.Controllers
 
             item.title = (item.title == null) ? "production_title" : item.title;
             item.description = (item.description == null) ? "production_description" : item.description;
+            item.created_date = (item.created_date == null) ? DateTime.Now : item.created_date;
 
             // If Production Status is Marked As Complete
             int c_pro_sta_id = dbStatusFunction.productionStatusID("Complete");
@@ -70,7 +72,7 @@ namespace dbShopeeAutomationV2.Controllers
                 db.SaveChanges();
             }
 
-            dbStoredProcedure.productionUpdate(item.production_id, item.title, item.description, item.total_usage, item.production_status_id, username);
+            dbStoredProcedure.productionUpdate(item.production_id, item.title, item.description, item.created_date, item.total_usage, item.production_status_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeProductions;

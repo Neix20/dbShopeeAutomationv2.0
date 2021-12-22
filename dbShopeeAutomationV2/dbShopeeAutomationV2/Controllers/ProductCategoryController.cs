@@ -31,8 +31,9 @@ namespace dbShopeeAutomationV2.Controllers
             string username = User.Identity.Name;
 
             item.name = (item.name == null) ? "product_category" : item.name;
+            item.code = (item.code == null) ? "category_code" : item.code;
 
-            dbStoredProcedure.productCategoryInsert(item.name, username);
+            dbStoredProcedure.productCategoryInsert(item.name, item.code, username);
             db.SaveChanges();
 
             var model = db.TShopeeProductCategories;
@@ -45,8 +46,9 @@ namespace dbShopeeAutomationV2.Controllers
             string username = User.Identity.Name;
 
             item.name = (item.name == null) ? "product_category" : item.name;
+            item.code = (item.code == null) ? "category_code" : item.code;
 
-            dbStoredProcedure.productCategoryUpdate(item.product_category_id, item.name, username);
+            dbStoredProcedure.productCategoryUpdate(item.product_category_id, item.name, item.code, username);
             db.SaveChanges();
 
             var model = db.TShopeeProductCategories;
@@ -56,7 +58,7 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult ProductCategoryGridViewPartialDelete(int product_category_id)
         {
-            dbStoredProcedure.productModelDelete(product_category_id);
+            dbStoredProcedure.productCategoryDelete(product_category_id);
             db.SaveChanges();
 
             var model = db.TShopeeProductCategories;

@@ -6,10 +6,10 @@
 
 <!-- To Remove -->
 <style>
-    table{
+    table {
         width: 100%;
     }
-
+    
     table tr td {
         padding: 0px 3px;
     }
@@ -41,8 +41,10 @@
                     </div>
                 </div>
             }
-            <div id="resp" class="px-3">
-
+            <div id="resp" class="px-3 py-2">
+                <div id="loader_div" class="text-center">
+                    <img src="~/Content/Images/loading-load.gif" style="height: 120px;" alt="Loading Animation" />
+                </div>
             </div>
         </div>
     </div>
@@ -50,6 +52,9 @@
 
 <script type="text/javascript">
     $(function () {
+        // Hide Loading Animation by Default
+        $("#loader_div").css("display", "none");
+
         let form = $("form[id='uploadFileForm']");
         const actionLink = form.attr("action");
         const methodType = form.attr("method");
@@ -58,6 +63,8 @@
             e.preventDefault();
 
             let fData = new FormData(form[0]);
+
+            $("#loader_div").css("display", "block");
 
             $.ajax({
                 url: actionLink,
@@ -68,6 +75,7 @@
                 cache: false,
                 data: fData,
                 success: resp => {
+                    $("#loader_div").css("display", "none");
                     $("#resp").html(resp);
                 }
             });

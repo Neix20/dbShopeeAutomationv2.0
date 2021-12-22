@@ -16,6 +16,7 @@ namespace dbShopeeAutomationV2.Models
     {
         public int product_category_id { get; set; }
         public string name { get; set; }
+        public string code { get; set; }
         public Nullable<int> detail_id { get; set; }
     }
 }

@@ -31,8 +31,9 @@ namespace dbShopeeAutomationV2.Controllers
             string username = User.Identity.Name;
 
             item.name = (item.name == null) ? "product_brand" : item.name;
+            item.code = (item.code == null) ? "brand_code" : item.code;
 
-            dbStoredProcedure.productBrandInsert(item.name, username);
+            dbStoredProcedure.productBrandInsert(item.name, item.code, username);
             db.SaveChanges();
 
             var model = db.TShopeeProductBrands;
@@ -45,8 +46,9 @@ namespace dbShopeeAutomationV2.Controllers
             string username = User.Identity.Name;
 
             item.name = (item.name == null) ? "product_brand" : item.name;
+            item.code = (item.code == null) ? "brand_code" : item.code;
 
-            dbStoredProcedure.productBrandUpdate(item.product_brand_id, item.name, username);
+            dbStoredProcedure.productBrandUpdate(item.product_brand_id, item.name, item.code, username);
             db.SaveChanges();
 
             var model = db.TShopeeProductBrands;

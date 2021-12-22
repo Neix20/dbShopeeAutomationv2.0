@@ -24,11 +24,11 @@ namespace dbShopeeAutomationV2.Controllers
             // Create WorkBook
             WorkBook wb = WorkBook.Load(fileName);
 
-            //// Read 'Supplier Info' Worksheet
-            //getSupplierInfo(wb, username);
+            // Read 'Supplier Info' Worksheet
+            getSupplierInfo(wb, username);
 
-            //// Read 'Raw Material Tracking Info' Worksheet
-            //getRawMaterialTrackingInfo(wb, username);
+            // Read 'Raw Material Tracking Info' Worksheet
+            getRawMaterialTrackingInfo(wb, username);
 
             // Testing
             getInventoryOverview(wb, username);
@@ -86,19 +86,19 @@ namespace dbShopeeAutomationV2.Controllers
 
                 string product_description = product_name;
 
-                string product_sku2 = (string)tmp_arr[4].Value;
+                string product_sku = (string)tmp_arr[4].Value;
 
                 // Product Status
                 string product_status = (string)tmp_arr[8].Value;
                 int product_status_id = dbStatusFunction.productStatusID(product_status);
 
                 string product_code = (string)tmp_arr[11].Value;
-                string product_sku = product_code;
+                string product_sku2 = product_code;
 
                 string product_type = (string)tmp_arr[12].Value;
                 int product_type_id = dbStatusFunction.productTypeID(product_type);
 
-                int product_model_id = dbStatusFunction.productModelID("Normal");
+                int product_model_id = dbStatusFunction.productModelID("Material");
                 int product_variety_id = dbStatusFunction.productVarietyID("Material");
 
                 // Buy Price => tmp_arr[14].Value
@@ -163,15 +163,26 @@ namespace dbShopeeAutomationV2.Controllers
                 string type_name = (string)tmp_arr[12].Value;
 
                 if (!category_name.Equals("") && !categoryList.Contains(category_name.ToLower()))
-                    dbStoredProcedure.productCategoryInsert(category_name, username);
+                    dbStoredProcedure.productCategoryInsert(category_name, $"{category_name.Substring(0, 1)}", username);
 
                 if (!brand_name.Equals("") && !brandList.Contains(brand_name.ToLower()))
-                    dbStoredProcedure.productBrandInsert(brand_name, username);
+                    dbStoredProcedure.productBrandInsert(brand_name, "", username);
 
                 if (!type_name.Equals("") && !typeList.Contains(type_name.ToLower()))
-                    dbStoredProcedure.productTypeInsert(type_name, username);
+                    dbStoredProcedure.productTypeInsert(type_name, "", username);
             }
             db.SaveChanges();
+        }
+
+        // 3.
+        public void getRecord(WorkBook wb, string username)
+        {
+            WorkSheet ws = wb.GetWorkSheet("Record");
+        }
+
+        public void checkProduction(WorkSheet ws, string username)
+        {
+
         }
 
         // 4.
@@ -179,6 +190,65 @@ namespace dbShopeeAutomationV2.Controllers
         {
             WorkSheet ws = wb.GetWorkSheet("Inventory Overview");
 
+            // Check if Model and Variety Exist
+            checkModelVariety(ws, username);
+
+            // Get List of Product SKU from Entity Framework
+            IEnumerable<string> productSKUList = db.TShopeeProducts.Select(x => x.SKU);
+
+            // Insert New Product
+            string model_name = "", panel_name = "", product_sku = "";
+            foreach (var row in ws.Rows.ToList().GetRange(3, ws.RowCount - 3))
+            {
+                var tmp_arr = row.ToArray();
+
+                model_name = (tmp_arr[1].Text == "") ? model_name : tmp_arr[1].Text;
+                panel_name = (tmp_arr[2].Text == "") ? panel_name : tmp_arr[2].Text;
+                product_sku = tmp_arr[3].Text;
+
+                if (product_sku == "" || productSKUList.Contains(product_sku)) continue;
+
+                string[] info_arr = product_sku.Split('-');
+
+                string model_code = info_arr[0];
+                string variety_code = info_arr[1];
+                string material_sku = info_arr[2];
+
+                var material = db.TShopeeProducts.FirstOrDefault(it => it.SKU == material_sku);
+
+                int product_category_id = (int)material.product_category_id;
+                int product_type_id = (int)material.product_type_id;
+
+                int product_brand_id = dbStatusFunction.productBrandID("NTL Asia");
+                int product_status_id = dbStatusFunction.productStatusID("Empty");
+                int product_variety_id = dbStatusFunction.productVarietyCodeID(variety_code);
+                int product_model_id = dbStatusFunction.productModelCodeID(model_code);
+
+                string product_code = product_sku;
+                string product_sku2 = product_sku;
+
+                string product_name = $"{model_name} : {panel_name}";
+                string product_description = product_name;
+
+                dbStoredProcedure.productInsert(
+                    product_code, product_name,
+                    product_description, product_sku, product_sku2,
+                    0, 0,
+                    product_brand_id, product_model_id, product_category_id,
+                    product_type_id, product_variety_id, product_status_id, username
+                );
+
+                // Insert Product Component
+                int master_product_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduct') AS INT)").FirstOrDefault();
+                int sub_product_id = material.product_id;
+
+                dbStoredProcedure.productComponentInsert(master_product_id, sub_product_id, 1, username);
+            }
+            db.SaveChanges();
+        }
+
+        public void checkModelVariety(WorkSheet ws, string username)
+        {
             // Get List of model name from Entity Framework
             IEnumerable<string> modelList = db.TShopeeProductModels.Select(x => x.name.ToLower());
 
@@ -186,19 +256,28 @@ namespace dbShopeeAutomationV2.Controllers
             IEnumerable<string> varietyList = db.TShopeeProductVarieties.Select(x => x.name.ToLower());
 
             // Get Rows Without Headers
-            string model_name = "", panel_name = "";
+            string model_name = "", model_code = "",
+                panel_name = "", panel_code = "",
+                product_sku = "";
             foreach (var row in ws.Rows.ToList().GetRange(3, ws.RowCount - 3))
             {
                 var tmp_arr = row.ToArray();
 
                 model_name = (tmp_arr[1].Text == "") ? model_name : tmp_arr[1].Text;
                 panel_name = (tmp_arr[2].Text == "") ? panel_name : tmp_arr[2].Text;
+                product_sku = tmp_arr[3].Text;
 
-                if (!model_name.Equals("") && !modelList.Contains(model_name.ToLower()))
-                    dbStoredProcedure.productModelInsert(model_name, username);
+                if (product_sku == "") continue;
 
-                if (!panel_name.Equals("") && !varietyList.Contains(panel_name.ToLower()))
-                    dbStoredProcedure.productVarietyInsert(panel_name, username);
+                string[] info_arr = product_sku.Split('-');
+                model_code = info_arr[0];
+                panel_code = info_arr[1];
+                
+                if (!modelList.Contains(model_name.ToLower()))
+                    dbStoredProcedure.productModelInsert(model_name, model_code, username);
+
+                if (!varietyList.Contains(panel_name.ToLower()))
+                    dbStoredProcedure.productVarietyInsert(panel_name, panel_code, username);
             }
             db.SaveChanges();
         }

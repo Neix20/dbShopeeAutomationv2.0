@@ -39,24 +39,24 @@ namespace dbShopeeAutomationV2.Models
         public virtual DbSet<TShopeePaymentMethod> TShopeePaymentMethods { get; set; }
         public virtual DbSet<TShopeePlatform> TShopeePlatforms { get; set; }
         public virtual DbSet<TShopeeProduct> TShopeeProducts { get; set; }
-        public virtual DbSet<TShopeeProductBrand> TShopeeProductBrands { get; set; }
-        public virtual DbSet<TShopeeProductCategory> TShopeeProductCategories { get; set; }
         public virtual DbSet<TShopeeProductComponent> TShopeeProductComponents { get; set; }
-        public virtual DbSet<TShopeeProduction> TShopeeProductions { get; set; }
         public virtual DbSet<TShopeeProductionDetail> TShopeeProductionDetails { get; set; }
         public virtual DbSet<TShopeeProductionStatu> TShopeeProductionStatus { get; set; }
-        public virtual DbSet<TShopeeProductModel> TShopeeProductModels { get; set; }
         public virtual DbSet<TShopeeProductStatu> TShopeeProductStatus { get; set; }
-        public virtual DbSet<TShopeeProductType> TShopeeProductTypes { get; set; }
-        public virtual DbSet<TShopeeProductVariety> TShopeeProductVarieties { get; set; }
         public virtual DbSet<TShopeeShipment> TShopeeShipments { get; set; }
         public virtual DbSet<TShopeeShipmentStatu> TShopeeShipmentStatus { get; set; }
         public virtual DbSet<TShopeeStockItem> TShopeeStockItems { get; set; }
         public virtual DbSet<TShopeeStockWarehouse> TShopeeStockWarehouses { get; set; }
-        public virtual DbSet<TShopeeSupplier> TShopeeSuppliers { get; set; }
         public virtual DbSet<TShopeeSupplierShipment> TShopeeSupplierShipments { get; set; }
         public virtual DbSet<TShopeeUser> TShopeeUsers { get; set; }
         public virtual DbSet<TShopeeUserRole> TShopeeUserRoles { get; set; }
+        public virtual DbSet<TShopeeProductBrand> TShopeeProductBrands { get; set; }
+        public virtual DbSet<TShopeeProductCategory> TShopeeProductCategories { get; set; }
+        public virtual DbSet<TShopeeProductType> TShopeeProductTypes { get; set; }
+        public virtual DbSet<TShopeeProductVariety> TShopeeProductVarieties { get; set; }
+        public virtual DbSet<TShopeeSupplier> TShopeeSuppliers { get; set; }
+        public virtual DbSet<TShopeeProductModel> TShopeeProductModels { get; set; }
+        public virtual DbSet<TShopeeProduction> TShopeeProductions { get; set; }
     
         public virtual int NSP_TShopeeCarrier_Delete(Nullable<int> carrier_id)
         {
@@ -910,84 +910,6 @@ namespace dbShopeeAutomationV2.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProduct_Update", product_idParameter, product_codeParameter, nameParameter, descriptionParameter, sKUParameter, sKU2Parameter, buy_priceParameter, sell_priceParameter, product_brand_idParameter, product_model_idParameter, product_category_idParameter, product_type_idParameter, product_variety_idParameter, product_status_idParameter, detail_idParameter);
         }
     
-        public virtual int NSP_TShopeeProductBrand_Delete(Nullable<int> product_brand_id)
-        {
-            var product_brand_idParameter = product_brand_id.HasValue ?
-                new ObjectParameter("product_brand_id", product_brand_id) :
-                new ObjectParameter("product_brand_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductBrand_Delete", product_brand_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeProductBrand_Insert(string name, Nullable<int> detail_id)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductBrand_Insert", nameParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeProductBrand_Update(Nullable<int> product_brand_id, string name, Nullable<int> detail_id)
-        {
-            var product_brand_idParameter = product_brand_id.HasValue ?
-                new ObjectParameter("product_brand_id", product_brand_id) :
-                new ObjectParameter("product_brand_id", typeof(int));
-    
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductBrand_Update", product_brand_idParameter, nameParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeProductCategory_Delete(Nullable<int> product_category_id)
-        {
-            var product_category_idParameter = product_category_id.HasValue ?
-                new ObjectParameter("product_category_id", product_category_id) :
-                new ObjectParameter("product_category_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductCategory_Delete", product_category_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeProductCategory_Insert(string name, Nullable<int> detail_id)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductCategory_Insert", nameParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeProductCategory_Update(Nullable<int> product_category_id, string name, Nullable<int> detail_id)
-        {
-            var product_category_idParameter = product_category_id.HasValue ?
-                new ObjectParameter("product_category_id", product_category_id) :
-                new ObjectParameter("product_category_id", typeof(int));
-    
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductCategory_Update", product_category_idParameter, nameParameter, detail_idParameter);
-        }
-    
         public virtual int NSP_TShopeeProductComponent_Delete(Nullable<int> product_component_id)
         {
             var product_component_idParameter = product_component_id.HasValue ?
@@ -1041,69 +963,6 @@ namespace dbShopeeAutomationV2.Models
                 new ObjectParameter("detail_id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductComponent_Update", product_component_idParameter, master_product_idParameter, sub_product_idParameter, quantityParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeProduction_Delete(Nullable<int> production_id)
-        {
-            var production_idParameter = production_id.HasValue ?
-                new ObjectParameter("production_id", production_id) :
-                new ObjectParameter("production_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProduction_Delete", production_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeProduction_Insert(string title, string description, Nullable<decimal> total_usage, Nullable<int> production_status_id, Nullable<int> detail_id)
-        {
-            var titleParameter = title != null ?
-                new ObjectParameter("title", title) :
-                new ObjectParameter("title", typeof(string));
-    
-            var descriptionParameter = description != null ?
-                new ObjectParameter("description", description) :
-                new ObjectParameter("description", typeof(string));
-    
-            var total_usageParameter = total_usage.HasValue ?
-                new ObjectParameter("total_usage", total_usage) :
-                new ObjectParameter("total_usage", typeof(decimal));
-    
-            var production_status_idParameter = production_status_id.HasValue ?
-                new ObjectParameter("production_status_id", production_status_id) :
-                new ObjectParameter("production_status_id", typeof(int));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProduction_Insert", titleParameter, descriptionParameter, total_usageParameter, production_status_idParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeProduction_Update(Nullable<int> production_id, string title, string description, Nullable<decimal> total_usage, Nullable<int> production_status_id, Nullable<int> detail_id)
-        {
-            var production_idParameter = production_id.HasValue ?
-                new ObjectParameter("production_id", production_id) :
-                new ObjectParameter("production_id", typeof(int));
-    
-            var titleParameter = title != null ?
-                new ObjectParameter("title", title) :
-                new ObjectParameter("title", typeof(string));
-    
-            var descriptionParameter = description != null ?
-                new ObjectParameter("description", description) :
-                new ObjectParameter("description", typeof(string));
-    
-            var total_usageParameter = total_usage.HasValue ?
-                new ObjectParameter("total_usage", total_usage) :
-                new ObjectParameter("total_usage", typeof(decimal));
-    
-            var production_status_idParameter = production_status_id.HasValue ?
-                new ObjectParameter("production_status_id", production_status_id) :
-                new ObjectParameter("production_status_id", typeof(int));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProduction_Update", production_idParameter, titleParameter, descriptionParameter, total_usageParameter, production_status_idParameter, detail_idParameter);
         }
     
         public virtual int NSP_TShopeeProductionDetail_Delete(Nullable<int> production_detail_id)
@@ -1264,45 +1123,6 @@ namespace dbShopeeAutomationV2.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductionStatus_Update", production_status_idParameter, nameParameter, detail_idParameter);
         }
     
-        public virtual int NSP_TShopeeProductModel_Delete(Nullable<int> product_model_id)
-        {
-            var product_model_idParameter = product_model_id.HasValue ?
-                new ObjectParameter("product_model_id", product_model_id) :
-                new ObjectParameter("product_model_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductModel_Delete", product_model_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeProductModel_Insert(string name, Nullable<int> detail_id)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductModel_Insert", nameParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeProductModel_Update(Nullable<int> product_model_id, string name, Nullable<int> detail_id)
-        {
-            var product_model_idParameter = product_model_id.HasValue ?
-                new ObjectParameter("product_model_id", product_model_id) :
-                new ObjectParameter("product_model_id", typeof(int));
-    
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductModel_Update", product_model_idParameter, nameParameter, detail_idParameter);
-        }
-    
         public virtual int NSP_TShopeeProductStatus_Delete(Nullable<int> product_status_id)
         {
             var product_status_idParameter = product_status_id.HasValue ?
@@ -1340,84 +1160,6 @@ namespace dbShopeeAutomationV2.Models
                 new ObjectParameter("detail_id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductStatus_Update", product_status_idParameter, nameParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeProductType_Delete(Nullable<int> product_type_id)
-        {
-            var product_type_idParameter = product_type_id.HasValue ?
-                new ObjectParameter("product_type_id", product_type_id) :
-                new ObjectParameter("product_type_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductType_Delete", product_type_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeProductType_Insert(string name, Nullable<int> detail_id)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductType_Insert", nameParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeProductType_Update(Nullable<int> product_type_id, string name, Nullable<int> detail_id)
-        {
-            var product_type_idParameter = product_type_id.HasValue ?
-                new ObjectParameter("product_type_id", product_type_id) :
-                new ObjectParameter("product_type_id", typeof(int));
-    
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductType_Update", product_type_idParameter, nameParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeProductVariety_Delete(Nullable<int> product_variety_id)
-        {
-            var product_variety_idParameter = product_variety_id.HasValue ?
-                new ObjectParameter("product_variety_id", product_variety_id) :
-                new ObjectParameter("product_variety_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductVariety_Delete", product_variety_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeProductVariety_Insert(string name, Nullable<int> detail_id)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductVariety_Insert", nameParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeProductVariety_Update(Nullable<int> product_variety_id, string name, Nullable<int> detail_id)
-        {
-            var product_variety_idParameter = product_variety_id.HasValue ?
-                new ObjectParameter("product_variety_id", product_variety_id) :
-                new ObjectParameter("product_variety_id", typeof(int));
-    
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductVariety_Update", product_variety_idParameter, nameParameter, detail_idParameter);
         }
     
         public virtual int NSP_TShopeeShipment_Delete(Nullable<int> shipment_id)
@@ -1970,6 +1712,312 @@ namespace dbShopeeAutomationV2.Models
                 new ObjectParameter("role", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeUserRole_Update", user_role_idParameter, usernameParameter, roleParameter);
+        }
+    
+        public virtual int NSP_TShopeeProductBrand_Delete(Nullable<int> product_brand_id)
+        {
+            var product_brand_idParameter = product_brand_id.HasValue ?
+                new ObjectParameter("product_brand_id", product_brand_id) :
+                new ObjectParameter("product_brand_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductBrand_Delete", product_brand_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProductBrand_Insert(string name, string code, Nullable<int> detail_id)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var codeParameter = code != null ?
+                new ObjectParameter("code", code) :
+                new ObjectParameter("code", typeof(string));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductBrand_Insert", nameParameter, codeParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProductBrand_Update(Nullable<int> product_brand_id, string name, string code, Nullable<int> detail_id)
+        {
+            var product_brand_idParameter = product_brand_id.HasValue ?
+                new ObjectParameter("product_brand_id", product_brand_id) :
+                new ObjectParameter("product_brand_id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var codeParameter = code != null ?
+                new ObjectParameter("code", code) :
+                new ObjectParameter("code", typeof(string));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductBrand_Update", product_brand_idParameter, nameParameter, codeParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProductCategory_Delete(Nullable<int> product_category_id)
+        {
+            var product_category_idParameter = product_category_id.HasValue ?
+                new ObjectParameter("product_category_id", product_category_id) :
+                new ObjectParameter("product_category_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductCategory_Delete", product_category_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProductCategory_Insert(string name, string code, Nullable<int> detail_id)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var codeParameter = code != null ?
+                new ObjectParameter("code", code) :
+                new ObjectParameter("code", typeof(string));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductCategory_Insert", nameParameter, codeParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProductCategory_Update(Nullable<int> product_category_id, string name, string code, Nullable<int> detail_id)
+        {
+            var product_category_idParameter = product_category_id.HasValue ?
+                new ObjectParameter("product_category_id", product_category_id) :
+                new ObjectParameter("product_category_id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var codeParameter = code != null ?
+                new ObjectParameter("code", code) :
+                new ObjectParameter("code", typeof(string));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductCategory_Update", product_category_idParameter, nameParameter, codeParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProductType_Delete(Nullable<int> product_type_id)
+        {
+            var product_type_idParameter = product_type_id.HasValue ?
+                new ObjectParameter("product_type_id", product_type_id) :
+                new ObjectParameter("product_type_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductType_Delete", product_type_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProductType_Insert(string name, string code, Nullable<int> detail_id)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var codeParameter = code != null ?
+                new ObjectParameter("code", code) :
+                new ObjectParameter("code", typeof(string));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductType_Insert", nameParameter, codeParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProductType_Update(Nullable<int> product_type_id, string name, string code, Nullable<int> detail_id)
+        {
+            var product_type_idParameter = product_type_id.HasValue ?
+                new ObjectParameter("product_type_id", product_type_id) :
+                new ObjectParameter("product_type_id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var codeParameter = code != null ?
+                new ObjectParameter("code", code) :
+                new ObjectParameter("code", typeof(string));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductType_Update", product_type_idParameter, nameParameter, codeParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProductVariety_Delete(Nullable<int> product_variety_id)
+        {
+            var product_variety_idParameter = product_variety_id.HasValue ?
+                new ObjectParameter("product_variety_id", product_variety_id) :
+                new ObjectParameter("product_variety_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductVariety_Delete", product_variety_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProductVariety_Insert(string name, string code, Nullable<int> detail_id)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var codeParameter = code != null ?
+                new ObjectParameter("code", code) :
+                new ObjectParameter("code", typeof(string));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductVariety_Insert", nameParameter, codeParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProductVariety_Update(Nullable<int> product_variety_id, string name, string code, Nullable<int> detail_id)
+        {
+            var product_variety_idParameter = product_variety_id.HasValue ?
+                new ObjectParameter("product_variety_id", product_variety_id) :
+                new ObjectParameter("product_variety_id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var codeParameter = code != null ?
+                new ObjectParameter("code", code) :
+                new ObjectParameter("code", typeof(string));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductVariety_Update", product_variety_idParameter, nameParameter, codeParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProductModel_Delete(Nullable<int> product_model_id)
+        {
+            var product_model_idParameter = product_model_id.HasValue ?
+                new ObjectParameter("product_model_id", product_model_id) :
+                new ObjectParameter("product_model_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductModel_Delete", product_model_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProductModel_Insert(string name, string code, Nullable<int> detail_id)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var codeParameter = code != null ?
+                new ObjectParameter("code", code) :
+                new ObjectParameter("code", typeof(string));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductModel_Insert", nameParameter, codeParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProductModel_Update(Nullable<int> product_model_id, string name, string code, Nullable<int> detail_id)
+        {
+            var product_model_idParameter = product_model_id.HasValue ?
+                new ObjectParameter("product_model_id", product_model_id) :
+                new ObjectParameter("product_model_id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var codeParameter = code != null ?
+                new ObjectParameter("code", code) :
+                new ObjectParameter("code", typeof(string));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductModel_Update", product_model_idParameter, nameParameter, codeParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProduction_Delete(Nullable<int> production_id)
+        {
+            var production_idParameter = production_id.HasValue ?
+                new ObjectParameter("production_id", production_id) :
+                new ObjectParameter("production_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProduction_Delete", production_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProduction_Insert(string title, string description, Nullable<System.DateTime> created_date, Nullable<decimal> total_usage, Nullable<int> production_status_id, Nullable<int> detail_id)
+        {
+            var titleParameter = title != null ?
+                new ObjectParameter("title", title) :
+                new ObjectParameter("title", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("description", description) :
+                new ObjectParameter("description", typeof(string));
+    
+            var created_dateParameter = created_date.HasValue ?
+                new ObjectParameter("created_date", created_date) :
+                new ObjectParameter("created_date", typeof(System.DateTime));
+    
+            var total_usageParameter = total_usage.HasValue ?
+                new ObjectParameter("total_usage", total_usage) :
+                new ObjectParameter("total_usage", typeof(decimal));
+    
+            var production_status_idParameter = production_status_id.HasValue ?
+                new ObjectParameter("production_status_id", production_status_id) :
+                new ObjectParameter("production_status_id", typeof(int));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProduction_Insert", titleParameter, descriptionParameter, created_dateParameter, total_usageParameter, production_status_idParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProduction_Update(Nullable<int> production_id, string title, string description, Nullable<System.DateTime> created_date, Nullable<decimal> total_usage, Nullable<int> production_status_id, Nullable<int> detail_id)
+        {
+            var production_idParameter = production_id.HasValue ?
+                new ObjectParameter("production_id", production_id) :
+                new ObjectParameter("production_id", typeof(int));
+    
+            var titleParameter = title != null ?
+                new ObjectParameter("title", title) :
+                new ObjectParameter("title", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("description", description) :
+                new ObjectParameter("description", typeof(string));
+    
+            var created_dateParameter = created_date.HasValue ?
+                new ObjectParameter("created_date", created_date) :
+                new ObjectParameter("created_date", typeof(System.DateTime));
+    
+            var total_usageParameter = total_usage.HasValue ?
+                new ObjectParameter("total_usage", total_usage) :
+                new ObjectParameter("total_usage", typeof(decimal));
+    
+            var production_status_idParameter = production_status_id.HasValue ?
+                new ObjectParameter("production_status_id", production_status_id) :
+                new ObjectParameter("production_status_id", typeof(int));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProduction_Update", production_idParameter, titleParameter, descriptionParameter, created_dateParameter, total_usageParameter, production_status_idParameter, detail_idParameter);
         }
     }
 }

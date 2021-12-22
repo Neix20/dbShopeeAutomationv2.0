@@ -41,6 +41,21 @@
         settings.Columns.Add("title").Caption = "Title";
         settings.Columns.Add("description").Caption = "Description";
 
+        // Production Status
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "production_status_id";
+            col.Caption = "Complete?";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeProductionStatus.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "production_status_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
+        });
+
         // Created Date
         settings.Columns.Add(column =>
         {
@@ -69,21 +84,9 @@
             prop.MinValue = 0;
             prop.MaxValue = 10000000;
             prop.Increment = 0.1M;
-        });
 
-        // Production Status
-        settings.Columns.Add(col =>
-        {
-            col.FieldName = "production_status_id";
-            col.Caption = "Complete?";
-
-            col.ColumnType = MVCxGridViewColumnType.ComboBox;
-            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
-            prop.DataSource = db.TShopeeProductionStatus.ToList();
-            prop.TextField = "name";
-            prop.ValueField = "production_status_id";
-            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
-            prop.ValidationSettings.RequiredField.IsRequired = true;
+            prop.DecimalPlaces = 2;
+            prop.DisplayFormatString = "N2";
         });
 
         // Last Updated By

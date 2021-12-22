@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace dbShopeeAutomationV2.Controllers
 {
-    public class ProductionController : Controller
+    public class ProductionController : AdminController
     {
         // GET: ProductionV2
         public ActionResult Index()
@@ -34,6 +34,7 @@ namespace dbShopeeAutomationV2.Controllers
             item.description = (item.description == null) ? "production_description" : item.description;
             item.production_status_id = dbStatusFunction.productionStatusID("Incomplete");
             item.created_date = (item.created_date == null) ? DateTime.Now : item.created_date;
+            item.total_usage = (item.total_usage == null) ? 0 : item.total_usage;
 
             dbStoredProcedure.productionInsert(item.title, item.description, item.created_date, item.total_usage, item.production_status_id, username);
             db.SaveChanges();
@@ -50,27 +51,7 @@ namespace dbShopeeAutomationV2.Controllers
             item.title = (item.title == null) ? "production_title" : item.title;
             item.description = (item.description == null) ? "production_description" : item.description;
             item.created_date = (item.created_date == null) ? DateTime.Now : item.created_date;
-
-            // If Production Status is Marked As Complete
-            int c_pro_sta_id = dbStatusFunction.productionStatusID("Complete");
-
-            if (item.production_status_id == c_pro_sta_id)
-            {
-                int production_id = item.production_id;
-                var production_detail_list = db.TShopeeProductionDetails.Where(it => it.production_id == production_id);
-
-                production_detail_list.ToList().ForEach(production_detail =>
-                {
-                    int quantity = (int)production_detail.quantity;
-                    int product_id = (int)production_detail.product_id;
-
-                    var siModel = db.TShopeeStockItems.FirstOrDefault(it => it.product_id == product_id);
-                    siModel.stock_quantity = siModel.stock_quantity + quantity;
-
-                    dbStoredProcedure.stockItemUpdate(siModel.stock_item_id, siModel.name, siModel.description, (int)siModel.stock_quantity, (int)siModel.product_id, (int)siModel.stock_warehouse_id, username);
-                });
-                db.SaveChanges();
-            }
+            item.total_usage = (item.total_usage == null) ? 0 : item.total_usage;
 
             dbStoredProcedure.productionUpdate(item.production_id, item.title, item.description, item.created_date, item.total_usage, item.production_status_id, username);
             db.SaveChanges();

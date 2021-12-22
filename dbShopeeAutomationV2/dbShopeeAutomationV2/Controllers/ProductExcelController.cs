@@ -9,7 +9,7 @@ using dbShopeeAutomationV2.Models;
 
 namespace dbShopeeAutomationV2.Controllers
 {
-    public class ProductExcelController : Controller
+    public class ProductExcelController : AdminController
     {
         // GET: ProductExcel
         public ActionResult Index()
@@ -66,6 +66,9 @@ namespace dbShopeeAutomationV2.Controllers
 
             checkBrandCategoryType(ws, username);
 
+            // Get List of Product SKU from Entity Framework
+            IEnumerable<string> productSKUList = db.TShopeeProducts.Select(x => x.SKU);
+
             // Get Only Rows without headers
             foreach (var row in ws.Rows.ToList().GetRange(4, ws.RowCount - 4))
             {
@@ -87,6 +90,8 @@ namespace dbShopeeAutomationV2.Controllers
                 string product_description = product_name;
 
                 string product_sku = (string)tmp_arr[4].Value;
+
+                if (productSKUList.Contains(product_sku)) continue;
 
                 // Product Status
                 string product_status = (string)tmp_arr[8].Value;
@@ -113,6 +118,12 @@ namespace dbShopeeAutomationV2.Controllers
                     product_brand_id, product_model_id, product_category_id,
                     product_type_id, product_variety_id, product_status_id, username);
 
+                int product_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduct') AS INT)").FirstOrDefault();
+
+                // Insert New Stock Item
+                int stock_warehouse_id = dbStatusFunction.stockWarehouseID("VendLah! (HQ)");
+                dbStoredProcedure.stockItemInsert(product_name, product_description, 0, product_id, stock_warehouse_id, username);
+
                 // Create Supplier Shipment
                 DateTime? ss_r_dt = tmp_arr[5].DateTimeValue;
 
@@ -128,8 +139,6 @@ namespace dbShopeeAutomationV2.Controllers
                 Decimal height = hwl_arr[0];
                 Decimal width = hwl_arr[1];
                 Decimal length = hwl_arr[2];
-
-                int product_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduct') AS INT)").FirstOrDefault();
 
                 // Insert Supplier Shipment
                 dbStoredProcedure.supplierShipmentInsert(
@@ -196,7 +205,7 @@ namespace dbShopeeAutomationV2.Controllers
             // Get List of Product SKU from Entity Framework
             IEnumerable<string> productSKUList = db.TShopeeProducts.Select(x => x.SKU);
 
-            // Insert New Product
+            // Insert New Product (Product)
             string model_name = "", panel_name = "", product_sku = "";
             foreach (var row in ws.Rows.ToList().GetRange(3, ws.RowCount - 3))
             {
@@ -238,8 +247,14 @@ namespace dbShopeeAutomationV2.Controllers
                     product_type_id, product_variety_id, product_status_id, username
                 );
 
+                int product_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduct') AS INT)").FirstOrDefault();
+
+                // Insert New Stock Item
+                int stock_warehouse_id = dbStatusFunction.stockWarehouseID("VendLah! (HQ)");
+                dbStoredProcedure.stockItemInsert(product_name, product_description, 0, product_id, stock_warehouse_id, username);
+
                 // Insert Product Component
-                int master_product_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduct') AS INT)").FirstOrDefault();
+                int master_product_id = product_id;
                 int sub_product_id = material.product_id;
 
                 dbStoredProcedure.productComponentInsert(master_product_id, sub_product_id, 1, username);

@@ -17,6 +17,7 @@ namespace dbShopeeAutomationV2.Models
         public int production_id { get; set; }
         public string title { get; set; }
         public string description { get; set; }
+        public string staff_name { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<decimal> total_usage { get; set; }
         public Nullable<int> production_status_id { get; set; }

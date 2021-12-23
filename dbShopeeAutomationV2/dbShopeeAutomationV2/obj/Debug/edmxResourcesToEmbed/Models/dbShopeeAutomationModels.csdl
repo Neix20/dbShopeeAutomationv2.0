@@ -847,6 +847,7 @@
     <FunctionImport Name="NSP_TShopeeProduction_Insert">
       <Parameter Name="title" Mode="In" Type="String" />
       <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="staff_name" Mode="In" Type="String" />
       <Parameter Name="created_date" Mode="In" Type="DateTime" />
       <Parameter Name="total_usage" Mode="In" Type="Decimal" />
       <Parameter Name="production_status_id" Mode="In" Type="Int32" />
@@ -856,6 +857,7 @@
       <Parameter Name="production_id" Mode="In" Type="Int32" />
       <Parameter Name="title" Mode="In" Type="String" />
       <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="staff_name" Mode="In" Type="String" />
       <Parameter Name="created_date" Mode="In" Type="DateTime" />
       <Parameter Name="total_usage" Mode="In" Type="Decimal" />
       <Parameter Name="production_status_id" Mode="In" Type="Int32" />
@@ -924,6 +926,7 @@
     <Property Name="production_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="staff_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="created_date" Type="DateTime" Precision="3" />
     <Property Name="total_usage" Type="Decimal" Precision="10" Scale="6" />
     <Property Name="production_status_id" Type="Int32" />

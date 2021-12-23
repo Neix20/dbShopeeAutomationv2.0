@@ -179,6 +179,7 @@
     <Property Name="production_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="title" Type="varchar(max)" />
     <Property Name="description" Type="varchar(max)" />
+    <Property Name="staff_name" Type="varchar(max)" />
     <Property Name="created_date" Type="datetime" />
     <Property Name="total_usage" Type="decimal" Precision="10" Scale="6" />
     <Property Name="production_status_id" Type="int" />
@@ -629,6 +630,7 @@
   <Function Name="NSP_TShopeeProduction_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="title" Type="varchar(max)" Mode="In" />
     <Parameter Name="description" Type="varchar(max)" Mode="In" />
+    <Parameter Name="staff_name" Type="varchar(max)" Mode="In" />
     <Parameter Name="created_date" Type="datetime" Mode="In" />
     <Parameter Name="total_usage" Type="decimal" Mode="In" />
     <Parameter Name="production_status_id" Type="int" Mode="In" />
@@ -638,6 +640,7 @@
     <Parameter Name="production_id" Type="int" Mode="In" />
     <Parameter Name="title" Type="varchar(max)" Mode="In" />
     <Parameter Name="description" Type="varchar(max)" Mode="In" />
+    <Parameter Name="staff_name" Type="varchar(max)" Mode="In" />
     <Parameter Name="created_date" Type="datetime" Mode="In" />
     <Parameter Name="total_usage" Type="decimal" Mode="In" />
     <Parameter Name="production_status_id" Type="int" Mode="In" />

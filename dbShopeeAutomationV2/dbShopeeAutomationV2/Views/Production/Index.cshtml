@@ -44,8 +44,8 @@ else
 
                 <div class="row m-2">
                     <div class="col">
-                        <label>Title: </label>
-                        @Html.TextBox("title", "", new { @Class = "form-control", @Placeholder = "Production Title" })
+                        <label>Staff Name: </label>
+                        @Html.TextBox("staff_name", "", new { @Class = "form-control", @Placeholder = "Staff Name" })
                     </div>
                     <div class="col">
                         <label>Date: </label>
@@ -101,6 +101,7 @@ else
                     data: productionForm.serialize(),
                     success: resp => {
                         $("#productionFormResp").html(resp);
+                        location.reload();
                     }
                 })
             });

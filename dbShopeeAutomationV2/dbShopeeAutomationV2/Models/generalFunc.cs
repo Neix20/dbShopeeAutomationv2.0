@@ -12,6 +12,11 @@ namespace dbShopeeAutomationV2.Models
             return str.Trim('"');
         }
 
+        public static string removeWhitespace(string str)
+        {
+            return str.Replace(" ", string.Empty);
+        }
+
         public static string Random10DigitCode(int length = 10)
         {
             Random rand = new Random();

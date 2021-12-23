@@ -1105,6 +1105,7 @@
           <ScalarProperty Name="production_status_id" ColumnName="production_status_id" />
           <ScalarProperty Name="total_usage" ColumnName="total_usage" />
           <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="staff_name" ColumnName="staff_name" />
           <ScalarProperty Name="description" ColumnName="description" />
           <ScalarProperty Name="title" ColumnName="title" />
           <ScalarProperty Name="production_id" ColumnName="production_id" />
@@ -1117,6 +1118,7 @@
             <ScalarProperty Name="production_status_id" ParameterName="production_status_id" />
             <ScalarProperty Name="total_usage" ParameterName="total_usage" />
             <ScalarProperty Name="created_date" ParameterName="created_date" />
+            <ScalarProperty Name="staff_name" ParameterName="staff_name" />
             <ScalarProperty Name="description" ParameterName="description" />
             <ScalarProperty Name="title" ParameterName="title" />
           </InsertFunction>
@@ -1125,6 +1127,7 @@
             <ScalarProperty Name="production_status_id" ParameterName="production_status_id" Version="Current" />
             <ScalarProperty Name="total_usage" ParameterName="total_usage" Version="Current" />
             <ScalarProperty Name="created_date" ParameterName="created_date" Version="Current" />
+            <ScalarProperty Name="staff_name" ParameterName="staff_name" Version="Current" />
             <ScalarProperty Name="description" ParameterName="description" Version="Current" />
             <ScalarProperty Name="title" ParameterName="title" Version="Current" />
             <ScalarProperty Name="production_id" ParameterName="production_id" Version="Current" />

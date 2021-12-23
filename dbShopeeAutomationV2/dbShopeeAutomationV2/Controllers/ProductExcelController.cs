@@ -30,8 +30,11 @@ namespace dbShopeeAutomationV2.Controllers
             // Read 'Raw Material Tracking Info' Worksheet
             getRawMaterialTrackingInfo(wb, username);
 
-            // Testing
+            // Read 'Inventory Overview' Worksheet 
             getInventoryOverview(wb, username);
+
+            // Read 'Record' Worksheet
+            getRecord(wb, username);
         }
 
         // 1.
@@ -90,6 +93,7 @@ namespace dbShopeeAutomationV2.Controllers
                 string product_description = product_name;
 
                 string product_sku = (string)tmp_arr[4].Value;
+                product_sku = generalFunc.removeWhitespace(product_sku);
 
                 if (productSKUList.Contains(product_sku)) continue;
 
@@ -97,7 +101,9 @@ namespace dbShopeeAutomationV2.Controllers
                 string product_status = (string)tmp_arr[8].Value;
                 int product_status_id = dbStatusFunction.productStatusID(product_status);
 
-                string product_code = (string)tmp_arr[11].Value;
+                string product_code = (string) tmp_arr[11].Value;
+                product_code = generalFunc.removeWhitespace(product_code);
+
                 string product_sku2 = product_code;
 
                 string product_type = (string)tmp_arr[12].Value;
@@ -187,11 +193,101 @@ namespace dbShopeeAutomationV2.Controllers
         public void getRecord(WorkBook wb, string username)
         {
             WorkSheet ws = wb.GetWorkSheet("Record");
+
+            // Insert New Production Detail
+            int last_production_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduction') AS INT)").FirstOrDefault();
+            decimal total_usage;
+
+            // Get Rows Without Headers
+            foreach (var row in ws.Rows.ToList().GetRange(4, ws.RowCount - 4))
+            {
+                var tmp_arr = row.ToArray();
+
+                if (tmp_arr[8].Text == "") continue;
+
+                // Only Update Values when reached a new Production
+                if (tmp_arr[1].Text != "")
+                {
+                    string title = generalFunc.GenProductionCode(last_production_id);
+                    last_production_id += 1;
+
+                    DateTime? created_date = tmp_arr[1].DateTimeValue;
+
+                    string staff_name = tmp_arr[2].Text;
+
+                    string total_usage_str = (tmp_arr[6].Text == "") ? "0" : tmp_arr[6].Text;
+                    total_usage = Decimal.Parse(total_usage_str);
+
+                    string description = tmp_arr[15].Text;
+
+                    int production_status_id = dbStatusFunction.productionStatusID("Complete");
+
+                    dbStoredProcedure.productionInsert(title, description, staff_name, created_date, total_usage, production_status_id, username);
+
+                    // Product Material
+                    string material_code = tmp_arr[4].Text;
+                    material_code = generalFunc.removeWhitespace(material_code);
+
+                    int material_id = dbStatusFunction.productIdByCode(material_code);
+                    dbStoredProcedure.productionDetailInsert("", DateTime.Now, DateTime.Now, 0, 0, 0, total_usage, 0, 0, last_production_id, material_id, username);
+                }
+
+                string product_code = tmp_arr[8].Text;
+                int product_id = dbStatusFunction.productIdByCode(product_code);
+
+                string size = tmp_arr[10].Text;
+                string[] size_arr = size.Split(new[] { " x " }, StringSplitOptions.None);
+                decimal width = Decimal.Parse(size_arr[0]);
+                decimal length = Decimal.Parse(size_arr[1]);
+
+                string total_quantity_str = (tmp_arr[11].Text == "") ? "0" : tmp_arr[11].Text;
+                decimal total_quantity = decimal.Parse(total_quantity_str);
+
+                string not_ok_str = (tmp_arr[12].Text == "") ? "0" : tmp_arr[12].Text;
+                int not_ok = int.Parse(not_ok_str);
+
+                string ok_str = (tmp_arr[13].Text == "") ? "0" : tmp_arr[13].Text;
+                int ok = int.Parse(ok_str);
+
+                dbStoredProcedure.productionDetailInsert(
+                    "", DateTime.Now, DateTime.Now,
+                    0, width, length,
+                    total_quantity, not_ok, ok,
+                    last_production_id, product_id, username);
+            }
         }
 
         public void checkProduction(WorkSheet ws, string username)
         {
+            int last_production_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduction') AS INT)").FirstOrDefault();
 
+            // Get Rows Without Headers
+            foreach (var row in ws.Rows.ToList().GetRange(3, ws.RowCount - 3))
+            {
+                var tmp_arr = row.ToArray();
+
+                if (tmp_arr[8].Text == "") continue;
+
+                if (tmp_arr[1].Text != "")
+                {
+                    string title = generalFunc.GenProductionCode(last_production_id);
+                    last_production_id += 1;
+
+                    DateTime? created_date = tmp_arr[1].DateTimeValue;
+
+                    string staff_name = tmp_arr[2].Text;
+
+                    string total_usage_str = (tmp_arr[6].Text == "") ? "0" : tmp_arr[6].Text;
+                    decimal total_usage = Decimal.Parse(total_usage_str);
+
+                    string description = tmp_arr[15].Text;
+
+                    int production_status_id = dbStatusFunction.productionStatusID("Complete");
+
+                    dbStoredProcedure.productionInsert(title, description, staff_name, created_date, total_usage, production_status_id, username);
+                }
+            }
+            db.SaveChanges();
         }
 
         // 4.
@@ -214,6 +310,7 @@ namespace dbShopeeAutomationV2.Controllers
                 model_name = (tmp_arr[1].Text == "") ? model_name : tmp_arr[1].Text;
                 panel_name = (tmp_arr[2].Text == "") ? panel_name : tmp_arr[2].Text;
                 product_sku = tmp_arr[3].Text;
+                product_sku = generalFunc.removeWhitespace(product_sku);
 
                 if (product_sku == "" || productSKUList.Contains(product_sku)) continue;
 
@@ -222,6 +319,7 @@ namespace dbShopeeAutomationV2.Controllers
                 string model_code = info_arr[0];
                 string variety_code = info_arr[1];
                 string material_sku = info_arr[2];
+                material_sku = generalFunc.removeWhitespace(material_sku);
 
                 var material = db.TShopeeProducts.FirstOrDefault(it => it.SKU == material_sku);
 
@@ -317,7 +415,6 @@ namespace dbShopeeAutomationV2.Controllers
                 readExcelFile(file_path, username);
                 return Content($"File {file.FileName} Uploaded Successfully!");
 
-                //return Content(readExcelFile(file_path, username));
             }
 
             return Content($"Error! File {file.FileName} was not uploaded successfully...");

@@ -1958,7 +1958,7 @@ namespace dbShopeeAutomationV2.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProduction_Delete", production_idParameter);
         }
     
-        public virtual int NSP_TShopeeProduction_Insert(string title, string description, Nullable<System.DateTime> created_date, Nullable<decimal> total_usage, Nullable<int> production_status_id, Nullable<int> detail_id)
+        public virtual int NSP_TShopeeProduction_Insert(string title, string description, string staff_name, Nullable<System.DateTime> created_date, Nullable<decimal> total_usage, Nullable<int> production_status_id, Nullable<int> detail_id)
         {
             var titleParameter = title != null ?
                 new ObjectParameter("title", title) :
@@ -1967,6 +1967,10 @@ namespace dbShopeeAutomationV2.Models
             var descriptionParameter = description != null ?
                 new ObjectParameter("description", description) :
                 new ObjectParameter("description", typeof(string));
+    
+            var staff_nameParameter = staff_name != null ?
+                new ObjectParameter("staff_name", staff_name) :
+                new ObjectParameter("staff_name", typeof(string));
     
             var created_dateParameter = created_date.HasValue ?
                 new ObjectParameter("created_date", created_date) :
@@ -1984,10 +1988,10 @@ namespace dbShopeeAutomationV2.Models
                 new ObjectParameter("detail_id", detail_id) :
                 new ObjectParameter("detail_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProduction_Insert", titleParameter, descriptionParameter, created_dateParameter, total_usageParameter, production_status_idParameter, detail_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProduction_Insert", titleParameter, descriptionParameter, staff_nameParameter, created_dateParameter, total_usageParameter, production_status_idParameter, detail_idParameter);
         }
     
-        public virtual int NSP_TShopeeProduction_Update(Nullable<int> production_id, string title, string description, Nullable<System.DateTime> created_date, Nullable<decimal> total_usage, Nullable<int> production_status_id, Nullable<int> detail_id)
+        public virtual int NSP_TShopeeProduction_Update(Nullable<int> production_id, string title, string description, string staff_name, Nullable<System.DateTime> created_date, Nullable<decimal> total_usage, Nullable<int> production_status_id, Nullable<int> detail_id)
         {
             var production_idParameter = production_id.HasValue ?
                 new ObjectParameter("production_id", production_id) :
@@ -2001,6 +2005,10 @@ namespace dbShopeeAutomationV2.Models
                 new ObjectParameter("description", description) :
                 new ObjectParameter("description", typeof(string));
     
+            var staff_nameParameter = staff_name != null ?
+                new ObjectParameter("staff_name", staff_name) :
+                new ObjectParameter("staff_name", typeof(string));
+    
             var created_dateParameter = created_date.HasValue ?
                 new ObjectParameter("created_date", created_date) :
                 new ObjectParameter("created_date", typeof(System.DateTime));
@@ -2017,7 +2025,7 @@ namespace dbShopeeAutomationV2.Models
                 new ObjectParameter("detail_id", detail_id) :
                 new ObjectParameter("detail_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProduction_Update", production_idParameter, titleParameter, descriptionParameter, created_dateParameter, total_usageParameter, production_status_idParameter, detail_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProduction_Update", production_idParameter, titleParameter, descriptionParameter, staff_nameParameter, created_dateParameter, total_usageParameter, production_status_idParameter, detail_idParameter);
         }
     }
 }

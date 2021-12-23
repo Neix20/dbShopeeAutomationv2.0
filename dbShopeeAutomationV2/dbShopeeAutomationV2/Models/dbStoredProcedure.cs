@@ -444,7 +444,10 @@ namespace dbShopeeAutomationV2.Models
 
         // Production Stored Procedure
         public static int productionInsert(
-            string title, string description, DateTime? created_date, Decimal? total_usage, int? production_status_id, string username
+            string title, string description, string staff_name, 
+            DateTime? created_date, 
+            Decimal? total_usage, 
+            int? production_status_id, string username
         )
         {
             // Create New Detail
@@ -454,11 +457,11 @@ namespace dbShopeeAutomationV2.Models
             db.SaveChanges();
 
             int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
-            return db.NSP_TShopeeProduction_Insert(title, description, created_date, total_usage, production_status_id, detail_id);
+            return db.NSP_TShopeeProduction_Insert(title, description, staff_name, created_date, total_usage, production_status_id, detail_id);
         }
 
         public static int productionUpdate(
-            int production_id, string title, string description, DateTime? created_date,  Decimal? total_usage, int? production_status_id, string username
+            int production_id, string title, string description, string staff_name, DateTime? created_date,  Decimal? total_usage, int? production_status_id, string username
         )
         {
             int detail_id = (int)db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id).detail_id;
@@ -467,7 +470,7 @@ namespace dbShopeeAutomationV2.Models
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
-            return db.NSP_TShopeeProduction_Update(production_id, title, description, created_date, total_usage, production_status_id, detail_id);
+            return db.NSP_TShopeeProduction_Update(production_id, title, description, staff_name, created_date, total_usage, production_status_id, detail_id);
         }
 
         public static int productionDelete(int production_id)

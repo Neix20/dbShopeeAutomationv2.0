@@ -184,6 +184,7 @@
           <Property Name="production_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="title" Type="varchar(max)" />
           <Property Name="description" Type="varchar(max)" />
+          <Property Name="staff_name" Type="varchar(max)" />
           <Property Name="created_date" Type="datetime" />
           <Property Name="total_usage" Type="decimal" Precision="10" Scale="6" />
           <Property Name="production_status_id" Type="int" />
@@ -634,6 +635,7 @@
         <Function Name="NSP_TShopeeProduction_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="title" Type="varchar(max)" Mode="In" />
           <Parameter Name="description" Type="varchar(max)" Mode="In" />
+          <Parameter Name="staff_name" Type="varchar(max)" Mode="In" />
           <Parameter Name="created_date" Type="datetime" Mode="In" />
           <Parameter Name="total_usage" Type="decimal" Mode="In" />
           <Parameter Name="production_status_id" Type="int" Mode="In" />
@@ -643,6 +645,7 @@
           <Parameter Name="production_id" Type="int" Mode="In" />
           <Parameter Name="title" Type="varchar(max)" Mode="In" />
           <Parameter Name="description" Type="varchar(max)" Mode="In" />
+          <Parameter Name="staff_name" Type="varchar(max)" Mode="In" />
           <Parameter Name="created_date" Type="datetime" Mode="In" />
           <Parameter Name="total_usage" Type="decimal" Mode="In" />
           <Parameter Name="production_status_id" Type="int" Mode="In" />
@@ -1785,6 +1788,7 @@
           <FunctionImport Name="NSP_TShopeeProduction_Insert">
             <Parameter Name="title" Mode="In" Type="String" />
             <Parameter Name="description" Mode="In" Type="String" />
+            <Parameter Name="staff_name" Mode="In" Type="String" />
             <Parameter Name="created_date" Mode="In" Type="DateTime" />
             <Parameter Name="total_usage" Mode="In" Type="Decimal" />
             <Parameter Name="production_status_id" Mode="In" Type="Int32" />
@@ -1794,6 +1798,7 @@
             <Parameter Name="production_id" Mode="In" Type="Int32" />
             <Parameter Name="title" Mode="In" Type="String" />
             <Parameter Name="description" Mode="In" Type="String" />
+            <Parameter Name="staff_name" Mode="In" Type="String" />
             <Parameter Name="created_date" Mode="In" Type="DateTime" />
             <Parameter Name="total_usage" Mode="In" Type="Decimal" />
             <Parameter Name="production_status_id" Mode="In" Type="Int32" />
@@ -1862,6 +1867,7 @@
           <Property Name="production_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="staff_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
           <Property Name="total_usage" Type="Decimal" Precision="10" Scale="6" />
           <Property Name="production_status_id" Type="Int32" />
@@ -2977,6 +2983,7 @@
                 <ScalarProperty Name="production_status_id" ColumnName="production_status_id" />
                 <ScalarProperty Name="total_usage" ColumnName="total_usage" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="staff_name" ColumnName="staff_name" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="production_id" ColumnName="production_id" />
@@ -2989,6 +2996,7 @@
                   <ScalarProperty Name="production_status_id" ParameterName="production_status_id" />
                   <ScalarProperty Name="total_usage" ParameterName="total_usage" />
                   <ScalarProperty Name="created_date" ParameterName="created_date" />
+                  <ScalarProperty Name="staff_name" ParameterName="staff_name" />
                   <ScalarProperty Name="description" ParameterName="description" />
                   <ScalarProperty Name="title" ParameterName="title" />
                 </InsertFunction>
@@ -2997,6 +3005,7 @@
                   <ScalarProperty Name="production_status_id" ParameterName="production_status_id" Version="Current" />
                   <ScalarProperty Name="total_usage" ParameterName="total_usage" Version="Current" />
                   <ScalarProperty Name="created_date" ParameterName="created_date" Version="Current" />
+                  <ScalarProperty Name="staff_name" ParameterName="staff_name" Version="Current" />
                   <ScalarProperty Name="description" ParameterName="description" Version="Current" />
                   <ScalarProperty Name="title" ParameterName="title" Version="Current" />
                   <ScalarProperty Name="production_id" ParameterName="production_id" Version="Current" />

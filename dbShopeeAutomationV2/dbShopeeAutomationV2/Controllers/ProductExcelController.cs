@@ -51,8 +51,8 @@ namespace dbShopeeAutomationV2.Controllers
 
                 if (supplier_name == "" || supplierList.Contains(supplier_name)) continue;
 
-                string supplier_nation = (string)tmp_arr[2].Value;
-                string supplier_code = (string)tmp_arr[3].Value;
+                string supplier_nation = (string) tmp_arr[2].Value;
+                string supplier_code = (string) tmp_arr[3].Value;
 
                 dbStoredProcedure.supplierInsert(supplier_name, supplier_code, supplier_nation, username);
             }

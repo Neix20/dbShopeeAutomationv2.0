@@ -69,6 +69,12 @@ namespace dbShopeeAutomationV2.Models
             return (productStatus == null) ? -1 : productStatus.product_status_id;
         }
 
+        public static int productionID(string title)
+        {
+            var production = db.TShopeeProductions.FirstOrDefault(it => it.title.ToLower().Equals(title.ToLower()));
+            return (production == null) ? -1 : production.production_id;
+        }
+
         public static int productionStatusID(string name)
         {
             var productionStatus = db.TShopeeProductionStatus.FirstOrDefault(it => it.name.ToLower().Equals(name.ToLower()));

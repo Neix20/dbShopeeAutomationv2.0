@@ -438,6 +438,8 @@
     <Content Include="Views\Production\_ProductionGridViewPartial.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\_ProductGridViewPartial.cshtml" />
+    <Content Include="Views\ProductionDetailParam\Index.cshtml" />
+    <Content Include="Views\ProductionDetailParam\_ProductionDetailParamGridViewGridViewPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -472,6 +474,7 @@
     <Compile Include="Controllers\ProductExcelController.cs" />
     <Compile Include="Controllers\ProductionController.cs" />
     <Compile Include="Controllers\ProductionDetailController.cs" />
+    <Compile Include="Controllers\ProductionDetailParamController.cs" />
     <Compile Include="Controllers\ProductionStatusController.cs" />
     <Compile Include="Controllers\ProductModelController.cs" />
     <Compile Include="Controllers\ProductStatusController.cs" />

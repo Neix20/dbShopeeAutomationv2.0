@@ -95,5 +95,18 @@ namespace dbShopeeAutomationV2.Models
 
             return arr;
         }
+
+        public static string FormatNum(int num, int zLen)
+        {
+            string num_str = $"{num}";
+            return new string('0', zLen - num_str.Length) + num_str;
+        }
+
+
+        public static string GenProductionCode(int last_production_id)
+        {
+            int zLen = 5;
+            return $"JS{FormatNum(last_production_id, zLen)}";
+        }
     }
 }

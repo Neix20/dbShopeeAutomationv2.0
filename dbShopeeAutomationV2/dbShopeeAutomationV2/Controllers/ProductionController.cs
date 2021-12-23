@@ -21,6 +21,8 @@ namespace dbShopeeAutomationV2.Controllers
         [ValidateInput(false)]
         public ActionResult ProductionGridViewPartial()
         {
+            int last_production_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduction') AS INT)").FirstOrDefault();
+            ViewData["new_production_title"] = generalFunc.GenProductionCode(last_production_id + 1);
             var model = db.TShopeeProductions;
             return PartialView("_ProductionGridViewPartial", model.ToList());
         }
@@ -30,7 +32,8 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            item.title = (item.title == null) ? "production_title" : item.title;
+            int last_production_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduction') AS INT)").FirstOrDefault();
+            item.title = (item.title == null) ? generalFunc.GenProductionCode(last_production_id + 1) : item.title;
             item.description = (item.description == null) ? "production_description" : item.description;
             item.production_status_id = dbStatusFunction.productionStatusID("Incomplete");
             item.created_date = (item.created_date == null) ? DateTime.Now : item.created_date;
@@ -48,7 +51,6 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            item.title = (item.title == null) ? "production_title" : item.title;
             item.description = (item.description == null) ? "production_description" : item.description;
             item.created_date = (item.created_date == null) ? DateTime.Now : item.created_date;
             item.total_usage = (item.total_usage == null) ? 0 : item.total_usage;
@@ -56,8 +58,7 @@ namespace dbShopeeAutomationV2.Controllers
             dbStoredProcedure.productionUpdate(item.production_id, item.title, item.description, item.created_date, item.total_usage, item.production_status_id, username);
             db.SaveChanges();
 
-            var model = db.TShopeeProductions;
-            return PartialView("_ProductionGridViewPartial", model.ToList());
+            return RedirectToAction("Index", "ProductionDetailParam", new { production_id = item.production_id });
         }
 
         [HttpPost, ValidateInput(false)]

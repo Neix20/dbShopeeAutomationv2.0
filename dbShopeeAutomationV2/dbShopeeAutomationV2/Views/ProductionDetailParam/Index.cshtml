@@ -1,0 +1,180 @@
+﻿@using dbShopeeAutomationV2.Models;
+@using System.Collections.Generic;
+
+@{
+    ViewBag.Title = "Job Scope Detail Form";
+    Layout = "~/Views/Shared/_ProductionLayout.cshtml";
+
+    dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
+    int product_count = db.TShopeeProducts.ToList().Count;
+    int production_count = db.TShopeeProductions.ToList().Count;
+
+    Dictionary<int, string> productionDict = new Dictionary<int, string>();
+    db.TShopeeProductions.ToList().ForEach(it => {
+        productionDict.Add(it.production_id, it.title);
+    });
+}
+
+@if (product_count <= 0 || production_count <= 0)
+{
+    <div class="p-3">
+        <div class="warning_div border border-danger">
+            <div class="row">
+                <div class="col">
+                    <div class="text-white text-center fw-bold h2 bg-danger">
+                        Error!
+                    </div>
+                </div>
+            </div>
+            <div class="text-black h4">
+                <ul>
+                    @if (product_count <= 0)
+                    {
+                        <li>There are no existing products. Please make a product before you proceed!</li>
+                    }
+                    @if (production_count <= 0)
+                    {
+                        <li>There are no existing productions. Please make a production before you proceed!</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="p-3">
+        <div class="border border-dark">
+            <div class="row">
+                <div class="col">
+                    <div class="bg-dark text-center h1 text-white">@ViewBag.Title</div>
+                </div>
+            </div>
+
+            @using (Html.BeginForm("ProductionDetailParamGridViewGridViewPartialAddNew", "ProductionDetailParam", FormMethod.Post, new { @Id = "productionDetailForm" }))
+            {
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Production Title: </label>
+                        @Html.TextBox("production_title", productionDict[(int) ViewData["production_id"]], new { @Class="form-control", @Readonly="true"})
+                    </div>
+                </div>
+
+                <hr/>
+
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Product: </label>
+                        @Html.DevExpress().ComboBox(settings => {
+                       settings.Name = "product_id";
+                       settings.Width = 180;
+                       settings.SelectedIndex = 0;
+                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.Properties.TextField = "SKU";
+                       settings.Properties.ValueField = "product_id";
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                       settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                   }).BindList(db.TShopeeProducts.ToList()).GetHtml()
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Width: </label>
+                        @Html.DevExpress().SpinEdit(settings =>
+                           {
+                               settings.Name = "width";
+                               settings.Width = Unit.Percentage(100);
+                               settings.Properties.DisplayFormatString = "C";
+                               settings.Properties.MinValue = 0;
+                               settings.Properties.MaxValue = 10000000;
+                               settings.Properties.Increment = 0.1M;
+                               settings.Properties.DecimalPlaces = 2;
+                               settings.Properties.DisplayFormatString = "N2";
+                           }).GetHtml()
+                    </div>
+                    <div class="col">
+                        <label>Length: </label>
+                        @Html.DevExpress().SpinEdit(settings =>
+                           {
+                               settings.Name = "length";
+                               settings.Width = Unit.Percentage(100);
+                               settings.Properties.DisplayFormatString = "C";
+                               settings.Properties.MinValue = 0;
+                               settings.Properties.MaxValue = 10000000;
+                               settings.Properties.Increment = 0.1M;
+                               settings.Properties.DecimalPlaces = 2;
+                               settings.Properties.DisplayFormatString = "N2";
+                           }).GetHtml()
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Quantity: </label>
+                        @Html.DevExpress().SpinEdit(settings =>
+                       {
+                           settings.Name = "quantity";
+                           settings.Width = Unit.Percentage(100);
+                           settings.Properties.MinValue = 0;
+                           settings.Properties.MaxValue = 10000000;
+                       }).GetHtml()
+                    </div>
+                    <div class="col">
+                        <label>Not OK (NG): </label>
+                        @Html.DevExpress().SpinEdit(settings =>
+                       {
+                           settings.Name = "cannot_be_used";
+                           settings.Width = Unit.Percentage(100);
+                           settings.Properties.MinValue = 0;
+                           settings.Properties.MaxValue = 10000000;
+                       }).GetHtml()
+                    </div>
+                    <div class="col">
+                        <label>OK: </label>
+                        @Html.DevExpress().SpinEdit(settings =>
+                       {
+                           settings.Name = "can_be_used";
+                           settings.Width = Unit.Percentage(100);
+                           settings.Properties.MinValue = 0;
+                           settings.Properties.MaxValue = 10000000;
+                       }).GetHtml()
+                    </div>
+                </div>
+            }
+
+            <div class="row mx-2">
+                <div class="col">
+                    <button type="submit" form="productionDetailForm" class="btn btn-success">Submit Form</button>
+                </div>
+            </div>
+
+            <div id="productionDetailFormResp" class="p-3">
+                @Html.Action("ProductionDetailParamGridViewGridViewPartial", new { production_id = (int) ViewData["production_id"] })
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            let productionDetailForm = $("form[id='productionDetailForm']");
+            const productionDetailForm_actionLink = productionDetailForm.attr("action");
+            const productionDetailForm_methodType = productionDetailForm.attr("method");
+
+            productionDetailForm.submit(e => {
+                e.preventDefault();
+
+                $.ajax({
+                    url: productionDetailForm_actionLink,
+                    type: productionDetailForm_methodType,
+                    data: productionDetailForm.serialize(),
+                    success: resp => {
+                        $("#productionDetailFormResp").html(resp);
+                        location.reload();
+                    }
+                });
+            });
+        });
+    </script>
+}

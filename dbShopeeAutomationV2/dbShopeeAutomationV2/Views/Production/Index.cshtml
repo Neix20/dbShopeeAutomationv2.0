@@ -1,7 +1,7 @@
 ﻿@using dbShopeeAutomationV2.Models;
 
 @{
-    ViewBag.Title = "Production Form";
+    ViewBag.Title = "Job Scope Form";
     Layout = "~/Views/Shared/_ProductionLayout.cshtml";
 
     dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
@@ -38,7 +38,40 @@ else
                 </div>
             </div>
 
-            <div class="p-3">
+            @using (Html.BeginForm("ProductionGridViewPartialAddNew", "Production", FormMethod.Post, new { @Id = "productionForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Title: </label>
+                        @Html.TextBox("title", "", new { @Class = "form-control", @Placeholder = "Production Title" })
+                    </div>
+                    <div class="col">
+                        <label>Date: </label>
+                        @Html.DevExpress().DateEdit(settings => {
+                            settings.Name = "created_date";
+                            settings.Properties.DisplayFormatString = "yyyy-MM-dd";
+                            settings.Width = Unit.Percentage(100);
+                        }).GetHtml()
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Description</label>
+                        @Html.TextArea("description", "", new { @class = "form-control", @placeholder = "Insert Description Here..." })
+                    </div>
+                </div>
+            }
+
+            <div class="row mx-2">
+                <div class="col">
+                    <button type="submit" form="productionForm" class="btn btn-success">Submit Form</button>
+                </div>
+            </div>
+
+            <div id="productionFormResp" class="p-3">
                 @Html.Action("ProductionGridViewPartial")
             </div>
         </div>
@@ -52,5 +85,27 @@ else
             </ul>
         </div>
     }
+
+    <script type="text/javascript">
+        $(function () {
+            let productionForm = $("form[id='productionForm']");
+            const form_actionLink = productionForm.attr("action");
+            const form_methodType = productionForm.attr("method");
+
+            productionForm.submit(e => {
+                e.preventDefault();
+
+                $.ajax({
+                    url: form_actionLink,
+                    type: form_methodType,
+                    data: productionForm.serialize(),
+                    success: resp => {
+                        $("#productionFormResp").html(resp);
+                    }
+                })
+            });
+
+        });
+    </script>
 }
 

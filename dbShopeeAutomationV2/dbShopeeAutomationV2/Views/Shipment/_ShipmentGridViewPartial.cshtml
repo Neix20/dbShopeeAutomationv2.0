@@ -14,6 +14,15 @@
 
     int invoice_complete = (invoiceStatus != null) ? invoiceStatus.invoice_status_id : 0;
 
+    List<mStockWarehouse> swList = new List<mStockWarehouse>();
+    db.TShopeeStockWarehouses.ToList().ForEach(it =>
+    {
+        string name = it.name;
+        string address = $"{it.address_line_1}, {it.address_line_2}, {it.city}, {it.zip_code}, {it.state}, {it.country}";
+        swList.Add(new mStockWarehouse(name, address));
+    });
+
+
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "ShipmentGridView";
         settings.Width = Unit.Percentage(100);
@@ -42,7 +51,21 @@
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
-        settings.Columns.Add("start_location").Caption = "Start Location";
+        // Start location
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "start_location";
+            col.Caption = "Start Location";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = swList;
+            prop.TextField = "name";
+            prop.ValueField = "address";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
+        });
+
         settings.Columns.Add("destination").Caption = "Destination";
         settings.Columns.Add("tracking_id").Caption = "Tracking ID";
 

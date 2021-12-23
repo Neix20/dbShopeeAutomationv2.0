@@ -51,13 +51,6 @@ namespace dbShopeeAutomationV2.Controllers
             dbStoredProcedure.orderItemInsert(item.quantity, item.sub_total, item.discount_fee, item.RMA_num, item.RMA_issued_by, item.RMA_issued_date, item.order_id, item.order_item_status_id, item.product_id, username);
             db.SaveChanges();
 
-            // Update order Total
-            var orderItems = db.TShopeeOrderItems.Where(it => it.order_id == item.order_id).ToList();
-            order.total_price = (decimal)orderItems.Select(x => x.sub_total).Sum();
-
-            dbStoredProcedure.orderUpdate(order.order_id, order.order_title, order.order_placed_date, order.total_price, order.order_status_id, username);
-            db.SaveChanges();
-
             var model = db.TShopeeOrderItems;
             return PartialView("_OrderItemGridViewPartial", model.ToList());
         }
@@ -82,11 +75,6 @@ namespace dbShopeeAutomationV2.Controllers
             item.sub_total = product.sell_price * item.quantity - item.discount_fee;
 
             dbStoredProcedure.orderItemUpdate(item.order_item_id, item.quantity, item.sub_total, item.discount_fee, item.RMA_num, item.RMA_issued_by, item.RMA_issued_date, item.order_id, item.order_item_status_id, item.product_id, username);
-            db.SaveChanges();
-
-            // Update order Total
-            order.total_price += item.sub_total;
-            dbStoredProcedure.orderUpdate(order.order_id, order.order_title, order.order_placed_date, order.total_price, order.order_status_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeOrderItems;

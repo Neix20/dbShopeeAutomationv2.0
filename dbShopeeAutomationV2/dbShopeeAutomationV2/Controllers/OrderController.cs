@@ -63,16 +63,6 @@ namespace dbShopeeAutomationV2.Controllers
             dbStoredProcedure.orderDelete(order_id);
             db.SaveChanges();
 
-            // Delete All Order Item
-            db.TShopeeOrderItems.Where(it => it.order_id == order_id).ToList().ForEach(order_item => {
-                int order_item_status_id = (int) db.TShopeeOrderItems.FirstOrDefault(tmp => tmp.order_item_id == order_item.order_item_id).order_item_status_id;
-                dbStoredProcedure.orderItemStatusDelete(order_item_status_id);
-                db.SaveChanges();
-
-                dbStoredProcedure.orderItemDelete(order_item.order_item_id);
-                db.SaveChanges();
-            });
-
             var model = db.TShopeeOrders;
             return PartialView("_OrderGridViewPartial", model.ToList());
         }

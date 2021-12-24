@@ -45,10 +45,89 @@ else
                 </div>
             </div>
 
-            <div class="p-3">
-                @Html.Action("StockItemGridViewPartial")
+            @using (Html.BeginForm("StockItemGridViewPartialAddNew", "StockItem", FormMethod.Post, new { @Id = "stockItemForm" }))
+            {
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Stock Warehouse: </label>
+                        @Html.DevExpress().ComboBox(settings => {
+                       settings.Name = "stock_warehouse_id";
+                       settings.Width = Unit.Percentage(100);
+                       settings.SelectedIndex = 0;
+                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.Properties.TextField = "name";
+                       settings.Properties.ValueField = "stock_warehouse_id";
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                       settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                   }).BindList(db.TShopeeStockWarehouses.ToList()).GetHtml()
+                    </div>
+                    <div class="col">
+                        <label>Product SKU: </label>
+                        @Html.DevExpress().ComboBox(settings =>
+                   {
+                       settings.Name = "product_id";
+                       settings.Width = Unit.Percentage(100);
+                       settings.SelectedIndex = 0;
+                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.Properties.TextField = "SKU";
+                       settings.Properties.ValueField = "product_id";
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                       settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                   }).BindList(db.TShopeeProducts.ToList()).GetHtml()
+                    </div>
+                    <div class="col">
+                        <label>Quantity: </label>
+                        @Html.DevExpress().SpinEdit(settings => {
+                       settings.Name = "stock_quantity";
+                       settings.Width = Unit.Percentage(100);
+                       settings.Properties.MinValue = 0;
+                       settings.Properties.MaxValue = 10000000;
+                       settings.Properties.Increment = 0.1M;
+                       settings.Properties.DecimalPlaces = 2;
+                       settings.Properties.DisplayFormatString = "N2";
+                   }).GetHtml()
+                    </div>
+                </div>
+            }
+
+            <div class="row my-3 mx-2">
+                <div class="col">
+                    <button type="submit" form="stockItemForm" class="btn btn-success">Submit Form</button>
+                </div>
+            </div>
+
+            <div class="row m-2">
+                <div class="col">
+                    <div id="stockItemFormResp">
+                        @Html.Action("StockItemGridViewPartial")
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        $(function () {
+            let stockItemForm = $("form[id='stockItemForm']");
+            const stockItemForm_actionLink = stockItemForm.attr("action");
+            const stockItemForm_methodType = stockItemForm.attr("method");
+
+            stockItemForm.submit(e => {
+                e.preventDefault();
+
+                $.ajax({
+                    url: stockItemForm_actionLink,
+                    type: stockItemForm_methodType,
+                    data: stockItemForm.serialize(),
+                    success: resp => {
+                        $("#stockItemFormResp").html(resp);
+                        alert("Stock item has been inserted successfully!");
+                    }
+                });
+            });
+        });
+    </script>
 }
 

@@ -31,7 +31,10 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            item.name = (item.name == null) ? "Stock Item Name" : item.name;
+            var product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == item.product_id);
+            string product_name = product.name;
+
+            item.name = (item.name == null) ? product_name : item.name;
             item.description = (item.description == null) ? "Stock Item Description" : item.description;
             item.stock_quantity = (item.stock_quantity == null) ? 0 : item.stock_quantity;
 
@@ -47,7 +50,10 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            item.name = (item.name == null) ? "Stock Item Name" : item.name;
+            var product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == item.product_id);
+            string product_name = product.name;
+
+            item.name = (item.name == null) ? product_name : item.name;
             item.description = (item.description == null) ? "Stock Item Description" : item.description;
             item.stock_quantity = (item.stock_quantity == null) ? 0 : item.stock_quantity;
 

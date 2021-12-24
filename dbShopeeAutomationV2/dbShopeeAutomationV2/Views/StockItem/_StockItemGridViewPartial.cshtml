@@ -22,7 +22,7 @@
         settings.SettingsBehavior.ConfirmDelete = true;
 
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.ShowNewButtonInHeader = false;
         settings.CommandColumn.ShowDeleteButton = true;
         settings.CommandColumn.ShowEditButton = true;
 
@@ -38,22 +38,19 @@
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
-        settings.Columns.Add("name").Caption = "Stock Item";
-        settings.Columns.Add("description").Caption = "Description";
+        // Stock Warehouse
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "stock_warehouse_id";
+            col.Caption = "Stock Warehouse";
 
-        settings.Columns.Add(col => {
-            col.FieldName = "stock_quantity";
-            col.Caption = "Stock Quantity";
-
-            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
-            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
-            prop.NumberType = SpinEditNumberType.Float;
-            prop.MinValue = 0;
-            prop.MaxValue = 10000000;
-            prop.Increment = 0.1M;
-
-            prop.DecimalPlaces = 2;
-            prop.DisplayFormatString = "N2";
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeStockWarehouses.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "stock_warehouse_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
         });
 
         // Product SKU
@@ -71,19 +68,22 @@
             prop.ValidationSettings.RequiredField.IsRequired = true;
         });
 
-        // Stock Warehouse
+        settings.Columns.Add("name").Caption = "Stock Item";
+
         settings.Columns.Add(col =>
         {
-            col.FieldName = "stock_warehouse_id";
-            col.Caption = "Stock Warehouse Title";
+            col.FieldName = "stock_quantity";
+            col.Caption = "Stock Quantity";
 
-            col.ColumnType = MVCxGridViewColumnType.ComboBox;
-            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
-            prop.DataSource = db.TShopeeStockWarehouses.ToList();
-            prop.TextField = "name";
-            prop.ValueField = "stock_warehouse_id";
-            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
-            prop.ValidationSettings.RequiredField.IsRequired = true;
+            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
+            prop.NumberType = SpinEditNumberType.Float;
+            prop.MinValue = 0;
+            prop.MaxValue = 10000000;
+            prop.Increment = 0.1M;
+
+            prop.DecimalPlaces = 2;
+            prop.DisplayFormatString = "N2";
         });
 
         // Last Updated By

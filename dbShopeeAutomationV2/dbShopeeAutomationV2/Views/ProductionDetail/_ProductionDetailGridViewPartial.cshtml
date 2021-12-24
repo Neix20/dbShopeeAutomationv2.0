@@ -68,23 +68,6 @@
             prop.ValidationSettings.RequiredField.IsRequired = true;
         });
 
-        // Height
-        settings.Columns.Add(col =>
-        {
-            col.FieldName = "height";
-            col.Caption = "Height";
-
-            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
-            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
-            prop.NumberType = SpinEditNumberType.Float;
-            prop.MinValue = 0;
-            prop.MaxValue = 10000000;
-            prop.Increment = 0.1M;
-
-            prop.DecimalPlaces = 2;
-            prop.DisplayFormatString = "N2";
-        });
-
         // Width
         settings.Columns.Add(col =>
         {
@@ -131,6 +114,9 @@
             prop.MinValue = 0;
             prop.MaxValue = 10000000;
             prop.Increment = 0.1M;
+
+            prop.DecimalPlaces = 2;
+            prop.DisplayFormatString = "N2";
         });
 
         // Cannot Be Used
@@ -163,7 +149,7 @@
         settings.Columns.Add(column =>
         {
             column.FieldName = "manufactured_date";
-            column.Caption = "Product Manufactured Date";
+            column.Caption = "Manufactured Date";
 
             column.ColumnType = MVCxGridViewColumnType.DateEdit;
             column.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
@@ -185,8 +171,6 @@
             prop.DisplayFormatString = "yyyy-MM-dd";
             prop.DisplayFormatInEditMode = true;
         });
-
-        settings.Columns.Add("UOM").Caption = "UOM";
 
         // Last Updated By
         settings.Columns.Add(col =>

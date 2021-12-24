@@ -187,10 +187,10 @@ namespace dbShopeeAutomationV2.Controllers
                     dbStoredProcedure.productCategoryInsert(category_name, $"{category_name.Substring(0, 1)}", username);
 
                 if (!brand_name.Equals("") && !brandList.Contains(brand_name.ToLower()))
-                    dbStoredProcedure.productBrandInsert(brand_name, "", username);
+                    dbStoredProcedure.productBrandInsert(brand_name, brand_name, username);
 
                 if (!type_name.Equals("") && !typeList.Contains(type_name.ToLower()))
-                    dbStoredProcedure.productTypeInsert(type_name, "", username);
+                    dbStoredProcedure.productTypeInsert(type_name, type_name, username);
 
                 if(!variety_name.Equals("") && !varietyList.Contains(variety_name.ToLower()))
                     dbStoredProcedure.productVarietyInsert(variety_name, $"{variety_name.Substring(0, 1)}", username);

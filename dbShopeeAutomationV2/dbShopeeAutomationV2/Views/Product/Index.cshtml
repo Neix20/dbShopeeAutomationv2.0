@@ -70,11 +70,168 @@ else
                 </div>
             </div>
 
+            @using (Html.BeginForm("ProductGridViewPartialAddNew", "Product", FormMethod.Post, new { @Id = "productForm"}))
+            {
+                @Html.AntiForgeryToken()
 
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Name: </label>
+                        @Html.TextBox("name", "", new { @Class = "form-control", @type = "text", @Required = "true" })
+                    </div>
+                    <div class="col">
+                        <label>Code: </label>
+                        @Html.TextBox("product_code", "", new { @Class = "form-control", @type = "text", @Required = "true" })
+                    </div>
+                    <div class="col">
+                        <label>SKU: </label>
+                        @Html.TextBox("SKU", "", new { @Class = "form-control", @type = "text", @Required = "true" })
+                    </div>
+                </div>
 
-            <div class="p-3">
-                @Html.Action("ProductGridViewPartial")
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Buy Price: </label>
+                        @Html.DevExpress().SpinEdit(settings => {
+                       settings.Name = "buy_price";
+                       settings.Width = Unit.Percentage(100);
+                       settings.Properties.MinValue = 0;
+                       settings.Properties.MaxValue = 10000000;
+                       settings.Properties.Increment = 0.1M;
+                       settings.Properties.DisplayFormatString = "C";
+                   }).GetHtml()
+                    </div>
+                    <div class="col">
+                        <label>Sell Price: </label>
+                        @Html.DevExpress().SpinEdit(settings => {
+                       settings.Name = "sell_price";
+                       settings.Width = Unit.Percentage(100);
+                       settings.Properties.MinValue = 0;
+                       settings.Properties.MaxValue = 10000000;
+                       settings.Properties.Increment = 0.1M;
+                       settings.Properties.DisplayFormatString = "C";
+                   }).GetHtml()
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Brand: </label>
+                        @Html.DevExpress().ComboBox(settings =>
+                   {
+                       settings.Name = "product_brand_id";
+                       settings.Width = Unit.Percentage(100);
+                       settings.SelectedIndex = 0;
+                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.Properties.TextField = "name";
+                       settings.Properties.ValueField = "product_brand_id";
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                       settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                   }).BindList(db.TShopeeProductBrands.ToList()).GetHtml()
+                    </div>
+                    <div class="col">
+                        <label>Model: </label>
+                        @Html.DevExpress().ComboBox(settings =>
+                   {
+                       settings.Name = "product_model_id";
+                       settings.Width = Unit.Percentage(100);
+                       settings.SelectedIndex = 0;
+                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.Properties.TextField = "name";
+                       settings.Properties.ValueField = "product_model_id";
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                       settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                   }).BindList(db.TShopeeProductModels.ToList()).GetHtml()
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Type: </label>
+                        @Html.DevExpress().ComboBox(settings =>
+                   {
+                       settings.Name = "product_type_id";
+                       settings.Width = Unit.Percentage(100);
+                       settings.SelectedIndex = 0;
+                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.Properties.TextField = "name";
+                       settings.Properties.ValueField = "product_type_id";
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                       settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                   }).BindList(db.TShopeeProductTypes.ToList()).GetHtml()
+                    </div>
+                    <div class="col">
+                        <label>Variety: </label>
+                        @Html.DevExpress().ComboBox(settings =>
+                   {
+                       settings.Name = "product_variety_id";
+                       settings.Width = Unit.Percentage(100);
+                       settings.SelectedIndex = 0;
+                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.Properties.TextField = "name";
+                       settings.Properties.ValueField = "product_variety_id";
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                       settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                   }).BindList(db.TShopeeProductVarieties.ToList()).GetHtml()
+                    </div>
+                    <div class="col">
+                        <label>Status: </label>
+                        @Html.DevExpress().ComboBox(settings =>
+                   {
+                       settings.Name = "product_status_id";
+                       settings.Width = Unit.Percentage(100);
+                       settings.SelectedIndex = 0;
+                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.Properties.TextField = "name";
+                       settings.Properties.ValueField = "product_status_id";
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                       settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                   }).BindList(db.TShopeeProductStatus.ToList()).GetHtml()
+                    </div>
+                </div>
+            }
+
+            <div class="row mt-3 mx-2">
+                <div class="col">
+                    <button type="submit" class="btn btn-success" form="productForm">Submit Form</button>
+                </div>
+            </div>
+
+            <div class="row m-2">
+                <div class="col">
+                    <div id="productFormResp">
+                        @Html.Action("ProductGridViewPartial")
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        $(function() {
+            let productForm = $("form[id='productForm']");
+            const productForm_actionLink = productForm.attr("action");
+            const productForm_methodType = productForm.attr("method");
+
+            productForm.submit(e => {
+                e.preventDefault();
+
+                $.ajax({
+                    url: productForm_actionLink,
+                    type: productForm_methodType,
+                    data: productForm.serialize(),
+                    success: resp => {
+                        $("#productFormResp").html(resp);
+                        alert("Product has been inserted successfully!");
+                        window.location.reload();
+                    }
+                });
+            });
+        });
+    </script>
 }

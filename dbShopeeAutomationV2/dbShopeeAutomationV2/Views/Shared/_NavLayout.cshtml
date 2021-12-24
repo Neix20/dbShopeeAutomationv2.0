@@ -2,14 +2,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     IDictionary<string, List<string>> propDict = new Dictionary<string, List<string>>(){
-        {"Manage E-commerce", new List<string>(){"Customer", "Invoice", "Invoice Status", "Order", "Order Item", "Order Item Status",
+        {"E-commerce", new List<string>(){"Customer", "Invoice", "Invoice Status", "Order", "Order Item", "Order Item Status",
                                             "Order Status", "Payment Method", "Platform"}},
-        {"Manage Production", new List<string>(){
+        {"Production", new List<string>(){
             "Product Brand", "Product Category", "Product Model", "Product Type", "Product Variety",
             "Product", "Product Status", "Product Component", "Production", "Production Status", "Production Detail",
             "Supplier", "Supplier Shipment", "Stock Warehouse", "Stock Item", "Upload Excel"}},
-        {"Manage Shipment", new List<string>(){"Carrier", "Shipment", "Shipment Status"}},
-        {"Manage Operations", new List<string>(){"Detail", "User", "User Role"}}
+        {"Shipment", new List<string>(){"Carrier", "Shipment", "Shipment Status"}},
+        {"Operations", new List<string>(){"Detail", "User", "User Role"}}
     };
 
     string uName = (User.Identity.IsAuthenticated) ? User.Identity.Name : "Admin";
@@ -85,7 +85,7 @@
                             {
                                 string controllerLink = $"{Regex.Replace(prop, @" ", "")}";
 
-                                if (kvp.Key.Equals("Manage Production") && prop.Equals("Upload Excel"))
+                                if (kvp.Key.Equals("Production") && prop.Equals("Upload Excel"))
                                 {
                                     controllerLink = "ProductExcel";
                                 }

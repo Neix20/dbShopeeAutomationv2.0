@@ -53,8 +53,7 @@ namespace dbShopeeAutomationV2.Controllers
             dbStoredProcedure.orderUpdate(item.order_id, item.order_title, item.order_placed_date, item.total_price, item.order_status_id, username);
             db.SaveChanges();
 
-            var model = db.TShopeeOrders;
-            return PartialView("_OrderGridViewPartial", model.ToList());
+            return RedirectToAction("Index", "OrderItemParam", new { order_id = item.order_id });
         }
 
         [HttpPost, ValidateInput(false)]

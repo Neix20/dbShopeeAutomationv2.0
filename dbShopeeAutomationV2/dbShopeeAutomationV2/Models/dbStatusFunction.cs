@@ -15,6 +15,12 @@ namespace dbShopeeAutomationV2.Models
             return (invoiceStatus == null) ? -1 : invoiceStatus.invoice_status_id;
         }
 
+        public static int orderID(string title)
+        {
+            var order = db.TShopeeOrders.FirstOrDefault(it => it.order_title.ToLower().Equals(title.ToLower()));
+            return (order == null) ? -1 : order.order_id;
+        }
+
         public static int orderStatusID(string name)
         {
             var orderStatus = db.TShopeeOrderStatus.FirstOrDefault(it => it.name.ToLower().Equals(name.ToLower()));

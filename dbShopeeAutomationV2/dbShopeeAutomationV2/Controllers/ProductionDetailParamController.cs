@@ -23,6 +23,7 @@ namespace dbShopeeAutomationV2.Controllers
         [ValidateInput(false)]
         public ActionResult ProductionDetailParamGridViewGridViewPartial(int? production_id)
         {
+            production_id = (production_id == null) ? -1 : production_id;
             var model = db.TShopeeProductionDetails.Where(it => it.production_id == production_id);
             return PartialView("_ProductionDetailParamGridViewGridViewPartial", model.ToList());
         }
@@ -75,7 +76,7 @@ namespace dbShopeeAutomationV2.Controllers
             item.cannot_be_used = (item.cannot_be_used == null) ? 0 : item.cannot_be_used;
             item.can_be_used = (item.can_be_used == null) ? 0 : item.can_be_used;
 
-            item.production_id = db.TShopeeProductionDetails.FirstOrDefault(it => it.production_detail_id == item.production_detail_id).production_id; ;
+            item.production_id = db.TShopeeProductionDetails.FirstOrDefault(it => it.production_detail_id == item.production_detail_id).production_id;
 
             dbStoredProcedure.productionDetailUpdate(
                 item.production_detail_id, item.UOM,

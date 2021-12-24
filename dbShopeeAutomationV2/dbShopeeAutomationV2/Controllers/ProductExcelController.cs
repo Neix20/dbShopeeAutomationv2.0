@@ -67,7 +67,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             WorkSheet ws = wb.GetWorkSheet("Raw Material Tracking Info");
 
-            checkBrandCategoryType(ws, username);
+            checkBrandCategoryTypeVariety(ws, username);
 
             // Get List of Product SKU from Entity Framework
             IEnumerable<string> productSKUList = db.TShopeeProducts.Select(x => x.SKU);
@@ -110,7 +110,9 @@ namespace dbShopeeAutomationV2.Controllers
                 int product_type_id = dbStatusFunction.productTypeID(product_type);
 
                 int product_model_id = dbStatusFunction.productModelID("Material");
-                int product_variety_id = dbStatusFunction.productVarietyID("Material");
+
+                string product_variety = product_category;
+                int product_variety_id = dbStatusFunction.productVarietyID(product_variety);
 
                 // Buy Price => tmp_arr[14].Value
                 double buy_price = tmp_arr[14].DoubleValue;
@@ -156,7 +158,7 @@ namespace dbShopeeAutomationV2.Controllers
         }
 
         // Get All Brands
-        public void checkBrandCategoryType(WorkSheet ws, string username)
+        public void checkBrandCategoryTypeVariety(WorkSheet ws, string username)
         {
             // Get List of Brand name from Entity Framework
             IEnumerable<string> brandList = db.TShopeeProductBrands.Select(it => it.name.ToLower());
@@ -167,6 +169,9 @@ namespace dbShopeeAutomationV2.Controllers
             // Get List of Type name from Entity Framework
             IEnumerable<string> typeList = db.TShopeeProductTypes.Select(it => it.name.ToLower());
 
+            // Get List of Variety name From Entity Framework
+            IEnumerable<string> varietyList = db.TShopeeProductVarieties.Select(it => it.name.ToLower());
+
             // Get Rows without Headers
             foreach(var row in ws.Rows.ToList().GetRange(4, ws.RowCount - 4))
             {
@@ -174,6 +179,7 @@ namespace dbShopeeAutomationV2.Controllers
                 var tmp_arr = row.ToArray();
 
                 string category_name = (string)tmp_arr[1].Value;
+                string variety_name = category_name;
                 string brand_name = (string) tmp_arr[2].Value;
                 string type_name = (string)tmp_arr[12].Value;
 
@@ -185,6 +191,9 @@ namespace dbShopeeAutomationV2.Controllers
 
                 if (!type_name.Equals("") && !typeList.Contains(type_name.ToLower()))
                     dbStoredProcedure.productTypeInsert(type_name, "", username);
+
+                if(!variety_name.Equals("") && !varietyList.Contains(variety_name.ToLower()))
+                    dbStoredProcedure.productVarietyInsert(variety_name, $"{variety_name.Substring(0, 1)}", username);
             }
             db.SaveChanges();
         }

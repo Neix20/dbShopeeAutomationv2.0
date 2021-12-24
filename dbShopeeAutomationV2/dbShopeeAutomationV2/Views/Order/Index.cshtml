@@ -37,10 +37,56 @@ else
                 </div>
             </div>
 
-            <div class="p-3">
+            @using (Html.BeginForm("OrderGridViewPartialAddNew", "Order", FormMethod.Post, new { @Id = "orderForm" }))
+            {
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Title: </label>
+                        @Html.TextBox("order_title", "", new { @Class="form-control", @Required = true })
+                    </div>
+
+                    <div class="col">
+                        <label>Placement Date: </label>
+                        @Html.DevExpress().DateEdit(settings => {
+                            settings.Name = "order_placed_date";
+                            settings.Properties.DisplayFormatString = "yyyy-MM-dd";
+                            settings.Width = Unit.Percentage(100);
+                        }).GetHtml()
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
+                        <button type="submit" form="orderForm" class="btn btn-success">Submit Form</button>
+                    </div>
+                </div>
+            }
+
+            <div id="orderFormResp" class="p-3">
                 @Html.Action("OrderGridViewPartial")
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        $(function () {
+            let orderForm = $("form[id='orderForm']");
+            const orderForm_actionLink = orderForm.attr("action");
+            const orderForm_methodType = orderForm.attr("method");
+
+            orderForm.submit(e => {
+                e.preventDefault();
+
+                $.ajax({
+                    url: orderForm_actionLink,
+                    type: orderForm_methodType,
+                    data: orderForm.serialize(),
+                    success: resp => {
+                        $("#orderFormResp").html(resp);
+                    }
+                })
+            });
+        });
+    </script>
 }
 

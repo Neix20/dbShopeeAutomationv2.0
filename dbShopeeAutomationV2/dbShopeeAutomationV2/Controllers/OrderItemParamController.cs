@@ -83,10 +83,6 @@ namespace dbShopeeAutomationV2.Controllers
 
             item.order_item_status_id = (int)db.TShopeeOrderItems.FirstOrDefault(it => it.order_item_id == item.order_item_id).order_item_status_id;
 
-            // Update Sub Total
-            var order = db.TShopeeOrders.FirstOrDefault(it => it.order_id == item.order_id);
-            order.total_price -= item.sub_total;
-
             var product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == item.product_id);
             item.sub_total = product.sell_price * item.quantity - item.discount_fee;
 
@@ -116,6 +112,26 @@ namespace dbShopeeAutomationV2.Controllers
 
             var model = db.TShopeeOrderItems.Where(it => it.order_id == item.order_id);
             return PartialView("_OrderItemParamGridViewPartial", model.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult CompleteOrder()
+        {
+            string username = User.Identity.Name;
+
+            string order_id_str = generalFunc.trimStr(Request.Form["order_id"]);
+            int order_id = int.Parse(order_id_str);
+
+            // Update Order Status to Complete
+            int c_ord_sta_id = dbStatusFunction.orderStatusID("Complete");
+
+            var item = db.TShopeeOrders.FirstOrDefault(it => it.order_id == order_id);
+            item.order_status_id = c_ord_sta_id;
+
+            dbStoredProcedure.orderUpdate(item.order_id, item.order_title, item.order_placed_date, item.total_price, item.order_status_id, username);
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Order");
         }
     }
 }

@@ -54,6 +54,8 @@ else
 
             @using (Html.BeginForm("OrderItemParamGridViewPartialAddNew", "OrderItemParam", FormMethod.Post, new { @Id = "orderItemForm" }))
             {
+                @Html.AntiForgeryToken()
+
                 <div class="row m-2">
                     <div class="col">
                         <label>Order Title: </label>
@@ -63,7 +65,7 @@ else
                         <label>Product SKU: </label>
                         @Html.DevExpress().ComboBox(settings => {
                        settings.Name = "product_id";
-                       settings.Width = 180;
+                       settings.Width = Unit.Percentage(100);
                        settings.SelectedIndex = 0;
                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -99,17 +101,33 @@ else
                    }).GetHtml()
                     </div>
                 </div>
+            }
 
+            <div class="row m-2">
+                <div class="col">
+                    <button type="submit" form="orderItemForm" class="btn btn-outline-success">Submit Form</button>
+                </div>
+            </div>
+
+            <div class="row m-2">
+                <div class="col">
+                    <div id="orderItemFormResp">
+                        @Html.Action("OrderItemParamGridViewPartial", new { order_id = (int)ViewData["order_id"] })
+                    </div>
+                </div>
+            </div>
+
+            @using (Html.BeginForm("CompleteOrder", "OrderItemParam", FormMethod.Post, new { @Id = "CompleteOrderForm"}))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.Hidden("order_id", ViewData["order_id"])
                 <div class="row m-2">
                     <div class="col">
-                        <button type="submit" form="orderItemForm" class="btn btn-success">Submit Form</button>
+                        <button type="submit" class="btn btn-success" form="CompleteOrderForm">Complete Order</button>
                     </div>
                 </div>
             }
-
-            <div id="orderItemFormResp" class="p-3">
-                @Html.Action("OrderItemParamGridViewPartial", new { order_id = (int) ViewData["order_id"] })
-            </div>
         </div>
     </div>
 

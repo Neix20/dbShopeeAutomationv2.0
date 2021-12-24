@@ -73,10 +73,6 @@ namespace dbShopeeAutomationV2.Controllers
 
             item.order_item_status_id = (int) db.TShopeeOrderItems.FirstOrDefault(it => it.order_item_id == item.order_item_id).order_item_status_id;
 
-            // Update Sub Total
-            var order = db.TShopeeOrders.FirstOrDefault(it => it.order_id == item.order_id);
-            order.total_price -= item.sub_total;
-
             var product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == item.product_id);
             item.sub_total = product.sell_price * item.quantity - item.discount_fee;
 

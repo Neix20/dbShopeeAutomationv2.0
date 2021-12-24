@@ -46,7 +46,73 @@ else
                 </div>
             </div>
 
-            <div class="p-3">
+            @using (Html.BeginForm("OrderItemGridViewPartialAddNew", "OrderItem", FormMethod.Post, new { @Id = "orderItemForm" }))
+            {
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Order Title: </label>
+                        @Html.DevExpress().ComboBox(settings => {
+                       settings.Name = "order_id";
+                       settings.Width = Unit.Percentage(100);
+                       settings.SelectedIndex = 0;
+                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.Properties.TextField = "order_title";
+                       settings.Properties.ValueField = "order_id";
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                       settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                   }).BindList(db.TShopeeOrders.ToList()).GetHtml()
+                    </div>
+                    <div class="col">
+                        <label>Product SKU: </label>
+                        @Html.DevExpress().ComboBox(settings => {
+                       settings.Name = "product_id";
+                       settings.Width = Unit.Percentage(100);
+                       settings.SelectedIndex = 0;
+                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.Properties.TextField = "SKU";
+                       settings.Properties.ValueField = "product_id";
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                       settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                   }).BindList(db.TShopeeProducts.ToList()).GetHtml()
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Quantity: </label>
+                        @Html.DevExpress().SpinEdit(settings =>
+                   {
+                       settings.Name = "quantity";
+                       settings.Width = Unit.Percentage(100);
+                       settings.Properties.MinValue = 0;
+                       settings.Properties.MaxValue = 10000000;
+                   }).GetHtml()
+                    </div>
+                    <div class="col">
+                        <label>Discount Fee: </label>
+                        @Html.DevExpress().SpinEdit(settings =>
+                   {
+                       settings.Name = "discount_fee";
+                       settings.Width = Unit.Percentage(100);
+                       settings.Properties.MinValue = 0;
+                       settings.Properties.MaxValue = 10000000;
+                       settings.Properties.Increment = 0.1M;
+                       settings.Properties.DecimalPlaces = 2;
+                       settings.Properties.DisplayFormatString = "C";
+                   }).GetHtml()
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
+                        <button type="submit" form="orderItemForm" class="btn btn-success">Submit Form</button>
+                    </div>
+                </div>
+            }
+
+            <div id="orderItemFormResp" class="px-3 pb-3">
                 @Html.Action("OrderItemGridViewPartial")
             </div>
         </div>
@@ -57,5 +123,27 @@ else
             <li class="fst-italic">If you are unable to select a specific product, please check and ensure stock item count is not 0.</li>
         </ul>
     </div>
+
+    <script type="text/javascript">
+        $(function () {
+            let orderItemForm = $("form[id='orderItemForm']");
+            const orderItemForm_actionLink = orderItemForm.attr('action');
+            const orderItemForm_methodType = orderItemForm.attr('method');
+
+            orderItemForm.submit(e => {
+                e.preventDefault();
+
+                $.ajax({
+                    url: orderItemForm_actionLink,
+                    type: orderItemForm_methodType,
+                    data: orderItemForm.serialize(),
+                    success: resp => {
+                        $("#orderItemFormResp").html(resp);
+                        window.location.reload();
+                    }
+                });
+            });
+        });
+    </script>
 }
 

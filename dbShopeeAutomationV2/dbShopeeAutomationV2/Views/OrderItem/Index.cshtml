@@ -104,17 +104,22 @@ else
                    }).GetHtml()
                     </div>
                 </div>
-
-                <div class="row m-2">
-                    <div class="col">
-                        <button type="submit" form="orderItemForm" class="btn btn-success">Submit Form</button>
-                    </div>
-                </div>
             }
 
-            <div id="orderItemFormResp" class="px-3 pb-3">
-                @Html.Action("OrderItemGridViewPartial")
+            <div class="row mt-3 mx-2">
+                <div class="col">
+                    <button type="submit" form="orderItemForm" class="btn btn-success">Submit Form</button>
+                </div>
             </div>
+
+            <div class="row m-2">
+                <div class="col">
+                    <div id="orderItemFormResp">
+                        @Html.Action("OrderItemGridViewPartial")
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 

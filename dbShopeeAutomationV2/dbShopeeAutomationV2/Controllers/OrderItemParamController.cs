@@ -123,10 +123,8 @@ namespace dbShopeeAutomationV2.Controllers
             int order_id = int.Parse(order_id_str);
 
             // Update Order Status to Complete
-            int c_ord_sta_id = dbStatusFunction.orderStatusID("Complete");
-
             var item = db.TShopeeOrders.FirstOrDefault(it => it.order_id == order_id);
-            item.order_status_id = c_ord_sta_id;
+            item.order_status_id = dbStatusFunction.orderStatusID("Complete");
 
             dbStoredProcedure.orderUpdate(item.order_id, item.order_title, item.order_placed_date, item.total_price, item.order_status_id, username);
             db.SaveChanges();

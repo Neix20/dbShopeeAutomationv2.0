@@ -100,5 +100,25 @@ namespace dbShopeeAutomationV2.Controllers
             var model = db.TShopeeProductionDetails.Where(it => it.production_id == item.production_id);
             return PartialView("_ProductionDetailParamGridViewGridViewPartial", model.ToList());
         }
+
+        [HttpPost]
+        public ActionResult CompleteProduction()
+        {
+            string username = User.Identity.Name;
+
+            string production_id_str = generalFunc.trimStr(Request.Form["production_id"]);
+            int production_id = int.Parse(production_id_str);
+
+            // Update Production Status
+            var item = db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id);
+            item.production_status_id = dbStatusFunction.productionStatusID("Complete");
+
+            dbStoredProcedure.productionUpdate(
+                item.production_id, item.title, item.description, 
+                item.staff_name, item.created_date, item.total_usage, item.production_status_id, username);
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Production");
+        }
     }
 }

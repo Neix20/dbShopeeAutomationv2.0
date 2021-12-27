@@ -513,6 +513,7 @@
     <Compile Include="Models\dbStatusFunction.cs" />
     <Compile Include="Models\dbStoredProcedure.cs" />
     <Compile Include="Models\generalFunc.cs" />
+    <Compile Include="Models\mCustomer.cs" />
     <Compile Include="Models\mStockWarehouse.cs" />
     <Compile Include="Models\PackageListingSummary.cs" />
     <Compile Include="Models\ProductSummary.cs" />

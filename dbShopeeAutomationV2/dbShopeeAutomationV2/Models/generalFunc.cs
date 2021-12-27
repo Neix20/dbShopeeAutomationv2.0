@@ -9,6 +9,7 @@ namespace dbShopeeAutomationV2.Models
     {
         public static string trimStr(string str)
         {
+            if (str == null) return "";
             return str.Trim('"');
         }
 
@@ -107,11 +108,28 @@ namespace dbShopeeAutomationV2.Models
             return new string('0', zLen - num_str.Length) + num_str;
         }
 
-
         public static string GenProductionCode(int last_production_id)
         {
             int zLen = 5;
             return $"JS{FormatNum(last_production_id, zLen)}";
+        }
+
+        public static string[] FormatCustomerName(string name)
+        {
+            name = trimStr(name);
+            name = (name == "") ? "first_name last_name" : name;
+            int name_count = name.Split(' ').Length - 1;
+            name = (name_count < 1) ? $"{name} " : name;
+
+            return name.Split(new[] { " " }, StringSplitOptions.None);
+        }
+
+        public static string[] FormatAddress(string address)
+        {
+            address = trimStr(address);
+            int address_count = address.Split(new[] { ", " }, StringSplitOptions.None).Length - 1;
+            address = (address_count != 5) ? "address line 1, address line 2, city, 00000, state, country" : address;
+            return address.Split(new[] { ", " }, StringSplitOptions.None);
         }
     }
 }

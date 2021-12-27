@@ -58,7 +58,7 @@ else
                     </div>
                     <div class="col">
                         <label>Email Address: </label>
-                        @Html.TextBox("email_address", "", new { @Class = "form-control", @Type = "email", @Required = "true" })
+                        @Html.TextBox("email_address", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
                     </div>
                 </div>
 
@@ -145,4 +145,27 @@ else
 
         </div>
     </div>
+
+    <script type="text/javascript">
+        $(function () {
+            let cForm = $("form[id='customerForm']");
+            const cForm_actionLink = cForm.attr("action");
+            const cForm_methodType = cForm.attr("method");
+
+            cForm.submit(e => {
+                e.preventDefault();
+
+                $.ajax({
+                    url: cForm_actionLink,
+                    type: cForm_methodType,
+                    data: cForm.serialize(),
+                    success: resp => {
+                        $("#customerFormResp").html(resp);
+                        alert("Customer has been inserted successfully!");
+                        cForm.find("input[type=text], textarea").val("");
+                    }
+                });
+            });
+        });
+    </script>
 }

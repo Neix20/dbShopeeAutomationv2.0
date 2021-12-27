@@ -38,10 +38,93 @@ else
                 </div>
             </div>
 
-            <div class="p-3">
-                @Html.Action("ProductComponentGridViewPartial")
+            @using (Html.BeginForm("ProductComponentGridViewPartialAddNew", "ProductComponent", FormMethod.Post, new { @Id = "productComponentForm" }))
+            {
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Master Product SKU: </label>
+                        @Html.DevExpress().ComboBox(settings =>
+                    {
+                        settings.Name = "master_product_id";
+                        settings.Width = Unit.Percentage(106);
+                        settings.SelectedIndex = 0;
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.TextField = "SKU";
+                        settings.Properties.ValueField = "product_id";
+                        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                        settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                    }).BindList(db.TShopeeProducts.ToList()).GetHtml()
+                    </div>
+                    <div class="col">
+                        <label>Sub Product SKU: </label>
+                        @Html.DevExpress().ComboBox(settings =>
+                    {
+                        settings.Name = "sub_product_id";
+                        settings.Width = Unit.Percentage(106);
+                        settings.SelectedIndex = 0;
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.TextField = "SKU";
+                        settings.Properties.ValueField = "product_id";
+                        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                        settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                    }).BindList(db.TShopeeProducts.ToList()).GetHtml()
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Quantity: </label>
+                        @Html.DevExpress().SpinEdit(settings =>
+                   {
+                       settings.Name = "quantity";
+                       settings.Width = Unit.Percentage(49);
+                       settings.Properties.MinValue = 0;
+                       settings.Properties.MaxValue = 10000000;
+                   }).GetHtml()
+                    </div>
+                </div>
+            }
+
+            <div class="row mt-3 mx-2">
+                <div class="col">
+                    <button type="submit" class="btn btn-success" form="productComponentForm">Submit Form</button>
+                </div>
             </div>
+
+            <div class="row mx-2">
+                <div class="col">
+                    <div id="productComponentFormResp">
+                        @Html.Action("ProductComponentGridViewPartial")
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
+
+    <script type="text/javascript">
+        $(function () {
+            let pcForm = $("form[id='productComponentForm']");
+            const pcForm_actionLink = pcForm.attr("action");
+            const pcForm_methodType = pcForm.attr("method");
+
+            pcForm.submit(e => {
+                e.preventDefault();
+
+                $.ajax({
+                    url: pcForm_actionLink,
+                    type: pcForm_methodType,
+                    data: pcForm.serialize(),
+                    success: resp => {
+                        $("#productComponentFormResp").html(resp);
+                        alert("Product Component has been inserted successfully!");
+                        pcForm.find("input[type=text], textarea").val("");
+                    }
+                });
+            });
+        });
+    </script>
 }
 

@@ -95,6 +95,7 @@ else
                         @Html.DevExpress().ComboBox(settings =>
                    {
                        settings.Name = "product_status_id";
+                       settings.Width = Unit.Percentage(106);
                        settings.SelectedIndex = 0;
                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -109,8 +110,10 @@ else
                 <div class="row m-2">
                     <div class="col">
                         <label>Buy Price: </label>
-                        @Html.DevExpress().SpinEdit(settings => {
+                        @Html.DevExpress().SpinEdit(settings => 
+                   {
                        settings.Name = "buy_price";
+                       settings.Width = Unit.Percentage(100);
                        settings.Properties.MinValue = 0;
                        settings.Properties.MaxValue = 10000000;
                        settings.Properties.Increment = 0.1M;
@@ -119,8 +122,10 @@ else
                     </div>
                     <div class="col">
                         <label>Sell Price: </label>
-                        @Html.DevExpress().SpinEdit(settings => {
+                        @Html.DevExpress().SpinEdit(settings => 
+                   {
                        settings.Name = "sell_price";
+                       settings.Width = Unit.Percentage(100);
                        settings.Properties.MinValue = 0;
                        settings.Properties.MaxValue = 10000000;
                        settings.Properties.Increment = 0.1M;
@@ -135,6 +140,7 @@ else
                         @Html.DevExpress().ComboBox(settings =>
                    {
                        settings.Name = "product_brand_id";
+                       settings.Width = Unit.Percentage(106);
                        settings.SelectedIndex = 0;
                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -149,6 +155,7 @@ else
                         @Html.DevExpress().ComboBox(settings =>
                    {
                        settings.Name = "product_model_id";
+                       settings.Width = Unit.Percentage(106);
                        settings.SelectedIndex = 0;
                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -166,6 +173,7 @@ else
                         @Html.DevExpress().ComboBox(settings =>
                    {
                        settings.Name = "product_type_id";
+                       settings.Width = Unit.Percentage(106);
                        settings.SelectedIndex = 0;
                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -180,6 +188,7 @@ else
                         @Html.DevExpress().ComboBox(settings =>
                    {
                        settings.Name = "product_variety_id";
+                       settings.Width = Unit.Percentage(106);
                        settings.SelectedIndex = 0;
                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -210,8 +219,6 @@ else
 
     <script type="text/javascript">
         $(function () {
-            // CSS Selector
-            $("form[id='productForm'] input[type=text]").css("width", 500);
 
             let productForm = $("form[id='productForm']");
             const productForm_actionLink = productForm.attr("action");

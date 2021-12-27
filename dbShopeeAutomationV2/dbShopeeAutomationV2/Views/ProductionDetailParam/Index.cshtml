@@ -62,8 +62,10 @@ else
                     </div>
                     <div class="col">
                         <label>Product: </label>
-                        @Html.DevExpress().ComboBox(settings => {
+                        @Html.DevExpress().ComboBox(settings => 
+                   {
                        settings.Name = "product_id";
+                       settings.Width = Unit.Percentage(106);
                        settings.SelectedIndex = 0;
                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -81,6 +83,7 @@ else
                         @Html.DevExpress().SpinEdit(settings =>
                            {
                                settings.Name = "width";
+                               settings.Width = Unit.Percentage(100);
                                settings.Properties.MinValue = 0;
                                settings.Properties.MaxValue = 10000000;
                                settings.Properties.Increment = 0.1M;
@@ -93,6 +96,7 @@ else
                         @Html.DevExpress().SpinEdit(settings =>
                            {
                                settings.Name = "length";
+                               settings.Width = Unit.Percentage(100);
                                settings.Properties.MinValue = 0;
                                settings.Properties.MaxValue = 10000000;
                                settings.Properties.Increment = 0.1M;
@@ -108,6 +112,7 @@ else
                         @Html.DevExpress().SpinEdit(settings =>
                        {
                            settings.Name = "quantity";
+                           settings.Width = Unit.Percentage(49);
                            settings.Properties.MinValue = 0;
                            settings.Properties.MaxValue = 10000000;
                        }).GetHtml()
@@ -120,6 +125,7 @@ else
                         @Html.DevExpress().SpinEdit(settings =>
                        {
                            settings.Name = "cannot_be_used";
+                           settings.Width = Unit.Percentage(100);
                            settings.Properties.MinValue = 0;
                            settings.Properties.MaxValue = 10000000;
                        }).GetHtml()
@@ -129,6 +135,7 @@ else
                         @Html.DevExpress().SpinEdit(settings =>
                        {
                            settings.Name = "can_be_used";
+                           settings.Width = Unit.Percentage(100);
                            settings.Properties.MinValue = 0;
                            settings.Properties.MaxValue = 10000000;
                        }).GetHtml()
@@ -167,8 +174,6 @@ else
 
     <script type="text/javascript">
         $(function () {
-            // CSS Selector
-            $("form[id='productionDetailForm'] input[type=text]").css("width", "500px");
 
             let productionDetailForm = $("form[id='productionDetailForm']");
             const productionDetailForm_actionLink = productionDetailForm.attr("action");

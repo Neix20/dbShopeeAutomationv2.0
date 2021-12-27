@@ -306,6 +306,9 @@
     <Property Name="name" Type="varchar(max)" />
     <Property Name="code" Type="varchar" MaxLength="20" />
     <Property Name="nation" Type="varchar" MaxLength="20" />
+    <Property Name="poc_name" Type="varchar(max)" />
+    <Property Name="poc_email" Type="varchar(max)" />
+    <Property Name="poc_phone_number" Type="varchar" MaxLength="20" />
     <Property Name="detail_id" Type="int" />
   </EntityType>
   <EntityType Name="TShopeeSupplierShipment">
@@ -839,6 +842,9 @@
     <Parameter Name="name" Type="varchar(max)" Mode="In" />
     <Parameter Name="code" Type="varchar" Mode="In" />
     <Parameter Name="nation" Type="varchar" Mode="In" />
+    <Parameter Name="poc_name" Type="varchar(max)" Mode="In" />
+    <Parameter Name="poc_email" Type="varchar(max)" Mode="In" />
+    <Parameter Name="poc_phone_number" Type="varchar" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeSupplier_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -846,6 +852,9 @@
     <Parameter Name="name" Type="varchar(max)" Mode="In" />
     <Parameter Name="code" Type="varchar" Mode="In" />
     <Parameter Name="nation" Type="varchar" Mode="In" />
+    <Parameter Name="poc_name" Type="varchar(max)" Mode="In" />
+    <Parameter Name="poc_email" Type="varchar(max)" Mode="In" />
+    <Parameter Name="poc_phone_number" Type="varchar" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeSupplierShipment_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">

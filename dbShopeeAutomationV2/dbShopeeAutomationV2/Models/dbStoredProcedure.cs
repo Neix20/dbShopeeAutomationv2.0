@@ -536,7 +536,7 @@ namespace dbShopeeAutomationV2.Models
         }
 
         // Supplier Stored Procedure
-        public static int supplierInsert(string name, string code, string nation, string username)
+        public static int supplierInsert(string name, string code, string nation, string poc_name, string poc_email, string poc_phone_number, string username)
         {
             // Create New Detail
             string status = $"Supplier: {name}";
@@ -545,10 +545,10 @@ namespace dbShopeeAutomationV2.Models
             db.SaveChanges();
 
             int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
-            return db.NSP_TShopeeSupplier_Insert(name, code, nation, detail_id);
+            return db.NSP_TShopeeSupplier_Insert(name, code, nation, poc_name, poc_email, poc_phone_number, detail_id);
         }
 
-        public static int supplierUpdate(int supplier_id, string name, string code, string nation, string username)
+        public static int supplierUpdate(int supplier_id, string name, string code, string nation, string poc_name, string poc_email, string poc_phone_number, string username)
         {
             int detail_id = (int)db.TShopeeSuppliers.FirstOrDefault(it => it.supplier_id == supplier_id).detail_id;
             TShopeeDetail detail = db.TShopeeDetails.FirstOrDefault(it => it.detail_id == detail_id);
@@ -556,7 +556,7 @@ namespace dbShopeeAutomationV2.Models
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
-            return db.NSP_TShopeeSupplier_Update(supplier_id, name, code, nation, detail_id);
+            return db.NSP_TShopeeSupplier_Update(supplier_id, name, code, nation, poc_name, poc_email, poc_phone_number, detail_id);
         }
 
         public static int supplierDelete(int supplier_id)

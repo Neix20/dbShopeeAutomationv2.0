@@ -131,5 +131,41 @@ namespace dbShopeeAutomationV2.Models
             address = (address_count != 5) ? "address line 1, address line 2, city, 00000, state, country" : address;
             return address.Split(new[] { ", " }, StringSplitOptions.None);
         }
+
+        public static int[] base_calc(int num, int base_num)
+        {
+            List<int> numList = new List<int>();
+            for (; num > 0; num /= base_num)
+            {
+                int tmp = num % base_num;
+                num += (tmp == 0) ? 1 : 0;
+                numList.Add(tmp);
+            }
+            numList.Reverse();
+            return numList.ToArray();
+        }
+
+        public static string GenSupplierCode(int num) {
+            int[] numArr = base_calc(num, 26);
+            List<string> strList = new List<String>();
+
+            // Increment By 1 (As in Minus)
+            for (int i = numArr.Length - 1; i > 0; i--)
+            {
+                if (numArr[i] <= 0)
+                {
+                    numArr[i] += 26;
+                    numArr[i - 1] -= 1;
+                }
+            }
+
+            foreach (var tmp_num in numArr)
+            {
+                if (tmp_num == 0) continue;
+                strList.Add($"{Convert.ToChar(tmp_num + 64)}");
+            }
+
+            return String.Join("", strList);
+        }
     }
 }

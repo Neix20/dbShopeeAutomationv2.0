@@ -696,22 +696,6 @@
       <Parameter Name="country" Mode="In" Type="String" />
       <Parameter Name="detail_id" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeSupplier_Delete">
-      <Parameter Name="supplier_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeSupplier_Insert">
-      <Parameter Name="name" Mode="In" Type="String" />
-      <Parameter Name="code" Mode="In" Type="String" />
-      <Parameter Name="nation" Mode="In" Type="String" />
-      <Parameter Name="detail_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeSupplier_Update">
-      <Parameter Name="supplier_id" Mode="In" Type="Int32" />
-      <Parameter Name="name" Mode="In" Type="String" />
-      <Parameter Name="code" Mode="In" Type="String" />
-      <Parameter Name="nation" Mode="In" Type="String" />
-      <Parameter Name="detail_id" Mode="In" Type="Int32" />
-    </FunctionImport>
     <FunctionImport Name="NSP_TShopeeSupplierShipment_Delete">
       <Parameter Name="supplier_shipment_id" Mode="In" Type="Int32" />
     </FunctionImport>
@@ -824,7 +808,6 @@
       <Parameter Name="code" Mode="In" Type="String" />
       <Parameter Name="detail_id" Mode="In" Type="Int32" />
     </FunctionImport>
-    <EntitySet Name="TShopeeSuppliers" EntityType="dbShopeeAutomationV2Model.TShopeeSupplier" />
     <EntitySet Name="TShopeeProductModels" EntityType="dbShopeeAutomationV2Model.TShopeeProductModel" />
     <FunctionImport Name="NSP_TShopeeProductModel_Delete">
       <Parameter Name="product_model_id" Mode="In" Type="Int32" />
@@ -861,6 +844,29 @@
       <Parameter Name="created_date" Mode="In" Type="DateTime" />
       <Parameter Name="total_usage" Mode="In" Type="Decimal" />
       <Parameter Name="production_status_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="TShopeeSuppliers" EntityType="dbShopeeAutomationV2Model.TShopeeSupplier" />
+    <FunctionImport Name="NSP_TShopeeSupplier_Delete">
+      <Parameter Name="supplier_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeSupplier_Insert">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="code" Mode="In" Type="String" />
+      <Parameter Name="nation" Mode="In" Type="String" />
+      <Parameter Name="poc_name" Mode="In" Type="String" />
+      <Parameter Name="poc_email" Mode="In" Type="String" />
+      <Parameter Name="poc_phone_number" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeSupplier_Update">
+      <Parameter Name="supplier_id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="code" Mode="In" Type="String" />
+      <Parameter Name="nation" Mode="In" Type="String" />
+      <Parameter Name="poc_name" Mode="In" Type="String" />
+      <Parameter Name="poc_email" Mode="In" Type="String" />
+      <Parameter Name="poc_phone_number" Mode="In" Type="String" />
       <Parameter Name="detail_id" Mode="In" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
@@ -900,16 +906,6 @@
     <Property Name="code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="detail_id" Type="Int32" />
   </EntityType>
-  <EntityType Name="TShopeeSupplier">
-    <Key>
-      <PropertyRef Name="supplier_id" />
-    </Key>
-    <Property Name="supplier_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="nation" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="detail_id" Type="Int32" />
-  </EntityType>
   <EntityType Name="TShopeeProductModel">
     <Key>
       <PropertyRef Name="product_model_id" />
@@ -930,6 +926,19 @@
     <Property Name="created_date" Type="DateTime" Precision="3" />
     <Property Name="total_usage" Type="Decimal" Precision="10" Scale="6" />
     <Property Name="production_status_id" Type="Int32" />
+    <Property Name="detail_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TShopeeSupplier">
+    <Key>
+      <PropertyRef Name="supplier_id" />
+    </Key>
+    <Property Name="supplier_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="nation" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="poc_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="poc_email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="poc_phone_number" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="detail_id" Type="Int32" />
   </EntityType>
 </Schema>

@@ -10,6 +10,10 @@
         detailDict.Add(it.detail_id, it);
     });
 
+    List<mLocality> localityList = new List<mLocality>();
+    localityList.Add(new mLocality("Local"));
+    localityList.Add(new mLocality("International"));
+
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "SupplierGridView";
         settings.Width = Unit.Percentage(100);
@@ -39,8 +43,27 @@
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
         settings.Columns.Add("name").Caption = "Supplier";
+
         settings.Columns.Add("code").Caption = "NTL Code";
-        settings.Columns.Add("nation").Caption = "Locality";
+
+        // Nation
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "nation";
+            col.Caption = "Locality";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = localityList;
+            prop.TextField = "value";
+            prop.ValueField = "value";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
+        });
+
+        settings.Columns.Add("poc_name").Caption = "POC Name";
+        settings.Columns.Add("poc_email").Caption = "POC Email";
+        settings.Columns.Add("poc_phone_number").Caption = "POC Phone Number";
 
         // Last Updated By
         settings.Columns.Add(columns =>

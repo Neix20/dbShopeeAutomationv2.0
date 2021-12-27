@@ -54,9 +54,9 @@ namespace dbShopeeAutomationV2.Models
         public virtual DbSet<TShopeeProductCategory> TShopeeProductCategories { get; set; }
         public virtual DbSet<TShopeeProductType> TShopeeProductTypes { get; set; }
         public virtual DbSet<TShopeeProductVariety> TShopeeProductVarieties { get; set; }
-        public virtual DbSet<TShopeeSupplier> TShopeeSuppliers { get; set; }
         public virtual DbSet<TShopeeProductModel> TShopeeProductModels { get; set; }
         public virtual DbSet<TShopeeProduction> TShopeeProductions { get; set; }
+        public virtual DbSet<TShopeeSupplier> TShopeeSuppliers { get; set; }
     
         public virtual int NSP_TShopeeCarrier_Delete(Nullable<int> carrier_id)
         {
@@ -1478,61 +1478,6 @@ namespace dbShopeeAutomationV2.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeStockWarehouse_Update", stock_warehouse_idParameter, nameParameter, email_addressParameter, phone_numberParameter, address_line_1Parameter, address_line_2Parameter, cityParameter, stateParameter, zip_codeParameter, countryParameter, detail_idParameter);
         }
     
-        public virtual int NSP_TShopeeSupplier_Delete(Nullable<int> supplier_id)
-        {
-            var supplier_idParameter = supplier_id.HasValue ?
-                new ObjectParameter("supplier_id", supplier_id) :
-                new ObjectParameter("supplier_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeSupplier_Delete", supplier_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeSupplier_Insert(string name, string code, string nation, Nullable<int> detail_id)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var codeParameter = code != null ?
-                new ObjectParameter("code", code) :
-                new ObjectParameter("code", typeof(string));
-    
-            var nationParameter = nation != null ?
-                new ObjectParameter("nation", nation) :
-                new ObjectParameter("nation", typeof(string));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeSupplier_Insert", nameParameter, codeParameter, nationParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeSupplier_Update(Nullable<int> supplier_id, string name, string code, string nation, Nullable<int> detail_id)
-        {
-            var supplier_idParameter = supplier_id.HasValue ?
-                new ObjectParameter("supplier_id", supplier_id) :
-                new ObjectParameter("supplier_id", typeof(int));
-    
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var codeParameter = code != null ?
-                new ObjectParameter("code", code) :
-                new ObjectParameter("code", typeof(string));
-    
-            var nationParameter = nation != null ?
-                new ObjectParameter("nation", nation) :
-                new ObjectParameter("nation", typeof(string));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeSupplier_Update", supplier_idParameter, nameParameter, codeParameter, nationParameter, detail_idParameter);
-        }
-    
         public virtual int NSP_TShopeeSupplierShipment_Delete(Nullable<int> supplier_shipment_id)
         {
             var supplier_shipment_idParameter = supplier_shipment_id.HasValue ?
@@ -2026,6 +1971,85 @@ namespace dbShopeeAutomationV2.Models
                 new ObjectParameter("detail_id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProduction_Update", production_idParameter, titleParameter, descriptionParameter, staff_nameParameter, created_dateParameter, total_usageParameter, production_status_idParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeSupplier_Delete(Nullable<int> supplier_id)
+        {
+            var supplier_idParameter = supplier_id.HasValue ?
+                new ObjectParameter("supplier_id", supplier_id) :
+                new ObjectParameter("supplier_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeSupplier_Delete", supplier_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeSupplier_Insert(string name, string code, string nation, string poc_name, string poc_email, string poc_phone_number, Nullable<int> detail_id)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var codeParameter = code != null ?
+                new ObjectParameter("code", code) :
+                new ObjectParameter("code", typeof(string));
+    
+            var nationParameter = nation != null ?
+                new ObjectParameter("nation", nation) :
+                new ObjectParameter("nation", typeof(string));
+    
+            var poc_nameParameter = poc_name != null ?
+                new ObjectParameter("poc_name", poc_name) :
+                new ObjectParameter("poc_name", typeof(string));
+    
+            var poc_emailParameter = poc_email != null ?
+                new ObjectParameter("poc_email", poc_email) :
+                new ObjectParameter("poc_email", typeof(string));
+    
+            var poc_phone_numberParameter = poc_phone_number != null ?
+                new ObjectParameter("poc_phone_number", poc_phone_number) :
+                new ObjectParameter("poc_phone_number", typeof(string));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeSupplier_Insert", nameParameter, codeParameter, nationParameter, poc_nameParameter, poc_emailParameter, poc_phone_numberParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeSupplier_Update(Nullable<int> supplier_id, string name, string code, string nation, string poc_name, string poc_email, string poc_phone_number, Nullable<int> detail_id)
+        {
+            var supplier_idParameter = supplier_id.HasValue ?
+                new ObjectParameter("supplier_id", supplier_id) :
+                new ObjectParameter("supplier_id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var codeParameter = code != null ?
+                new ObjectParameter("code", code) :
+                new ObjectParameter("code", typeof(string));
+    
+            var nationParameter = nation != null ?
+                new ObjectParameter("nation", nation) :
+                new ObjectParameter("nation", typeof(string));
+    
+            var poc_nameParameter = poc_name != null ?
+                new ObjectParameter("poc_name", poc_name) :
+                new ObjectParameter("poc_name", typeof(string));
+    
+            var poc_emailParameter = poc_email != null ?
+                new ObjectParameter("poc_email", poc_email) :
+                new ObjectParameter("poc_email", typeof(string));
+    
+            var poc_phone_numberParameter = poc_phone_number != null ?
+                new ObjectParameter("poc_phone_number", poc_phone_number) :
+                new ObjectParameter("poc_phone_number", typeof(string));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeSupplier_Update", supplier_idParameter, nameParameter, codeParameter, nationParameter, poc_nameParameter, poc_emailParameter, poc_phone_numberParameter, detail_idParameter);
         }
     }
 }

@@ -32,9 +32,9 @@
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeProductCategory" Width="1.5" PointX="2.75" PointY="14.375" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeProductType" Width="1.5" PointX="6.75" PointY="14.375" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeProductVariety" Width="1.5" PointX="8.875" PointY="14.375" />
-        <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeSupplier" Width="1.5" PointX="0.75" PointY="2.875" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeProductModel" Width="1.5" PointX="4.75" PointY="14.375" />
         <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeProduction" Width="1.5" PointX="4.75" PointY="10.75" />
+        <EntityTypeShape EntityType="dbShopeeAutomationV2Model.TShopeeSupplier" Width="1.5" PointX="0.75" PointY="2.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

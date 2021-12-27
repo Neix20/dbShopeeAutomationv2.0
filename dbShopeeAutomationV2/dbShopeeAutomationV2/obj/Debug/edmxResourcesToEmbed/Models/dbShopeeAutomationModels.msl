@@ -900,9 +900,6 @@
     <FunctionImportMapping FunctionImportName="NSP_TShopeeStockWarehouse_Delete" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeStockWarehouse_Delete" />
     <FunctionImportMapping FunctionImportName="NSP_TShopeeStockWarehouse_Insert" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeStockWarehouse_Insert" />
     <FunctionImportMapping FunctionImportName="NSP_TShopeeStockWarehouse_Update" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeStockWarehouse_Update" />
-    <FunctionImportMapping FunctionImportName="NSP_TShopeeSupplier_Delete" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplier_Delete" />
-    <FunctionImportMapping FunctionImportName="NSP_TShopeeSupplier_Insert" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplier_Insert" />
-    <FunctionImportMapping FunctionImportName="NSP_TShopeeSupplier_Update" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplier_Update" />
     <FunctionImportMapping FunctionImportName="NSP_TShopeeSupplierShipment_Delete" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplierShipment_Delete" />
     <FunctionImportMapping FunctionImportName="NSP_TShopeeSupplierShipment_Insert" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplierShipment_Insert" />
     <FunctionImportMapping FunctionImportName="NSP_TShopeeSupplierShipment_Update" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplierShipment_Update" />
@@ -1036,37 +1033,6 @@
     <FunctionImportMapping FunctionImportName="NSP_TShopeeProductVariety_Delete" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeProductVariety_Delete" />
     <FunctionImportMapping FunctionImportName="NSP_TShopeeProductVariety_Insert" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeProductVariety_Insert" />
     <FunctionImportMapping FunctionImportName="NSP_TShopeeProductVariety_Update" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeProductVariety_Update" />
-    <EntitySetMapping Name="TShopeeSuppliers">
-      <EntityTypeMapping TypeName="dbShopeeAutomationV2Model.TShopeeSupplier">
-        <MappingFragment StoreEntitySet="TShopeeSupplier">
-          <ScalarProperty Name="detail_id" ColumnName="detail_id" />
-          <ScalarProperty Name="nation" ColumnName="nation" />
-          <ScalarProperty Name="code" ColumnName="code" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="dbShopeeAutomationV2Model.TShopeeSupplier">
-        <ModificationFunctionMapping>
-          <InsertFunction FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplier_Insert">
-            <ScalarProperty Name="detail_id" ParameterName="detail_id" />
-            <ScalarProperty Name="nation" ParameterName="nation" />
-            <ScalarProperty Name="code" ParameterName="code" />
-            <ScalarProperty Name="name" ParameterName="name" />
-          </InsertFunction>
-          <UpdateFunction FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplier_Update">
-            <ScalarProperty Name="detail_id" ParameterName="detail_id" Version="Current" />
-            <ScalarProperty Name="nation" ParameterName="nation" Version="Current" />
-            <ScalarProperty Name="code" ParameterName="code" Version="Current" />
-            <ScalarProperty Name="name" ParameterName="name" Version="Current" />
-            <ScalarProperty Name="supplier_id" ParameterName="supplier_id" Version="Current" />
-          </UpdateFunction>
-          <DeleteFunction FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplier_Delete">
-            <ScalarProperty Name="supplier_id" ParameterName="supplier_id" />
-          </DeleteFunction>
-        </ModificationFunctionMapping>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TShopeeProductModels">
       <EntityTypeMapping TypeName="dbShopeeAutomationV2Model.TShopeeProductModel">
         <MappingFragment StoreEntitySet="TShopeeProductModel">
@@ -1141,5 +1107,48 @@
     <FunctionImportMapping FunctionImportName="NSP_TShopeeProduction_Delete" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeProduction_Delete" />
     <FunctionImportMapping FunctionImportName="NSP_TShopeeProduction_Insert" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeProduction_Insert" />
     <FunctionImportMapping FunctionImportName="NSP_TShopeeProduction_Update" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeProduction_Update" />
+    <EntitySetMapping Name="TShopeeSuppliers">
+      <EntityTypeMapping TypeName="dbShopeeAutomationV2Model.TShopeeSupplier">
+        <MappingFragment StoreEntitySet="TShopeeSupplier">
+          <ScalarProperty Name="detail_id" ColumnName="detail_id" />
+          <ScalarProperty Name="poc_phone_number" ColumnName="poc_phone_number" />
+          <ScalarProperty Name="poc_email" ColumnName="poc_email" />
+          <ScalarProperty Name="poc_name" ColumnName="poc_name" />
+          <ScalarProperty Name="nation" ColumnName="nation" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="dbShopeeAutomationV2Model.TShopeeSupplier">
+        <ModificationFunctionMapping>
+          <InsertFunction FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplier_Insert">
+            <ScalarProperty Name="detail_id" ParameterName="detail_id" />
+            <ScalarProperty Name="poc_phone_number" ParameterName="poc_phone_number" />
+            <ScalarProperty Name="poc_email" ParameterName="poc_email" />
+            <ScalarProperty Name="poc_name" ParameterName="poc_name" />
+            <ScalarProperty Name="nation" ParameterName="nation" />
+            <ScalarProperty Name="code" ParameterName="code" />
+            <ScalarProperty Name="name" ParameterName="name" />
+          </InsertFunction>
+          <UpdateFunction FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplier_Update">
+            <ScalarProperty Name="detail_id" ParameterName="detail_id" Version="Current" />
+            <ScalarProperty Name="poc_phone_number" ParameterName="poc_phone_number" Version="Current" />
+            <ScalarProperty Name="poc_email" ParameterName="poc_email" Version="Current" />
+            <ScalarProperty Name="poc_name" ParameterName="poc_name" Version="Current" />
+            <ScalarProperty Name="nation" ParameterName="nation" Version="Current" />
+            <ScalarProperty Name="code" ParameterName="code" Version="Current" />
+            <ScalarProperty Name="name" ParameterName="name" Version="Current" />
+            <ScalarProperty Name="supplier_id" ParameterName="supplier_id" Version="Current" />
+          </UpdateFunction>
+          <DeleteFunction FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplier_Delete">
+            <ScalarProperty Name="supplier_id" ParameterName="supplier_id" />
+          </DeleteFunction>
+        </ModificationFunctionMapping>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="NSP_TShopeeSupplier_Delete" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplier_Delete" />
+    <FunctionImportMapping FunctionImportName="NSP_TShopeeSupplier_Insert" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplier_Insert" />
+    <FunctionImportMapping FunctionImportName="NSP_TShopeeSupplier_Update" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplier_Update" />
   </EntityContainerMapping>
 </Mapping>

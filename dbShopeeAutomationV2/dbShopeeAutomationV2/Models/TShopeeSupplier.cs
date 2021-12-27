@@ -18,6 +18,9 @@ namespace dbShopeeAutomationV2.Models
         public string name { get; set; }
         public string code { get; set; }
         public string nation { get; set; }
+        public string poc_name { get; set; }
+        public string poc_email { get; set; }
+        public string poc_phone_number { get; set; }
         public Nullable<int> detail_id { get; set; }
     }
 }

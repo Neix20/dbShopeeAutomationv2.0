@@ -37,10 +37,112 @@ else
                 </div>
             </div>
 
-            <div class="p-3">
-                @Html.Action("CustomerGridViewPartial")
+            @using (Html.BeginForm("CustomerGridViewPartialAddNew", "Customer", FormMethod.Post, new { @Id = "customerForm" }))
+            {
+
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Platform Name: </label>
+                        @Html.DevExpress().ComboBox(settings =>
+                   {
+                       settings.Name = "platform_id";
+                       settings.Width = Unit.Percentage(106);
+                       settings.SelectedIndex = 0;
+                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.Properties.TextField = "name";
+                       settings.Properties.ValueField = "platform_id";
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                       settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                   }).BindList(db.TShopeePlatforms.ToList()).GetHtml()
+                    </div>
+                    <div class="col">
+                        <label>Email Address: </label>
+                        @Html.TextBox("email_address", "", new { @Class = "form-control", @Type = "email", @Required = "true" })
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
+                        <label>First Name: </label>
+                        @Html.TextBox("first_name", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
+                    </div>
+                    <div class="col">
+                        <label>Last Name: </label>
+                        @Html.TextBox("last_name", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Date of Birth: </label>
+                        @Html.DevExpress().DateEdit(settings =>
+                   {
+                       settings.Name = "dob";
+                       settings.Width = Unit.Percentage(100);
+                       settings.Properties.DisplayFormatString = "yyyy-MM-dd";
+                   }).GetHtml()
+                    </div>
+                    <div class="col">
+                        <label>Phone Number: </label>
+                        @Html.TextBox("phone_number", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Address Line 1: </label>
+                        @Html.TextBox("address_line_1", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
+                    </div>
+                    <div class="col">
+                        <label>Address Line 2: </label>
+                        @Html.TextBox("address_line_2", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
+                        <label>City: </label>
+                        @Html.TextBox("city", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
+                    </div>
+                    <div class="col">
+                        <label>Zip Code: </label>
+                        @Html.DevExpress().SpinEdit(settings =>
+                   {
+                       settings.Name = "zip_code";
+                       settings.Width = Unit.Percentage(100);
+                       settings.Properties.MinValue = 10000;
+                       settings.Properties.MaxValue = 99999;
+                   }).GetHtml()
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
+                        <label>State: </label>
+                        @Html.TextBox("state", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
+                    </div>
+                    <div class="col">
+                        <label>Country: </label>
+                        @Html.TextBox("country", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
+                    </div>
+                </div>
+            }
+
+            <div class="row mt-3 mx-2">
+                <div class="col">
+                    <button type="submit" class="btn btn-success" form="customerForm">Submit Form</button>
+                </div>
             </div>
+
+            <div class="row mx-2 mb-2">
+                <div class="col">
+                    <div id="customerFormResp">
+                        @Html.Action("CustomerGridViewPartial")
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 }
-

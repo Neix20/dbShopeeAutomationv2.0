@@ -54,7 +54,7 @@ else
                         @Html.DevExpress().ComboBox(settings =>
                    {
                        settings.Name = "supplier_id";
-                       settings.Width = Unit.Percentage(100);
+                       settings.Width = Unit.Percentage(106);
                        settings.SelectedIndex = 0;
                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -70,7 +70,7 @@ else
                         @Html.DevExpress().ComboBox(settings =>
                    {
                        settings.Name = "product_id";
-                       settings.Width = Unit.Percentage(100);
+                       settings.Width = Unit.Percentage(106);
                        settings.SelectedIndex = 0;
                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -80,15 +80,6 @@ else
                        settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
                    }).BindList(db.TShopeeProducts.ToList()).GetHtml()
                     </div>
-                    <div class="col">
-                        <label>Received Date: </label>
-                        @Html.DevExpress().DateEdit(settings =>
-                   {
-                       settings.Name = "received_date";
-                       settings.Properties.DisplayFormatString = "yyyy-MM-dd";
-                       settings.Width = Unit.Percentage(100);
-                   }).GetHtml()
-                    </div>
                 </div>
 
                 <div class="row m-2">
@@ -96,6 +87,18 @@ else
                         <label>Tracking No: </label>
                         @Html.TextBox("supplier_tracking_id", "", new { @Class = "form-control", @type = "text", @Required = "true" })
                     </div>
+                    <div class="col">
+                        <label>Received Date: </label>
+                        @Html.DevExpress().DateEdit(settings =>
+                   {
+                       settings.Name = "received_date";
+                       settings.Width = Unit.Percentage(100);
+                       settings.Properties.DisplayFormatString = "yyyy-MM-dd";
+                   }).GetHtml()
+                    </div>
+                </div>
+
+                <div class="row m-2">
                     <div class="col">
                         <label>Width: </label>
                         @Html.DevExpress().SpinEdit(settings =>

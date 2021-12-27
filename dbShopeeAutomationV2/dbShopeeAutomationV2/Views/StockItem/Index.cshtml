@@ -52,7 +52,7 @@ else
                         <label>Stock Warehouse: </label>
                         @Html.DevExpress().ComboBox(settings => {
                        settings.Name = "stock_warehouse_id";
-                       settings.Width = Unit.Percentage(100);
+                       settings.Width = Unit.Percentage(106);
                        settings.SelectedIndex = 0;
                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -67,7 +67,7 @@ else
                         @Html.DevExpress().ComboBox(settings =>
                    {
                        settings.Name = "product_id";
-                       settings.Width = Unit.Percentage(100);
+                       settings.Width = Unit.Percentage(106);
                        settings.SelectedIndex = 0;
                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -77,11 +77,15 @@ else
                        settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
                    }).BindList(db.TShopeeProducts.ToList()).GetHtml()
                     </div>
+                </div>
+
+                <div class="row m-2">
                     <div class="col">
                         <label>Quantity: </label>
-                        @Html.DevExpress().SpinEdit(settings => {
+                        @Html.DevExpress().SpinEdit(settings =>
+                   {
                        settings.Name = "stock_quantity";
-                       settings.Width = Unit.Percentage(100);
+                       settings.Width = Unit.Percentage(49);
                        settings.Properties.MinValue = 0;
                        settings.Properties.MaxValue = 10000000;
                        settings.Properties.Increment = 0.1M;

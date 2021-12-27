@@ -68,38 +68,8 @@
             prop.ValidationSettings.RequiredField.IsRequired = true;
         });
 
-        // Received Date
-        settings.Columns.Add(col =>
-        {
-            col.FieldName = "received_date";
-            col.Caption = "Received Date";
-
-            col.ColumnType = MVCxGridViewColumnType.DateEdit;
-            col.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
-
-            DateEditProperties prop = col.PropertiesEdit as DateEditProperties;
-            prop.DisplayFormatString = "yyyy-MM-dd";
-            prop.DisplayFormatInEditMode = true;
-        });
-
         settings.Columns.Add("supplier_tracking_id").Caption = "Tracking #";
         settings.Columns.Add("NTL_tracking_id").Caption = "NTL Tracking #";
-
-        // Height
-        settings.Columns.Add(col =>
-        {
-            col.FieldName = "height";
-            col.Caption = "Height";
-
-            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
-            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
-            prop.NumberType = SpinEditNumberType.Float;
-            prop.MinValue = 0;
-            prop.MaxValue = 10000000;
-            prop.Increment = 0.1M;
-            prop.DecimalPlaces = 2;
-            prop.DisplayFormatString = "N2";
-        });
 
         // Width
         settings.Columns.Add(col =>
@@ -133,6 +103,20 @@
 
             prop.DecimalPlaces = 2;
             prop.DisplayFormatString = "N2";
+        });
+
+        // Received Date
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "received_date";
+            col.Caption = "Received Date";
+
+            col.ColumnType = MVCxGridViewColumnType.DateEdit;
+            col.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
+
+            DateEditProperties prop = col.PropertiesEdit as DateEditProperties;
+            prop.DisplayFormatString = "yyyy-MM-dd";
+            prop.DisplayFormatInEditMode = true;
         });
 
         // Last Updated By

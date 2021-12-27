@@ -83,9 +83,26 @@ else
                         <label>Code: </label>
                         @Html.TextBox("product_code", "", new { @Class = "form-control", @type = "text", @Required = "true" })
                     </div>
+                </div>
+
+                <div class="row m-2">
                     <div class="col">
                         <label>SKU: </label>
                         @Html.TextBox("SKU", "", new { @Class = "form-control", @type = "text", @Required = "true" })
+                    </div>
+                    <div class="col">
+                        <label>Status: </label>
+                        @Html.DevExpress().ComboBox(settings =>
+                   {
+                       settings.Name = "product_status_id";
+                       settings.SelectedIndex = 0;
+                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.Properties.TextField = "name";
+                       settings.Properties.ValueField = "product_status_id";
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                       settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                   }).BindList(db.TShopeeProductStatus.ToList()).GetHtml()
                     </div>
                 </div>
 
@@ -94,7 +111,6 @@ else
                         <label>Buy Price: </label>
                         @Html.DevExpress().SpinEdit(settings => {
                        settings.Name = "buy_price";
-                       settings.Width = Unit.Percentage(100);
                        settings.Properties.MinValue = 0;
                        settings.Properties.MaxValue = 10000000;
                        settings.Properties.Increment = 0.1M;
@@ -105,7 +121,6 @@ else
                         <label>Sell Price: </label>
                         @Html.DevExpress().SpinEdit(settings => {
                        settings.Name = "sell_price";
-                       settings.Width = Unit.Percentage(100);
                        settings.Properties.MinValue = 0;
                        settings.Properties.MaxValue = 10000000;
                        settings.Properties.Increment = 0.1M;
@@ -120,7 +135,6 @@ else
                         @Html.DevExpress().ComboBox(settings =>
                    {
                        settings.Name = "product_brand_id";
-                       settings.Width = Unit.Percentage(100);
                        settings.SelectedIndex = 0;
                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -135,7 +149,6 @@ else
                         @Html.DevExpress().ComboBox(settings =>
                    {
                        settings.Name = "product_model_id";
-                       settings.Width = Unit.Percentage(100);
                        settings.SelectedIndex = 0;
                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -153,7 +166,6 @@ else
                         @Html.DevExpress().ComboBox(settings =>
                    {
                        settings.Name = "product_type_id";
-                       settings.Width = Unit.Percentage(100);
                        settings.SelectedIndex = 0;
                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -168,7 +180,6 @@ else
                         @Html.DevExpress().ComboBox(settings =>
                    {
                        settings.Name = "product_variety_id";
-                       settings.Width = Unit.Percentage(100);
                        settings.SelectedIndex = 0;
                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -177,21 +188,6 @@ else
                        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
                        settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
                    }).BindList(db.TShopeeProductVarieties.ToList()).GetHtml()
-                    </div>
-                    <div class="col">
-                        <label>Status: </label>
-                        @Html.DevExpress().ComboBox(settings =>
-                   {
-                       settings.Name = "product_status_id";
-                       settings.Width = Unit.Percentage(100);
-                       settings.SelectedIndex = 0;
-                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                       settings.Properties.TextField = "name";
-                       settings.Properties.ValueField = "product_status_id";
-                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
-                       settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
-                   }).BindList(db.TShopeeProductStatus.ToList()).GetHtml()
                     </div>
                 </div>
             }
@@ -213,7 +209,10 @@ else
     </div>
 
     <script type="text/javascript">
-        $(function() {
+        $(function () {
+            // CSS Selector
+            $("form[id='productForm'] input[type=text]").css("width", 500);
+
             let productForm = $("form[id='productForm']");
             const productForm_actionLink = productForm.attr("action");
             const productForm_methodType = productForm.attr("method");
@@ -228,7 +227,7 @@ else
                     success: resp => {
                         $("#productFormResp").html(resp);
                         alert("Product has been inserted successfully!");
-                        window.location.reload();
+                        productForm.find("input[type=text], textarea").val("");
                     }
                 });
             });

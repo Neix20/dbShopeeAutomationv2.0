@@ -87,6 +87,8 @@ else
                     data: orderForm.serialize(),
                     success: resp => {
                         $("#orderFormResp").html(resp);
+                        alert("Order has been successfully inserted!");
+                        orderForm.find("input[type=text], textarea").val("");
                     }
                 })
             });

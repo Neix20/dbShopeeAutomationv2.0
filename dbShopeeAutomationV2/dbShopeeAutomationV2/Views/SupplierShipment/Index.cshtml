@@ -46,10 +46,120 @@ else
                 </div>
             </div>
 
-            <div class="p-3">
-                @Html.Action("SupplierShipmentGridViewPartial")
+            @using (Html.BeginForm("SupplierShipmentGridViewPartialAddNew", "SupplierShipment", FormMethod.Post, new { @Id = "supplierShipmentForm"}))
+            {
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Supplier: </label>
+                        @Html.DevExpress().ComboBox(settings =>
+                   {
+                       settings.Name = "supplier_id";
+                       settings.Width = Unit.Percentage(100);
+                       settings.SelectedIndex = 0;
+                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.Properties.TextField = "name";
+                       settings.Properties.ValueField = "supplier_id";
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                       settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                   }).BindList(db.TShopeeSuppliers.ToList()).GetHtml()
+
+                    </div>
+                    <div class="col">
+                        <label>Product SKU: </label>
+                        @Html.DevExpress().ComboBox(settings =>
+                   {
+                       settings.Name = "product_id";
+                       settings.Width = Unit.Percentage(100);
+                       settings.SelectedIndex = 0;
+                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.Properties.TextField = "SKU";
+                       settings.Properties.ValueField = "product_id";
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                       settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                   }).BindList(db.TShopeeProducts.ToList()).GetHtml()
+                    </div>
+                    <div class="col">
+                        <label>Received Date: </label>
+                        @Html.DevExpress().DateEdit(settings =>
+                   {
+                       settings.Name = "received_date";
+                       settings.Properties.DisplayFormatString = "yyyy-MM-dd";
+                       settings.Width = Unit.Percentage(100);
+                   }).GetHtml()
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Tracking No: </label>
+                        @Html.TextBox("supplier_tracking_id", "", new { @Class = "form-control", @type = "text", @Required = "true" })
+                    </div>
+                    <div class="col">
+                        <label>Width: </label>
+                        @Html.DevExpress().SpinEdit(settings =>
+                   {
+                       settings.Name = "width";
+                       settings.Width = Unit.Percentage(100);
+                       settings.Properties.MinValue = 0;
+                       settings.Properties.MaxValue = 10000000;
+                       settings.Properties.Increment = 0.1M;
+                       settings.Properties.DecimalPlaces = 2;
+                       settings.Properties.DisplayFormatString = "N2";
+                   }).GetHtml()
+                    </div>
+                    <div class="col">
+                        <label>Length: </label>
+                        @Html.DevExpress().SpinEdit(settings =>
+                   {
+                       settings.Name = "length";
+                       settings.Width = Unit.Percentage(100);
+                       settings.Properties.MinValue = 0;
+                       settings.Properties.MaxValue = 10000000;
+                       settings.Properties.Increment = 0.1M;
+                       settings.Properties.DecimalPlaces = 2;
+                       settings.Properties.DisplayFormatString = "N2";
+                   }).GetHtml()
+                    </div>
+                </div>
+            }
+
+            <div class="row mt-3 mx-2">
+                <div class="col">
+                    <button type="submit" class="btn btn-success" form="supplierShipmentForm">Submit Form</button>
+                </div>
+            </div>
+
+            <div class="row m-2">
+                <div class="col">
+                    <div id="supplierShipmentFormResp">
+                        @Html.Action("SupplierShipmentGridViewPartial")
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        let supplierShipmentForm = $("form[id='supplierShipmentForm']");
+        const supplierShipmentForm_actionLink = supplierShipmentForm.attr("action");
+        const supplierShipmentForm_methodType = supplierShipmentForm.attr("method");
+
+        supplierShipmentForm.submit(e => {
+            e.preventDefault();
+
+            $.ajax({
+                url: supplierShipmentForm_actionLink,
+                type: supplierShipmentForm_methodType,
+                data: supplierShipmentForm.serialize(),
+                success: resp => {
+                    $("#supplierShipmentFormResp").html(resp);
+                    alert("Supplier Shipment has been inserted successfully!");
+                    supplierShipmentForm.find("input[type=text], textarea").val("");
+                }
+            })
+        });
+    </script>
 }
 

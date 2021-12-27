@@ -70,6 +70,7 @@
                 data: fData,
                 success: resp => {
                     $("#platformFormContent").html(resp);
+                    form.find("input[type=text], textarea").val("");
                 }
             });
         })

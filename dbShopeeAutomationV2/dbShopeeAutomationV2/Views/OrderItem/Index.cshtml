@@ -144,7 +144,8 @@ else
                     data: orderItemForm.serialize(),
                     success: resp => {
                         $("#orderItemFormResp").html(resp);
-                        window.location.reload();
+                        alert("Order Item has been successfully inserted!");
+                        orderItemForm.find("input[type=text], textarea").val("");
                     }
                 });
             });

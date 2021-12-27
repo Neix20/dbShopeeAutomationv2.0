@@ -105,7 +105,8 @@ else
                     data: productionForm.serialize(),
                     success: resp => {
                         $("#productionFormResp").html(resp);
-                        location.reload();
+                        alert("Production has been successfully inserted!");
+                        productionForm.find("input[type=text], textarea").val("");
                     }
                 })
             });

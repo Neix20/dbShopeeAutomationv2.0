@@ -124,6 +124,7 @@ else
                     success: resp => {
                         $("#stockItemFormResp").html(resp);
                         alert("Stock item has been inserted successfully!");
+                        stockItemForm.find("input[type=text], textarea").val("");
                     }
                 });
             });

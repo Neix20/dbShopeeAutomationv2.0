@@ -104,14 +104,12 @@ namespace dbShopeeAutomationV2.Models
 
         public static string FormatNum(int num, int zLen)
         {
-            string num_str = $"{num}";
-            return new string('0', zLen - num_str.Length) + num_str;
+            return new string('0', zLen - $"{num}".Length) + $"{num}";
         }
 
         public static string GenProductionCode(int last_production_id)
         {
-            int zLen = 5;
-            return $"JS{FormatNum(last_production_id, zLen)}";
+            return $"JS{FormatNum(last_production_id, 5)}";
         }
 
         public static string[] FormatCustomerName(string name)
@@ -132,40 +130,23 @@ namespace dbShopeeAutomationV2.Models
             return address.Split(new[] { ", " }, StringSplitOptions.None);
         }
 
-        public static int[] base_calc(int num, int base_num)
-        {
-            List<int> numList = new List<int>();
-            for (; num > 0; num /= base_num)
-            {
-                int tmp = num % base_num;
-                num += (tmp == 0) ? 1 : 0;
-                numList.Add(tmp);
-            }
-            numList.Reverse();
-            return numList.ToArray();
-        }
-
         public static string GenSupplierCode(int num) {
-            int[] numArr = base_calc(num, 26);
-            List<string> strList = new List<String>();
+            int quotient = num / 26 - 1;
+            int remainder = num % 26;
 
-            // Increment By 1 (As in Minus)
-            for (int i = numArr.Length - 1; i > 0; i--)
-            {
-                if (numArr[i] <= 0)
-                {
-                    numArr[i] += 26;
-                    numArr[i - 1] -= 1;
-                }
-            }
+            string qStr = (quotient < 0) ? "" : $"{Convert.ToChar(quotient + 65)}";
+            string rStr = $"{Convert.ToChar(remainder + 65)}";
 
-            foreach (var tmp_num in numArr)
-            {
-                if (tmp_num == 0) continue;
-                strList.Add($"{Convert.ToChar(tmp_num + 64)}");
-            }
-
-            return String.Join("", strList);
+            return qStr + rStr;
         }
+
+        public static string GenSupplierTrackingCode(int num)
+        {
+            int quotient = num / 100;
+            int remainder = num % 100;
+            return GenSupplierCode(quotient) + FormatNum(remainder, 2);
+        }
+
+
     }
 }

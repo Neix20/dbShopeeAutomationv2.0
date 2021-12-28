@@ -53,7 +53,7 @@ namespace dbShopeeAutomationV2.Controllers
             dbStoredProcedure.orderItemStatusInsert($"Order Title: {order.order_title}, Product Item: {product.SKU}", "Order Item Description", 0, username);
             db.SaveChanges();
 
-            item.order_item_status_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeOrderItemStatus') AS INT)").FirstOrDefault(); ;
+            item.order_item_status_id = dbStoredProcedure.getID("TShopeeOrderItemStatus");
 
             dbStoredProcedure.orderItemInsert(
                 item.quantity,

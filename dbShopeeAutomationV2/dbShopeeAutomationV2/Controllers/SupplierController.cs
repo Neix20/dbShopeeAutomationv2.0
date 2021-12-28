@@ -30,8 +30,9 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            int supplier_id = dbStoredProcedure.getID("TShopeeSupplier");
             item.name = (item.name == null) ? "supplier_name" : item.name;
-            item.code = (item.code == null) ? "ABC" : item.code;
+            item.code = (item.code == null) ?  generalFunc.GenSupplierCode(supplier_id) : item.code;
             item.nation = (item.nation == null) ? "International" : item.nation;
             item.poc_name = (item.poc_name == null) ? "poc_name" : item.poc_name;
             item.poc_email = (item.poc_email == null) ? generalFunc.GenEmail() : item.poc_email;
@@ -53,7 +54,7 @@ namespace dbShopeeAutomationV2.Controllers
             string username = User.Identity.Name;
 
             item.name = (item.name == null) ? "supplier_name" : item.name;
-            item.code = (item.code == null) ? "ABC" : item.code;
+            item.code = (item.code == null) ? generalFunc.GenSupplierCode(item.supplier_id) : item.code;
             item.nation = (item.nation == null) ? "International" : item.nation;
             item.poc_name = (item.poc_name == null) ? "poc_name" : item.poc_name;
             item.poc_email = (item.poc_email == null) ? generalFunc.GenEmail() : item.poc_email;

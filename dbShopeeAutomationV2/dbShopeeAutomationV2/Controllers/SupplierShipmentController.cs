@@ -30,9 +30,11 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            int supplier_shipment_id = dbStoredProcedure.getID("TShopeeSupplierShipment");
+
             item.received_date = (item.received_date == null) ? DateTime.Now : item.received_date;
             item.supplier_tracking_id = (item.supplier_tracking_id == null) ? generalFunc.Random10DigitCode() : item.supplier_tracking_id;
-            item.NTL_tracking_id = (item.NTL_tracking_id == null) ? generalFunc.Random10DigitCode() : item.NTL_tracking_id;
+            item.NTL_tracking_id = (item.NTL_tracking_id == null) ? generalFunc.GenSupplierTrackingCode(supplier_shipment_id) : item.NTL_tracking_id;
 
             item.height = (item.height == null) ? 0 : item.height;
             item.width = (item.width == null) ? 0 : item.width;
@@ -55,7 +57,7 @@ namespace dbShopeeAutomationV2.Controllers
 
             item.received_date = (item.received_date == null) ? DateTime.Now : item.received_date;
             item.supplier_tracking_id = (item.supplier_tracking_id == null) ? generalFunc.Random10DigitCode() : item.supplier_tracking_id;
-            item.NTL_tracking_id = (item.NTL_tracking_id == null) ? generalFunc.Random10DigitCode() : item.NTL_tracking_id;
+            item.NTL_tracking_id = (item.NTL_tracking_id == null) ? generalFunc.GenSupplierTrackingCode(item.supplier_shipment_id) : item.NTL_tracking_id;
 
             item.height = (item.height == null) ? 0 : item.height;
             item.width = (item.width == null) ? 0 : item.width;

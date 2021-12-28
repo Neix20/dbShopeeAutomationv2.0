@@ -9,6 +9,11 @@ namespace dbShopeeAutomationV2.Models
     {
         static dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
+        public static int getID(string tbl_name)
+        {
+            return db.Database.SqlQuery<int>($"SELECT CAST(IDENT_CURRENT('{tbl_name}') AS INT)").FirstOrDefault();
+        }
+
         // Details Section
         // Details Stored Procedure
         public static int detailInsert(string status, string remark, string created_by, string last_updated_by)
@@ -68,7 +73,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeProductBrand_Insert(name, code, detail_id);
         }
 
@@ -100,7 +105,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeProductCategory_Insert(name, code, detail_id);
         }
 
@@ -132,7 +137,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeProductModel_Insert(name, code, detail_id);
         }
 
@@ -164,7 +169,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeProductStatus_Insert(name, detail_id);
         }
 
@@ -196,7 +201,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeProductType_Insert(name, code, detail_id);
         }
 
@@ -228,7 +233,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeProductVariety_Insert(name, code, detail_id);
         }
 
@@ -260,7 +265,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeStockWarehouse_Insert(name, email_address, phone_number, address_line_1, address_line_2, city, state, zip_code, country, detail_id);
         }
 
@@ -293,7 +298,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeStockItem_Insert(name, description, quantity, product_id, warehouse_id, detail_id);
         }
 
@@ -331,7 +336,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeProduct_Insert(
                 product_code, name, 
                 description, SKU, SKU2, 
@@ -382,7 +387,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeProductComponent_Insert(master_product_id, sub_product_id, quantity, detail_id);
         }
 
@@ -418,7 +423,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeProductionStatus_Insert(name, detail_id);
         }
 
@@ -456,7 +461,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeProduction_Insert(title, description, staff_name, created_date, total_usage, production_status_id, detail_id);
         }
 
@@ -498,7 +503,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeProductionDetail_Insert(
                 UOM, manufactured_date, expiry_date,
                 height, width, length,
@@ -544,7 +549,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeSupplier_Insert(name, code, nation, poc_name, poc_email, poc_phone_number, detail_id);
         }
 
@@ -580,7 +585,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeSupplierShipment_Insert(
                 received_date, supplier_tracking_id, NTL_tracking_id,
                 height, width, length,
@@ -623,7 +628,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeePlatform_Insert(name, detail_id);
         }
 
@@ -656,7 +661,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeePaymentMethod_Insert(name, detail_id);
         }
 
@@ -689,7 +694,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeOrderItemStatus_Insert(name, description, rma, detail_id);
         }
 
@@ -722,7 +727,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeInvoiceStatus_Insert(name, detail_id);
         }
 
@@ -755,7 +760,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeOrderStatus_Insert(name, detail_id);
         }
 
@@ -788,7 +793,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeCustomer_Insert(first_name, last_name, dob, email_address, phone_number, address_line_1, address_line_2, city, state, zip_code, country, platform_id, detail_id);
         }
 
@@ -821,7 +826,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeOrder_Insert(order_title, order_placed_date, total_price, order_status_id, detail_id);
         }
 
@@ -862,7 +867,7 @@ namespace dbShopeeAutomationV2.Models
             RMA_num = (RMA_num == null) ? 0 : RMA_num;
             RMA_issued_date = (RMA_issued_date == null) ? DateTime.Now : RMA_issued_date;
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeOrderItem_Insert(quantity, sub_total, discount_fee, RMA_num, RMA_issued_by, RMA_issued_date, order_id, order_item_status_id, product_id, detail_id);
         }
 
@@ -906,7 +911,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeInvoice_Insert(invoice_title, invoice_created_date, invoice_completed_date, invoice_details, shipping_fee, invoice_status_id, payment_method_id, order_id, customer_id, detail_id);
         }
 
@@ -941,7 +946,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeShipmentStatus_Insert(name, detail_id);
         }
 
@@ -974,7 +979,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeCarrier_Insert(name, detail_id);
         }
 
@@ -1007,7 +1012,7 @@ namespace dbShopeeAutomationV2.Models
             detailInsert(status, remark, username, username);
             db.SaveChanges();
 
-            int detail_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeDetail') AS INT)").FirstOrDefault();
+            int detail_id = getID("TShopeeDetail");
             return db.NSP_TShopeeShipment_Insert(start_location, destination, tracking_id, created_date, expected_date, due_date, invoice_id, carrier_id, shipment_status_id, detail_id);
         }
 

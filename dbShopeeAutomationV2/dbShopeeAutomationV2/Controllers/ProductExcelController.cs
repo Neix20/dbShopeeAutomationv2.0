@@ -129,7 +129,7 @@ namespace dbShopeeAutomationV2.Controllers
                     product_brand_id, product_model_id, product_category_id,
                     product_type_id, product_variety_id, product_status_id, username);
 
-                int product_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduct') AS INT)").FirstOrDefault();
+                int product_id = dbStoredProcedure.getID("TShopeeProduct");
 
                 // Insert New Stock Item
                 int stock_warehouse_id = dbStatusFunction.stockWarehouseID("VendLah! (HQ)");
@@ -207,7 +207,7 @@ namespace dbShopeeAutomationV2.Controllers
             WorkSheet ws = wb.GetWorkSheet("Record");
 
             // Insert New Production Detail
-            int last_production_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduction') AS INT)").FirstOrDefault();
+            int last_production_id = dbStoredProcedure.getID("TShopeeProduction");
             decimal total_usage;
 
             // Get Rows Without Headers
@@ -271,7 +271,7 @@ namespace dbShopeeAutomationV2.Controllers
 
         public void checkProduction(WorkSheet ws, string username)
         {
-            int last_production_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduction') AS INT)").FirstOrDefault();
+            int last_production_id = dbStoredProcedure.getID("TShopeeProduction");
 
             // Get Rows Without Headers
             foreach (var row in ws.Rows.ToList().GetRange(3, ws.RowCount - 3))
@@ -357,7 +357,7 @@ namespace dbShopeeAutomationV2.Controllers
                     product_type_id, product_variety_id, product_status_id, username
                 );
 
-                int product_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduct') AS INT)").FirstOrDefault();
+                int product_id = dbStoredProcedure.getID("TShopeeProduct");
 
                 // Insert New Stock Item
                 int stock_warehouse_id = dbStatusFunction.stockWarehouseID("VendLah! (HQ)");

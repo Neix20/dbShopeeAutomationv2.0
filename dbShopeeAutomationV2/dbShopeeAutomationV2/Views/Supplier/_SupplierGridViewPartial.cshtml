@@ -44,7 +44,11 @@
 
         settings.Columns.Add("name").Caption = "Supplier";
 
-        settings.Columns.Add("code").Caption = "NTL Code";
+        // NTL Code
+        settings.Columns.Add(col => {
+            col.FieldName = "code";
+            col.Caption = "NTL Code";
+        });
 
         // Nation
         settings.Columns.Add(col =>

@@ -1,7 +1,13 @@
-﻿
+﻿@using dbShopeeAutomationV2.Models;
+@using System.Collections.Generic;
+
 @{
     ViewBag.Title = "Supplier Form";
     Layout = "~/Views/Shared/_ProductionLayout.cshtml";
+
+    List<mLocality> localityList = new List<mLocality>();
+    localityList.Add(new mLocality("Local"));
+    localityList.Add(new mLocality("International"));
 }
 
 <div class="p-3">
@@ -12,9 +18,58 @@
             </div>
         </div>
 
+        @using (Html.BeginForm("SupplierGridViewPartialAddNew", "Supplier", FormMethod.Post, new { @Id="supplierForm"})) {
+            <div class="row m-2">
+                <div class="col">
+                    <label>Supplier Name: </label>
+                    @Html.TextBox("name", "", new { @Class="form-control", @Type = "text", @Required = "true" })
+                </div>
+                <div class="col">
+                    <label>Locality: </label>
+                    @Html.DevExpress().ComboBox(settings =>
+               {
+                   settings.Name = "nation";
+                   settings.Width = Unit.Percentage(106);
+                   settings.SelectedIndex = 0;
+                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.Properties.TextField = "value";
+                   settings.Properties.ValueField = "value";
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                   settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+               }).BindList(localityList).GetHtml()
+                </div>
+            </div>
 
+            <div class="row m-2">
+                <div class="col">
+                    <label>POC Name</label>
+                    @Html.TextBox("poc_name", "", new { @Class="form-control", @Type = "text", @Required = "true"})
+                </div>
+                <div class="col">
+                    <label>POC Email</label>
+                    @Html.TextBox("poc_email", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
+                </div>
+            </div>
 
-        <div class="row m-2">
+            <div class="row m-2">
+                <div class="col">
+                    <label>POC Phone Number</label>
+                    @Html.TextBox("poc_phone_number", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
+                </div>
+                <div class="col">
+
+                </div>
+            </div>
+        }
+
+        <div class="row mt-3 mx-2">
+            <div class="col">
+                <button type="submit" class="btn btn-success" form="supplierForm">Submit Form</button>
+            </div>
+        </div>
+
+        <div class="row mx-2 mb-2">
             <div class="col">
                 <div id="supplierFormResp">
                     @Html.Action("SupplierGridViewPartial")
@@ -23,4 +78,33 @@
         </div>
     </div>
 </div>
+
+<div class="p-1">
+    <ul>
+        <li class="fst-italic">"POC" stands for "Person of Contact".</li>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        let supForm = $("form[id='supplierForm']");
+        const supForm_actionLink = supForm.attr("action");
+        const supForm_methodType = supForm.attr("method");
+
+        supForm.submit(e => {
+            e.preventDefault();
+
+            $.ajax({
+                url: supForm_actionLink,
+                type: supForm_methodType,
+                data: supForm.serialize(),
+                success: resp => {
+                    $("#supplierFormResp").html(resp);
+                    alert("Supplier has been inserted successfully!");
+                    supForm.find("input[type=text], textarea").val("");
+                }
+            });
+        });
+    });
+</script>
 

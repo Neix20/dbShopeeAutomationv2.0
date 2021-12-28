@@ -21,7 +21,7 @@ namespace dbShopeeAutomationV2.Controllers
         [ValidateInput(false)]
         public ActionResult ProductionGridViewPartial()
         {
-            int last_production_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduction') AS INT)").FirstOrDefault();
+            int last_production_id = dbStoredProcedure.getID("TShopeeProduction");
             ViewData["new_production_title"] = generalFunc.GenProductionCode(last_production_id);
             var model = db.TShopeeProductions;
             return PartialView("_ProductionGridViewPartial", model.ToList());
@@ -32,7 +32,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            int last_production_id = db.Database.SqlQuery<int>("SELECT CAST(IDENT_CURRENT('TShopeeProduction') AS INT)").FirstOrDefault();
+            int last_production_id = dbStoredProcedure.getID("TShopeeProduction");
             item.title = (item.title == null) ? generalFunc.GenProductionCode(last_production_id) : item.title;
             item.description = (item.description == null) ? "production_description" : item.description;
             item.production_status_id = dbStatusFunction.productionStatusID("Incomplete");

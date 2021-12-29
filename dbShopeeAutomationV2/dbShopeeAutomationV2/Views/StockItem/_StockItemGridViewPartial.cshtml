@@ -38,19 +38,13 @@
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
-        // Stock Warehouse
+        // Image
         settings.Columns.Add(col =>
         {
-            col.FieldName = "stock_warehouse_id";
-            col.Caption = "Stock Warehouse";
-
-            col.ColumnType = MVCxGridViewColumnType.ComboBox;
-            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
-            prop.DataSource = db.TShopeeStockWarehouses.ToList();
-            prop.TextField = "name";
-            prop.ValueField = "stock_warehouse_id";
-            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
-            prop.ValidationSettings.RequiredField.IsRequired = true;
+            col.FieldName = "image";
+            col.Caption = "Image";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.PropertiesEdit.EncodeHtml = false;
         });
 
         // Product SKU
@@ -86,6 +80,21 @@
             prop.DisplayFormatString = "N2";
         });
 
+        // Stock Warehouse
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "stock_warehouse_id";
+            col.Caption = "Stock Warehouse";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeStockWarehouses.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "stock_warehouse_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
+        });
+
         // Last Updated By
         settings.Columns.Add(columns =>
         {
@@ -96,6 +105,14 @@
 
         settings.CustomUnboundColumnData = (s, e) =>
         {
+            if (e.Column.FieldName == "image")
+            {
+                int stock_item_id = int.Parse(e.GetListSourceFieldValue("stock_item_id").ToString());
+                int product_id = int.Parse(e.GetListSourceFieldValue("product_id").ToString());
+                string file_path = Path.Combine(new string[] { "/Content/StockItemImages", $"{stock_item_id}_{product_id}.png" });
+                e.Value = $"<img src='{file_path}' style='height: 50px; width: 50px' alt='[ Missing Image ]' />";
+            }
+
             if (e.Column.FieldName.Equals("Last Updated By"))
             {
                 int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());

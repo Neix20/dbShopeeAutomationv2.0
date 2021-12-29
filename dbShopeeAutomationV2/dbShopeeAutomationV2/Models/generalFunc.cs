@@ -51,7 +51,7 @@ namespace dbShopeeAutomationV2.Models
             str = (str.Length < 3) ? "str1" : str;
             str2 = (str2.Length < 3) ? "str2" : str2;
             str3 = (str3.Length < 3) ? "str3" : str3;
-            return $"{str.Substring(0, 3)}/{str2.Substring(0, 3)}_{str3.Substring(0, 3)}";
+            return $"{str.Substring(0, 3)}_{str2.Substring(0, 3)}_{str3.Substring(0, 3)}";
         }
 
         public static int getMonthInt(string str)

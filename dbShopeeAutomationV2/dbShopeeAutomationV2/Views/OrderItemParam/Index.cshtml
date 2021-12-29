@@ -9,6 +9,9 @@
     int order_count = db.TShopeeOrders.ToList().Count;
     int product_count = db.TShopeeProducts.ToList().Count;
 
+    // Prevents Users From Ordering Material Product
+    int material_model_id = dbStatusFunction.productModelID("material");
+
     Dictionary<int, string> orderDict = new Dictionary<int, string>();
     db.TShopeeOrders.ToList().ForEach(it =>
     {
@@ -73,7 +76,7 @@ else
                        settings.Properties.ValueField = "product_id";
                        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
                        settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
-                   }).BindList(db.TShopeeProducts.ToList()).GetHtml()
+                   }).BindList(db.TShopeeProducts.Where(it => it.product_model_id != material_model_id).ToList()).GetHtml()
                     </div>
 
                 </div>

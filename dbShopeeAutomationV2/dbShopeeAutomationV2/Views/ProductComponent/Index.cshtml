@@ -7,6 +7,8 @@
     dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
     int product_count = db.TShopeeProducts.ToList().Count;
+
+    int material_model_id = dbStatusFunction.productModelID("material");
 }
 
 @if (product_count <= 0)
@@ -54,7 +56,7 @@ else
                         settings.Properties.ValueField = "product_id";
                         settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
                         settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
-                    }).BindList(db.TShopeeProducts.ToList()).GetHtml()
+                    }).BindList(db.TShopeeProducts.Where(it => it.product_model_id != material_model_id).ToList()).GetHtml()
                     </div>
                     <div class="col">
                         <label>Sub Product SKU: </label>

@@ -24,50 +24,54 @@
 </style>
 
 <!-- To Copy Start -->
-<section class="h-100" style="background-color: lightgray">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center">
-            <div class="col">
-                <div class="card" style="border-radius: 15px;">
-                    <div class="card-body p-3">
+<div class="vh-100 p-3" style="background-color: lightgray;">
 
-                        <!-- Insert Content Start -->
-                        <div class="text-center pt-3">
-                            <img src="~/Content/Images/check1.png" alt="Check" style="height: 100px; width: 100px">
-                            <h2 class="my-4">Task List</h2>
-                        </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col">
 
-                        <div class="row">
-                            <div class="col-8">
-                                <form id="invoiceTaskForm" action="/DailyTask/Show" method="post"></form>
-                                @using (Html.BeginForm("Show", "DailyTask", FormMethod.Post, new { @Id = "invoiceTaskForm" }))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label"
-                                               style="font-size: 18px;">Filter</label>
-                                        <label class="col-sm-8">
-                                            @Html.TextBoxFor(model => model.invoice_completed_date, "{0:yyyy-MM-dd}", new { @Class = "form-control", @Type = "date" })
-                                        </label>
-                                    </div>
-                                }
-                            </div>
-                            <div class="col-4"></div>
-                        </div>
-                        <hr />
-
-                        <div id="invoiceTaskContent">
-                            @Html.Action("DailyTaskPartial")
-                        </div>
-
-                        <!-- Insert Content End-->
-
+            <div class="card" style="border-radius: 15px;">
+                <div class="card-body p-3">
+                    <!-- Insert Content Start -->
+                    <div class="text-center">
+                        <img src="~/Content/Images/check1.png" alt="Check" style="height: 100px; width: 100px">
+                        <h2 class="my-4">Task List</h2>
                     </div>
+
+                    @using (Html.BeginForm("Show", "DailyTask", FormMethod.Post, new { @Id = "invoiceTaskForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="row m-2">
+                            <div class="col-2">
+                            </div>
+                            <div class="col">
+                                <div class="row align-items-center ">
+                                    <div class="col-4 text-end">
+                                        <label style="font-size: 18px;">Filter</label>
+                                    </div>
+                                    <div class="col-8">
+                                        @Html.TextBoxFor(model => model.invoice_completed_date, "{0:yyyy-MM-dd}", new { @Class = "form-control", @Type = "date" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <hr />
+
+                    <div id="invoiceTaskContent">
+                        @Html.Action("DailyTaskPartial")
+                    </div>
+
+                    <!-- Insert Content End-->
                 </div>
             </div>
+
         </div>
     </div>
-</section>
+</div>
+<!-- To Copy End -->
+
+
 
 <script type="text/javascript">
     $(function () {

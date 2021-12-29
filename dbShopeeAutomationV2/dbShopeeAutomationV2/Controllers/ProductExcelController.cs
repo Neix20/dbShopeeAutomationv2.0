@@ -335,12 +335,14 @@ namespace dbShopeeAutomationV2.Controllers
 
                 var material = db.TShopeeProducts.FirstOrDefault(it => it.SKU == material_sku);
 
-                int product_category_id = (int)material.product_category_id;
                 int product_type_id = (int)material.product_type_id;
 
                 int product_brand_id = dbStatusFunction.productBrandID("NTL Asia");
                 int product_status_id = dbStatusFunction.productStatusID("Empty");
+
                 int product_variety_id = dbStatusFunction.productVarietyCodeID(variety_code);
+                int product_category_id = product_variety_id;
+
                 int product_model_id = dbStatusFunction.productModelCodeID(model_code);
 
                 string product_code = product_sku;
@@ -380,6 +382,9 @@ namespace dbShopeeAutomationV2.Controllers
             // Get List of Variety Name from Entity Framework
             IEnumerable<string> varietyList = db.TShopeeProductVarieties.Select(x => x.name.ToLower());
 
+            // Get List of Category Name From Entity Framework
+            IEnumerable<string> categoryList = db.TShopeeProductCategories.Select(x => x.name.ToLower());
+
             // Get Rows Without Headers
             string model_name = "", model_code = "",
                 panel_name = "", panel_code = "",
@@ -403,6 +408,9 @@ namespace dbShopeeAutomationV2.Controllers
 
                 if (!varietyList.Contains(panel_name.ToLower()))
                     dbStoredProcedure.productVarietyInsert(panel_name, panel_code, username);
+
+                if (!categoryList.Contains(panel_name.ToLower()))
+                    dbStoredProcedure.productCategoryInsert(panel_name, panel_code, username);
             }
             db.SaveChanges();
         }

@@ -22,7 +22,7 @@
         settings.SettingsBehavior.ConfirmDelete = true;
 
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.ShowNewButtonInHeader = false;
         settings.CommandColumn.ShowDeleteButton = true;
         settings.CommandColumn.ShowEditButton = true;
 
@@ -37,6 +37,15 @@
         // Header Set Center
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
+
+        // Image
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "image";
+            col.Caption = "Image";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.PropertiesEdit.EncodeHtml = false;
+        });
 
         settings.Columns.Add("name").Caption = "Name";
         settings.Columns.Add("product_code").Caption = "Code";
@@ -87,6 +96,21 @@
             prop.ValidationSettings.RequiredField.IsRequired = true;
         });
 
+        // Product Category
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "product_category_id";
+            col.Caption = "Category";
+
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
+            prop.DataSource = db.TShopeeProductCategories.ToList();
+            prop.TextField = "name";
+            prop.ValueField = "product_category_id";
+            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+            prop.ValidationSettings.RequiredField.IsRequired = true;
+        });
+
         // Product Model
         settings.Columns.Add(col =>
         {
@@ -117,21 +141,6 @@
             prop.ValidationSettings.RequiredField.IsRequired = true;
         });
 
-        // Product Variety
-        settings.Columns.Add(col =>
-        {
-            col.FieldName = "product_variety_id";
-            col.Caption = "Variety";
-
-            col.ColumnType = MVCxGridViewColumnType.ComboBox;
-            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
-            prop.DataSource = db.TShopeeProductVarieties.ToList();
-            prop.TextField = "name";
-            prop.ValueField = "product_variety_id";
-            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
-            prop.ValidationSettings.RequiredField.IsRequired = true;
-        });
-
         // Product Status
         settings.Columns.Add(col =>
         {
@@ -157,6 +166,13 @@
 
         settings.CustomUnboundColumnData = (s, e) =>
         {
+            if (e.Column.FieldName == "image")
+            {
+                string sku = e.GetListSourceFieldValue("SKU").ToString();
+                string file_path = Path.Combine(new string[] { "/Content/ProductImages", $"{sku}.png" });
+                e.Value = $"<img src='{file_path}' style='height: 50px; width: 50px' alt='[ Missing Image ]' />";
+            }
+
             if (e.Column.FieldName.Equals("Last Updated By"))
             {
                 int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());

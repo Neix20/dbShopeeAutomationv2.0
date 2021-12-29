@@ -49,11 +49,12 @@ else
                     </div>
                     <div class="col">
                         <label>Date: </label>
-                        @Html.DevExpress().DateEdit(settings => {
-                            settings.Name = "created_date";
-                            settings.Properties.DisplayFormatString = "yyyy-MM-dd";
-                            settings.Width = Unit.Percentage(100);
-                        }).GetHtml()
+                        @Html.DevExpress().DateEdit(settings =>
+                   {
+                       settings.Name = "created_date";
+                       settings.Properties.DisplayFormatString = "yyyy-MM-dd";
+                       settings.Width = Unit.Percentage(100);
+                   }).GetHtml()
                     </div>
                 </div>
 
@@ -81,14 +82,17 @@ else
         </div>
     </div>
 
-    if (product_count <= 0)
-    {
-        <div class="p-1">
-            <ul>
+    <div class="p-1">
+        <ul>
+            @if (product_count <= 0)
+            {
                 <li class="fst-italic">There are no products created.</li>
-            </ul>
-        </div>
-    }
+            }
+            <li class="fst-italic">Please do not modify Job Scopes marked as "Complete". Please create a seperate Job Scopes if you have marked the previous one as "Complete".</li>
+        </ul>
+    </div>
+
+
 
     <script type="text/javascript">
         $(function () {

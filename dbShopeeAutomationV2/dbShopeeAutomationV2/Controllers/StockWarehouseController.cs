@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace dbShopeeAutomationV2.Controllers
 {
@@ -26,69 +29,95 @@ namespace dbShopeeAutomationV2.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult StockWarehouseGridViewPartialAddNew(FormCollection collection)
+        public ActionResult StockWarehouseGridViewPartialAddNew(TShopeeStockWarehouse item)
         {
-            string name = generalFunc.trimStr(collection["name"]);
-            name = (name == "") ? "stock_warehouse_name" : name;
-
-            string email_address = generalFunc.trimStr(collection["email_address"]);
-            email_address = (email_address == "") ? generalFunc.GenEmail() : email_address;
-
-            string phone_number = generalFunc.trimStr(collection["phone_number"]);
-            phone_number = (phone_number == "") ? generalFunc.GenPhoneNum() : phone_number;
-
-            string address = generalFunc.trimStr(collection["Address"]);
             string username = User.Identity.Name;
 
-            int count = address.Split(new[] { ", " }, StringSplitOptions.None).Length - 1;
-            address = (count != 5) ? "address line 1, address line 2, city, 00000, state, country" : address;
+            item.name = (item.name == null) ? "stock_warehouse_name" : item.name;
+            item.email_address = (item.email_address == null) ? generalFunc.GenEmail() : item.email_address;
+            item.phone_number = (item.phone_number == null) ? generalFunc.GenPhoneNum() : item.phone_number;
 
-            string[] address_arr = address.Split(new[] { ", " }, StringSplitOptions.None);
+            if (item.address_line_1 == null)
+            {
+                string address = Request.Form["Address"];
+                string[] address_arr = generalFunc.FormatAddress(address);
+                item.address_line_1 = address_arr[0];
+                item.address_line_2 = address_arr[1];
+                item.city = address_arr[2];
+                item.zip_code = int.Parse(address_arr[3]);
+                item.state = address_arr[4];
+                item.country = address_arr[5];
+            }
+            item.address_line_1 = item.address_line_1.Replace(",", String.Empty);
 
-            string address_line_1 = address_arr[0];
-            string address_line_2 = address_arr[1];
-            string city = address_arr[2];
-            int zip_code = int.Parse(address_arr[3]);
-            string state = address_arr[4];
-            string country = address_arr[5];
+            item.address_line_2 = (item.address_line_2 == null) ? "address_line_2" : item.address_line_2;
+            item.address_line_2 = item.address_line_2.Replace(",", String.Empty);
 
-            dbStoredProcedure.stockWarehouseInsert(name, email_address, phone_number, address_line_1, address_line_2, city, zip_code, state, country, username);
+            item.city = (item.city == null) ? "city" : item.city;
+            item.zip_code = (item.zip_code == null) ? 0 : item.zip_code;
+            item.state = (item.state == null) ? "state" : item.state;
+            item.country = (item.country == null) ? "country" : item.country;
+
+            dbStoredProcedure.stockWarehouseInsert(
+                item.name, item.email_address, item.phone_number,
+                item.address_line_1, item.address_line_2, item.city,
+                item.zip_code, item.state, item.country, username);
             db.SaveChanges();
+
+            var file = Request.Files["warehouse_image"];
+
+            int stock_warehouse_id = dbStoredProcedure.getID("TShopeeStockWarehouse");
+
+            if (file != null && file.ContentLength > 0)
+            {
+                string file_path = $"{Server.MapPath("~/Content/StockWarehouseImages")}\\{stock_warehouse_id}_{item.name}.png";
+
+                if (!Directory.Exists(file_path)) Directory.CreateDirectory(Server.MapPath("~/Content/StockWarehouseImages"));
+
+                // If File Exist, delete existing file
+                if (System.IO.File.Exists(file_path)) System.IO.File.Delete(file_path);
+
+                var b = (Bitmap)Bitmap.FromStream(file.InputStream);
+                b.Save(file_path, ImageFormat.Png);
+            }
 
             var model = db.TShopeeStockWarehouses;
             return PartialView("_StockWarehouseGridViewPartial", model.ToList());
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult StockWarehouseGridViewPartialUpdate(FormCollection collection)
+        public ActionResult StockWarehouseGridViewPartialUpdate(TShopeeStockWarehouse item)
         {
-            int stock_warehouse_id = int.Parse(collection["stock_warehouse_id"]);
-
-            string name = generalFunc.trimStr(collection["name"]);
-            name = (name == "") ? "stock_warehouse_name" : name;
-
-            string email_address = generalFunc.trimStr(collection["email_address"]);
-            email_address = (email_address == "") ? generalFunc.GenEmail() : email_address;
-
-            string phone_number = generalFunc.trimStr(collection["phone_number"]);
-            phone_number = (phone_number == "") ? generalFunc.GenPhoneNum() : phone_number;
-
-            string address = generalFunc.trimStr(collection["Address"]);
             string username = User.Identity.Name;
 
-            int count = address.Split(new[] { ", " }, StringSplitOptions.None).Length - 1;
-            address = (count != 5) ? "address line 1, address line 2, city, 00000, state, country" : address;
+            item.name = (item.name == null) ? "stock_warehouse_name" : item.name;
+            item.email_address = (item.email_address == null) ? generalFunc.GenEmail() : item.email_address;
+            item.phone_number = (item.phone_number == null) ? generalFunc.GenPhoneNum() : item.phone_number;
 
-            string[] address_arr = address.Split(new[] { ", " }, StringSplitOptions.None);
+            if (item.address_line_1 == null)
+            {
+                string address = Request.Form["Address"];
+                string[] address_arr = generalFunc.FormatAddress(address);
+                item.address_line_1 = address_arr[0];
+                item.address_line_2 = address_arr[1];
+                item.city = address_arr[2];
+                item.zip_code = int.Parse(address_arr[3]);
+                item.state = address_arr[4];
+                item.country = address_arr[5];
+            }
 
-            string address_line_1 = address_arr[0];
-            string address_line_2 = address_arr[1];
-            string city = address_arr[2];
-            int zip_code = int.Parse(address_arr[3]);
-            string state = address_arr[4];
-            string country = address_arr[5];
+            item.address_line_2 = (item.address_line_2 == null) ? "address_line_2" : item.address_line_2;
+            item.city = (item.city == null) ? "city" : item.city;
+            item.zip_code = (item.zip_code == null) ? 0 : item.zip_code;
+            item.state = (item.state == null) ? "state" : item.state;
+            item.country = (item.country == null) ? "country" : item.country;
 
-            dbStoredProcedure.stockWarehouseUpdate(stock_warehouse_id, name, email_address, phone_number, address_line_1, address_line_2, city, zip_code, state, country, username);
+            dbStoredProcedure.stockWarehouseUpdate(
+                item.stock_warehouse_id,
+                item.name, item.email_address, item.phone_number,
+                item.address_line_1, item.address_line_2, item.city,
+                item.zip_code, item.state, item.country, username
+            );
             db.SaveChanges();
 
             var model = db.TShopeeStockWarehouses;

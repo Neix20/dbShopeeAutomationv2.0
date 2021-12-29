@@ -45,15 +45,27 @@ else
 {
     <div class="p-3">
         <div class="border border-dark">
+
             <div class="row">
                 <div class="col">
                     <div class="bg-dark text-center h1 text-white">@ViewBag.Title</div>
                 </div>
             </div>
 
-            <div class="p-3">
-                @Html.Action("ShipmentGridViewPartial")
+            @using (Html.BeginForm("ShipmentGridViewPartialAddNew", "Shipment", FormMethod.Post, new { @Id = "shipmentForm" })) {
+                <div class="row m-2">
+
+                </div>
+            }
+
+            <div class="row m-2">
+                <div class="col">
+                    <div id="shipmentFormResp">
+                        @Html.Action("ShipmentGridViewPartial")
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 

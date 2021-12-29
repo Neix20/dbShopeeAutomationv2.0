@@ -33,7 +33,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            string order_title = Request.Form["order_title"];
+            string order_title = generalFunc.trimStr(Request.Form["order_title"]);
             item.order_id = dbStatusFunction.orderID(order_title);
 
             item.quantity = (item.quantity == null) ? 0 : item.quantity;
@@ -70,9 +70,6 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult OrderItemParamGridViewPartialUpdate(TShopeeOrderItem item)
         {
             string username = User.Identity.Name;
-
-            string order_title = Request.Form["order_title"];
-            item.order_id = dbStatusFunction.orderID(order_title);
 
             item.quantity = (item.quantity == null) ? 0 : item.quantity;
             item.sub_total = (item.sub_total == null) ? 0 : item.sub_total;
@@ -123,10 +120,18 @@ namespace dbShopeeAutomationV2.Controllers
             int order_id = int.Parse(order_id_str);
 
             // Update Order Status to Complete
-            var item = db.TShopeeOrders.FirstOrDefault(it => it.order_id == order_id);
-            item.order_status_id = dbStatusFunction.orderStatusID("Complete");
+            var order = db.TShopeeOrders.FirstOrDefault(it => it.order_id == order_id);
+            order.order_status_id = dbStatusFunction.orderStatusID("Complete");
 
-            dbStoredProcedure.orderUpdate(item.order_id, item.order_title, item.order_placed_date, item.total_price, item.order_status_id, username);
+            // Get List of Order Item
+            List<TShopeeOrderItem> orderItemList = db.TShopeeOrderItems.Where(it => it.order_id == order_id).ToList();
+
+            orderItemList.ForEach(it =>
+            {
+                order.total_price += it.sub_total;
+            });
+
+
             db.SaveChanges();
 
             return RedirectToAction("Index", "Order");

@@ -52,6 +52,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
+            item.title = (item.title == null) ? "production_title" : item.title;
             item.description = (item.description == null) ? "production_description" : item.description;
             item.staff_name = (item.staff_name == null) ? username : item.staff_name;
             item.created_date = (item.created_date == null) ? DateTime.Now : item.created_date;
@@ -70,9 +71,7 @@ namespace dbShopeeAutomationV2.Controllers
             var production_detail_list = db.TShopeeProductionDetails.Where(it => it.production_id == production_id).ToList();
             production_detail_list.ForEach(tmp_model =>
             {
-                int production_detail_id = tmp_model.production_detail_id;
-                dbStoredProcedure.productionDetailDelete(production_detail_id);
-                db.SaveChanges();
+                dbStoredProcedure.productionDetailDelete(tmp_model.production_detail_id);
             });
 
             dbStoredProcedure.productionDelete(production_id);

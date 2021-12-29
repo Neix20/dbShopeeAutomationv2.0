@@ -77,10 +77,11 @@ else
                     </div>
                 </div>
 
-                <div class="row m-2">
-                    <div class="col">
-                        <label>Width: </label>
-                        @Html.DevExpress().SpinEdit(settings =>
+                <div id="to_remove">
+                    <div class="row m-2">
+                        <div class="col">
+                            <label>Width: </label>
+                            @Html.DevExpress().SpinEdit(settings =>
                            {
                                settings.Name = "width";
                                settings.Width = Unit.Percentage(100);
@@ -90,10 +91,10 @@ else
                                settings.Properties.DecimalPlaces = 2;
                                settings.Properties.DisplayFormatString = "N2";
                            }).GetHtml()
-                    </div>
-                    <div class="col">
-                        <label>Length: </label>
-                        @Html.DevExpress().SpinEdit(settings =>
+                        </div>
+                        <div class="col">
+                            <label>Length: </label>
+                            @Html.DevExpress().SpinEdit(settings =>
                            {
                                settings.Name = "length";
                                settings.Width = Unit.Percentage(100);
@@ -103,42 +104,43 @@ else
                                settings.Properties.DecimalPlaces = 2;
                                settings.Properties.DisplayFormatString = "N2";
                            }).GetHtml()
+                        </div>
                     </div>
-                </div>
 
-                <div class="row m-2">
-                    <div class="col">
-                        <label>Quantity: </label>
-                        @Html.DevExpress().SpinEdit(settings =>
+                    <div class="row m-2">
+                        <div class="col">
+                            <label>Quantity: </label>
+                            @Html.DevExpress().SpinEdit(settings =>
                        {
                            settings.Name = "quantity";
                            settings.Width = Unit.Percentage(49);
                            settings.Properties.MinValue = 0;
                            settings.Properties.MaxValue = 10000000;
                        }).GetHtml()
+                        </div>
                     </div>
-                </div>
 
-                <div class="row m-2">
-                    <div class="col">
-                        <label>Not OK (NG): </label>
-                        @Html.DevExpress().SpinEdit(settings =>
+                    <div class="row m-2">
+                        <div class="col">
+                            <label>Not OK (NG): </label>
+                            @Html.DevExpress().SpinEdit(settings =>
                        {
                            settings.Name = "cannot_be_used";
                            settings.Width = Unit.Percentage(100);
                            settings.Properties.MinValue = 0;
                            settings.Properties.MaxValue = 10000000;
                        }).GetHtml()
-                    </div>
-                    <div class="col">
-                        <label>OK: </label>
-                        @Html.DevExpress().SpinEdit(settings =>
+                        </div>
+                        <div class="col">
+                            <label>OK: </label>
+                            @Html.DevExpress().SpinEdit(settings =>
                        {
                            settings.Name = "can_be_used";
                            settings.Width = Unit.Percentage(100);
                            settings.Properties.MinValue = 0;
                            settings.Properties.MaxValue = 10000000;
                        }).GetHtml()
+                        </div>
                     </div>
                 </div>
             }
@@ -189,6 +191,7 @@ else
                     success: resp => {
                         $("#productionDetailFormResp").html(resp);
                         location.reload();
+                        $("#to_remove").find("input[type=text], textarea").val("");
                     }
                 });
             });

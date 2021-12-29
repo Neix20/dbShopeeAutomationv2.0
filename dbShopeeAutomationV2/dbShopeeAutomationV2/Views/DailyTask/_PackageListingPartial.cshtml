@@ -87,8 +87,9 @@
                         <th>No.</th>
                         <th>Item</th>
                         <th>Brand</th>
+                        <th>Category</th>
+                        <th>Model</th>
                         <th>Type</th>
-                        <th>Variety</th>
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Total</th>
@@ -98,19 +99,21 @@
                     @for (int ind = 0; ind < Model.productSummaryList.Count; ind++)
                     {
                         string no = $"{ind + 1}.";
-                        var item = Model.productSummaryList.ElementAt(ind);
+                        var product = Model.productSummaryList.ElementAt(ind);
                         <tr>
                             <td>@no</td>
-                            <td>@item.name</td>
-                            <td>@item.product_brand</td>
-                            <td>@item.product_type</td>
-                            <td>@item.product_variety</td>
-                            <td>RM @item.product_price</td>
-                            <td>@item.quantity</td>
-                            <td>RM @item.sub_total</td>
+                            <td>@product.name</td>
+                            <td>@product.product_brand</td>
+                            <td>@product.product_category</td>
+                            <td>@product.product_model</td>
+                            <td>@product.product_type</td>
+                            <td>RM @product.product_price</td>
+                            <td>@product.quantity</td>
+                            <td>RM @product.sub_total</td>
                         </tr>
                     }
                     <tr>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -127,10 +130,12 @@
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td><strong>Shipping</strong></td>
                         <td>@Model.invoice.shipping_fee</td>
                     </tr>
                     <tr>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>

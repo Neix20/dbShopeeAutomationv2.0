@@ -2,6 +2,9 @@
 using DevExpress.Web.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -34,11 +37,8 @@ namespace dbShopeeAutomationV2.Controllers
             item.name = (item.name == null) ? "product_name" : item.name;
             item.description = (item.description == null) ? "product_description" : item.description;
 
-            string product_brand = db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == item.product_brand_id).name;
-            string product_type = db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == item.product_type_id).name;
-            string product_variety = db.TShopeeProductVarieties.FirstOrDefault(it => it.product_variety_id == item.product_variety_id).name;
-            item.SKU = (item.SKU == null) ? generalFunc.GenSKU(product_brand, product_type, product_variety) : item.SKU;
-            item.SKU2 = (item.SKU2 == null) ? $"{item.SKU}2" : item.SKU2;
+            item.SKU = (item.SKU == null) ? generalFunc.Random10DigitCode() : item.SKU;
+            item.SKU2 = (item.SKU2 == null) ? $"{item.SKU}_2" : item.SKU2;
 
             item.buy_price = (item.buy_price == null) ? 0 : item.buy_price;
             item.sell_price = (item.sell_price == null) ? 0 : item.sell_price;
@@ -49,6 +49,43 @@ namespace dbShopeeAutomationV2.Controllers
                 item.buy_price, item.sell_price,
                 item.product_brand_id, item.product_model_id, item.product_category_id,
                 item.product_type_id, item.product_variety_id, item.product_status_id, username);
+
+            var file = Request.Files["product_image"];
+
+            if (file != null && file.ContentLength > 0)
+            {
+                string file_path = $"{Server.MapPath("~/Content/ProductImages")}\\{item.SKU}.png";
+
+                if (!Directory.Exists(file_path)) Directory.CreateDirectory(Server.MapPath("~/Content/ProductImages"));
+
+                // If File Exist, delete existing file
+                if (System.IO.File.Exists(file_path)) System.IO.File.Delete(file_path);
+
+                var b = (Bitmap)Bitmap.FromStream(file.InputStream);
+                b.Save(file_path, ImageFormat.Png);
+            }
+
+            // Create New Stock Item
+            int stock_warehouse_id = dbStatusFunction.stockWarehouseID("VendLah! (HQ)");
+            int product_id = dbStoredProcedure.getID("TShopeeProduct");
+
+            dbStoredProcedure.stockItemInsert(item.name, item.description, 0, product_id, stock_warehouse_id, username);
+
+            int stock_item_id = dbStoredProcedure.getID("TShopeeStockItem");
+
+            if (file != null && file.ContentLength > 0)
+            {
+                string file_path = $"{Server.MapPath("~/Content/StockItemImages")}\\{stock_item_id}_{product_id}.png";
+
+                if (!Directory.Exists(file_path)) Directory.CreateDirectory(Server.MapPath("~/Content/StockItemImages"));
+
+                // If File Exist, delete existing file
+                if (System.IO.File.Exists(file_path)) System.IO.File.Delete(file_path);
+
+                var b = (Bitmap)Bitmap.FromStream(file.InputStream);
+                b.Save(file_path, ImageFormat.Png);
+            }
+
             db.SaveChanges();
 
             var model = db.TShopeeProducts;
@@ -64,11 +101,8 @@ namespace dbShopeeAutomationV2.Controllers
             item.name = (item.name == null) ? "product_name" : item.name;
             item.description = (item.description == null) ? "product_description" : item.description;
 
-            string product_brand = db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == item.product_brand_id).name;
-            string product_type = db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == item.product_type_id).name;
-            string product_variety = db.TShopeeProductVarieties.FirstOrDefault(it => it.product_variety_id == item.product_variety_id).name;
-            item.SKU = (item.SKU == null) ? generalFunc.GenSKU(product_brand, product_type, product_variety) : item.SKU;
-            item.SKU2 = (item.SKU2 == null) ? $"{item.SKU}2" : item.SKU2;
+            item.SKU = (item.SKU == null) ? generalFunc.Random10DigitCode() : item.SKU;
+            item.SKU2 = (item.SKU2 == null) ? $"{item.SKU}_2" : item.SKU2;
 
             item.buy_price = (item.buy_price == null) ? 0 : item.buy_price;
             item.sell_price = (item.sell_price == null) ? 0 : item.sell_price;

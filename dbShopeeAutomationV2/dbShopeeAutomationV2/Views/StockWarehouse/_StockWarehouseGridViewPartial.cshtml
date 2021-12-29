@@ -10,7 +10,8 @@
         detailDict.Add(it.detail_id, it);
     });
 
-    var grid = Html.DevExpress().GridView(settings => {
+    var grid = Html.DevExpress().GridView(settings =>
+    {
         settings.Name = "StockWarehouseGridView";
         settings.Width = Unit.Percentage(100);
         settings.CallbackRouteValues = new { Controller = "StockWarehouse", Action = "StockWarehouseGridViewPartial" };
@@ -37,6 +38,15 @@
         // Header Set Center
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
+
+        // Image
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "image";
+            col.Caption = "Image";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.PropertiesEdit.EncodeHtml = false;
+        });
 
         settings.Columns.Add("name").Caption = "Stock Warehouse";
         settings.Columns.Add("email_address").Caption = "Email Address";
@@ -74,6 +84,14 @@
 
             };
 
+            if(e.Column.FieldName == "image")
+            {
+                int stock_warehouse_id = int.Parse(e.GetListSourceFieldValue("stock_warehouse_id").ToString());
+                string stock_warehouse_title = e.GetListSourceFieldValue("name").ToString();
+                string file_path = Path.Combine(new string[] { "/Content/StockWarehouseImages", $"{stock_warehouse_id}_{stock_warehouse_title}.png" });
+                e.Value = $"<img src='{file_path}' style='height: 50px; width: 50px' alt='[ Missing Image ]' />";
+            }
+
             if (e.Column.FieldName == "last_updated_by")
             {
                 int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());
@@ -86,7 +104,8 @@
         settings.Styles.Cell.VerticalAlign = VerticalAlign.Middle;
     });
 
-    if (ViewData["EditError"] != null){
+    if (ViewData["EditError"] != null)
+    {
         grid.SetEditErrorText((string)ViewData["EditError"]);
     }
 }

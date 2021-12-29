@@ -45,8 +45,10 @@ else
                 </div>
             </div>
 
-            @using (Html.BeginForm("StockItemGridViewPartialAddNew", "StockItem", FormMethod.Post, new { @Id = "stockItemForm" }))
+            @using (Html.BeginForm("StockItemGridViewPartialAddNew", "StockItem", FormMethod.Post, new { @Enctype = "multipart/form-data", @Id = "stockItemForm" }))
             {
+                @Html.AntiForgeryToken()
+
                 <div class="row m-2">
                     <div class="col">
                         <label>Stock Warehouse: </label>
@@ -63,6 +65,13 @@ else
                    }).BindList(db.TShopeeStockWarehouses.ToList()).GetHtml()
                     </div>
                     <div class="col">
+                        <label>Stock Item Image: </label>
+                        @Html.TextBox("stock_item_image", "", new { @Class = "form-control", @Type = "file", @Required = "true" })
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
                         <label>Product SKU: </label>
                         @Html.DevExpress().ComboBox(settings =>
                    {
@@ -77,15 +86,12 @@ else
                        settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
                    }).BindList(db.TShopeeProducts.ToList()).GetHtml()
                     </div>
-                </div>
-
-                <div class="row m-2">
                     <div class="col">
                         <label>Quantity: </label>
                         @Html.DevExpress().SpinEdit(settings =>
                    {
                        settings.Name = "stock_quantity";
-                       settings.Width = Unit.Percentage(49);
+                       settings.Width = Unit.Percentage(100);
                        settings.Properties.MinValue = 0;
                        settings.Properties.MaxValue = 10000000;
                        settings.Properties.Increment = 0.1M;
@@ -121,14 +127,20 @@ else
             stockItemForm.submit(e => {
                 e.preventDefault();
 
+                let fData = new FormData(stockItemForm[0]);
+
                 $.ajax({
                     url: stockItemForm_actionLink,
                     type: stockItemForm_methodType,
-                    data: stockItemForm.serialize(),
+                    enctype: 'multipart/form-data',
+                    processData: false,  // Important!
+                    contentType: false,
+                    cache: false,
+                    data: fData,
                     success: resp => {
                         $("#stockItemFormResp").html(resp);
                         alert("Stock item has been inserted successfully!");
-                        stockItemForm.find("input[type=text], textarea").val("");
+                        stockItemForm.find("input[type=text], input[type=file], textarea").val("");
                     }
                 });
             });

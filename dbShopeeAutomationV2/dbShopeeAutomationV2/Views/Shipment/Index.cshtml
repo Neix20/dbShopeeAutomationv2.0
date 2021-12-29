@@ -6,6 +6,14 @@
 
     dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
+    List<mStockWarehouse> swList = new List<mStockWarehouse>();
+    db.TShopeeStockWarehouses.ToList().ForEach(it =>
+    {
+        string name = it.name;
+        string address = $"{it.address_line_1}, {it.address_line_2}, {it.city}, {it.zip_code}, {it.state}, {it.country}";
+        swList.Add(new mStockWarehouse(name, address));
+    });
+
     int invoice_count = db.TShopeeInvoices.ToList().Count;
     int carrier_count = db.TShopeeCarriers.ToList().Count;
     int shipment_status_count = db.TShopeeShipmentStatus.ToList().Count;
@@ -52,13 +60,73 @@ else
                 </div>
             </div>
 
-            @using (Html.BeginForm("ShipmentGridViewPartialAddNew", "Shipment", FormMethod.Post, new { @Id = "shipmentForm" })) {
-                <div class="row m-2">
+            @using (Html.BeginForm("ShipmentGridViewPartialAddNew", "Shipment", FormMethod.Post, new { @Id = "shipmentForm" }))
+            {
+                @Html.AntiForgeryToken()
 
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Departure Point: </label>
+                        @Html.DevExpress().ComboBox(settings =>
+                   {
+                       settings.Name = "start_location";
+                       settings.Width = Unit.Percentage(106);
+                       settings.SelectedIndex = 0;
+                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.Properties.TextField = "name";
+                       settings.Properties.ValueField = "address";
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                       settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                   }).BindList(swList).GetHtml()
+                    </div>
+                    <div class="col">
+                        <label>Destination Address: </label>
+                        @Html.TextBox("destination", "", new { @Class="form-control", @Type="text", @Required = "true"})
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
+                        <label>Invoice Code: </label>
+                        @Html.DevExpress().ComboBox(settings =>
+                   {
+                       settings.Name = "invoice_id";
+                       settings.Width = Unit.Percentage(106);
+                       settings.SelectedIndex = 0;
+                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.Properties.TextField = "invoice_title";
+                       settings.Properties.ValueField = "invoice_id";
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                       settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                   }).BindList(db.TShopeeInvoices.ToList()).GetHtml()
+                    </div>
+                    <div class="col">
+                        <label>Carrier: </label>
+                        @Html.DevExpress().ComboBox(settings =>
+                   {
+                       settings.Name = "carrier_id";
+                       settings.Width = Unit.Percentage(106);
+                       settings.SelectedIndex = 0;
+                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                       settings.Properties.TextField = "name";
+                       settings.Properties.ValueField = "carrier_id";
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                       settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                   }).BindList(db.TShopeeCarriers.ToList()).GetHtml()
+                    </div>
                 </div>
             }
 
-            <div class="row m-2">
+            <div class="row mt-3 mx-2">
+                <div class="col">
+                    <button type="submit" class="btn btn-success" form="shipmentForm">Submit Form</button>
+                </div>
+            </div>
+
+            <div class="row mx-2 mb-2">
                 <div class="col">
                     <div id="shipmentFormResp">
                         @Html.Action("ShipmentGridViewPartial")
@@ -74,5 +142,28 @@ else
             <li class="fst-italic">If you are unable to select a specific invoice, please check and ensure invoice status is marked as 'Complete'.</li>
         </ul>
     </div>
+
+    <script type="text/javascript">
+        $(function () {
+            let shipmentForm = $("form[id='shipmentForm']");
+            const shipmentForm_actionLink = shipmentForm.attr("action");
+            const shipmentForm_methodType = shipmentForm.attr("method");
+
+            shipmentForm.submit(e => {
+                e.preventDefault();
+
+                $.ajax({
+                    url: shipmentForm_actionLink,
+                    type: shipmentForm_methodType,
+                    data: shipmentForm.serialize(),
+                    success: resp => {
+                        $("#shipmentFormResp").html(resp);
+                        alert("A new shipment has been successfully inserted!");
+                        shipmentForm.find("input[type=text], textarea").val("");
+                    }
+                });
+            });
+        });
+    </script>
 }
 

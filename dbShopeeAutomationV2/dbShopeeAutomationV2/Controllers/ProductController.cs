@@ -52,9 +52,11 @@ namespace dbShopeeAutomationV2.Controllers
 
             var file = Request.Files["product_image"];
 
+            int product_id = dbStoredProcedure.getID("TShopeeProduct");
+
             if (file != null && file.ContentLength > 0)
             {
-                string file_path = $"{Server.MapPath("~/Content/ProductImages")}\\{item.SKU}.png";
+                string file_path = $"{Server.MapPath("~/Content/ProductImages")}\\Product_{product_id}.png";
 
                 if (!Directory.Exists(file_path)) Directory.CreateDirectory(Server.MapPath("~/Content/ProductImages"));
 
@@ -67,7 +69,6 @@ namespace dbShopeeAutomationV2.Controllers
 
             // Create New Stock Item
             int stock_warehouse_id = dbStatusFunction.stockWarehouseID("VendLah! (HQ)");
-            int product_id = dbStoredProcedure.getID("TShopeeProduct");
 
             dbStoredProcedure.stockItemInsert(item.name, item.description, 0, product_id, stock_warehouse_id, username);
 

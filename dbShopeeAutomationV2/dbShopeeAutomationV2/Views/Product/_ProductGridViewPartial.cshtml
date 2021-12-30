@@ -168,8 +168,8 @@
         {
             if (e.Column.FieldName == "image")
             {
-                string sku = e.GetListSourceFieldValue("SKU").ToString();
-                string file_path = Path.Combine(new string[] { "/Content/ProductImages", $"{sku}.png" });
+                string product_id = e.GetListSourceFieldValue("product_id").ToString();
+                string file_path = Path.Combine(new string[] { "/Content/ProductImages", $"Product_{product_id}.png" });
                 e.Value = $"<img src='{file_path}' style='height: 50px; width: 50px' alt='[ Missing Image ]' />";
             }
 

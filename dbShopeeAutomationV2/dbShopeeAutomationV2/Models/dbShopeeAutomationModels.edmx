@@ -134,11 +134,11 @@
             <PropertyRef Name="product_id" />
           </Key>
           <Property Name="product_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="product_code" Type="varchar" MaxLength="20" />
+          <Property Name="product_code" Type="varchar" MaxLength="50" />
           <Property Name="name" Type="varchar" MaxLength="50" />
           <Property Name="description" Type="varchar(max)" />
-          <Property Name="SKU" Type="varchar" MaxLength="20" />
-          <Property Name="SKU2" Type="varchar" MaxLength="20" />
+          <Property Name="SKU" Type="varchar" MaxLength="50" />
+          <Property Name="SKU2" Type="varchar" MaxLength="50" />
           <Property Name="buy_price" Type="decimal" Precision="10" Scale="2" />
           <Property Name="sell_price" Type="decimal" Precision="10" Scale="2" />
           <Property Name="product_brand_id" Type="int" />
@@ -1079,11 +1079,11 @@
             <PropertyRef Name="product_id" />
           </Key>
           <Property Name="product_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="product_code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="product_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="SKU" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="SKU2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SKU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SKU2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="buy_price" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="sell_price" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="product_brand_id" Type="Int32" />
@@ -1798,7 +1798,7 @@
           </FunctionImport>
           <EntitySet Name="TShopeeSuppliers" EntityType="dbShopeeAutomationV2Model.TShopeeSupplier" />
           <FunctionImport Name="NSP_TShopeeSupplier_Delete">
-            <Parameter Name="supplier_id" Mode="In" Type="Int32" />
+          <Parameter Name="supplier_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="NSP_TShopeeSupplier_Insert">
             <Parameter Name="name" Mode="In" Type="String" />

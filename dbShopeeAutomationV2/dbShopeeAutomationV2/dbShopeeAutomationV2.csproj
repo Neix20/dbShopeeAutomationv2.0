@@ -517,6 +517,7 @@
     <Compile Include="Models\mDestAddress.cs" />
     <Compile Include="Models\mLocality.cs" />
     <Compile Include="Models\mStockWarehouse.cs" />
+    <Compile Include="Models\mUserRole.cs" />
     <Compile Include="Models\PackageListingSummary.cs" />
     <Compile Include="Models\ProductSummary.cs" />
     <Compile Include="Models\TShopeeCarrier.cs">

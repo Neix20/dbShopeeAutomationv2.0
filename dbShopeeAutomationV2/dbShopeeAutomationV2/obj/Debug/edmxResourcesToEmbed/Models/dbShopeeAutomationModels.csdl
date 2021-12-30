@@ -129,11 +129,11 @@
       <PropertyRef Name="product_id" />
     </Key>
     <Property Name="product_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="product_code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="product_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="SKU" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="SKU2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SKU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SKU2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="buy_price" Type="Decimal" Precision="10" Scale="2" />
     <Property Name="sell_price" Type="Decimal" Precision="10" Scale="2" />
     <Property Name="product_brand_id" Type="Int32" />

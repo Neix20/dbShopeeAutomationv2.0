@@ -45,14 +45,6 @@ namespace dbShopeeAutomationV2.Models
             return str;
         }
 
-        public static string GenSKU(string str, string str2, string str3)
-        {
-            str = (str.Length < 3) ? "str1" : str;
-            str2 = (str2.Length < 3) ? "str2" : str2;
-            str3 = (str3.Length < 3) ? "str3" : str3;
-            return $"{str.Substring(0, 3)}_{str2.Substring(0, 3)}_{str3.Substring(0, 3)}";
-        }
-
         public static int getMonthInt(string str)
         {
             List<String> monthList = new List<String>()
@@ -124,6 +116,16 @@ namespace dbShopeeAutomationV2.Models
         public static string GenTrackingCode()
         {
             return $"TRA{Random10DigitCode()}";
+        }
+
+        public static string GenMaterialSKU(string product_category_code, string supplier_code, int product_count)
+        {
+            return $"{product_category_code}{supplier_code}{FormatNum(product_count, 3)}";
+        }
+
+        public static string GenProductSKU(string product_model_code, string product_category_code, string product_material_sku)
+        {
+            return $"{product_model_code}-{product_category_code}-{product_material_sku}";
         }
 
         public static string[] FormatCustomerName(string name)

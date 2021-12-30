@@ -514,6 +514,7 @@
     <Compile Include="Models\dbStoredProcedure.cs" />
     <Compile Include="Models\generalFunc.cs" />
     <Compile Include="Models\mCustomer.cs" />
+    <Compile Include="Models\mDestAddress.cs" />
     <Compile Include="Models\mLocality.cs" />
     <Compile Include="Models\mStockWarehouse.cs" />
     <Compile Include="Models\PackageListingSummary.cs" />
@@ -614,6 +615,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Admin\" />
+    <Folder Include="Views\mDestAddress\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

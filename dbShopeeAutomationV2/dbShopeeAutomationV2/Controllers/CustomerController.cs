@@ -99,23 +99,35 @@ namespace dbShopeeAutomationV2.Controllers
 
             int platform_id = (int)item.platform_id;
 
-            string address = generalFunc.trimStr(Request.Form["Address"]);
+            if (item.address_line_1 == null)
+            {
+                string address = Request.Form["Address"];
+                string[] address_arr = generalFunc.FormatAddress(address);
+                item.address_line_1 = address_arr[0];
+                item.address_line_2 = address_arr[1];
+                item.city = address_arr[2];
+                item.zip_code = int.Parse(address_arr[3]);
+                item.state = address_arr[4];
+                item.country = address_arr[5];
+            }
+            item.address_line_1 = item.address_line_1.Replace(",", String.Empty);
 
-            int address_count = address.Split(new[] { ", " }, StringSplitOptions.None).Length - 1;
-            address = (address_count != 5) ? "address line 1, address line 2, city, 00000, state, country" : address;
+            item.address_line_2 = (item.address_line_2 == null) ? "address_line_2" : item.address_line_2;
+            item.address_line_2 = item.address_line_2.Replace(",", String.Empty);
 
-            string[] address_arr = address.Split(new[] { ", " }, StringSplitOptions.None);
-
-            string address_line_1 = address_arr[0];
-            string address_line_2 = address_arr[1];
-            string city = address_arr[2];
-            int zip_code = int.Parse(address_arr[3]);
-            string state = address_arr[4];
-            string country = address_arr[5];
+            item.city = (item.city == null) ? "city" : item.city;
+            item.zip_code = (item.zip_code == null) ? 0 : item.zip_code;
+            item.state = (item.state == null) ? "state" : item.state;
+            item.country = (item.country == null) ? "country" : item.country;
 
             string username = User.Identity.Name;
 
-            dbStoredProcedure.customerUpdate(customer_id, first_name, last_name, dob, email_address, phone_number, address_line_1, address_line_2, city, zip_code, state, country, platform_id, username);
+            dbStoredProcedure.customerUpdate(
+                customer_id, first_name, last_name, 
+                dob, email_address, phone_number,
+                item.address_line_1, item.address_line_2, item.city,
+                item.zip_code, item.state, item.country, 
+                platform_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeCustomers;

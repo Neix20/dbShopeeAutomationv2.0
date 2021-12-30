@@ -9,8 +9,7 @@ namespace dbShopeeAutomationV2.Models
     {
         public static string trimStr(string str)
         {
-            if (str == null) return "";
-            return str.Trim('"');
+            return (str == null) ? "" : str.Trim('"');
         }
 
         public static string removeWhitespace(string str)
@@ -112,12 +111,27 @@ namespace dbShopeeAutomationV2.Models
             return $"JS{FormatNum(last_production_id, 5)}";
         }
 
+        public static string GenOrderCode(int order_id)
+        {
+            return $"ORD{FormatNum(order_id, 5)}";
+        }
+
+        public static string GenInvoiceCode(int invoice_id)
+        {
+            return $"INV{FormatNum(invoice_id, 5)}";
+        }
+
+        public static string GenTrackingCode()
+        {
+            return $"TRA{Random10DigitCode()}";
+        }
+
         public static string[] FormatCustomerName(string name)
         {
             name = trimStr(name);
             name = (name == "") ? "first_name last_name" : name;
-            int name_count = name.Split(' ').Length - 1;
-            name = (name_count < 1) ? $"{name} " : name;
+            int name_count = name.Split(' ').Length;
+            name = (name_count < 2) ? $"{name} " : name;
 
             return name.Split(new[] { " " }, StringSplitOptions.None);
         }
@@ -125,8 +139,18 @@ namespace dbShopeeAutomationV2.Models
         public static string[] FormatAddress(string address)
         {
             address = trimStr(address);
-            int address_count = address.Split(new[] { ", " }, StringSplitOptions.None).Length - 1;
-            address = (address_count != 5) ? "address line 1, address line 2, city, 00000, state, country" : address;
+            string[] tmp_address_arr = address.Split(new[] { ", " }, StringSplitOptions.None);
+
+            string def_addr = "address line 1, address line 2, city, 00000, state, country";
+            List<string> def_addrList = new List<string>(def_addr.Split(new[] { ", " }, StringSplitOptions.None));
+
+            if (tmp_address_arr.Length != 6)
+            {
+                address = "";
+                foreach (var str in tmp_address_arr) address += $"{str}, ";
+                address += String.Join(", ", def_addrList.GetRange(tmp_address_arr.Length, 6 - tmp_address_arr.Length));
+            }
+            
             return address.Split(new[] { ", " }, StringSplitOptions.None);
         }
 

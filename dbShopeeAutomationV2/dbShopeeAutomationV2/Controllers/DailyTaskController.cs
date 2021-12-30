@@ -245,7 +245,29 @@ namespace dbShopeeAutomationV2.Controllers
             // Total Price
             Decimal total_price = (Decimal) (order.total_price + invoice.shipping_fee);
 
-            PackageListingSummary model = new PackageListingSummary(stockWarehouse, customer, invoice, productSummaryList, order.total_price, total_price);
+            // Check Shipment
+            var shipment = db.TShopeeShipments.FirstOrDefault(it => it.invoice_id == invoice_id);
+
+            mDestAddress destAddress = new mDestAddress();
+
+            if(shipment != null)
+            {
+                string address = shipment.destination;
+                address = (address == null) ? "" : address;
+
+                String[] address_arr = generalFunc.FormatAddress(address);
+                destAddress = new mDestAddress(address_arr);
+            } else
+            {
+                destAddress = new mDestAddress(
+                    customer.address_line_1, customer.address_line_2, 
+                    customer.city, customer.zip_code, 
+                    customer.state, customer.country);
+            }
+
+            PackageListingSummary model = new PackageListingSummary(
+                stockWarehouse, customer, invoice, destAddress,
+                productSummaryList, order.total_price, total_price);
 
             return PartialView("_PackageListingPartial", model);
         }

@@ -21,7 +21,7 @@ namespace dbShopeeAutomationV2.Controllers
         [ValidateInput(false)]
         public ActionResult ProductionGridViewPartial()
         {
-            int last_production_id = dbStoredProcedure.getID("TShopeeProduction");
+            int last_production_id = dbStoredProcedure.getID("TShopeeProduction") + 1;
             ViewData["new_production_title"] = generalFunc.GenProductionCode(last_production_id);
             var model = db.TShopeeProductions;
             return PartialView("_ProductionGridViewPartial", model.ToList());
@@ -32,7 +32,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            int last_production_id = dbStoredProcedure.getID("TShopeeProduction");
+            int last_production_id = dbStoredProcedure.getID("TShopeeProduction") + 1;
             item.title = (item.title == null) ? generalFunc.GenProductionCode(last_production_id) : item.title;
             item.description = (item.description == null) ? "production_description" : item.description;
             item.production_status_id = dbStatusFunction.productionStatusID("Incomplete");
@@ -52,7 +52,8 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            item.title = (item.title == null) ? "production_title" : item.title;
+            int last_production_id = dbStoredProcedure.getID("TShopeeProduction");
+            item.title = (item.title == null) ? generalFunc.GenProductionCode(last_production_id) : item.title;
             item.description = (item.description == null) ? "production_description" : item.description;
             item.staff_name = (item.staff_name == null) ? username : item.staff_name;
             item.created_date = (item.created_date == null) ? DateTime.Now : item.created_date;

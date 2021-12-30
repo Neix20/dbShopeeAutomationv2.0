@@ -65,7 +65,7 @@ else
                 </div>
             </div>
 
-            @using (Html.BeginForm("ProductGridViewPartialAddNew", "Product", FormMethod.Post, new { @Enctype = "multipart/form-data", @Id = "productForm"}))
+            @using (Html.BeginForm("ProductGridViewPartialAddNew", "Product", FormMethod.Post, new { @Enctype = "multipart/form-data", @Id = "productForm" }))
             {
                 @Html.AntiForgeryToken()
 
@@ -78,22 +78,22 @@ else
                 </div>
 
                 <div class="row m-2">
-                    <div class="col">
+                    <div class="col input_req">
                         <label>Name: </label>
                         @Html.TextBox("name", "", new { @Class = "form-control to_clear", @type = "text", @Required = "true" })
                     </div>
                     <div class="col">
                         <label>Code: </label>
-                        @Html.TextBox("product_code", "", new { @Class = "form-control to_clear", @type = "text", @Placeholder = "Optional"})
+                        @Html.TextBox("product_code", "", new { @Class = "form-control to_clear", @type = "text", @Placeholder = "Optional" })
                     </div>
                 </div>
 
                 <div class="row m-2">
                     <div class="col">
                         <label>SKU: </label>
-                        @Html.TextBox("SKU", "", new { @Class = "form-control to_clear", @type = "text", @Placeholder = "Optional"})
+                        @Html.TextBox("SKU", "", new { @Class = "form-control to_clear", @type = "text", @Placeholder = "Optional" })
                     </div>
-                    <div class="col">
+                    <div class="col input_req">
                         <label>Status: </label>
                         @Html.DevExpress().ComboBox(settings =>
                    {
@@ -110,10 +110,11 @@ else
                     </div>
                 </div>
 
-                <div class="row m-2">
-                    <div class="col">
-                        <label>Buy Price: </label>
-                        @Html.DevExpress().SpinEdit(settings => 
+                <div class="to_remove">
+                    <div class="row m-2">
+                        <div class="col">
+                            <label>Buy Price: </label>
+                            @Html.DevExpress().SpinEdit(settings =>
                    {
                        settings.Name = "buy_price";
                        settings.Width = Unit.Percentage(100);
@@ -122,10 +123,10 @@ else
                        settings.Properties.Increment = 0.1M;
                        settings.Properties.DisplayFormatString = "C";
                    }).GetHtml()
-                    </div>
-                    <div class="col">
-                        <label>Sell Price: </label>
-                        @Html.DevExpress().SpinEdit(settings => 
+                        </div>
+                        <div class="col">
+                            <label>Sell Price: </label>
+                            @Html.DevExpress().SpinEdit(settings =>
                    {
                        settings.Name = "sell_price";
                        settings.Width = Unit.Percentage(100);
@@ -134,11 +135,13 @@ else
                        settings.Properties.Increment = 0.1M;
                        settings.Properties.DisplayFormatString = "C";
                    }).GetHtml()
+                        </div>
                     </div>
+
                 </div>
 
                 <div class="row m-2">
-                    <div class="col">
+                    <div class="col input_req">
                         <label>Brand: </label>
                         @Html.DevExpress().ComboBox(settings =>
                    {
@@ -153,7 +156,7 @@ else
                        settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
                    }).BindList(db.TShopeeProductBrands.ToList()).GetHtml()
                     </div>
-                    <div class="col">
+                    <div class="col input_req">
                         <label>Category: </label>
                         @Html.DevExpress().ComboBox(settings =>
                    {
@@ -171,7 +174,7 @@ else
                 </div>
 
                 <div class="row m-2">
-                    <div class="col">
+                    <div class="col input_req">
                         <label>Model: </label>
                         @Html.DevExpress().ComboBox(settings =>
                    {
@@ -186,7 +189,7 @@ else
                        settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
                    }).BindList(db.TShopeeProductModels.ToList()).GetHtml()
                     </div>
-                    <div class="col">
+                    <div class="col input_req">
                         <label>Type: </label>
                         @Html.DevExpress().ComboBox(settings =>
                    {
@@ -229,26 +232,33 @@ else
             productForm.submit(e => {
                 e.preventDefault();
 
-                let product_valArr = [...document.getElementById("productForm").querySelectorAll("input[type=text]")]
-                                        .map(node => (node.value === "") ? 0 : 1);
-                let submit_flag = Math.min(...product_valArr);
-                
-                let fData = new FormData(productForm[0]);
+                //let submit_flag = Math.min(...product_valArr);
 
-                $.ajax({
-                    url: productForm_actionLink,
-                    type: productForm_methodType,
-                    enctype: 'multipart/form-data',
-                    processData: false,  // Important!
-                    contentType: false,
-                    cache: false,
-                    data: fData,
-                    success: resp => {
-                        $("#productFormResp").html(resp);
-                        alert("Product has been inserted successfully!");
-                        productForm.find("input.to_clear").val("");
-                    }
-                });
+                let product_valArr = [...document.getElementsByClassName("input_req")]
+                .map((node, ind) => node.querySelector("input[type=text]").value)
+                .map(node => (node == "") ? 0 : 1);
+                let submit_flag = Math.min(...product_valArr);
+
+                if (!submit_flag) {
+                    alert("Not all necessary inputs are filled in!");
+                } else {
+                    let fData = new FormData(productForm[0]);
+
+                    $.ajax({
+                        url: productForm_actionLink,
+                        type: productForm_methodType,
+                        enctype: 'multipart/form-data',
+                        processData: false,  // Important!
+                        contentType: false,
+                        cache: false,
+                        data: fData,
+                        success: resp => {
+                            $("#productFormResp").html(resp);
+                            alert("Product has been inserted successfully!");
+                            productForm.find("input[type=text], textarea").val("");
+                        }
+                    });
+                }
             });
         });
     </script>

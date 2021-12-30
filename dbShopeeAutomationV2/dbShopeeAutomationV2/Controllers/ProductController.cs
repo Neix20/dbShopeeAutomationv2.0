@@ -37,7 +37,7 @@ namespace dbShopeeAutomationV2.Controllers
             item.name = (item.name == null) ? "product_name" : item.name;
             item.description = (item.description == null) ? "product_description" : item.description;
 
-            item.SKU = (item.SKU == null) ? generalFunc.Random10DigitCode() : item.SKU;
+            item.SKU = (item.SKU == null) ? item.name : item.SKU;
             item.SKU2 = (item.SKU2 == null) ? item.SKU : item.SKU2;
 
             item.buy_price = (item.buy_price == null) ? 0 : item.buy_price;

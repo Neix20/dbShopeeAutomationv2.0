@@ -72,7 +72,7 @@ else
                 <div class="row m-2">
                     <div class="col">
                         <label>Product Image: </label>
-                        @Html.TextBox("product_image", "", new { @Class = "form-control", @Type = "file", @Required = "true" })
+                        @Html.TextBox("product_image", "", new { @Class = "form-control to_clear", @Type = "file", @Required = "true" })
                     </div>
                     <div class="col"></div>
                 </div>
@@ -80,18 +80,18 @@ else
                 <div class="row m-2">
                     <div class="col">
                         <label>Name: </label>
-                        @Html.TextBox("name", "", new { @Class = "form-control", @type = "text", @Required = "true" })
+                        @Html.TextBox("name", "", new { @Class = "form-control to_clear", @type = "text", @Required = "true" })
                     </div>
                     <div class="col">
                         <label>Code: </label>
-                        @Html.TextBox("product_code", "", new { @Class = "form-control", @type = "text", @Required = "true" })
+                        @Html.TextBox("product_code", "", new { @Class = "form-control to_clear", @type = "text", @Placeholder = "Optional"})
                     </div>
                 </div>
 
                 <div class="row m-2">
                     <div class="col">
                         <label>SKU: </label>
-                        @Html.TextBox("SKU", "", new { @Class = "form-control", @type = "text", @Required = "true" })
+                        @Html.TextBox("SKU", "", new { @Class = "form-control to_clear", @type = "text", @Placeholder = "Optional"})
                     </div>
                     <div class="col">
                         <label>Status: </label>
@@ -222,7 +222,6 @@ else
 
     <script type="text/javascript">
         $(function () {
-
             let productForm = $("form[id='productForm']");
             const productForm_actionLink = productForm.attr("action");
             const productForm_methodType = productForm.attr("method");
@@ -230,6 +229,10 @@ else
             productForm.submit(e => {
                 e.preventDefault();
 
+                let product_valArr = [...document.getElementById("productForm").querySelectorAll("input[type=text]")]
+                                        .map(node => (node.value === "") ? 0 : 1);
+                let submit_flag = Math.min(...product_valArr);
+                
                 let fData = new FormData(productForm[0]);
 
                 $.ajax({
@@ -243,7 +246,7 @@ else
                     success: resp => {
                         $("#productFormResp").html(resp);
                         alert("Product has been inserted successfully!");
-                        productForm.find("input[type=text], input[type=file], textarea").val("");
+                        productForm.find("input.to_clear").val("");
                     }
                 });
             });

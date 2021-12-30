@@ -44,8 +44,16 @@ else
 
                 <div class="row m-2">
                     <div class="col">
+                        <label>Title: </label>
+                        @Html.TextBox("title", "", new { @Class = "form-control", @Placeholder = "[Optional]" , @Type = "text", @Required = "true"})
+                    </div>
+                    <div class="col"></div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
                         <label>Staff Name: </label>
-                        @Html.TextBox("staff_name", "", new { @Class = "form-control", @Placeholder = "Staff Name" })
+                        @Html.TextBox("staff_name", "", new { @Class = "form-control", @Placeholder = "[Optional]", @Type = "text", @Required = "true" })
                     </div>
                     <div class="col">
                         <label>Date: </label>
@@ -61,7 +69,7 @@ else
                 <div class="row m-2">
                     <div class="col">
                         <label>Description</label>
-                        @Html.TextArea("description", "", new { @class = "form-control", @placeholder = "Insert Description Here..." })
+                        @Html.TextArea("description", "", new { @class = "form-control", @placeholder = "Insert Description Here..." , @Required = "true"})
                     </div>
                 </div>
             }

@@ -17,40 +17,40 @@
             <div class="row m-2">
                 <div class="col">
                     <label>Stock Warehouse Title: </label>
-                    @Html.TextBox("name", "", new { @Class="form-control", @Type="text", @Required="true" })
+                    @Html.TextBox("name", "", new { @Class="form-control to_clear", @Type="text", @Required="true" })
                 </div>
                 <div class="col">
                     <label>Stock Warehouse Image: </label>
-                    @Html.TextBox("warehouse_image", "", new { @Class = "form-control", @Type = "file", @Required = "true"  })
+                    @Html.TextBox("warehouse_image", "", new { @Class = "form-control to_clear", @Type = "file", @Required = "true"  })
                 </div>
             </div>
 
             <div class="row m-2">
                 <div class="col">
                     <label>Email Address: </label>
-                    @Html.TextBox("email_address", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
+                    @Html.TextBox("email_address", "", new { @Class = "form-control to_clear", @Type = "text", @Required = "true" })
                 </div>
                 <div class="col">
                     <label>Phone Number: </label>
-                    @Html.TextBox("phone_number", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
+                    @Html.TextBox("phone_number", "", new { @Class = "form-control to_clear", @Type = "text", @Required = "true" })
                 </div>
             </div>
 
             <div class="row m-2">
                 <div class="col">
                     <label>Address Line 1: </label>
-                    @Html.TextBox("address_line_1", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
+                    @Html.TextBox("address_line_1", "", new { @Class = "form-control to_clear", @Type = "text", @Required = "true" })
                 </div>
                 <div class="col">
                     <label>Address Line 2: </label>
-                    @Html.TextBox("address_line_2", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
+                    @Html.TextBox("address_line_2", "", new { @Class = "form-control to_clear", @Type = "text", @Required = "true" })
                 </div>
             </div>
 
                 <div class="row m-2">
                     <div class="col">
                         <label>City: </label>
-                        @Html.TextBox("city", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
+                        @Html.TextBox("city", "", new { @Class = "form-control to_clear", @Type = "text", @Required = "true" })
                     </div>
                     <div class="col">
                         <label>Zip Code: </label>
@@ -67,11 +67,11 @@
                 <div class="row m-2">
                     <div class="col">
                         <label>State: </label>
-                        @Html.TextBox("state", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
+                        @Html.TextBox("state", "", new { @Class = "form-control to_clear", @Type = "text", @Required = "true" })
                     </div>
                     <div class="col">
                         <label>Country: </label>
-                        @Html.TextBox("country", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
+                        @Html.TextBox("country", "", new { @Class = "form-control to_clear", @Type = "text", @Required = "true" })
                     </div>
                 </div>
         }
@@ -101,22 +101,30 @@
         swForm.submit(e => {
             e.preventDefault();
 
-            let fData = new FormData(swForm[0]);
+            let input_valArr = [...document.getElementById("stockWarehouseForm").querySelectorAll("input[type=text]")]
+                                        .map(node => (node.value === "") ? 0 : 1);
+            let submit_flag = Math.min(...input_valArr);
 
-            $.ajax({
-                url: swForm_actionLink,
-                type: swForm_methodType,
-                enctype: 'multipart/form-data',
-                processData: false,  // Important!
-                contentType: false,
-                cache: false,
-                data: fData,
-                success: resp => {
-                    $("#stockWarehouseFormResp").html(resp);
-                    alert("Stock Warehouse has been successfully inserted!");
-                    swForm.find("input[type=text], input[type=file], textarea").val("");
-                }
-            })
+            if (!submit_flag) {
+                alert("All inputs have not been filled in!");
+            } else {
+                let fData = new FormData(swForm[0]);
+
+                $.ajax({
+                    url: swForm_actionLink,
+                    type: swForm_methodType,
+                    enctype: 'multipart/form-data',
+                    processData: false,  // Important!
+                    contentType: false,
+                    cache: false,
+                    data: fData,
+                    success: resp => {
+                        $("#stockWarehouseFormResp").html(resp);
+                        alert("Stock Warehouse has been successfully inserted!");
+                        swForm.find("input.to_clear").val("");
+                    }
+                });
+            }
         });
     });
 </script>

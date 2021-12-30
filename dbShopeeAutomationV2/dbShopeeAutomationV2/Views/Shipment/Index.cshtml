@@ -88,6 +88,16 @@ else
 
                 <div class="row m-2">
                     <div class="col">
+                        <label>Tracking ID: </label>
+                        @Html.TextBox("tracking_id", "", new { @Class = "form-control", @Type = "text", @Placeholder = "[Optional]", @Required = "true" })
+                    </div>
+                    <div class="col">
+
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col">
                         <label>Invoice Code: </label>
                         @Html.DevExpress().ComboBox(settings =>
                    {

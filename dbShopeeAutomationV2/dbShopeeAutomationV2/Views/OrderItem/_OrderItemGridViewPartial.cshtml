@@ -10,14 +10,6 @@
         detailDict.Add(it.detail_id, it.last_updated_by);
     });
 
-    // 1. Cannot Select From Empty Stock Item
-    // 2. Cannot Select From Completed Order List
-
-    //List<TShopeeProduct> tmpProductList = db.TShopeeProducts.AsEnumerable().Where(it =>
-    //{
-    //    TShopeeStockItem tmp = db.TShopeeStockItems.FirstOrDefault(model => model.product_id == it.product_id);
-    //    return tmp.stock_quantity > 0;
-    //}).ToList();
 
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "OrderItemGridView";

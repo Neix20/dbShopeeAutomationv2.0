@@ -7,6 +7,7 @@
     dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
     int product_count = db.TShopeeProducts.ToList().Count;
     int production_count = db.TShopeeProductions.ToList().Count;
+    int inc_pro_sta_id = dbStatusFunction.productionStatusID("incomplete");
 }
 
 @if (product_count <= 0 || production_count <= 0)
@@ -62,7 +63,7 @@ else
                        settings.Properties.ValueField = "production_id";
                        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
                        settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
-                   }).BindList(db.TShopeeProductions.ToList()).GetHtml()
+                   }).BindList(db.TShopeeProductions.Where(it => it.production_status_id == inc_pro_sta_id).ToList()).GetHtml()
                     </div>
                     <div class="col input_req">
                         <label>Product: </label>

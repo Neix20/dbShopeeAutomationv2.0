@@ -13,26 +13,6 @@
             </div>
         </div>
 
-        @using (Html.BeginForm("PlatformGridViewPartialAddNew", "Platform", FormMethod.Post, new { enctype = "multipart/form-data", @Id="platformForm"}))
-        {
-            @Html.HiddenFor(model => model.platform_id, new { @Value = 0 })
-            @Html.HiddenFor(model => model.detail_id, new { @Value = 0 })
-
-            <div class="row m-2">
-                <div class="col">
-                    <label for="platformName">Platform Name</label>
-                    @Html.TextBoxFor(model => model.name, new { @Class = "form-control", @Type="text", @Required = "true" })
-                </div>
-                <div class="col"></div>
-            </div>
-        }
-
-        <div class="row mt-3 mx-2">
-            <div class="col">
-                <button type="submit" class="btn btn-primary" form="platformForm">Submit</button>
-            </div>
-        </div>
-
         <div class="row m-2">
             <div class="col">
                 <div id="platformFormContent">
@@ -43,31 +23,3 @@
 
     </div>
 </div>
-
-<script type="text/javascript">
-    $(function () {
-        let form = $("form[id='platformForm']");
-        const actionLink = form.attr("action");
-        const methodType = form.attr("method");
-
-        form.submit(e => {
-            e.preventDefault();
-
-            let fData = new FormData(form[0]);
-
-            $.ajax({
-                url: actionLink,
-                type: methodType,
-                enctype: 'multipart/form-data',
-                processData: false,  // Important!
-                contentType: false,
-                cache: false,
-                data: fData,
-                success: resp => {
-                    $("#platformFormContent").html(resp);
-                    form.find("input[type=text], textarea").val("");
-                }
-            });
-        })
-    });
-</script>

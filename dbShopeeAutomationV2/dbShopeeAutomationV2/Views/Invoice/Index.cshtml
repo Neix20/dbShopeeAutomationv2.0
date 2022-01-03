@@ -17,6 +17,8 @@
     int customer_count = db.TShopeeCustomers.ToList().Count;
     int invoice_status_count = db.TShopeeInvoiceStatus.ToList().Count;
     int payment_method_count = db.TShopeePaymentMethods.ToList().Count;
+
+    int c_ord_sta_id = dbStatusFunction.orderStatusID("complete");
 }
 
 @if (order_count <= 0 || customer_count <= 0 || invoice_status_count <= 0 || payment_method_count <= 0)
@@ -116,7 +118,7 @@ else
                        settings.Properties.ValueField = "order_id";
                        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
                        settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
-                   }).BindList(db.TShopeeOrders.ToList()).GetHtml()
+                   }).BindList(db.TShopeeOrders.Where(it => it.order_status_id == c_ord_sta_id).ToList()).GetHtml()
                     </div>
                 </div>
 

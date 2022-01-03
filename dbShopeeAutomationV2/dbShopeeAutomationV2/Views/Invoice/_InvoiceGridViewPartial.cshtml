@@ -10,23 +10,12 @@
         detailDict.Add(it.detail_id, it.last_updated_by);
     });
 
-    Dictionary<int, TShopeeOrder> orderDict = new Dictionary<int, TShopeeOrder>();
-    db.TShopeeOrders.ToList().ForEach(it => {
-        orderDict.Add(it.order_id, it);
-    });
-
     List<mCustomer> customerList = new List<mCustomer>();
     db.TShopeeCustomers.ToList().ForEach(it =>
     {
         string name = $"{it.first_name} {it.last_name}";
         customerList.Add(new mCustomer(it.customer_id, name));
     });
-
-    var orderStatus = db.TShopeeOrderStatus.FirstOrDefault(
-it => it.name.ToLower().Equals("Complete".ToLower())
-);
-
-    int order_complete = (orderStatus != null) ? orderStatus.order_status_id : 0;
 
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "InvoiceGridView";
@@ -70,7 +59,7 @@ it => it.name.ToLower().Equals("Complete".ToLower())
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
-            prop.DataSource = db.TShopeeOrders.Where(it => it.order_status_id == order_complete).ToList();
+            prop.DataSource = db.TShopeeOrders.ToList();
             prop.TextField = "order_title";
             prop.ValueField = "order_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
@@ -138,7 +127,6 @@ it => it.name.ToLower().Equals("Complete".ToLower())
         settings.Columns.Add(col => {
             col.FieldName = "invoice_status_id";
             col.Caption = "Complete?";
-            //col.ReadOnly = true;
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
@@ -153,7 +141,6 @@ it => it.name.ToLower().Equals("Complete".ToLower())
         {
             col.FieldName = "invoice_completed_date";
             col.Caption = "Completed Date";
-            //col.ReadOnly = true;
 
             col.ColumnType = MVCxGridViewColumnType.DateEdit;
             col.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";

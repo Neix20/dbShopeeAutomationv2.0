@@ -17,6 +17,8 @@
     int invoice_count = db.TShopeeInvoices.ToList().Count;
     int carrier_count = db.TShopeeCarriers.ToList().Count;
     int shipment_status_count = db.TShopeeShipmentStatus.ToList().Count;
+
+    int c_inc_sta_id = dbStatusFunction.invoiceStatusID("complete");
 }
 
 @if (invoice_count <= 0 || carrier_count <= 0 || shipment_status_count <= 0)
@@ -109,7 +111,7 @@ else
                        settings.Properties.ValueField = "invoice_id";
                        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
                        settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
-                   }).BindList(db.TShopeeInvoices.ToList()).GetHtml()
+                   }).BindList(db.TShopeeInvoices.Where(it => it.invoice_status_id == c_inc_sta_id).ToList()).GetHtml()
                     </div>
                     <div class="col input_req">
                         <label>Carrier: </label>

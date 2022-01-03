@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace dbShopeeAutomationV2.Models
@@ -141,19 +142,19 @@ namespace dbShopeeAutomationV2.Models
         public static string[] FormatAddress(string address)
         {
             address = trimStr(address);
+
             string[] tmp_address_arr = address.Split(new[] { ", " }, StringSplitOptions.None);
 
-            string def_addr = "address line 1, address line 2, city, 00000, state, country";
-            List<string> def_addrList = new List<string>(def_addr.Split(new[] { ", " }, StringSplitOptions.None));
+            string[] address_arr = (tmp_address_arr.Length != 6) ?
+                "address line 1, address line 2, city, 00000, state, country".Split(new[] { ", " }, StringSplitOptions.None) :
+                address.Split(new[] { ", " }, StringSplitOptions.None);
 
-            if (tmp_address_arr.Length != 6)
-            {
-                address = "";
-                foreach (var str in tmp_address_arr) address += $"{str}, ";
-                address += String.Join(", ", def_addrList.GetRange(tmp_address_arr.Length, 6 - tmp_address_arr.Length));
-            }
-            
-            return address.Split(new[] { ", " }, StringSplitOptions.None);
+            // Validate Zip Code
+            string zipCode_pattern = @"^\d{5}$", zipCode_str = address_arr[3];
+            var flag = Regex.Match(zipCode_str, zipCode_pattern, RegexOptions.IgnoreCase).Success;
+            address_arr[3] = (flag) ? address_arr[3] : "00000";
+
+            return address_arr;
         }
 
         public static string GenSupplierCode(int num) {

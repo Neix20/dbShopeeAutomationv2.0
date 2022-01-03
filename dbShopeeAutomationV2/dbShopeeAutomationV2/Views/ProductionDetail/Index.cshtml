@@ -50,7 +50,7 @@ else
                 @Html.AntiForgeryToken()
 
                 <div class="row m-2">
-                    <div class="col">
+                    <div class="col input_req">
                         <label>Production Title: </label>
                         @Html.DevExpress().ComboBox(settings => {
                        settings.Name = "production_id";
@@ -64,7 +64,7 @@ else
                        settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
                    }).BindList(db.TShopeeProductions.ToList()).GetHtml()
                     </div>
-                    <div class="col">
+                    <div class="col input_req">
                         <label>Product: </label>
                         @Html.DevExpress().ComboBox(settings => {
                        settings.Name = "product_id";
@@ -175,16 +175,25 @@ else
             productionDetailForm.submit(e => {
                 e.preventDefault();
 
-                $.ajax({
-                    url: productionDetailForm_actionLink,
-                    type: productionDetailForm_methodType,
-                    data: productionDetailForm.serialize(),
-                    success: resp => {
-                        $("#productionDetailFormResp").html(resp);
-                        alert("Production Detail has been successfully inserted!");
-                        $(".to_remove").find("input[type=text], textarea").val("");
-                    }
-                });
+                let input_valArr = [...document.getElementsByClassName("input_req")]
+                .map((node, ind) => node.querySelector("input[type=text]").value)
+                .map(node => (node == "") ? 0 : 1);
+                let submit_flag = Math.min(...input_valArr);
+
+                if (!submit_flag) {
+                    alert("Not all necessary input have been filled in!");
+                } else {
+                    $.ajax({
+                        url: productionDetailForm_actionLink,
+                        type: productionDetailForm_methodType,
+                        data: productionDetailForm.serialize(),
+                        success: resp => {
+                            $("#productionDetailFormResp").html(resp);
+                            alert("Production Detail has been successfully inserted!");
+                            $(".to_remove").find("input[type=text], textarea").val("");
+                        }
+                    });
+                }
             });
         });
     </script>

@@ -232,8 +232,6 @@ else
             productForm.submit(e => {
                 e.preventDefault();
 
-                //let submit_flag = Math.min(...product_valArr);
-
                 let input_valArr = [...document.getElementsByClassName("input_req")]
                 .map((node, ind) => node.querySelector("input[type=text]").value)
                 .map(node => (node == "") ? 0 : 1);

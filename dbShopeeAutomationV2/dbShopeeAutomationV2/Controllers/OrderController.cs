@@ -30,7 +30,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string username = User.Identity.Name;
 
-            int last_order_id = dbStoredProcedure.getID("TShopeeOrder") + 1;
+            int last_order_id = db.TShopeeOrders.ToList().Count + 1;
             item.order_title = (item.order_title == null) ? generalFunc.GenOrderCode(last_order_id) : item.order_title;
 
             item.order_placed_date = (item.order_placed_date == null) ? DateTime.Now : item.order_placed_date;

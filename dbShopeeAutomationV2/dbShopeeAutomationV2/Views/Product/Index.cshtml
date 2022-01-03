@@ -234,10 +234,10 @@ else
 
                 //let submit_flag = Math.min(...product_valArr);
 
-                let product_valArr = [...document.getElementsByClassName("input_req")]
+                let input_valArr = [...document.getElementsByClassName("input_req")]
                 .map((node, ind) => node.querySelector("input[type=text]").value)
                 .map(node => (node == "") ? 0 : 1);
-                let submit_flag = Math.min(...product_valArr);
+                let submit_flag = Math.min(...input_valArr);
 
                 if (!submit_flag) {
                     alert("Not all necessary inputs are filled in!");
@@ -255,7 +255,7 @@ else
                         success: resp => {
                             $("#productFormResp").html(resp);
                             alert("Product has been inserted successfully!");
-                            productForm.find("input[type=text], textarea").val("");
+                            productForm.find("input[type=text], input[type=file], textarea").val("");
                         }
                     });
                 }

@@ -66,11 +66,11 @@ else
             @using (Html.BeginForm("InvoiceGridViewPartialAddNew", "Invoice", FormMethod.Post, new { @Id = "invoiceForm"}))
             {
                 <div class="row m-2">
-                    <div class="col">
+                    <div class="col to_remove">
                         <label>Invoice Code: </label>
                         @Html.TextBox("invoice_title", "", new { @Class="form-control", @Type="text", @Placeholder = "Optional", @Required ="true"})
                     </div>
-                    <div class="col">
+                    <div class="col input_req">
                         <label>Payment Method: </label>
                         @Html.DevExpress().ComboBox(settings =>
                    {
@@ -88,7 +88,7 @@ else
                 </div>
 
                 <div class="row m-2">
-                    <div class="col">
+                    <div class="col input_req">
                         <label>Customer Name: </label>
                         @Html.DevExpress().ComboBox(settings =>
                    {
@@ -103,7 +103,7 @@ else
                        settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
                    }).BindList(customerList).GetHtml()
                     </div>
-                    <div class="col">
+                    <div class="col input_req">
                         <label>Order Title: </label>
                         @Html.DevExpress().ComboBox(settings =>
                    {
@@ -120,17 +120,19 @@ else
                     </div>
                 </div>
 
-                <div class="row m-2">
-                    <div class="col">
-                        <label>Invoice Details: </label>
-                        @Html.TextArea("invoice_details", "", new { @Class="form-control"})
+                <div class="to_remove">
+                    <div class="row m-2">
+                        <div class="col">
+                            <label>Invoice Details: </label>
+                            @Html.TextArea("invoice_details", "", new { @Class = "form-control" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="row m-2">
-                    <div class="col">
-                        <label>Shipping Fee: </label>
-                        @Html.DevExpress().SpinEdit(settings => {
+                    <div class="row m-2">
+                        <div class="col">
+                            <label>Shipping Fee: </label>
+                            @Html.DevExpress().SpinEdit(settings =>
+                   {
                        settings.Name = "shipping_fee";
                        settings.Width = Unit.Percentage(49);
                        settings.Properties.MinValue = 0;
@@ -138,6 +140,7 @@ else
                        settings.Properties.Increment = 0.1M;
                        settings.Properties.DisplayFormatString = "C";
                    }).GetHtml()
+                        </div>
                     </div>
                 </div>
             }
@@ -173,16 +176,25 @@ else
             iForm.submit(e => {
                 e.preventDefault();
 
-                $.ajax({
-                    url: iForm_actionLink,
-                    type: iForm_methodType,
-                    data: iForm.serialize(),
-                    success: resp => {
-                        $("#invoiceFormResp").html(resp);
-                        alert("Invoice has been inserted successfully!");
-                        iForm.find("input[type=text], textarea").val("");
-                    }
-                })
+                let input_valArr = [...document.getElementsByClassName("input_req")]
+                .map((node, ind) => node.querySelector("input[type=text]").value)
+                .map(node => (node == "") ? 0 : 1);
+                let submit_flag = Math.min(...input_valArr);
+
+                if (!submit_flag) {
+                    alert("Not all necessary input have been filled in!");
+                } else {
+                    $.ajax({
+                        url: iForm_actionLink,
+                        type: iForm_methodType,
+                        data: iForm.serialize(),
+                        success: resp => {
+                            $("#invoiceFormResp").html(resp);
+                            alert("Invoice has been inserted successfully!");
+                            $(".to_remove").find("input[type=text], textarea").val("");
+                        }
+                    })
+                }
             });
         });
     </script>

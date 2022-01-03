@@ -52,7 +52,7 @@ else
             @using (Html.BeginForm("OrderItemGridViewPartialAddNew", "OrderItem", FormMethod.Post, new { @Id = "orderItemForm" }))
             {
                 <div class="row m-2">
-                    <div class="col">
+                    <div class="col input_req">
                         <label>Order Title: </label>
                         @Html.DevExpress().ComboBox(settings => {
                        settings.Name = "order_id";
@@ -66,7 +66,7 @@ else
                        settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
                    }).BindList(db.TShopeeOrders.ToList()).GetHtml()
                     </div>
-                    <div class="col">
+                    <div class="col input_req">
                         <label>Product SKU: </label>
                         @Html.DevExpress().ComboBox(settings => {
                        settings.Name = "product_id";
@@ -82,20 +82,21 @@ else
                     </div>
                 </div>
 
-                <div class="row m-2">
-                    <div class="col">
-                        <label>Quantity: </label>
-                        @Html.DevExpress().SpinEdit(settings =>
+                <div class="to_remove">
+                    <div class="row m-2">
+                        <div class="col">
+                            <label>Quantity: </label>
+                            @Html.DevExpress().SpinEdit(settings =>
                    {
                        settings.Name = "quantity";
                        settings.Width = Unit.Percentage(100);
                        settings.Properties.MinValue = 0;
                        settings.Properties.MaxValue = 10000000;
                    }).GetHtml()
-                    </div>
-                    <div class="col">
-                        <label>Discount Fee: </label>
-                        @Html.DevExpress().SpinEdit(settings =>
+                        </div>
+                        <div class="col">
+                            <label>Discount Fee: </label>
+                            @Html.DevExpress().SpinEdit(settings =>
                    {
                        settings.Name = "discount_fee";
                        settings.Width = Unit.Percentage(100);
@@ -105,6 +106,7 @@ else
                        settings.Properties.DecimalPlaces = 2;
                        settings.Properties.DisplayFormatString = "C";
                    }).GetHtml()
+                        </div>
                     </div>
                 </div>
             }
@@ -141,16 +143,25 @@ else
             orderItemForm.submit(e => {
                 e.preventDefault();
 
-                $.ajax({
-                    url: orderItemForm_actionLink,
-                    type: orderItemForm_methodType,
-                    data: orderItemForm.serialize(),
-                    success: resp => {
-                        $("#orderItemFormResp").html(resp);
-                        alert("Order Item has been successfully inserted!");
-                        orderItemForm.find("input[type=text], textarea").val("");
-                    }
-                });
+                let input_valArr = [...document.getElementsByClassName("input_req")]
+                .map((node, ind) => node.querySelector("input[type=text]").value)
+                .map(node => (node == "") ? 0 : 1);
+                let submit_flag = Math.min(...input_valArr);
+
+                if (!submit_flag) {
+                    alert("Not all necessary input have been filled in!");
+                } else {
+                    $.ajax({
+                        url: orderItemForm_actionLink,
+                        type: orderItemForm_methodType,
+                        data: orderItemForm.serialize(),
+                        success: resp => {
+                            $("#orderItemFormResp").html(resp);
+                            alert("Order Item has been successfully inserted!");
+                            $(".to_remove").find("input[type=text], textarea").val("");
+                        }
+                    });
+                }
             });
         });
     </script>

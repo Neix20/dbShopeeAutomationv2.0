@@ -80,14 +80,14 @@ else
                        settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
                    }).BindList(swList).GetHtml()
                     </div>
-                    <div class="col">
+                    <div class="col to_remove">
                         <label>Destination Address: </label>
                         @Html.TextBox("destination", "", new { @Class="form-control", @Type="text", @Required = "true"})
                     </div>
                 </div>
 
                 <div class="row m-2">
-                    <div class="col">
+                    <div class="col to_remove">
                         <label>Tracking ID: </label>
                         @Html.TextBox("tracking_id", "", new { @Class = "form-control", @Type = "text", @Placeholder = "Optional", @Required = "true" })
                     </div>
@@ -169,7 +169,7 @@ else
                     success: resp => {
                         $("#shipmentFormResp").html(resp);
                         alert("A new shipment has been successfully inserted!");
-                        shipmentForm.find("input[type=text], textarea").val("");
+                        $(".to_remove").find("input[type=text], textarea").val("");
                     }
                 });
             });

@@ -80,7 +80,7 @@ else
                     </div>
                 </div>
 
-                <div id="to_remove">
+                <div class="to_remove">
                     <div class="row m-2">
                         <div class="col">
                             <label>Width: </label>
@@ -182,7 +182,7 @@ else
                     success: resp => {
                         $("#productionDetailFormResp").html(resp);
                         alert("Production Detail has been successfully inserted!");
-                        $("#to_remove").find("input[type=text], textarea").val("");
+                        $(".to_remove").find("input[type=text], textarea").val("");
                     }
                 });
             });

@@ -90,7 +90,7 @@
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
             prop.DataSource = db.TShopeeProductBrands.ToList();
-            prop.TextField = "name";
+            prop.TextField = "code";
             prop.ValueField = "product_brand_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
             prop.ValidationSettings.RequiredField.IsRequired = true;
@@ -105,7 +105,7 @@
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
             prop.DataSource = db.TShopeeProductCategories.ToList();
-            prop.TextField = "name";
+            prop.TextField = "code";
             prop.ValueField = "product_category_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
             prop.ValidationSettings.RequiredField.IsRequired = true;
@@ -120,7 +120,7 @@
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
             prop.DataSource = db.TShopeeProductModels.ToList();
-            prop.TextField = "name";
+            prop.TextField = "code";
             prop.ValueField = "product_model_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
             prop.ValidationSettings.RequiredField.IsRequired = true;
@@ -135,7 +135,7 @@
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
             prop.DataSource = db.TShopeeProductTypes.ToList();
-            prop.TextField = "name";
+            prop.TextField = "code";
             prop.ValueField = "product_type_id";
             prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
             prop.ValidationSettings.RequiredField.IsRequired = true;

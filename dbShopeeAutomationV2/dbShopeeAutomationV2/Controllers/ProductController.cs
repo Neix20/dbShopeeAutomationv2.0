@@ -104,39 +104,9 @@ namespace dbShopeeAutomationV2.Controllers
             item.product_code = item.product_code.Replace(" ", String.Empty);
 
             item.name = (item.name == null) ? "product_name" : item.name;
-            item.description = (item.description == null) ? "product_description" : item.description;
+            item.description = (item.description == null) ? "" : item.description;
 
-            // Check to see if Product is Material or Not
-            int pro_mat_id = dbStatusFunction.productModelID("material");
-
-            if (item.product_model_id == pro_mat_id)
-            {
-                // Check to see if Supplier Shipment Exists or not
-                // Technically, it is supposed to exist. If it doesn't, it just means the admin forgot to insert it.
-                var supplierShipment = db.TShopeeSupplierShipments.FirstOrDefault(it => it.product_id == item.product_id);
-                if(supplierShipment != null)
-                {
-                    string product_category_code = db.TShopeeProductCategories.FirstOrDefault(it => it.product_category_id == item.product_category_id).code;
-                    string supplier_code = db.TShopeeSuppliers.FirstOrDefault(it => it.supplier_id == supplierShipment.supplier_id).code;
-                    int material_count = db.TShopeeProducts.Where(it => it.product_model_id == pro_mat_id).ToList().Count;
-
-                    item.SKU = generalFunc.GenMaterialSKU(product_category_code, supplier_code, material_count);
-                }
-            } else
-            {
-                // Check to see if Product Component Exist
-                // Technically, it is supposed to exist. If it doesn't, it just means the admin forgot to insert it.
-                var productComponent = db.TShopeeProductComponents.FirstOrDefault(it => it.master_product_id == item.product_id);
-                if(productComponent != null)
-                {
-                    string product_model_code = db.TShopeeProductModels.FirstOrDefault(it => it.product_model_id == item.product_model_id).code;
-                    string product_category_code = db.TShopeeProductCategories.FirstOrDefault(it => it.product_category_id == item.product_category_id).code;
-                    string product_material_sku = db.TShopeeProducts.FirstOrDefault(it => it.product_id == productComponent.sub_product_id).SKU;
-                    item.SKU = generalFunc.GenProductSKU(product_model_code, product_category_code, product_material_sku);
-                }
-            }
-
-            item.SKU = (item.SKU == null) ? generalFunc.Random10DigitCode() : item.SKU;
+            item.SKU = (item.SKU == null) ? item.name : item.SKU;
             item.SKU2 = (item.SKU2 == null) ? item.SKU : item.SKU2;
 
             item.buy_price = (item.buy_price == null) ? 0 : item.buy_price;
@@ -161,6 +131,67 @@ namespace dbShopeeAutomationV2.Controllers
             db.SaveChanges();
 
             var model = db.TShopeeProducts;
+            return PartialView("_ProductGridViewPartial", model.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult UpdateMaterialSKU()
+        {
+            // Check to see if Product is Material or Not
+            int pro_mat_id = dbStatusFunction.productModelID("material");
+
+            var model = db.TShopeeProducts;
+
+            int material_ind = 0;
+
+            model.ToList().ForEach(item =>
+            {
+                if (item.product_model_id == pro_mat_id)
+                {
+                    // Check to see if Supplier Shipment Exists or not
+                    // Technically, it is supposed to exist. If it doesn't, it just means the admin forgot to insert it.
+                    var supplierShipment = db.TShopeeSupplierShipments.FirstOrDefault(it => it.product_id == item.product_id);
+                    if (supplierShipment != null)
+                    {
+                        string product_category_code = db.TShopeeProductCategories.FirstOrDefault(it => it.product_category_id == item.product_category_id).code;
+                        string supplier_code = db.TShopeeSuppliers.FirstOrDefault(it => it.supplier_id == supplierShipment.supplier_id).code;
+                        int material_count = ++material_ind;
+
+                        item.SKU = generalFunc.GenMaterialSKU(product_category_code, supplier_code, material_count);
+                    }
+                }
+            });
+            db.SaveChanges();
+
+            return PartialView("_ProductGridViewPartial", model.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult UpdateProductSKU()
+        {
+            // Check to see if Product is Material or Not
+            int pro_mat_id = dbStatusFunction.productModelID("material");
+
+            var model = db.TShopeeProducts;
+
+            model.ToList().ForEach(item =>
+            {
+                if (item.product_model_id != pro_mat_id)
+                {
+                    // Check to see if Product Component Exist
+                    // Technically, it is supposed to exist. If it doesn't, it just means the admin forgot to insert it.
+                    var productComponent = db.TShopeeProductComponents.FirstOrDefault(it => it.master_product_id == item.product_id);
+                    if (productComponent != null)
+                    {
+                        string product_model_code = db.TShopeeProductModels.FirstOrDefault(it => it.product_model_id == item.product_model_id).code;
+                        string product_category_code = db.TShopeeProductCategories.FirstOrDefault(it => it.product_category_id == item.product_category_id).code;
+                        string product_material_sku = db.TShopeeProducts.FirstOrDefault(it => it.product_id == productComponent.sub_product_id).SKU;
+                        item.SKU = generalFunc.GenProductSKU(product_model_code, product_category_code, product_material_sku);
+                    }
+                }
+            });
+            db.SaveChanges();
+
             return PartialView("_ProductGridViewPartial", model.ToList());
         }
     }

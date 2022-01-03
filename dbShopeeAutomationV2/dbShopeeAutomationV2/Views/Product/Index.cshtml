@@ -207,10 +207,31 @@ else
                 </div>
             }
 
+            @using (Html.BeginForm("UpdateMaterialSKU", "Product", FormMethod.Post, new { @Id = "updateMaterialSKUForm" }))
+            {
+                @Html.AntiForgeryToken()
+            }
+
+            @using(Html.BeginForm("UpdateProductSKU", "Product", FormMethod.Post, new { @Id="updateProductSKUForm"}))
+            {
+                @Html.AntiForgeryToken()
+            }
+
             <div class="row mt-3 mx-2">
                 <div class="col">
-                    <button type="submit" class="btn btn-success" form="productForm">Submit Form</button>
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" class="btn btn-success" form="productForm">Submit Form</button>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-secondary" form="updateMaterialSKUForm">Update Material SKU</button>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary" form="updateProductSKUForm">Update Product SKU</button>
+                        </div>
+                    </div>
                 </div>
+                <div class="col"></div>
             </div>
 
             <div class="row mx-2 mb-2">
@@ -225,6 +246,38 @@ else
 
     <script type="text/javascript">
         $(function () {
+            let umSKUForm = $("form[id='updateMaterialSKUForm']");
+            const umSKUForm_actionLink = umSKUForm.attr("action");
+            const umSKUForm_methodType = umSKUForm.attr("method");
+            
+            umSKUForm.submit(e => {
+                e.preventDefault();
+
+                $.ajax({
+                    url: umSKUForm_actionLink,
+                    type: umSKUForm_methodType,
+                    success: resp => {
+                        $("#productFormResp").html(resp);
+                    }
+                })
+            });
+
+            let upSKUForm = $("form[id='updateProductSKUForm']");
+            const upSKUForm_actionLink = upSKUForm.attr("action");
+            const upSKUForm_methodType = upSKUForm.attr("method");
+            
+            upSKUForm.submit(e => {
+                e.preventDefault();
+
+                $.ajax({
+                    url: upSKUForm_actionLink,
+                    type: upSKUForm_methodType,
+                    success: resp => {
+                        $("#productFormResp").html(resp);
+                    }
+                })
+            });
+
             let productForm = $("form[id='productForm']");
             const productForm_actionLink = productForm.attr("action");
             const productForm_methodType = productForm.attr("method");

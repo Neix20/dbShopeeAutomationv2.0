@@ -130,7 +130,7 @@
     </Key>
     <Property Name="product_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="product_code" Type="varchar" MaxLength="50" />
-    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="name" Type="varchar(max)" />
     <Property Name="description" Type="varchar(max)" />
     <Property Name="SKU" Type="varchar" MaxLength="50" />
     <Property Name="SKU2" Type="varchar" MaxLength="50" />
@@ -552,7 +552,7 @@
   </Function>
   <Function Name="NSP_TShopeeProduct_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="product_code" Type="varchar" Mode="In" />
-    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar(max)" Mode="In" />
     <Parameter Name="description" Type="varchar(max)" Mode="In" />
     <Parameter Name="SKU" Type="varchar" Mode="In" />
     <Parameter Name="SKU2" Type="varchar" Mode="In" />
@@ -569,7 +569,7 @@
   <Function Name="NSP_TShopeeProduct_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="product_id" Type="int" Mode="In" />
     <Parameter Name="product_code" Type="varchar" Mode="In" />
-    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar(max)" Mode="In" />
     <Parameter Name="description" Type="varchar(max)" Mode="In" />
     <Parameter Name="SKU" Type="varchar" Mode="In" />
     <Parameter Name="SKU2" Type="varchar" Mode="In" />

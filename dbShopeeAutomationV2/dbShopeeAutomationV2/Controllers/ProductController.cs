@@ -34,6 +34,8 @@ namespace dbShopeeAutomationV2.Controllers
             string username = User.Identity.Name;
 
             item.product_code = (item.product_code == null || item.product_code.Equals("")) ? generalFunc.Random10DigitCode() : item.product_code;
+            item.product_code = item.product_code.Replace(" ", String.Empty);
+
             item.name = (item.name == null) ? "product_name" : item.name;
             item.description = (item.description == null) ? "product_description" : item.description;
 
@@ -99,6 +101,8 @@ namespace dbShopeeAutomationV2.Controllers
             string username = User.Identity.Name;
 
             item.product_code = (item.product_code == null || item.product_code.Equals("")) ? generalFunc.Random10DigitCode() : item.product_code;
+            item.product_code = item.product_code.Replace(" ", String.Empty);
+
             item.name = (item.name == null) ? "product_name" : item.name;
             item.description = (item.description == null) ? "product_description" : item.description;
 

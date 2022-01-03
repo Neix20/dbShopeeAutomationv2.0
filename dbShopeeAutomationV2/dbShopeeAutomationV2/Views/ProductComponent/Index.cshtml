@@ -43,7 +43,7 @@ else
             @using (Html.BeginForm("ProductComponentGridViewPartialAddNew", "ProductComponent", FormMethod.Post, new { @Id = "productComponentForm" }))
             {
                 <div class="row m-2">
-                    <div class="col">
+                    <div class="col input_req">
                         <label>Master Product SKU: </label>
                         @Html.DevExpress().ComboBox(settings =>
                     {
@@ -58,7 +58,7 @@ else
                         settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
                     }).BindList(db.TShopeeProducts.Where(it => it.product_model_id != material_model_id).ToList()).GetHtml()
                     </div>
-                    <div class="col">
+                    <div class="col input_req">
                         <label>Sub Product SKU: </label>
                         @Html.DevExpress().ComboBox(settings =>
                     {
@@ -115,16 +115,25 @@ else
             pcForm.submit(e => {
                 e.preventDefault();
 
-                $.ajax({
-                    url: pcForm_actionLink,
-                    type: pcForm_methodType,
-                    data: pcForm.serialize(),
-                    success: resp => {
-                        $("#productComponentFormResp").html(resp);
-                        alert("Product Component has been inserted successfully!");
-                        pcForm.find("input[type=text], textarea").val("");
-                    }
-                });
+                let input_valArr = [...document.getElementsByClassName("input_req")]
+                .map((node, ind) => node.querySelector("input[type=text]").value)
+                .map(node => (node == "") ? 0 : 1);
+                let submit_flag = Math.min(...input_valArr);
+
+                if (!submit_flag) {
+                    alert("Not all necessary inputs are filled in!");
+                } else {
+                    $.ajax({
+                        url: pcForm_actionLink,
+                        type: pcForm_methodType,
+                        data: pcForm.serialize(),
+                        success: resp => {
+                            $("#productComponentFormResp").html(resp);
+                            alert("Product Component has been inserted successfully!");
+                            pcForm.find("input[type=text], textarea").val("");
+                        }
+                    });
+                }
             });
         });
     </script>

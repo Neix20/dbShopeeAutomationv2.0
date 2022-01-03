@@ -45,6 +45,9 @@ namespace dbShopeeAutomationV2.Controllers
             item.buy_price = (item.buy_price == null) ? 0 : item.buy_price;
             item.sell_price = (item.sell_price == null) ? 0 : item.sell_price;
 
+            // Set Default for Product Variety ID
+            item.product_variety_id = dbStoredProcedure.getID("TShopeeProductVariety");
+
             dbStoredProcedure.productInsert(
                 item.product_code, item.name,
                 item.description, item.SKU, item.SKU2,
@@ -111,6 +114,9 @@ namespace dbShopeeAutomationV2.Controllers
 
             item.buy_price = (item.buy_price == null) ? 0 : item.buy_price;
             item.sell_price = (item.sell_price == null) ? 0 : item.sell_price;
+
+            // Set Default for Product Variety ID
+            item.product_variety_id = dbStoredProcedure.getID("TShopeeProductVariety");
 
             dbStoredProcedure.productUpdate(
                 item.product_id, item.product_code, item.name,

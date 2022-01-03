@@ -53,7 +53,7 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult SupplierShipmentGridViewPartialUpdate(TShopeeSupplierShipment item)
         {
             string username = User.Identity.Name;
-            int supplier_shipment_id = db.TShopeeSupplierShipments.ToList().Count + 1;
+            int supplier_shipment_id = db.TShopeeSupplierShipments.ToList().Count;
 
             item.received_date = (item.received_date == null) ? DateTime.Now : item.received_date;
             item.supplier_tracking_id = (item.supplier_tracking_id == null) ? generalFunc.Random10DigitCode() : item.supplier_tracking_id;

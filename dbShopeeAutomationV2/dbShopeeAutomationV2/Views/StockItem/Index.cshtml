@@ -50,9 +50,10 @@ else
                 @Html.AntiForgeryToken()
 
                 <div class="row m-2">
-                    <div class="col">
+                    <div class="col input_req">
                         <label>Stock Warehouse: </label>
-                        @Html.DevExpress().ComboBox(settings => {
+                        @Html.DevExpress().ComboBox(settings =>
+                   {
                        settings.Name = "stock_warehouse_id";
                        settings.Width = Unit.Percentage(106);
                        settings.SelectedIndex = 0;
@@ -71,7 +72,7 @@ else
                 </div>
 
                 <div class="row m-2">
-                    <div class="col">
+                    <div class="col input_req">
                         <label>Product SKU: </label>
                         @Html.DevExpress().ComboBox(settings =>
                    {
@@ -127,22 +128,31 @@ else
             stockItemForm.submit(e => {
                 e.preventDefault();
 
-                let fData = new FormData(stockItemForm[0]);
+                let input_valArr = [...document.getElementsByClassName("input_req")]
+                .map((node, ind) => node.querySelector("input[type=text]").value)
+                .map(node => (node == "") ? 0 : 1);
+                let submit_flag = Math.min(...input_valArr);
 
-                $.ajax({
-                    url: stockItemForm_actionLink,
-                    type: stockItemForm_methodType,
-                    enctype: 'multipart/form-data',
-                    processData: false,  // Important!
-                    contentType: false,
-                    cache: false,
-                    data: fData,
-                    success: resp => {
-                        $("#stockItemFormResp").html(resp);
-                        alert("Stock item has been inserted successfully!");
-                        stockItemForm.find("input[type=text], input[type=file], textarea").val("");
-                    }
-                });
+                if (!submit_flag) {
+                    alert("Not all necessary inputs have been filled in!");
+                } else {
+                    let fData = new FormData(stockItemForm[0]);
+
+                    $.ajax({
+                        url: stockItemForm_actionLink,
+                        type: stockItemForm_methodType,
+                        enctype: 'multipart/form-data',
+                        processData: false,  // Important!
+                        contentType: false,
+                        cache: false,
+                        data: fData,
+                        success: resp => {
+                            $("#stockItemFormResp").html(resp);
+                            alert("Stock item has been inserted successfully!");
+                            stockItemForm.find("input[type=text], input[type=file], textarea").val("");
+                        }
+                    });
+                }
             });
         });
     </script>

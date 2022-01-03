@@ -142,10 +142,10 @@ namespace dbShopeeAutomationV2.Controllers
                             // 6. Create New Product Summary Class
                             string product_name = product.name;
 
-                            string product_brand = db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == product.product_brand_id).name;
-                            string product_category = db.TShopeeProductCategories.FirstOrDefault(it => it.product_category_id == product.product_category_id).name;
-                            string product_model = db.TShopeeProductModels.FirstOrDefault(it => it.product_model_id == product.product_model_id).name;
-                            string product_type = db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == product.product_type_id).name;
+                            string product_brand = db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == product.product_brand_id).code;
+                            string product_category = db.TShopeeProductCategories.FirstOrDefault(it => it.product_category_id == product.product_category_id).code;
+                            string product_model = db.TShopeeProductModels.FirstOrDefault(it => it.product_model_id == product.product_model_id).code;
+                            string product_type = db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == product.product_type_id).code;
 
                             var productSummary = new ProductSummary(product_id, product_name, product_brand, product_category, product_model, product_type, quantity);
 
@@ -219,10 +219,10 @@ namespace dbShopeeAutomationV2.Controllers
                     // 6. Create New Product Summary Class
                     string product_name = product.name;
 
-                    string product_brand = db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == product.product_brand_id).name;
-                    string product_category = db.TShopeeProductCategories.FirstOrDefault(it => it.product_category_id == product.product_category_id).name;
-                    string product_model = db.TShopeeProductModels.FirstOrDefault(it => it.product_model_id == product.product_model_id).name;
-                    string product_type = db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == product.product_type_id).name;
+                    string product_brand = db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == product.product_brand_id).code;
+                    string product_category = db.TShopeeProductCategories.FirstOrDefault(it => it.product_category_id == product.product_category_id).code;
+                    string product_model = db.TShopeeProductModels.FirstOrDefault(it => it.product_model_id == product.product_model_id).code;
+                    string product_type = db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == product.product_type_id).code;
 
                     var productSummary = new ProductSummary(product_id, product_name, product_brand, product_category, product_model, product_type, product.sell_price, quantity);
 

@@ -29,14 +29,14 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult SupplierGridViewPartialAddNew(TShopeeSupplier item)
         {
             string username = User.Identity.Name;
+            int supplier_num = db.TShopeeSuppliers.ToList().Count;
 
-            int supplier_id = dbStoredProcedure.getID("TShopeeSupplier");
             item.name = (item.name == null) ? "supplier_name" : item.name;
-            item.code = (item.code == null) ?  generalFunc.GenSupplierCode(supplier_id) : item.code;
+            item.code = (item.code == null) ?  generalFunc.GenSupplierCode(supplier_num) : item.code;
             item.nation = (item.nation == null) ? "International" : item.nation;
-            item.poc_name = (item.poc_name == null) ? "poc_name" : item.poc_name;
-            item.poc_email = (item.poc_email == null) ? generalFunc.GenEmail() : item.poc_email;
-            item.poc_phone_number = (item.poc_phone_number == null) ? generalFunc.GenPhoneNum() : item.poc_phone_number;
+            item.poc_name = (item.poc_name == null) ? "" : item.poc_name;
+            item.poc_email = (item.poc_email == null) ? "" : item.poc_email;
+            item.poc_phone_number = (item.poc_phone_number == null) ? "" : item.poc_phone_number;
 
             dbStoredProcedure.supplierInsert(
                 item.name, item.code, item.nation, 
@@ -52,13 +52,14 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult SupplierGridViewPartialUpdate(TShopeeSupplier item)
         {
             string username = User.Identity.Name;
+            int supplier_num = db.TShopeeSuppliers.ToList().Count;
 
             item.name = (item.name == null) ? "supplier_name" : item.name;
-            item.code = (item.code == null) ? generalFunc.GenSupplierCode(item.supplier_id) : item.code;
+            item.code = (item.code == null) ? generalFunc.GenSupplierCode(supplier_num) : item.code;
             item.nation = (item.nation == null) ? "International" : item.nation;
-            item.poc_name = (item.poc_name == null) ? "poc_name" : item.poc_name;
-            item.poc_email = (item.poc_email == null) ? generalFunc.GenEmail() : item.poc_email;
-            item.poc_phone_number = (item.poc_phone_number == null) ? generalFunc.GenPhoneNum() : item.poc_phone_number;
+            item.poc_name = (item.poc_name == null) ? "" : item.poc_name;
+            item.poc_email = (item.poc_email == null) ? "" : item.poc_email;
+            item.poc_phone_number = (item.poc_phone_number == null) ? "" : item.poc_phone_number;
 
             dbStoredProcedure.supplierUpdate(
                 item.supplier_id,

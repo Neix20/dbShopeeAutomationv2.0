@@ -20,11 +20,11 @@
 
         @using (Html.BeginForm("SupplierGridViewPartialAddNew", "Supplier", FormMethod.Post, new { @Id="supplierForm"})) {
             <div class="row m-2">
-                <div class="col">
+                <div class="col to_remove">
                     <label>Supplier Name: </label>
                     @Html.TextBox("name", "", new { @Class="form-control", @Type = "text", @Required = "true" })
                 </div>
-                <div class="col">
+                <div class="col input_req">
                     <label>Locality: </label>
                     @Html.DevExpress().ComboBox(settings =>
                {
@@ -42,18 +42,18 @@
             </div>
 
             <div class="row m-2">
-                <div class="col">
+                <div class="col to_remove">
                     <label>POC Name</label>
                     @Html.TextBox("poc_name", "", new { @Class="form-control", @Type = "text", @Required = "true"})
                 </div>
-                <div class="col">
+                <div class="col to_remove">
                     <label>POC Email</label>
                     @Html.TextBox("poc_email", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
                 </div>
             </div>
 
             <div class="row m-2">
-                <div class="col">
+                <div class="col to_remove">
                     <label>POC Phone Number</label>
                     @Html.TextBox("poc_phone_number", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
                 </div>
@@ -94,16 +94,25 @@
         supForm.submit(e => {
             e.preventDefault();
 
-            $.ajax({
-                url: supForm_actionLink,
-                type: supForm_methodType,
-                data: supForm.serialize(),
-                success: resp => {
-                    $("#supplierFormResp").html(resp);
-                    alert("Supplier has been inserted successfully!");
-                    supForm.find("input[type=text], textarea").val("");
-                }
-            });
+            let input_valArr = [...document.getElementsByClassName("input_req")]
+                .map((node, ind) => node.querySelector("input[type=text]").value)
+                .map(node => (node == "") ? 0 : 1);
+            let submit_flag = Math.min(...input_valArr);
+
+            if (!submit_flag) {
+                alert("Not all necessary inputs are filled in!");
+            } else {
+                $.ajax({
+                    url: supForm_actionLink,
+                    type: supForm_methodType,
+                    data: supForm.serialize(),
+                    success: resp => {
+                        $("#supplierFormResp").html(resp);
+                        alert("Supplier has been inserted successfully!");
+                        $(".to_remove").find("input[type=text], textarea").val("");
+                    }
+                });
+            }
         });
     });
 </script>

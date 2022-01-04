@@ -2,6 +2,9 @@
 using DevExpress.Web.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -44,6 +47,21 @@ namespace dbShopeeAutomationV2.Controllers
                 item.height, item.width, item.length, 
                 item.supplier_id, item.product_id, username);
             db.SaveChanges();
+
+            var file = Request.Files["tracking_image"];
+
+            if (file != null && file.ContentLength > 0)
+            {
+                string file_path = $"{Server.MapPath("~/Content/SupplierShipmentTrackingImages")}\\SupplierShipment_{supplier_shipment_id}.png";
+
+                if (!Directory.Exists(file_path)) Directory.CreateDirectory(Server.MapPath("~/Content/StockWarehouseImages"));
+
+                // If File Exist, delete existing file
+                if (System.IO.File.Exists(file_path)) System.IO.File.Delete(file_path);
+
+                var b = (Bitmap)Bitmap.FromStream(file.InputStream);
+                b.Save(file_path, ImageFormat.Png);
+            }
 
             var model = db.TShopeeSupplierShipments;
             return PartialView("_SupplierShipmentGridViewPartial", model.ToList());

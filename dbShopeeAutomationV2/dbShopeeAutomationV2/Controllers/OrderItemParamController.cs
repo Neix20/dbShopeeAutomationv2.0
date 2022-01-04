@@ -156,7 +156,6 @@ namespace dbShopeeAutomationV2.Controllers
 
             orderItemList.ForEach(it =>
             {
-                
                 var stockItem = db.TShopeeStockItems.FirstOrDefault(si => si.product_id == it.product_id);
                 stockItem.stock_quantity -= it.quantity;
 

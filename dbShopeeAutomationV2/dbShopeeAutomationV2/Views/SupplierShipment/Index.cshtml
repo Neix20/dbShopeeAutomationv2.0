@@ -48,8 +48,18 @@ else
                 </div>
             </div>
 
-            @using (Html.BeginForm("SupplierShipmentGridViewPartialAddNew", "SupplierShipment", FormMethod.Post, new { @Id = "supplierShipmentForm"}))
+            @using (Html.BeginForm("SupplierShipmentGridViewPartialAddNew", "SupplierShipment", FormMethod.Post, new { @Enctype = "multipart/form-data", @Id = "supplierShipmentForm" }))
             {
+                @Html.AntiForgeryToken()
+
+                <div class="row m-2">
+                    <div class="col to_remove">
+                        <label>Tracking Code Image: </label>
+                        @Html.TextBox("tracking_image", "", new { @Class = "form-control", @Type = "file" })
+                    </div>
+                    <div class="col"></div>
+                </div>
+
                 <div class="row m-2">
                     <div class="col input_req">
                         <label>Supplier: </label>
@@ -84,27 +94,26 @@ else
                     </div>
                 </div>
 
-                <div class="to_remove">
-                    <div class="row m-2">
-                        <div class="col">
-                            <label>Tracking No: </label>
-                            @Html.TextBox("supplier_tracking_id", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
-                        </div>
-                        <div class="col">
-                            <label>Received Date: </label>
-                            @Html.DevExpress().DateEdit(settings =>
+                <div class="row m-2">
+                    <div class="col to_remove">
+                        <label>Tracking No: </label>
+                        @Html.TextBox("supplier_tracking_id", "", new { @Class = "form-control", @Type = "text", @Required = "true" })
+                    </div>
+                    <div class="col to_remove">
+                        <label>Received Date: </label>
+                        @Html.DevExpress().DateEdit(settings =>
                    {
                        settings.Name = "received_date";
                        settings.Width = Unit.Percentage(100);
                        settings.Properties.DisplayFormatString = "yyyy-MM-dd";
                    }).GetHtml()
-                        </div>
                     </div>
+                </div>
 
-                    <div class="row m-2">
-                        <div class="col">
-                            <label>Width: </label>
-                            @Html.DevExpress().SpinEdit(settings =>
+                <div class="row m-2">
+                    <div class="col to_remove">
+                        <label>Width: </label>
+                        @Html.DevExpress().SpinEdit(settings =>
                    {
                        settings.Name = "width";
                        settings.Width = Unit.Percentage(100);
@@ -114,10 +123,10 @@ else
                        settings.Properties.DecimalPlaces = 2;
                        settings.Properties.DisplayFormatString = "N2";
                    }).GetHtml()
-                        </div>
-                        <div class="col">
-                            <label>Length: </label>
-                            @Html.DevExpress().SpinEdit(settings =>
+                    </div>
+                    <div class="col to_remove">
+                        <label>Length: </label>
+                        @Html.DevExpress().SpinEdit(settings =>
                    {
                        settings.Name = "length";
                        settings.Width = Unit.Percentage(100);
@@ -127,7 +136,6 @@ else
                        settings.Properties.DecimalPlaces = 2;
                        settings.Properties.DisplayFormatString = "N2";
                    }).GetHtml()
-                        </div>
                     </div>
                 </div>
             }
@@ -164,14 +172,20 @@ else
             if (!submit_flag) {
                 alert("Not all necessary input have been filled in!");
             } else {
+                let fData = new FormData(supplierShipmentForm[0]);
+
                 $.ajax({
                     url: supplierShipmentForm_actionLink,
                     type: supplierShipmentForm_methodType,
-                    data: supplierShipmentForm.serialize(),
+                    enctype: 'multipart/form-data',
+                    processData: false,  // Important!
+                    contentType: false,
+                    cache: false,
+                    data: fData,
                     success: resp => {
                         $("#supplierShipmentFormResp").html(resp);
                         alert("Supplier Shipment has been inserted successfully!");
-                        $(".to_remove").find("input[type=text], textarea").val("");
+                        $(".to_remove").find("input[type=text], input[type=file], textarea").val("");
                     }
                 });
             }

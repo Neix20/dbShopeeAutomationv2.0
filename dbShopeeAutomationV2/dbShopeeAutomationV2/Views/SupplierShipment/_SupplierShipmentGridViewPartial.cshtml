@@ -39,6 +39,15 @@
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
+        // Image
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "image";
+            col.Caption = "Image";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.PropertiesEdit.EncodeHtml = false;
+        });
+
         // Supplier ID
         settings.Columns.Add(col =>
         {
@@ -129,6 +138,13 @@
 
         settings.CustomUnboundColumnData = (s, e) =>
         {
+            if (e.Column.FieldName == "image")
+            {
+                int supplier_shipment_id = int.Parse(e.GetListSourceFieldValue("supplier_shipment_id").ToString());
+                string file_path = Path.Combine(new string[] { "/Content/SupplierShipmentTrackingImages", $"SupplierShipment_{supplier_shipment_id}.png" });
+                e.Value = $"<img src='{file_path}' style='height: 50px; width: 50px' alt='[ Missing Image ]' />";
+            }
+
             if (e.Column.FieldName.Equals("Last Updated By"))
             {
                 int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());

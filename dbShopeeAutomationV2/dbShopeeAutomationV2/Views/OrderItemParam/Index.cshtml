@@ -12,6 +12,11 @@
     // Prevents Users From Ordering Material Product
     int material_model_id = dbStatusFunction.productModelID("material");
 
+    // Prevent Users From Selecting Product with 0 Stock Count
+    List<int> productIDList = db.TShopeeStockItems
+        .Where(it => it.stock_quantity > 0)
+        .Select(it => (int)it.product_id).ToList();
+
     Dictionary<int, string> orderDict = new Dictionary<int, string>();
     db.TShopeeOrders.ToList().ForEach(it =>
     {
@@ -62,11 +67,12 @@ else
                 <div class="row m-2">
                     <div class="col input_req">
                         <label>Order Title: </label>
-                        @Html.TextBox("order_title", orderDict[(int) ViewData["order_id"]], new { @Class = "form-control", @Readonly = "true" })
+                        @Html.TextBox("order_title", orderDict[(int)ViewData["order_id"]], new { @Class = "form-control", @Readonly = "true" })
                     </div>
                     <div class="col input_req">
                         <label>Product SKU: </label>
-                        @Html.DevExpress().ComboBox(settings => {
+                        @Html.DevExpress().ComboBox(settings =>
+                   {
                        settings.Name = "product_id";
                        settings.Width = Unit.Percentage(106);
                        settings.SelectedIndex = 0;
@@ -76,7 +82,7 @@ else
                        settings.Properties.ValueField = "product_id";
                        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
                        settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
-                   }).BindList(db.TShopeeProducts.Where(it => it.product_model_id != material_model_id).ToList()).GetHtml()
+                   }).BindList(db.TShopeeProducts.Where(it => it.product_model_id != material_model_id && productIDList.Contains(it.product_id)).ToList()).GetHtml()
                     </div>
 
                 </div>
@@ -124,7 +130,7 @@ else
                 </div>
             </div>
 
-            @using (Html.BeginForm("CompleteOrder", "OrderItemParam", FormMethod.Post, new { @Id = "CompleteOrderForm"}))
+            @using (Html.BeginForm("CompleteOrder", "OrderItemParam", FormMethod.Post, new { @Id = "CompleteOrderForm" }))
             {
                 @Html.AntiForgeryToken()
 
@@ -146,6 +152,11 @@ else
 
     <script type="text/javascript">
         $(function () {
+
+            // Disable or Enable Button
+            $("button[form='orderItemForm']").prop("disabled", '@ViewData["order_status"]'.toLowerCase() == "true");
+            $("button[form='CompleteOrderForm']").prop("disabled", '@ViewData["order_status"]'.toLowerCase() == "true");
+
             let orderItemForm = $("form[id='orderItemForm']");
             const orderItemForm_actionLink = orderItemForm.attr("action");
             const orderItemForm_methodType = orderItemForm.attr("method");

@@ -16,9 +16,9 @@ namespace dbShopeeAutomationV2.Controllers
             production_id = (production_id == null) ? -1 : production_id;
             ViewData["production_id"] = production_id;
 
-            int production_status_id = (int)db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id).production_status_id;
+            var production = db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id);
+            int production_status_id = (int) production.production_status_id;
             int c_pro_sta_id = dbStatusFunction.productionStatusID("complete");
-
             ViewData["production_status"] = (production_status_id == c_pro_sta_id) ? "true" : "false";
 
             return View();

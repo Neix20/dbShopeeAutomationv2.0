@@ -32,21 +32,6 @@
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Header.VerticalAlign = VerticalAlign.Middle;
 
-        // Order ID
-        settings.Columns.Add(col => 
-        {
-            col.FieldName = "order_id";
-            col.Caption = "Order Title";
-
-            col.ColumnType = MVCxGridViewColumnType.ComboBox;
-            ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
-            prop.DataSource = db.TShopeeOrders.ToList();
-            prop.TextField = "order_title";
-            prop.ValueField = "order_id";
-            prop.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
-            prop.ValidationSettings.RequiredField.IsRequired = true;
-        });
-
         // Product ID
         settings.Columns.Add(col =>
         {

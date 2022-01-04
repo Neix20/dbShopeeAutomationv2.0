@@ -12,6 +12,11 @@
     // Prevents Users From Ordering Material Product
     int material_model_id = dbStatusFunction.productModelID("material");
 
+    // Prevent Users From Selecting Product with 0 Stock Count
+    List<int> productIDList = db.TShopeeStockItems
+        .Where(it => it.stock_quantity > 0)
+        .Select(it => (int)it.product_id).ToList();
+
     int inc_ord_sta_id = dbStatusFunction.orderStatusID("incomplete");
 }
 
@@ -80,7 +85,7 @@ else
                        settings.Properties.ValueField = "product_id";
                        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
                        settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
-                   }).BindList(db.TShopeeProducts.Where(it => it.product_model_id != material_model_id).ToList()).GetHtml()
+                   }).BindList(db.TShopeeProducts.Where(it => it.product_model_id != material_model_id && productIDList.Contains(it.product_id)).ToList()).GetHtml()
                     </div>
                 </div>
 

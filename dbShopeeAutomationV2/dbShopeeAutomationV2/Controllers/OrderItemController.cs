@@ -110,7 +110,8 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult OrderItemGridViewPartialDelete(int order_item_id)
         {
-            int order_item_status_id = (int)db.TShopeeOrderItems.FirstOrDefault(it => it.order_item_id == order_item_id).order_item_status_id;
+            var orderItem = db.TShopeeOrderItems.FirstOrDefault(it => it.order_item_id == order_item_id);
+            int order_item_status_id = (int) orderItem.order_item_status_id;
 
             dbStoredProcedure.orderItemStatusDelete(order_item_status_id);
             db.SaveChanges();

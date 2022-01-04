@@ -67,20 +67,10 @@ namespace dbShopeeAutomationV2.Controllers
             var order = db.TShopeeOrders.FirstOrDefault(it => it.order_id == order_id);
             int ord_sta_id = (int) order.order_status_id;
 
-            int c_ord_sta_id = dbStatusFunction.orderStatusID("complete");
-
             // Delete List of Order Items
             var orderItemList = db.TShopeeOrderItems.Where(it => it.order_id == order_id).ToList();
             orderItemList.ForEach(it =>
             {
-                if(ord_sta_id == c_ord_sta_id)
-                {
-                    var stockItem = db.TShopeeStockItems.FirstOrDefault(si => si.product_id == it.product_id);
-
-                    // 1. Update Stock Item Count
-                    stockItem.stock_quantity += it.quantity;
-                }
-
                 // Delete Corresponding Order item Status
                 int order_item_status_id = (int) it.order_item_status_id;
                 dbStoredProcedure.orderItemStatusDelete(order_item_status_id);

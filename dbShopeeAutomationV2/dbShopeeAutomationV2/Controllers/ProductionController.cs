@@ -68,10 +68,28 @@ namespace dbShopeeAutomationV2.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult ProductionGridViewPartialDelete(int production_id)
         {
+            // Get Production Status
+            var production = db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id);
+            int pro_sta_id = (int) production.production_status_id;
+
+            // Get Status id for Complete Production
+            int c_pro_sta_id = dbStatusFunction.productionStatusID("complete");
+
             // Delete List of Production Detail
             var production_detail_list = db.TShopeeProductionDetails.Where(it => it.production_id == production_id).ToList();
             production_detail_list.ForEach(tmp_model =>
             {
+                if(pro_sta_id == c_pro_sta_id)
+                {
+                    var product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == tmp_model.product_id);
+                    var stock_item = db.TShopeeStockItems.FirstOrDefault(it => it.product_id == tmp_model.product_id);
+
+                    int material_model_id = dbStatusFunction.productModelID("Material");
+                    stock_item.stock_quantity += (product.product_model_id == material_model_id) ?
+                        tmp_model.quantity :
+                        -1 * tmp_model.can_be_used;
+                }
+
                 dbStoredProcedure.productionDetailDelete(tmp_model.production_detail_id);
             });
 

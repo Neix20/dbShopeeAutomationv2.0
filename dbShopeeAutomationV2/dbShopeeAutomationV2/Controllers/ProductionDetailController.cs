@@ -70,6 +70,32 @@ namespace dbShopeeAutomationV2.Controllers
             item.cannot_be_used = (item.cannot_be_used == null) ? 0 : item.cannot_be_used;
             item.can_be_used = (item.can_be_used == null) ? 0 : item.can_be_used;
 
+            // Update Stock Item 
+            var production = db.TShopeeProductions.FirstOrDefault(it => it.production_id == item.production_id);
+            int c_pro_sta_id = dbStatusFunction.productionStatusID("complete");
+
+            // Only Update Stock Item Count when Production is marked as complete
+            if (production.production_status_id == c_pro_sta_id)
+            {
+                var oriProductionDetail = db.TShopeeProductionDetails.FirstOrDefault(it => it.production_detail_id == item.production_detail_id);
+                var product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == oriProductionDetail.product_id);
+                var stock_item = db.TShopeeStockItems.FirstOrDefault(it => it.product_id == oriProductionDetail.product_id);
+
+                int material_model_id = dbStatusFunction.productModelID("Material");
+
+                if (product.product_model_id == material_model_id)
+                {
+                    stock_item.stock_quantity += oriProductionDetail.quantity;
+                    stock_item.stock_quantity -= item.quantity;
+                    production.total_usage = item.quantity;
+                }
+                else
+                {
+                    stock_item.stock_quantity -= oriProductionDetail.can_be_used;
+                    stock_item.stock_quantity += item.can_be_used;
+                }
+            }
+
             dbStoredProcedure.productionDetailUpdate(
                 item.production_detail_id, item.UOM, 
                 item.manufactured_date, item.expiry_date,

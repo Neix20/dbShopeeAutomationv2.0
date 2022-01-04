@@ -15,6 +15,12 @@ namespace dbShopeeAutomationV2.Controllers
         {
             production_id = (production_id == null) ? -1 : production_id;
             ViewData["production_id"] = production_id;
+
+            int production_status_id = (int)db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id).production_status_id;
+            int c_pro_sta_id = dbStatusFunction.productionStatusID("complete");
+
+            ViewData["production_status"] = (production_status_id == c_pro_sta_id) ? "true" : "false";
+
             return View();
         }
 
@@ -76,7 +82,33 @@ namespace dbShopeeAutomationV2.Controllers
             item.cannot_be_used = (item.cannot_be_used == null) ? 0 : item.cannot_be_used;
             item.can_be_used = (item.can_be_used == null) ? 0 : item.can_be_used;
 
-            item.production_id = db.TShopeeProductionDetails.FirstOrDefault(it => it.production_detail_id == item.production_detail_id).production_id;
+            var oriProductionDetail = db.TShopeeProductionDetails.FirstOrDefault(it => it.production_detail_id == item.production_detail_id);
+            item.production_id = oriProductionDetail.production_id;
+
+            // Update Stock Item 
+            var production = db.TShopeeProductions.FirstOrDefault(it => it.production_id == oriProductionDetail.production_id);
+            int c_pro_sta_id = dbStatusFunction.productionStatusID("complete");
+
+            // Only Update Stock Item Count when Production is marked as complete
+            if (production.production_status_id == c_pro_sta_id)
+            {
+                var product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == oriProductionDetail.product_id);
+                var stock_item = db.TShopeeStockItems.FirstOrDefault(it => it.product_id == oriProductionDetail.product_id);
+
+                int material_model_id = dbStatusFunction.productModelID("Material");
+
+                if (product.product_model_id == material_model_id)
+                {
+                    stock_item.stock_quantity += oriProductionDetail.quantity;
+                    stock_item.stock_quantity -= item.quantity;
+                    production.total_usage = item.quantity;
+                }
+                else
+                {
+                    stock_item.stock_quantity -= oriProductionDetail.can_be_used;
+                    stock_item.stock_quantity += item.can_be_used;
+                }
+            }
 
             dbStoredProcedure.productionDetailUpdate(
                 item.production_detail_id, item.UOM,
@@ -84,11 +116,10 @@ namespace dbShopeeAutomationV2.Controllers
                 item.height, item.width, item.length,
                 item.quantity, item.cannot_be_used, item.can_be_used,
                 item.production_id, item.product_id, username);
-
             db.SaveChanges();
 
             var model = db.TShopeeProductionDetails.Where(it => it.production_id == item.production_id);
-            return PartialView("_ProductionDetailParamGridViewGridViewPartial", model.ToList());
+            return  PartialView("_ProductionDetailParamGridViewGridViewPartial", model.ToList());
         }
 
         [HttpPost, ValidateInput(false)]
@@ -123,13 +154,13 @@ namespace dbShopeeAutomationV2.Controllers
             {
                 var product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == tmp_model.product_id);
                 var stock_item = db.TShopeeStockItems.FirstOrDefault(it => it.product_id == tmp_model.product_id);
-                if (product.product_model_id != material_model_id)
-                {
-                    stock_item.stock_quantity += tmp_model.can_be_used;
-                } else
+                if (product.product_model_id == material_model_id)
                 {
                     stock_item.stock_quantity -= tmp_model.quantity;
                     production.total_usage = tmp_model.quantity;
+                } else
+                {
+                    stock_item.stock_quantity += tmp_model.can_be_used;
                 }
             });
 

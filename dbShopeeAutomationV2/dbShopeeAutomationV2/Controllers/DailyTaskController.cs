@@ -17,7 +17,9 @@ namespace dbShopeeAutomationV2.Controllers
             int inv_sta_id = dbStatusFunction.invoiceStatusID("Incomplete");
             int p_inv_sta_id = dbStatusFunction.invoiceStatusID("Packaging");
 
-            return invoiceList.Where(it => it.invoice_status_id == inv_sta_id || it.invoice_status_id == p_inv_sta_id).ToList().Count;
+            return invoiceList
+                .Where(it => it.invoice_status_id == inv_sta_id || it.invoice_status_id == p_inv_sta_id)
+                .ToList().Count;
         }
 
         // GET: DailyTask
@@ -28,21 +30,19 @@ namespace dbShopeeAutomationV2.Controllers
 
         public ActionResult DailyTaskPartial()
         {
-            int inv_sta_id = dbStatusFunction.invoiceStatusID("Incomplete");
-            int p_inv_sta_id = dbStatusFunction.invoiceStatusID("Packaging");
-
-            var model = db.TShopeeInvoices.AsEnumerable().Where(it => {
-                    if (it.invoice_completed_date != null)
-                    {
-                        DateTime tmp = (DateTime)it.invoice_completed_date;
-                        return tmp.Date == DateTime.Now.Date;
-                    }
-                    return it.invoice_status_id == inv_sta_id || it.invoice_status_id == p_inv_sta_id;
+            // Return only Incomplete, Packaging and Orders with Completed Dates on Today
+            var model = db.TShopeeInvoices.AsEnumerable().Where(it =>
+            {
+                if (it.invoice_completed_date == null)
+                {
+                    return true;
                 }
-            );
+
+                DateTime tmp = (DateTime)it.invoice_completed_date;
+                return tmp.Date == DateTime.Now.Date;
+            });
 
             ViewData["num_of_orders_left"] = numOfOrdersLeft(model);
-
             return PartialView("_DailyTaskPartial", model);
         }
 
@@ -51,40 +51,37 @@ namespace dbShopeeAutomationV2.Controllers
         {
             IEnumerable<TShopeeInvoice> model;
 
-            if (((DateTime)item.invoice_completed_date).Date == DateTime.Now.Date)
-            {
-                int inv_sta_id = dbStatusFunction.invoiceStatusID("Incomplete");
-                int p_inv_sta_id = dbStatusFunction.invoiceStatusID("Packaging");
+            DateTime inv_com_dt = (DateTime)item.invoice_completed_date;
 
-                model = db.TShopeeInvoices.AsEnumerable().Where(
-                    it =>
+            if (inv_com_dt.Date == DateTime.Now.Date)
+            {
+                // Return only Incomplete, Packaging and Orders with Completed Dates on Today
+                model = db.TShopeeInvoices.AsEnumerable().Where(it =>
+                {
+                    if (it.invoice_completed_date == null)
                     {
-                        if (it.invoice_completed_date != null)
-                        {
-                            DateTime tmp = (DateTime)it.invoice_completed_date;
-                            return tmp.Date == DateTime.Now.Date;
-                        }
-                        return it.invoice_status_id == inv_sta_id || it.invoice_status_id == p_inv_sta_id;
+                        return true;
                     }
-                );
+
+                    DateTime tmp = (DateTime)it.invoice_completed_date;
+                    return tmp.Date == DateTime.Now.Date;
+                });
 
                 ViewData["num_of_orders_left"] = numOfOrdersLeft(model);
-
                 return PartialView("_DailyTaskPartial", model);
             }
 
-            model = db.TShopeeInvoices.AsEnumerable().Where(
-                it =>
+            // Return only Specific Date that were completed on that day
+            model = db.TShopeeInvoices.AsEnumerable().Where(it =>
+            {
+                if (it.invoice_completed_date == null)
                 {
-                    if (it.invoice_completed_date != null)
-                    {
-                        DateTime tmp = (DateTime)it.invoice_completed_date;
-                        return tmp.Date == ((DateTime)item.invoice_completed_date).Date;
-                    }
                     return false;
-
                 }
-            );
+
+                DateTime tmp = (DateTime)it.invoice_completed_date;
+                return tmp.Date == inv_com_dt.Date.Date;
+            });
 
             ViewData["num_of_orders_left"] = numOfOrdersLeft(model);
 
@@ -96,7 +93,7 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string[] invoice_id_str_arr = Request.Form.GetValues("invoice_id");
 
-            if(invoice_id_str_arr != null)
+            if (invoice_id_str_arr != null)
             {
                 int[] invoice_id_arr = invoice_id_str_arr.Select(x => int.Parse(x)).ToArray();
 
@@ -114,7 +111,7 @@ namespace dbShopeeAutomationV2.Controllers
                     var invoice = db.TShopeeInvoices.FirstOrDefault(it => it.invoice_id == invoice_id);
 
                     // 1. Get Order ID
-                    int order_id = (int)invoice.order_id;
+                    int order_id = (int) invoice.order_id;
 
                     // 2. Get List of Order Item
                     List<TShopeeOrderItem> orderItemList = db.TShopeeOrderItems.Where(it => it.order_id == order_id).ToList();
@@ -140,20 +137,33 @@ namespace dbShopeeAutomationV2.Controllers
                             // 6. Create New Product Summary Class
                             string product_name = product.name;
 
-                            string product_brand = db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == product.product_brand_id).code;
-                            string product_category = db.TShopeeProductCategories.FirstOrDefault(it => it.product_category_id == product.product_category_id).code;
-                            string product_model = db.TShopeeProductModels.FirstOrDefault(it => it.product_model_id == product.product_model_id).code;
-                            string product_type = db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == product.product_type_id).code;
+                            // Product Brand
+                            var product_brand = db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == product.product_brand_id);
+                            string product_brand_str = product_brand.code;
 
-                            var productSummary = new ProductSummary(product_id, product_name, product_brand, product_category, product_model, product_type, quantity);
+                            // Product Model
+                            var product_model = db.TShopeeProductModels.FirstOrDefault(it => it.product_model_id == product.product_model_id);
+                            string product_model_str = product_model.code;
+
+                            // Product Type
+                            var product_type = db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == product.product_type_id);
+                            string product_type_str = product_type.code;
+
+                            // Product Category
+                            var product_category = db.TShopeeProductCategories.FirstOrDefault(it => it.product_category_id == product.product_category_id);
+                            string product_category_str = product_category.code;
+
+                            var productSummary = new ProductSummary(
+                                product_id, product_name,
+                                product_brand_str, product_category_str, 
+                                product_model_str, product_type_str, 
+                                quantity);
 
                             productSummaryDict.Add(product_id, productSummary);
                         }
                     }
 
                     invoice.invoice_status_id = p_inv_sta_id;
-
-                    dbStoredProcedure.invoiceUpdate(invoice.invoice_id, invoice.invoice_title, invoice.invoice_created_date, invoice.invoice_completed_date, invoice.invoice_details, invoice.shipping_fee, invoice.invoice_status_id, invoice.payment_method_id, invoice.order_id, invoice.customer_id, username);
                     db.SaveChanges();
                 }
 
@@ -217,19 +227,32 @@ namespace dbShopeeAutomationV2.Controllers
                     // 6. Create New Product Summary Class
                     string product_name = product.name;
 
-                    string product_brand = db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == product.product_brand_id).code;
-                    string product_category = db.TShopeeProductCategories.FirstOrDefault(it => it.product_category_id == product.product_category_id).code;
-                    string product_model = db.TShopeeProductModels.FirstOrDefault(it => it.product_model_id == product.product_model_id).code;
-                    string product_type = db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == product.product_type_id).code;
+                    // Product Brand
+                    var product_brand = db.TShopeeProductBrands.FirstOrDefault(it => it.product_brand_id == product.product_brand_id);
+                    string product_brand_str = product_brand.code;
 
-                    var productSummary = new ProductSummary(product_id, product_name, product_brand, product_category, product_model, product_type, product.sell_price, quantity);
+                    // Product Model
+                    var product_model = db.TShopeeProductModels.FirstOrDefault(it => it.product_model_id == product.product_model_id);
+                    string product_model_str = product_model.code;
+
+                    // Product Type
+                    var product_type = db.TShopeeProductTypes.FirstOrDefault(it => it.product_type_id == product.product_type_id);
+                    string product_type_str = product_type.code;
+
+                    // Product Category
+                    var product_category = db.TShopeeProductCategories.FirstOrDefault(it => it.product_category_id == product.product_category_id);
+                    string product_category_str = product_category.code;
+
+                    var productSummary = new ProductSummary(
+                        product_id, product_name, 
+                        product_brand_str, product_category_str, 
+                        product_model_str, product_type_str, 
+                        product.sell_price, quantity);
 
                     productSummary.calculateSubTotal();
-
                     productSummaryDict.Add(product_id, productSummary);
                 }
             }
-
 
             // 7. Create List of productSummary
             IList<ProductSummary> productSummaryList = new List<ProductSummary>();
@@ -241,25 +264,26 @@ namespace dbShopeeAutomationV2.Controllers
             }
 
             // Total Price
-            Decimal total_price = (Decimal) (order.total_price + invoice.shipping_fee);
+            Decimal total_price = (Decimal)(order.total_price + invoice.shipping_fee);
 
             // Check Shipment
             var shipment = db.TShopeeShipments.FirstOrDefault(it => it.invoice_id == invoice_id);
 
             mDestAddress destAddress = new mDestAddress();
 
-            if(shipment != null)
+            if (shipment != null)
             {
                 string address = shipment.destination;
                 address = (address == null) ? "" : address;
 
                 String[] address_arr = generalFunc.FormatAddress(address);
                 destAddress = new mDestAddress(address_arr);
-            } else
+            }
+            else
             {
                 destAddress = new mDestAddress(
-                    customer.address_line_1, customer.address_line_2, 
-                    customer.city, customer.zip_code, 
+                    customer.address_line_1, customer.address_line_2,
+                    customer.city, customer.zip_code,
                     customer.state, customer.country);
             }
 

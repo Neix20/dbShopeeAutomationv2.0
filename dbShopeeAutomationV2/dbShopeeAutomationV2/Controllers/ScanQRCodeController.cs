@@ -22,20 +22,24 @@ namespace dbShopeeAutomationV2.Controllers
         {
             var model = db.TShopeeInvoices.FirstOrDefault(it => it.invoice_title.ToLower().Equals(invoice_title.ToLower()));
 
-            if(model == null) return Content("Error! Invalid Invoice Code!");
+            // Check If Invoice Code Exist in Database
+            if(model == null) {
+                return Content("Error! Invalid Invoice Code!");
+            }
 
             int c_inv_sta_id = dbStatusFunction.invoiceStatusID("Complete");
 
-            if (c_inv_sta_id == -1) return Content("Error! Invoice Status Code for 'Complete' does not exist!");
+            if (c_inv_sta_id == -1) {
+                return Content("Error! Invoice Status Code for 'Complete' does not exist!");
+            }
             
             if(model.invoice_status_id != c_inv_sta_id)
             {
+                string username = User.Identity.Name;
+
                 model.invoice_status_id = c_inv_sta_id;
                 model.invoice_completed_date = DateTime.Now;
 
-                String username = User.Identity.Name;
-
-                dbStoredProcedure.invoiceUpdate(model.invoice_id, model.invoice_title, model.invoice_created_date, model.invoice_completed_date, model.invoice_details, model.shipping_fee, model.invoice_status_id, model.payment_method_id, model.order_id, model.customer_id, username);
                 db.SaveChanges();
 
                 return Content($"Success! Invoice Code {model.invoice_title} was successfully updated!");

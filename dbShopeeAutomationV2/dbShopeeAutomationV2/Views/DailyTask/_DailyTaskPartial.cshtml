@@ -10,7 +10,7 @@
 }
 
 <div class="text-center">
-    <h4>Number of Orders: <span id="num_of_order_left">0</span></h4>
+    <h4>Number of Orders: <span id="num_of_order_left">@ViewData["num_of_orders_left"]</span></h4>
 </div>
 
 <div class="my-2"></div>
@@ -21,8 +21,7 @@
         {
             @Html.AntiForgeryToken()
 
-            <input id="generateSummaryBtn" type="submit" class="btn btn-success" value="Generate Summary Listing"
-                   disabled />
+            <input id="generateSummaryBtn" type="submit" class="btn btn-success" value="Generate Summary Listing" disabled />
         }
     </div>
 </div>

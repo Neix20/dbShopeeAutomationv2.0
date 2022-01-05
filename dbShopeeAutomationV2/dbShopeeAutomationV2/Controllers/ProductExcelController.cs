@@ -32,9 +32,6 @@ namespace dbShopeeAutomationV2.Controllers
 
             // Read 'Inventory Overview' Worksheet 
             getInventoryOverview(wb, username);
-
-            // Read 'Record' Worksheet
-            getRecord(wb, username);
         }
 
         // 1.
@@ -129,10 +126,10 @@ namespace dbShopeeAutomationV2.Controllers
                     product_brand_id, product_model_id, product_category_id,
                     product_type_id, product_variety_id, product_status_id, username);
 
-                int product_id = dbStoredProcedure.getID("TShopeeProduct");
-
                 // Insert New Stock Item
                 int stock_warehouse_id = dbStatusFunction.stockWarehouseID("VendLah! (HQ)");
+                int product_id = dbStoredProcedure.getID("TShopeeProduct");
+
                 dbStoredProcedure.stockItemInsert(product_name, product_description, 0, product_id, stock_warehouse_id, username);
 
                 // Create Supplier Shipment
@@ -202,6 +199,7 @@ namespace dbShopeeAutomationV2.Controllers
         }
 
         // 3.
+        // [Depreceated]
         public void getRecord(WorkBook wb, string username)
         {
             WorkSheet ws = wb.GetWorkSheet("Record");
@@ -221,6 +219,7 @@ namespace dbShopeeAutomationV2.Controllers
                 if (tmp_arr[1].Text != "")
                 {
                     string title = generalFunc.GenProductionCode(last_production_id);
+
                     last_production_id += 1;
 
                     DateTime? created_date = tmp_arr[1].DateTimeValue;
@@ -241,6 +240,7 @@ namespace dbShopeeAutomationV2.Controllers
                     material_code = generalFunc.removeWhitespace(material_code);
 
                     int material_id = dbStatusFunction.productIdByCode(material_code);
+
                     dbStoredProcedure.productionDetailInsert("", DateTime.Now, DateTime.Now, 0, 0, 0, total_usage, 0, 0, last_production_id, material_id, username);
                 }
 
@@ -269,6 +269,7 @@ namespace dbShopeeAutomationV2.Controllers
             }
         }
 
+        // [Depreceated]
         public void checkProduction(WorkSheet ws, string username)
         {
             int last_production_id = dbStoredProcedure.getID("TShopeeProduction");
@@ -359,10 +360,10 @@ namespace dbShopeeAutomationV2.Controllers
                     product_type_id, product_variety_id, product_status_id, username
                 );
 
-                int product_id = dbStoredProcedure.getID("TShopeeProduct");
-
                 // Insert New Stock Item
                 int stock_warehouse_id = dbStatusFunction.stockWarehouseID("VendLah! (HQ)");
+                int product_id = dbStoredProcedure.getID("TShopeeProduct");
+
                 dbStoredProcedure.stockItemInsert(product_name, product_description, 0, product_id, stock_warehouse_id, username);
 
                 // Insert Product Component

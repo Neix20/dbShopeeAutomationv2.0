@@ -2051,5 +2051,18 @@ namespace dbShopeeAutomationV2.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeSupplier_Update", supplier_idParameter, nameParameter, codeParameter, nationParameter, poc_nameParameter, poc_emailParameter, poc_phone_numberParameter, detail_idParameter);
         }
+    
+        public virtual ObjectResult<NSP_TShopeeUser_CheckPassword_Result> NSP_TShopeeUser_CheckPassword(string usr, string pwd)
+        {
+            var usrParameter = usr != null ?
+                new ObjectParameter("usr", usr) :
+                new ObjectParameter("usr", typeof(string));
+    
+            var pwdParameter = pwd != null ?
+                new ObjectParameter("pwd", pwd) :
+                new ObjectParameter("pwd", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<NSP_TShopeeUser_CheckPassword_Result>("NSP_TShopeeUser_CheckPassword", usrParameter, pwdParameter);
+        }
     }
 }

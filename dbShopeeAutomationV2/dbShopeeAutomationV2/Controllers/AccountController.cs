@@ -29,8 +29,9 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string returnUrl = Request.QueryString["returnUrl"];
 
-            var dataItem = db.TShopeeUsers.FirstOrDefault(it => it.username.Equals(model.username) && it.password.Equals(model.password));
-            if(dataItem != null)
+            var dataList = db.NSP_TShopeeUser_CheckPassword(model.username, model.password).ToList();
+
+            if (dataList.Count != 0)
             {
                 FormsAuthentication.SetAuthCookie(model.username, false);
 
@@ -45,10 +46,8 @@ namespace dbShopeeAutomationV2.Controllers
                 {
                     return Content(returnUrl);
                 }
-                else
-                {
-                    return Content("/DailyTask/Index");
-                }
+
+                return Content("/DailyTask/Index");
             }
 
             return Content($"Error 400: Invalid Username or Password");

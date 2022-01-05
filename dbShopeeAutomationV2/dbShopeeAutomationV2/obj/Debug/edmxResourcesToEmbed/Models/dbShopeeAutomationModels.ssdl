@@ -275,7 +275,7 @@
       <PropertyRef Name="stock_item_id" />
     </Key>
     <Property Name="stock_item_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="name" Type="varchar(max)" />
     <Property Name="description" Type="varchar(max)" />
     <Property Name="stock_quantity" Type="decimal" Precision="10" Scale="6" />
     <Property Name="product_id" Type="int" />
@@ -287,7 +287,7 @@
       <PropertyRef Name="stock_warehouse_id" />
     </Key>
     <Property Name="stock_warehouse_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="name" Type="varchar(max)" />
     <Property Name="email_address" Type="varchar" MaxLength="50" />
     <Property Name="phone_number" Type="varchar" MaxLength="20" />
     <Property Name="address_line_1" Type="varchar" MaxLength="50" />
@@ -791,7 +791,7 @@
     <Parameter Name="stock_item_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeStockItem_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar(max)" Mode="In" />
     <Parameter Name="description" Type="varchar(max)" Mode="In" />
     <Parameter Name="stock_quantity" Type="decimal" Mode="In" />
     <Parameter Name="product_id" Type="int" Mode="In" />
@@ -800,7 +800,7 @@
   </Function>
   <Function Name="NSP_TShopeeStockItem_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="stock_item_id" Type="int" Mode="In" />
-    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar(max)" Mode="In" />
     <Parameter Name="description" Type="varchar(max)" Mode="In" />
     <Parameter Name="stock_quantity" Type="decimal" Mode="In" />
     <Parameter Name="product_id" Type="int" Mode="In" />
@@ -811,7 +811,7 @@
     <Parameter Name="stock_warehouse_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeStockWarehouse_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar(max)" Mode="In" />
     <Parameter Name="email_address" Type="varchar" Mode="In" />
     <Parameter Name="phone_number" Type="varchar" Mode="In" />
     <Parameter Name="address_line_1" Type="varchar" Mode="In" />
@@ -824,7 +824,7 @@
   </Function>
   <Function Name="NSP_TShopeeStockWarehouse_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="stock_warehouse_id" Type="int" Mode="In" />
-    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar(max)" Mode="In" />
     <Parameter Name="email_address" Type="varchar" Mode="In" />
     <Parameter Name="phone_number" Type="varchar" Mode="In" />
     <Parameter Name="address_line_1" Type="varchar" Mode="In" />

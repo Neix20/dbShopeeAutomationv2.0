@@ -217,7 +217,7 @@
       <PropertyRef Name="stock_item_id" />
     </Key>
     <Property Name="stock_item_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="stock_quantity" Type="Decimal" Precision="10" Scale="6" />
     <Property Name="product_id" Type="Int32" />
@@ -229,7 +229,7 @@
       <PropertyRef Name="stock_warehouse_id" />
     </Key>
     <Property Name="stock_warehouse_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="email_address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="phone_number" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="address_line_1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />

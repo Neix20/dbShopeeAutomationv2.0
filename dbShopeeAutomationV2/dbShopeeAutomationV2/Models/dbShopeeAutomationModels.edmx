@@ -10,7 +10,7 @@
             <PropertyRef Name="carrier_id" />
           </Key>
           <Property Name="carrier_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="20" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
           <Property Name="detail_id" Type="int" />
         </EntityType>
         <EntityType Name="TShopeeCustomer">
@@ -18,8 +18,8 @@
             <PropertyRef Name="customer_id" />
           </Key>
           <Property Name="customer_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="first_name" Type="varchar" MaxLength="20" />
-          <Property Name="last_name" Type="varchar" MaxLength="20" />
+          <Property Name="first_name" Type="varchar" MaxLength="100" />
+          <Property Name="last_name" Type="varchar" MaxLength="100" />
           <Property Name="dob" Type="datetime" />
           <Property Name="email_address" Type="varchar" MaxLength="20" />
           <Property Name="phone_number" Type="varchar" MaxLength="20" />
@@ -49,7 +49,7 @@
             <PropertyRef Name="invoice_id" />
           </Key>
           <Property Name="invoice_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="invoice_title" Type="varchar" MaxLength="50" />
+          <Property Name="invoice_title" Type="varchar" MaxLength="100" />
           <Property Name="invoice_created_date" Type="datetime" />
           <Property Name="invoice_completed_date" Type="datetime" />
           <Property Name="invoice_details" Type="varchar(max)" />
@@ -65,7 +65,7 @@
             <PropertyRef Name="invoice_status_id" />
           </Key>
           <Property Name="invoice_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
           <Property Name="detail_id" Type="int" />
         </EntityType>
         <EntityType Name="TShopeeOrder">
@@ -100,7 +100,7 @@
             <PropertyRef Name="order_item_status_id" />
           </Key>
           <Property Name="order_item_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
           <Property Name="description" Type="varchar(max)" />
           <Property Name="return_merchandise_authorization_nr" Type="int" />
           <Property Name="detail_id" Type="int" />
@@ -110,7 +110,7 @@
             <PropertyRef Name="order_status_id" />
           </Key>
           <Property Name="order_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
           <Property Name="detail_id" Type="int" />
         </EntityType>
         <EntityType Name="TShopeePaymentMethod">
@@ -118,7 +118,7 @@
             <PropertyRef Name="payment_method_id" />
           </Key>
           <Property Name="payment_method_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
           <Property Name="detail_id" Type="int" />
         </EntityType>
         <EntityType Name="TShopeePlatform">
@@ -126,7 +126,7 @@
             <PropertyRef Name="platform_id" />
           </Key>
           <Property Name="platform_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
           <Property Name="detail_id" Type="int" />
         </EntityType>
         <EntityType Name="TShopeeProduct">
@@ -154,8 +154,8 @@
             <PropertyRef Name="product_brand_id" />
           </Key>
           <Property Name="product_brand_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="50" />
-          <Property Name="code" Type="varchar" MaxLength="20" />
+          <Property Name="name" Type="varchar(max)" />
+          <Property Name="code" Type="varchar" MaxLength="50" />
           <Property Name="detail_id" Type="int" />
         </EntityType>
         <EntityType Name="TShopeeProductCategory">
@@ -163,8 +163,8 @@
             <PropertyRef Name="product_category_id" />
           </Key>
           <Property Name="product_category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="50" />
-          <Property Name="code" Type="varchar" MaxLength="20" />
+          <Property Name="name" Type="varchar(max)" />
+          <Property Name="code" Type="varchar" MaxLength="50" />
           <Property Name="detail_id" Type="int" />
         </EntityType>
         <EntityType Name="TShopeeProductComponent">
@@ -184,7 +184,7 @@
           <Property Name="production_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="title" Type="varchar(max)" />
           <Property Name="description" Type="varchar(max)" />
-          <Property Name="staff_name" Type="varchar(max)" />
+          <Property Name="staff_name" Type="varchar" MaxLength="100" />
           <Property Name="created_date" Type="datetime" />
           <Property Name="total_usage" Type="decimal" Precision="10" Scale="6" />
           <Property Name="production_status_id" Type="int" />
@@ -213,7 +213,7 @@
             <PropertyRef Name="production_status_id" />
           </Key>
           <Property Name="production_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
           <Property Name="detail_id" Type="int" />
         </EntityType>
         <EntityType Name="TShopeeProductModel">
@@ -222,7 +222,7 @@
           </Key>
           <Property Name="product_model_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar(max)" />
-          <Property Name="code" Type="varchar" MaxLength="20" />
+          <Property Name="code" Type="varchar" MaxLength="50" />
           <Property Name="detail_id" Type="int" />
         </EntityType>
         <EntityType Name="TShopeeProductStatus">
@@ -230,7 +230,7 @@
             <PropertyRef Name="product_status_id" />
           </Key>
           <Property Name="product_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar(max)" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
           <Property Name="detail_id" Type="int" />
         </EntityType>
         <EntityType Name="TShopeeProductType">
@@ -238,8 +238,8 @@
             <PropertyRef Name="product_type_id" />
           </Key>
           <Property Name="product_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="50" />
-          <Property Name="code" Type="varchar" MaxLength="20" />
+          <Property Name="name" Type="varchar(max)" />
+          <Property Name="code" Type="varchar" MaxLength="50" />
           <Property Name="detail_id" Type="int" />
         </EntityType>
         <EntityType Name="TShopeeProductVariety">
@@ -247,8 +247,8 @@
             <PropertyRef Name="product_variety_id" />
           </Key>
           <Property Name="product_variety_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="50" />
-          <Property Name="code" Type="varchar" MaxLength="20" />
+          <Property Name="name" Type="varchar(max)" />
+          <Property Name="code" Type="varchar" MaxLength="50" />
           <Property Name="detail_id" Type="int" />
         </EntityType>
         <EntityType Name="TShopeeShipment">
@@ -272,7 +272,7 @@
             <PropertyRef Name="shipment_status_id" />
           </Key>
           <Property Name="shipment_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="20" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
           <Property Name="detail_id" Type="int" />
         </EntityType>
         <EntityType Name="TShopeeStockItem">
@@ -280,7 +280,7 @@
             <PropertyRef Name="stock_item_id" />
           </Key>
           <Property Name="stock_item_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="name" Type="varchar(max)" />
           <Property Name="description" Type="varchar(max)" />
           <Property Name="stock_quantity" Type="decimal" Precision="10" Scale="6" />
           <Property Name="product_id" Type="int" />
@@ -292,7 +292,7 @@
             <PropertyRef Name="stock_warehouse_id" />
           </Key>
           <Property Name="stock_warehouse_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="name" Type="varchar(max)" />
           <Property Name="email_address" Type="varchar" MaxLength="50" />
           <Property Name="phone_number" Type="varchar" MaxLength="20" />
           <Property Name="address_line_1" Type="varchar" MaxLength="50" />
@@ -309,10 +309,10 @@
           </Key>
           <Property Name="supplier_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar(max)" />
-          <Property Name="code" Type="varchar" MaxLength="20" />
+          <Property Name="code" Type="varchar" MaxLength="50" />
           <Property Name="nation" Type="varchar" MaxLength="20" />
           <Property Name="poc_name" Type="varchar(max)" />
-          <Property Name="poc_email" Type="varchar(max)" />
+          <Property Name="poc_email" Type="varchar" MaxLength="50" />
           <Property Name="poc_phone_number" Type="varchar" MaxLength="20" />
           <Property Name="detail_id" Type="int" />
         </EntityType>
@@ -322,8 +322,8 @@
           </Key>
           <Property Name="supplier_shipment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="received_date" Type="datetime" />
-          <Property Name="supplier_tracking_id" Type="varchar(max)" />
-          <Property Name="NTL_tracking_id" Type="varchar(max)" />
+          <Property Name="supplier_tracking_id" Type="varchar" MaxLength="50" />
+          <Property Name="NTL_tracking_id" Type="varchar" MaxLength="50" />
           <Property Name="height" Type="decimal" Precision="10" Scale="6" />
           <Property Name="width" Type="decimal" Precision="10" Scale="6" />
           <Property Name="length" Type="decimal" Precision="10" Scale="6" />
@@ -346,7 +346,7 @@
           </Key>
           <Property Name="user_role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="username" Type="varchar(max)" />
-          <Property Name="role" Type="varchar" MaxLength="50" />
+          <Property Name="role" Type="varchar" MaxLength="100" />
         </EntityType>
         <Function Name="NSP_TShopeeCarrier_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="carrier_id" Type="int" Mode="In" />
@@ -592,13 +592,13 @@
           <Parameter Name="product_brand_id" Type="int" Mode="In" />
         </Function>
         <Function Name="NSP_TShopeeProductBrand_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar(max)" Mode="In" />
           <Parameter Name="code" Type="varchar" Mode="In" />
           <Parameter Name="detail_id" Type="int" Mode="In" />
         </Function>
         <Function Name="NSP_TShopeeProductBrand_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="product_brand_id" Type="int" Mode="In" />
-          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar(max)" Mode="In" />
           <Parameter Name="code" Type="varchar" Mode="In" />
           <Parameter Name="detail_id" Type="int" Mode="In" />
         </Function>
@@ -606,13 +606,13 @@
           <Parameter Name="product_category_id" Type="int" Mode="In" />
         </Function>
         <Function Name="NSP_TShopeeProductCategory_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar(max)" Mode="In" />
           <Parameter Name="code" Type="varchar" Mode="In" />
           <Parameter Name="detail_id" Type="int" Mode="In" />
         </Function>
         <Function Name="NSP_TShopeeProductCategory_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="product_category_id" Type="int" Mode="In" />
-          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar(max)" Mode="In" />
           <Parameter Name="code" Type="varchar" Mode="In" />
           <Parameter Name="detail_id" Type="int" Mode="In" />
         </Function>
@@ -638,7 +638,7 @@
         <Function Name="NSP_TShopeeProduction_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="title" Type="varchar(max)" Mode="In" />
           <Parameter Name="description" Type="varchar(max)" Mode="In" />
-          <Parameter Name="staff_name" Type="varchar(max)" Mode="In" />
+          <Parameter Name="staff_name" Type="varchar" Mode="In" />
           <Parameter Name="created_date" Type="datetime" Mode="In" />
           <Parameter Name="total_usage" Type="decimal" Mode="In" />
           <Parameter Name="production_status_id" Type="int" Mode="In" />
@@ -648,7 +648,7 @@
           <Parameter Name="production_id" Type="int" Mode="In" />
           <Parameter Name="title" Type="varchar(max)" Mode="In" />
           <Parameter Name="description" Type="varchar(max)" Mode="In" />
-          <Parameter Name="staff_name" Type="varchar(max)" Mode="In" />
+          <Parameter Name="staff_name" Type="varchar" Mode="In" />
           <Parameter Name="created_date" Type="datetime" Mode="In" />
           <Parameter Name="total_usage" Type="decimal" Mode="In" />
           <Parameter Name="production_status_id" Type="int" Mode="In" />
@@ -716,25 +716,25 @@
           <Parameter Name="product_status_id" Type="int" Mode="In" />
         </Function>
         <Function Name="NSP_TShopeeProductStatus_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="name" Type="varchar(max)" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
           <Parameter Name="detail_id" Type="int" Mode="In" />
         </Function>
         <Function Name="NSP_TShopeeProductStatus_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="product_status_id" Type="int" Mode="In" />
-          <Parameter Name="name" Type="varchar(max)" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
           <Parameter Name="detail_id" Type="int" Mode="In" />
         </Function>
         <Function Name="NSP_TShopeeProductType_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="product_type_id" Type="int" Mode="In" />
         </Function>
         <Function Name="NSP_TShopeeProductType_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar(max)" Mode="In" />
           <Parameter Name="code" Type="varchar" Mode="In" />
           <Parameter Name="detail_id" Type="int" Mode="In" />
         </Function>
         <Function Name="NSP_TShopeeProductType_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="product_type_id" Type="int" Mode="In" />
-          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar(max)" Mode="In" />
           <Parameter Name="code" Type="varchar" Mode="In" />
           <Parameter Name="detail_id" Type="int" Mode="In" />
         </Function>
@@ -742,13 +742,13 @@
           <Parameter Name="product_variety_id" Type="int" Mode="In" />
         </Function>
         <Function Name="NSP_TShopeeProductVariety_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar(max)" Mode="In" />
           <Parameter Name="code" Type="varchar" Mode="In" />
           <Parameter Name="detail_id" Type="int" Mode="In" />
         </Function>
         <Function Name="NSP_TShopeeProductVariety_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="product_variety_id" Type="int" Mode="In" />
-          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar(max)" Mode="In" />
           <Parameter Name="code" Type="varchar" Mode="In" />
           <Parameter Name="detail_id" Type="int" Mode="In" />
         </Function>
@@ -796,7 +796,7 @@
           <Parameter Name="stock_item_id" Type="int" Mode="In" />
         </Function>
         <Function Name="NSP_TShopeeStockItem_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar(max)" Mode="In" />
           <Parameter Name="description" Type="varchar(max)" Mode="In" />
           <Parameter Name="stock_quantity" Type="decimal" Mode="In" />
           <Parameter Name="product_id" Type="int" Mode="In" />
@@ -805,7 +805,7 @@
         </Function>
         <Function Name="NSP_TShopeeStockItem_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="stock_item_id" Type="int" Mode="In" />
-          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar(max)" Mode="In" />
           <Parameter Name="description" Type="varchar(max)" Mode="In" />
           <Parameter Name="stock_quantity" Type="decimal" Mode="In" />
           <Parameter Name="product_id" Type="int" Mode="In" />
@@ -816,7 +816,7 @@
           <Parameter Name="stock_warehouse_id" Type="int" Mode="In" />
         </Function>
         <Function Name="NSP_TShopeeStockWarehouse_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar(max)" Mode="In" />
           <Parameter Name="email_address" Type="varchar" Mode="In" />
           <Parameter Name="phone_number" Type="varchar" Mode="In" />
           <Parameter Name="address_line_1" Type="varchar" Mode="In" />
@@ -829,7 +829,7 @@
         </Function>
         <Function Name="NSP_TShopeeStockWarehouse_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="stock_warehouse_id" Type="int" Mode="In" />
-          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar(max)" Mode="In" />
           <Parameter Name="email_address" Type="varchar" Mode="In" />
           <Parameter Name="phone_number" Type="varchar" Mode="In" />
           <Parameter Name="address_line_1" Type="varchar" Mode="In" />
@@ -848,7 +848,7 @@
           <Parameter Name="code" Type="varchar" Mode="In" />
           <Parameter Name="nation" Type="varchar" Mode="In" />
           <Parameter Name="poc_name" Type="varchar(max)" Mode="In" />
-          <Parameter Name="poc_email" Type="varchar(max)" Mode="In" />
+          <Parameter Name="poc_email" Type="varchar" Mode="In" />
           <Parameter Name="poc_phone_number" Type="varchar" Mode="In" />
           <Parameter Name="detail_id" Type="int" Mode="In" />
         </Function>
@@ -858,7 +858,7 @@
           <Parameter Name="code" Type="varchar" Mode="In" />
           <Parameter Name="nation" Type="varchar" Mode="In" />
           <Parameter Name="poc_name" Type="varchar(max)" Mode="In" />
-          <Parameter Name="poc_email" Type="varchar(max)" Mode="In" />
+          <Parameter Name="poc_email" Type="varchar" Mode="In" />
           <Parameter Name="poc_phone_number" Type="varchar" Mode="In" />
           <Parameter Name="detail_id" Type="int" Mode="In" />
         </Function>
@@ -867,8 +867,8 @@
         </Function>
         <Function Name="NSP_TShopeeSupplierShipment_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="received_date" Type="datetime" Mode="In" />
-          <Parameter Name="supplier_tracking_id" Type="varchar(max)" Mode="In" />
-          <Parameter Name="NTL_tracking_id" Type="varchar(max)" Mode="In" />
+          <Parameter Name="supplier_tracking_id" Type="varchar" Mode="In" />
+          <Parameter Name="NTL_tracking_id" Type="varchar" Mode="In" />
           <Parameter Name="height" Type="decimal" Mode="In" />
           <Parameter Name="width" Type="decimal" Mode="In" />
           <Parameter Name="length" Type="decimal" Mode="In" />
@@ -879,8 +879,8 @@
         <Function Name="NSP_TShopeeSupplierShipment_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="supplier_shipment_id" Type="int" Mode="In" />
           <Parameter Name="received_date" Type="datetime" Mode="In" />
-          <Parameter Name="supplier_tracking_id" Type="varchar(max)" Mode="In" />
-          <Parameter Name="NTL_tracking_id" Type="varchar(max)" Mode="In" />
+          <Parameter Name="supplier_tracking_id" Type="varchar" Mode="In" />
+          <Parameter Name="NTL_tracking_id" Type="varchar" Mode="In" />
           <Parameter Name="height" Type="decimal" Mode="In" />
           <Parameter Name="width" Type="decimal" Mode="In" />
           <Parameter Name="length" Type="decimal" Mode="In" />
@@ -955,7 +955,7 @@
             <PropertyRef Name="carrier_id" />
           </Key>
           <Property Name="carrier_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="detail_id" Type="Int32" />
         </EntityType>
         <EntityType Name="TShopeeCustomer">
@@ -963,8 +963,8 @@
             <PropertyRef Name="customer_id" />
           </Key>
           <Property Name="customer_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="first_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="last_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="first_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="dob" Type="DateTime" Precision="3" />
           <Property Name="email_address" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="phone_number" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -994,7 +994,7 @@
             <PropertyRef Name="invoice_id" />
           </Key>
           <Property Name="invoice_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="invoice_title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="invoice_title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="invoice_created_date" Type="DateTime" Precision="3" />
           <Property Name="invoice_completed_date" Type="DateTime" Precision="3" />
           <Property Name="invoice_details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -1010,7 +1010,7 @@
             <PropertyRef Name="invoice_status_id" />
           </Key>
           <Property Name="invoice_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="detail_id" Type="Int32" />
         </EntityType>
         <EntityType Name="TShopeeOrder">
@@ -1045,7 +1045,7 @@
             <PropertyRef Name="order_item_status_id" />
           </Key>
           <Property Name="order_item_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="return_merchandise_authorization_nr" Type="Int32" />
           <Property Name="detail_id" Type="Int32" />
@@ -1055,7 +1055,7 @@
             <PropertyRef Name="order_status_id" />
           </Key>
           <Property Name="order_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="detail_id" Type="Int32" />
         </EntityType>
         <EntityType Name="TShopeePaymentMethod">
@@ -1063,7 +1063,7 @@
             <PropertyRef Name="payment_method_id" />
           </Key>
           <Property Name="payment_method_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="detail_id" Type="Int32" />
         </EntityType>
         <EntityType Name="TShopeePlatform">
@@ -1071,7 +1071,7 @@
             <PropertyRef Name="platform_id" />
           </Key>
           <Property Name="platform_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="detail_id" Type="Int32" />
         </EntityType>
         <EntityType Name="TShopeeProduct">
@@ -1127,7 +1127,7 @@
             <PropertyRef Name="production_status_id" />
           </Key>
           <Property Name="production_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="detail_id" Type="Int32" />
         </EntityType>
         <EntityType Name="TShopeeProductStatu">
@@ -1135,7 +1135,7 @@
             <PropertyRef Name="product_status_id" />
           </Key>
           <Property Name="product_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="detail_id" Type="Int32" />
         </EntityType>
         <EntityType Name="TShopeeShipment">
@@ -1159,7 +1159,7 @@
             <PropertyRef Name="shipment_status_id" />
           </Key>
           <Property Name="shipment_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="detail_id" Type="Int32" />
         </EntityType>
         <EntityType Name="TShopeeStockItem">
@@ -1167,7 +1167,7 @@
             <PropertyRef Name="stock_item_id" />
           </Key>
           <Property Name="stock_item_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="stock_quantity" Type="Decimal" Precision="10" Scale="6" />
           <Property Name="product_id" Type="Int32" />
@@ -1179,7 +1179,7 @@
             <PropertyRef Name="stock_warehouse_id" />
           </Key>
           <Property Name="stock_warehouse_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="email_address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="phone_number" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="address_line_1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -1196,8 +1196,8 @@
           </Key>
           <Property Name="supplier_shipment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="received_date" Type="DateTime" Precision="3" />
-          <Property Name="supplier_tracking_id" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="NTL_tracking_id" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="supplier_tracking_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NTL_tracking_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="height" Type="Decimal" Precision="10" Scale="6" />
           <Property Name="width" Type="Decimal" Precision="10" Scale="6" />
           <Property Name="length" Type="Decimal" Precision="10" Scale="6" />
@@ -1220,7 +1220,7 @@
           </Key>
           <Property Name="user_role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="username" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="role" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="dbShopeeAutomationV2Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="TShopeeCarriers" EntityType="Self.TShopeeCarrier" />
@@ -1825,8 +1825,8 @@
             <PropertyRef Name="product_brand_id" />
           </Key>
           <Property Name="product_brand_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="detail_id" Type="Int32" />
         </EntityType>
         <EntityType Name="TShopeeProductCategory">
@@ -1834,8 +1834,8 @@
             <PropertyRef Name="product_category_id" />
           </Key>
           <Property Name="product_category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="detail_id" Type="Int32" />
         </EntityType>
         <EntityType Name="TShopeeProductType">
@@ -1843,8 +1843,8 @@
             <PropertyRef Name="product_type_id" />
           </Key>
           <Property Name="product_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="detail_id" Type="Int32" />
         </EntityType>
         <EntityType Name="TShopeeProductVariety">
@@ -1852,8 +1852,8 @@
             <PropertyRef Name="product_variety_id" />
           </Key>
           <Property Name="product_variety_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="detail_id" Type="Int32" />
         </EntityType>
         <EntityType Name="TShopeeProductModel">
@@ -1862,7 +1862,7 @@
           </Key>
           <Property Name="product_model_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="detail_id" Type="Int32" />
         </EntityType>
         <EntityType Name="TShopeeProduction">
@@ -1872,7 +1872,7 @@
           <Property Name="production_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="staff_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="staff_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
           <Property Name="total_usage" Type="Decimal" Precision="10" Scale="6" />
           <Property Name="production_status_id" Type="Int32" />
@@ -1884,10 +1884,10 @@
           </Key>
           <Property Name="supplier_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="nation" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="poc_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="poc_email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="poc_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="poc_phone_number" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="detail_id" Type="Int32" />
         </EntityType>

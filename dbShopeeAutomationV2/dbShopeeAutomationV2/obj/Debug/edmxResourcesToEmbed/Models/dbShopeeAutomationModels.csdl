@@ -869,10 +869,6 @@
       <Parameter Name="poc_phone_number" Mode="In" Type="String" />
       <Parameter Name="detail_id" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeUser_CheckPassword" ReturnType="Collection(dbShopeeAutomationV2Model.NSP_TShopeeUser_CheckPassword_Result)">
-      <Parameter Name="usr" Mode="In" Type="String" />
-      <Parameter Name="pwd" Mode="In" Type="String" />
-    </FunctionImport>
   </EntityContainer>
   <EntityType Name="TShopeeProductBrand">
     <Key>

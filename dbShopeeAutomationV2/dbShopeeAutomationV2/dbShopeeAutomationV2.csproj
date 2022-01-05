@@ -523,6 +523,7 @@
     </Compile>
     <Compile Include="Models\PackageListingSummary.cs" />
     <Compile Include="Models\ProductSummary.cs" />
+    <Compile Include="Models\SecurityHelper.cs" />
     <Compile Include="Models\TShopeeCarrier.cs">
       <DependentUpon>dbShopeeAutomationModels.tt</DependentUpon>
     </Compile>

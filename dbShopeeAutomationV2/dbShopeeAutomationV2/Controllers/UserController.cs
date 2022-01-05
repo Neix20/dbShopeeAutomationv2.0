@@ -29,7 +29,10 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult UserGridViewPartialAddNew(TShopeeUser item)
         {
             item.username = (item.username == null) ? "username" : item.username;
+
             item.password = (item.password == null) ? "password" : item.password;
+            item.password = SecurityHelper.HashPasswordFull(item.password);
+
             item.email = (item.email == null) ? generalFunc.GenEmail() : item.email;
 
             dbStoredProcedure.userInsert(item.username, item.password, item.email);
@@ -43,7 +46,9 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult UserGridViewPartialUpdate(TShopeeUser item)
         {
             item.username = (item.username == null) ? "username" : item.username;
-            item.password = (item.password == null) ? "password" : item.password;
+
+            item.password = (item.password == null) ? SecurityHelper.HashPasswordFull("password") : item.password;
+
             item.email = (item.email == null) ? generalFunc.GenEmail() : item.email;
 
             dbStoredProcedure.userUpdate(item.user_id, item.username, item.password, item.email);

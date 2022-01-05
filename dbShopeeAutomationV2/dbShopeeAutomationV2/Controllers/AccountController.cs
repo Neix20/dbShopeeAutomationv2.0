@@ -29,9 +29,10 @@ namespace dbShopeeAutomationV2.Controllers
         {
             string returnUrl = Request.QueryString["returnUrl"];
 
-            var dataList = db.NSP_TShopeeUser_CheckPassword(model.username, model.password).ToList();
+            string pwdHashed = SecurityHelper.HashPasswordFull(model.password);
+            var dataItem = db.TShopeeUsers.FirstOrDefault(it => it.username.Equals(model.username) && it.password.Equals(pwdHashed));
 
-            if (dataList.Count != 0)
+            if(dataItem != null)
             {
                 FormsAuthentication.SetAuthCookie(model.username, false);
 
@@ -81,7 +82,7 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult ForgotPassword(TShopeeUser model)
         {
             var dataItem = db.TShopeeUsers.FirstOrDefault(it => it.username.Equals(model.username));
-            dataItem.password = model.password;
+            dataItem.password = SecurityHelper.HashPasswordFull(model.password);
 
             dbStoredProcedure.userUpdate(dataItem.user_id, dataItem.username, dataItem.password, dataItem.email);
             db.SaveChanges();
@@ -93,6 +94,8 @@ namespace dbShopeeAutomationV2.Controllers
         public ActionResult SignUp(TShopeeUser model)
         {
             // Create New User
+            model.password = SecurityHelper.HashPasswordFull(model.password);
+
             dbStoredProcedure.userInsert(model.username, model.password, model.email);
             db.SaveChanges();
 

@@ -1150,15 +1150,5 @@
     <FunctionImportMapping FunctionImportName="NSP_TShopeeSupplier_Delete" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplier_Delete" />
     <FunctionImportMapping FunctionImportName="NSP_TShopeeSupplier_Insert" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplier_Insert" />
     <FunctionImportMapping FunctionImportName="NSP_TShopeeSupplier_Update" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplier_Update" />
-    <FunctionImportMapping FunctionImportName="NSP_TShopeeUser_CheckPassword" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeUser_CheckPassword">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="dbShopeeAutomationV2Model.NSP_TShopeeUser_CheckPassword_Result">
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="username" ColumnName="username" />
-          <ScalarProperty Name="password" ColumnName="password" />
-          <ScalarProperty Name="email" ColumnName="email" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

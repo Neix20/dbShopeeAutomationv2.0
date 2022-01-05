@@ -888,10 +888,6 @@
           <Parameter Name="product_id" Type="int" Mode="In" />
           <Parameter Name="detail_id" Type="int" Mode="In" />
         </Function>
-        <Function Name="NSP_TShopeeUser_CheckPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="usr" Type="varchar(max)" Mode="In" />
-          <Parameter Name="pwd" Type="varchar(max)" Mode="In" />
-        </Function>
         <Function Name="NSP_TShopeeUser_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_id" Type="int" Mode="In" />
         </Function>
@@ -1822,10 +1818,6 @@
             <Parameter Name="poc_email" Mode="In" Type="String" />
             <Parameter Name="poc_phone_number" Mode="In" Type="String" />
             <Parameter Name="detail_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="NSP_TShopeeUser_CheckPassword" ReturnType="Collection(dbShopeeAutomationV2Model.NSP_TShopeeUser_CheckPassword_Result)">
-          <Parameter Name="usr" Mode="In" Type="String" />
-            <Parameter Name="pwd" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="TShopeeProductBrand">
@@ -3060,16 +3052,6 @@
           <FunctionImportMapping FunctionImportName="NSP_TShopeeSupplier_Delete" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplier_Delete" />
           <FunctionImportMapping FunctionImportName="NSP_TShopeeSupplier_Insert" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplier_Insert" />
           <FunctionImportMapping FunctionImportName="NSP_TShopeeSupplier_Update" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeSupplier_Update" />
-          <FunctionImportMapping FunctionImportName="NSP_TShopeeUser_CheckPassword" FunctionName="dbShopeeAutomationV2Model.Store.NSP_TShopeeUser_CheckPassword">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="dbShopeeAutomationV2Model.NSP_TShopeeUser_CheckPassword_Result">
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="email" ColumnName="email" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

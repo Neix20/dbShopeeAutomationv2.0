@@ -883,10 +883,6 @@
     <Parameter Name="product_id" Type="int" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
-  <Function Name="NSP_TShopeeUser_CheckPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="usr" Type="varchar(max)" Mode="In" />
-    <Parameter Name="pwd" Type="varchar(max)" Mode="In" />
-  </Function>
   <Function Name="NSP_TShopeeUser_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="user_id" Type="int" Mode="In" />
   </Function>

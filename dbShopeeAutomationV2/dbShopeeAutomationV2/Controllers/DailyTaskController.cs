@@ -31,9 +31,7 @@ namespace dbShopeeAutomationV2.Controllers
             int inv_sta_id = dbStatusFunction.invoiceStatusID("Incomplete");
             int p_inv_sta_id = dbStatusFunction.invoiceStatusID("Packaging");
 
-            var model = db.TShopeeInvoices.AsEnumerable().Where(
-                it =>
-                {
+            var model = db.TShopeeInvoices.AsEnumerable().Where(it => {
                     if (it.invoice_completed_date != null)
                     {
                         DateTime tmp = (DateTime)it.invoice_completed_date;

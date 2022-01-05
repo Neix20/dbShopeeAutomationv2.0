@@ -50,6 +50,8 @@ namespace dbShopeeAutomationV2.Controllers
 
             var file = Request.Files["tracking_image"];
 
+            supplier_shipment_id = dbStoredProcedure.getID("TShopeeSupplierShipment");
+
             if (file != null && file.ContentLength > 0)
             {
                 string file_path = $"{Server.MapPath("~/Content/SupplierShipmentTrackingImages")}\\SupplierShipment_{supplier_shipment_id}.png";

@@ -109,10 +109,12 @@
                 success: response => {
                     $(`${loginFormStr} input[name='username']`).val("");
                     $(`${loginFormStr} input[name='password']`).val("");
-                    if (response.includes("Error"))
+                    if (response.includes("Error")) {
                         $("#loginErrorDiv").html(response);
-                    else
+                    } 
+                    else {
                         window.location.href = response;
+                    }
                 }
             });
         });

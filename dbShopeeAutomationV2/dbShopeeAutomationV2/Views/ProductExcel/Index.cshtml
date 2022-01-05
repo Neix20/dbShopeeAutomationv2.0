@@ -77,6 +77,9 @@
                 success: resp => {
                     $("#loader_div").css("display", "none");
                     $("#resp").html(resp);
+                    setTimeout(_ => {
+                        $("#resp").html("");
+                    }, 2000);
                 }
             });
         })

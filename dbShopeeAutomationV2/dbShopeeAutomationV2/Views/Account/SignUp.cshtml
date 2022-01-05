@@ -184,6 +184,9 @@
                     if (response.toLowerCase() === "false") {
                         $("form[id='checkUsernameForm'] input[name='username']").val("");
                         $("#checkUsernameErrorDiv").html(`Error! Username '${username}' already exist in the database!`);
+                        setTimeout(_ => {
+                            $("#checkUsernameErrorDiv").html("");
+                        }, 2000);
                     } else {
                         $("form[id='signUpForm'] input[name='username']").val(username);
                         checkUsernameDiv.css("display", "none");

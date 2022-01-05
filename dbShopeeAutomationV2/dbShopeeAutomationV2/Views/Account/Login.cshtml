@@ -111,6 +111,9 @@
                     $(`${loginFormStr} input[name='password']`).val("");
                     if (response.includes("Error")) {
                         $("#loginErrorDiv").html(response);
+                        setTimeout(_ => {
+                            $("#loginErrorDiv").html("");
+                        }, 2000);
                     } 
                     else {
                         window.location.href = response;

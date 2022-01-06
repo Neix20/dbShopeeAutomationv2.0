@@ -153,6 +153,7 @@
     <Property Name="sub_product_id" Type="Int32" />
     <Property Name="quantity" Type="Int32" />
     <Property Name="detail_id" Type="Int32" />
+    <Property Name="type_id" Type="Int32" />
   </EntityType>
   <EntityType Name="TShopeeProductionDetail">
     <Key>
@@ -539,19 +540,6 @@
     <FunctionImport Name="NSP_TShopeeProductComponent_Delete">
       <Parameter Name="product_component_id" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeProductComponent_Insert">
-      <Parameter Name="master_product_id" Mode="In" Type="Int32" />
-      <Parameter Name="sub_product_id" Mode="In" Type="Int32" />
-      <Parameter Name="quantity" Mode="In" Type="Int32" />
-      <Parameter Name="detail_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="NSP_TShopeeProductComponent_Update">
-      <Parameter Name="product_component_id" Mode="In" Type="Int32" />
-      <Parameter Name="master_product_id" Mode="In" Type="Int32" />
-      <Parameter Name="sub_product_id" Mode="In" Type="Int32" />
-      <Parameter Name="quantity" Mode="In" Type="Int32" />
-      <Parameter Name="detail_id" Mode="In" Type="Int32" />
-    </FunctionImport>
     <FunctionImport Name="NSP_TShopeeProductionDetail_Delete">
       <Parameter Name="production_detail_id" Mode="In" Type="Int32" />
     </FunctionImport>
@@ -867,6 +855,21 @@
       <Parameter Name="poc_name" Mode="In" Type="String" />
       <Parameter Name="poc_email" Mode="In" Type="String" />
       <Parameter Name="poc_phone_number" Mode="In" Type="String" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductComponent_Insert">
+      <Parameter Name="master_product_id" Mode="In" Type="Int32" />
+      <Parameter Name="sub_product_id" Mode="In" Type="Int32" />
+      <Parameter Name="quantity" Mode="In" Type="Int32" />
+      <Parameter Name="type_id" Mode="In" Type="Int32" />
+      <Parameter Name="detail_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NSP_TShopeeProductComponent_Update">
+      <Parameter Name="product_component_id" Mode="In" Type="Int32" />
+      <Parameter Name="master_product_id" Mode="In" Type="Int32" />
+      <Parameter Name="sub_product_id" Mode="In" Type="Int32" />
+      <Parameter Name="quantity" Mode="In" Type="Int32" />
+      <Parameter Name="type_id" Mode="In" Type="Int32" />
       <Parameter Name="detail_id" Mode="In" Type="Int32" />
     </FunctionImport>
   </EntityContainer>

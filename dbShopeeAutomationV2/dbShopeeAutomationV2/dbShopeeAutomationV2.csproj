@@ -442,6 +442,7 @@
     <Content Include="Views\ProductionDetailParam\_ProductionDetailParamGridViewGridViewPartial.cshtml" />
     <Content Include="Views\OrderItemParam\Index.cshtml" />
     <Content Include="Views\OrderItemParam\_OrderItemParamGridViewPartial.cshtml" />
+    <Content Include="Views\Product\_ProductGridViewPartialDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

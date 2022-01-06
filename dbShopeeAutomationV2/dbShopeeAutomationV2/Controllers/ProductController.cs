@@ -258,5 +258,51 @@ namespace dbShopeeAutomationV2.Controllers
 
             return PartialView("_ProductGridViewPartial", model.ToList());
         }
+
+
+        public ActionResult ProductComponentMasterDetailDetailPartial(int product_id)
+        {
+            ViewData["product_id"] = product_id;
+            var model = db.TShopeeProductComponents.Where(it=> it.master_product_id == product_id);
+
+            return PartialView("_ProductGridViewPartialDetails", model.ToList());
+        }
+
+        [ValidateInput(false)]
+        public ActionResult ProductComponentGridViewPartialSpecial(int product_id)
+        {
+            ViewData["product_id"] = product_id;
+            var model = db.TShopeeProductComponents.Where(it=>it.master_product_id==product_id);
+            return PartialView("_ProductGridViewPartialDetails", model.ToList());
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult ProductComponentGridViewPartialAddNew(TShopeeProductComponent item, int product_id)
+        {
+            ViewData["product_id"] = product_id;
+            string username = User.Identity.Name;
+
+            item.quantity = (item.quantity == null) ? 0 : item.quantity;
+
+            dbStoredProcedure.productComponentInsert(product_id, item.sub_product_id, item.quantity, item.type_id, username);
+            db.SaveChanges();
+
+            var model = db.TShopeeProductComponents.Where(it => it.master_product_id == product_id);
+            return PartialView("_ProductGridViewPartialDetails", model.ToList());
+        }
+        [HttpPost, ValidateInput(false)]
+        public ActionResult ProductComponentGridViewPartialUpdate(TShopeeProductComponent item, int product_id)
+        {
+            ViewData["product_id"] = product_id;
+            string username = User.Identity.Name;
+
+            item.quantity = (item.quantity == null) ? 0 : item.quantity;
+
+            dbStoredProcedure.productComponentUpdate(item.product_component_id, product_id, item.sub_product_id, item.quantity, item.type_id, username);
+            db.SaveChanges();
+
+            var model = db.TShopeeProductComponents.Where(it => it.master_product_id == product_id);
+            return PartialView("_ProductGridViewPartialDetails", model.ToList());
+        }
     }
 }

@@ -26,16 +26,14 @@
 
             @using (Html.BeginForm("uploadFile", "ProductExcel", FormMethod.Post, new { enctype = "multipart/form-data", @Id = "uploadFileForm" }))
             {
-                <div class="form-group row px-3">
-                    <label for="fileUpload" class="col-2 col-form-label">Excel File</label>
-                    <div class="col-6">
-                        <input type="file" class="form-control" name="fileUpload" placeholder="Submit File Here" required />
+                <div class="row m-2 align-items-center">
+                    <label class="col-2">File</label>
+                    <div class="col to_remove">
+                        @Html.TextBox("fileUpload", "", new { @Class="form-control", @Type="file"})
                     </div>
                 </div>
 
-                <div class="my-2"></div>
-
-                <div class="row px-3">
+                <div class="row m-2">
                     <div class="col">
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
@@ -77,9 +75,10 @@
                 success: resp => {
                     $("#loader_div").css("display", "none");
                     $("#resp").html(resp);
+                    $(".to_remove").find("input[type=file]").val("");
                     setTimeout(_ => {
                         $("#resp").html("");
-                    }, 2000);
+                    }, 3000);
                 }
             });
         })

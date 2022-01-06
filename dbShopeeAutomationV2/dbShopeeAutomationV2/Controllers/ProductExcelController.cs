@@ -24,14 +24,17 @@ namespace dbShopeeAutomationV2.Controllers
             // Create WorkBook
             WorkBook wb = WorkBook.Load(fileName);
 
-            // Read 'Supplier Info' Worksheet
-            getSupplierInfo(wb, username);
+            //// Read 'Supplier Info' Worksheet
+            //getSupplierInfo(wb, username);
 
-            // Read 'Raw Material Tracking Info' Worksheet
-            getRawMaterialTrackingInfo(wb, username);
+            //// Read 'Raw Material Tracking Info' Worksheet
+            //getRawMaterialTrackingInfo(wb, username);
 
-            // Read 'Inventory Overview' Worksheet 
-            getInventoryOverview(wb, username);
+            //// Read 'Inventory Overview' Worksheet 
+            //getInventoryOverview(wb, username);
+
+            // Read 'Record' Worksheet
+            getRecord(wb, username);
         }
 
         // 1.
@@ -208,6 +211,19 @@ namespace dbShopeeAutomationV2.Controllers
             int last_production_id = dbStoredProcedure.getID("TShopeeProduction");
             decimal total_usage;
 
+            // tmp_arr[1] => Production Date Created
+            // tmp_arr[2] => Production Staff Name
+            // tmp_arr[6] => Total Usage
+            // tmp_arr[15] => Production Description
+
+            // tmp_arr[4] => Material
+
+            // tmp_arr[8] => Product SKU
+            // tmp_arr[10] => Product L x W
+            // tmp_arr[11] => Product Total Quantity
+            // tmp_arr[12] => Product NG
+            // tmp_arr[13] => Product OK
+
             // Get Rows Without Headers
             foreach (var row in ws.Rows.ToList().GetRange(4, ws.RowCount - 4))
             {
@@ -244,13 +260,13 @@ namespace dbShopeeAutomationV2.Controllers
                     dbStoredProcedure.productionDetailInsert("", DateTime.Now, DateTime.Now, 0, 0, 0, total_usage, 0, 0, last_production_id, material_id, username);
                 }
 
-                string product_code = tmp_arr[8].Text;
-                int product_id = dbStatusFunction.productIdByCode(product_code);
+                string product_sku = tmp_arr[8].Text;
+                int product_id = dbStatusFunction.productIdBySKU(product_sku);
 
-                string size = tmp_arr[10].Text;
+                string size = (tmp_arr[10].Text == "") ? "0 x 0" : tmp_arr[10].Text;
                 string[] size_arr = size.Split(new[] { " x " }, StringSplitOptions.None);
-                decimal width = Decimal.Parse(size_arr[0]);
-                decimal length = Decimal.Parse(size_arr[1]);
+                decimal length = Decimal.Parse(size_arr[0]);
+                decimal width = Decimal.Parse(size_arr[1]);
 
                 string total_quantity_str = (tmp_arr[11].Text == "") ? "0" : tmp_arr[11].Text;
                 decimal total_quantity = decimal.Parse(total_quantity_str);
@@ -435,7 +451,6 @@ namespace dbShopeeAutomationV2.Controllers
 
                 readExcelFile(file_path, username);
                 return Content($"File {file.FileName} Uploaded Successfully!");
-
             }
 
             return Content($"Error! File {file.FileName} was not uploaded successfully...");

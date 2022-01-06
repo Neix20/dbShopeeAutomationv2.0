@@ -87,6 +87,12 @@ namespace dbShopeeAutomationV2.Models
             return (product == null) ? -1 : product.product_id;
         }
 
+        public static int productIdBySKU(string sku)
+        {
+            var product = db.TShopeeProducts.FirstOrDefault(it => it.SKU.Equals(sku));
+            return (product == null) ? -1 : product.product_id;
+        }
+
         public static int productionStatusID(string name)
         {
             var productionStatus = db.TShopeeProductionStatus.FirstOrDefault(it => it.name.ToLower().Equals(name.ToLower()));

@@ -45,11 +45,18 @@
             col.Caption = "Image";
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
             col.PropertiesEdit.EncodeHtml = false;
+            col.ReadOnly = true;
         });
 
         settings.Columns.Add("name").Caption = "Name";
         settings.Columns.Add("product_code").Caption = "Code";
-        settings.Columns.Add("SKU").Caption = "SKU";
+
+        // SKU
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "SKU";
+            col.Caption = "SKU";
+        });
 
         // Buy Price
         settings.Columns.Add(col =>
@@ -156,21 +163,37 @@
             prop.ValidationSettings.RequiredField.IsRequired = true;
         });
 
-        // Last Updated By
+        //// Last Updated By
+        //settings.Columns.Add(col =>
+        //{
+        //    col.FieldName = "Last Updated By";
+        //    col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+        //    col.ReadOnly = true;
+        //});
+
+        // Update SKU
         settings.Columns.Add(col =>
         {
-            col.FieldName = "Last Updated By";
+            col.Caption = "Update SKU";
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.PropertiesEdit.EncodeHtml = false;
             col.ReadOnly = true;
         });
 
         settings.CustomUnboundColumnData = (s, e) =>
         {
-            if (e.Column.FieldName == "image")
+            if (e.Column.FieldName.Equals("image"))
             {
                 string product_id = e.GetListSourceFieldValue("product_id").ToString();
                 string file_path = Path.Combine(new string[] { "/Content/ProductImages", $"Product_{product_id}.png" });
                 e.Value = $"<img src='{file_path}' style='height: 50px; width: 50px' alt='[ Missing Image ]' />";
+            }
+
+            if(e.Column.Caption.Equals("Update SKU"))
+            {
+                string product_id = e.GetListSourceFieldValue("product_id").ToString();
+                string SKU = e.GetListSourceFieldValue("SKU").ToString();
+                e.Value = $"<button form='updateMaterialSKUForm' class='btn btn-outline-primary' value='{product_id}'>{SKU}</button>";
             }
 
             if (e.Column.FieldName.Equals("Last Updated By"))

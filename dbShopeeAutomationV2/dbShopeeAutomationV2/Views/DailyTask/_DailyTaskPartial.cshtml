@@ -149,12 +149,12 @@
             $("#selectAll").prop("checked", false);
         });
 
+        let generateInvoiceBillForm = $("form[id='generateInvoiceBillForm']")
+        const generate_invoice_bill_actionLink = generateInvoiceBillForm.attr("action");
+        const generate_invoice_bill_methodType = generateInvoiceBillForm.attr("method");
+
         $(".print_bill_btn").on("click", e => {
             let invoice_id = e.currentTarget.value;
-
-            let generateInvoiceBillForm = $("form[id='generateInvoiceBillForm']")
-            const generate_invoice_bill_actionLink = generateInvoiceBillForm.attr("action");
-            const generate_invoice_bill_methodType = generateInvoiceBillForm.attr("method");
 
             $.ajax({
                 type: generate_invoice_bill_methodType,

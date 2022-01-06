@@ -207,11 +207,6 @@ else
                 </div>
             }
 
-            @using (Html.BeginForm("UpdateMaterialSKU", "Product", FormMethod.Post, new { @Id = "updateMaterialSKUForm" }))
-            {
-                @Html.AntiForgeryToken()
-            }
-
             @using(Html.BeginForm("UpdateProductSKU", "Product", FormMethod.Post, new { @Id="updateProductSKUForm"}))
             {
                 @Html.AntiForgeryToken()
@@ -222,9 +217,6 @@ else
                     <div class="row">
                         <div class="col-3">
                             <button type="submit" class="btn btn-success" form="productForm">Submit Form</button>
-                        </div>
-                        <div class="col">
-                            <button type="submit" class="btn btn-secondary" form="updateMaterialSKUForm">Update Material SKU</button>
                         </div>
                         <div class="col">
                             <button type="submit" class="btn btn-primary" form="updateProductSKUForm">Update Product SKU</button>
@@ -246,22 +238,7 @@ else
 
     <script type="text/javascript">
         $(function () {
-            let umSKUForm = $("form[id='updateMaterialSKUForm']");
-            const umSKUForm_actionLink = umSKUForm.attr("action");
-            const umSKUForm_methodType = umSKUForm.attr("method");
-            
-            umSKUForm.submit(e => {
-                e.preventDefault();
-
-                $.ajax({
-                    url: umSKUForm_actionLink,
-                    type: umSKUForm_methodType,
-                    success: resp => {
-                        $("#productFormResp").html(resp);
-                    }
-                })
-            });
-
+            // Update Product
             let upSKUForm = $("form[id='updateProductSKUForm']");
             const upSKUForm_actionLink = upSKUForm.attr("action");
             const upSKUForm_methodType = upSKUForm.attr("method");
@@ -274,10 +251,19 @@ else
                     type: upSKUForm_methodType,
                     success: resp => {
                         $("#productFormResp").html(resp);
+                        alert("Product ID Successfully Updated!");
                     }
-                })
+                });
             });
 
+            // Update SKU Form
+            let uSKUForm = $("form[id='updateSKUForm']");
+            const uSKUForm_actionLink = uSKUForm.attr("action");
+            const uSKUForm_methodType = uSKUForm.attr("method");
+
+            console.log(uSKUForm_actionLink, uSKUForm_methodType)
+
+            // Submit Product
             let productForm = $("form[id='productForm']");
             const productForm_actionLink = productForm.attr("action");
             const productForm_methodType = productForm.attr("method");

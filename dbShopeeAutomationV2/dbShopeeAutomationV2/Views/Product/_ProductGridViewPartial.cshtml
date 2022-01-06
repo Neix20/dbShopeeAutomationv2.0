@@ -10,7 +10,8 @@
         detailDict.Add(it.detail_id, it.last_updated_by);
     });
 
-    var grid = Html.DevExpress().GridView(settings => {
+    var grid = Html.DevExpress().GridView(settings =>
+    {
         settings.Name = "ProductGridView";
         settings.Width = Unit.Percentage(100);
 
@@ -174,6 +175,7 @@
         // Update SKU
         settings.Columns.Add(col =>
         {
+            col.FieldName = "update_sku";
             col.Caption = "Update SKU";
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
             col.PropertiesEdit.EncodeHtml = false;
@@ -189,18 +191,31 @@
                 e.Value = $"<img src='{file_path}' style='height: 50px; width: 50px' alt='[ Missing Image ]' />";
             }
 
-            if(e.Column.Caption.Equals("Update SKU"))
+            if (e.Column.FieldName.Equals("update_sku"))
             {
                 string product_id = e.GetListSourceFieldValue("product_id").ToString();
                 string SKU = e.GetListSourceFieldValue("SKU").ToString();
-                e.Value = $"<button form='updateMaterialSKUForm' class='btn btn-outline-primary' value='{product_id}'>{SKU}</button>";
+
+                string action = "'/Product/UpdateSKU'", method = "'Post'";
+
+                string js_func = "$.ajax({ "
+                + "url: " + action + ","
+                + "type: " + method + ","
+                + "data: {'product_id': this.value},"
+                + "success: resp => {"
+                + "$('#productFormResp').html(resp);"
+                + "alert('Product ID Successfully Updated!');"
+                + "}"
+                + " });";
+
+                e.Value = $"<button class='btn btn-outline-primary' value='{product_id}' onclick=\"{js_func}\">Update</button>";
             }
 
-            if (e.Column.FieldName.Equals("Last Updated By"))
-            {
-                int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());
-                e.Value = detailDict[detail_id];
-            };
+            //if (e.Column.FieldName.Equals("Last Updated By"))
+            //{
+            //    int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());
+            //    e.Value = detailDict[detail_id];
+            //};
         };
 
         // Cell Set Center
@@ -208,7 +223,8 @@
         settings.Styles.Cell.VerticalAlign = VerticalAlign.Middle;
     });
 
-    if (ViewData["EditError"] != null){
+    if (ViewData["EditError"] != null)
+    {
         grid.SetEditErrorText((string)ViewData["EditError"]);
     }
 }

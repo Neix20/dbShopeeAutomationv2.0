@@ -24,14 +24,14 @@ namespace dbShopeeAutomationV2.Controllers
             // Create WorkBook
             WorkBook wb = WorkBook.Load(fileName);
 
-            //// Read 'Supplier Info' Worksheet
-            //getSupplierInfo(wb, username);
+            // Read 'Supplier Info' Worksheet
+            getSupplierInfo(wb, username);
 
-            //// Read 'Raw Material Tracking Info' Worksheet
-            //getRawMaterialTrackingInfo(wb, username);
+            // Read 'Raw Material Tracking Info' Worksheet
+            getRawMaterialTrackingInfo(wb, username);
 
-            //// Read 'Inventory Overview' Worksheet 
-            //getInventoryOverview(wb, username);
+            // Read 'Inventory Overview' Worksheet 
+            getInventoryOverview(wb, username);
 
             // Read 'Record' Worksheet
             getRecord(wb, username);
@@ -229,8 +229,6 @@ namespace dbShopeeAutomationV2.Controllers
             {
                 var tmp_arr = row.ToArray();
 
-                if (tmp_arr[8].Text == "") continue;
-
                 // Only Update Values when reached a new Production
                 if (tmp_arr[1].Text != "")
                 {
@@ -259,6 +257,8 @@ namespace dbShopeeAutomationV2.Controllers
 
                     dbStoredProcedure.productionDetailInsert("", DateTime.Now, DateTime.Now, 0, 0, 0, total_usage, 0, 0, last_production_id, material_id, username);
                 }
+
+                if (tmp_arr[8].Text == "") continue;
 
                 string product_sku = tmp_arr[8].Text;
                 int product_id = dbStatusFunction.productIdBySKU(product_sku);
@@ -348,11 +348,6 @@ namespace dbShopeeAutomationV2.Controllers
                 string model_code = info_arr[0];
                 string variety_code = info_arr[1];
                 string material_sku = info_arr[2];
-                material_sku = generalFunc.removeWhitespace(material_sku);
-
-                var material = db.TShopeeProducts.FirstOrDefault(it => it.SKU == material_sku);
-
-                int product_type_id = (int)material.product_type_id;
 
                 int product_brand_id = dbStatusFunction.productBrandID("NTL Asia");
                 int product_status_id = dbStatusFunction.productStatusID("Empty");
@@ -361,6 +356,9 @@ namespace dbShopeeAutomationV2.Controllers
                 int product_category_id = product_variety_id;
 
                 int product_model_id = dbStatusFunction.productModelCodeID(model_code);
+
+                int sc_type_id = (int)dbStatusFunction.productTypeID("Solid Color");
+                int product_type_id = sc_type_id;
 
                 string product_code = product_sku;
                 string product_sku2 = product_sku;
@@ -381,6 +379,10 @@ namespace dbShopeeAutomationV2.Controllers
                 int product_id = dbStoredProcedure.getID("TShopeeProduct");
 
                 dbStoredProcedure.stockItemInsert(product_name, product_description, 0, product_id, stock_warehouse_id, username);
+
+                // Get Material
+                material_sku = generalFunc.removeWhitespace(material_sku);
+                var material = db.TShopeeProducts.FirstOrDefault(it => it.SKU == material_sku);
 
                 // Insert Product Component
                 int master_product_id = product_id;

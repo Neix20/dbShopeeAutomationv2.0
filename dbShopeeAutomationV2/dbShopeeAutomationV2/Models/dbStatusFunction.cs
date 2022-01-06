@@ -83,7 +83,7 @@ namespace dbShopeeAutomationV2.Models
 
         public static int productIdByCode(string code)
         {
-            var product = db.TShopeeProducts.FirstOrDefault(it => it.product_code.Equals(code));
+            var product = db.TShopeeProducts.FirstOrDefault(it => it.product_code.ToLower().Equals(code.ToLower()));
             return (product == null) ? -1 : product.product_id;
         }
 

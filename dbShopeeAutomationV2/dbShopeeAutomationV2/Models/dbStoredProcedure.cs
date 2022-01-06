@@ -376,7 +376,7 @@ namespace dbShopeeAutomationV2.Models
         }
 
         // Product Component
-        public static int productComponentInsert(int? master_product_id, int? sub_product_id, int? quantity, string username)
+        public static int productComponentInsert(int? master_product_id, int? sub_product_id, int? quantity, int? type_id, string username)
         {
             string master_product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == master_product_id).name;
             string sub_product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == sub_product_id).name;
@@ -388,10 +388,10 @@ namespace dbShopeeAutomationV2.Models
             db.SaveChanges();
 
             int detail_id = getID("TShopeeDetail");
-            return db.NSP_TShopeeProductComponent_Insert(master_product_id, sub_product_id, quantity, detail_id);
+            return db.NSP_TShopeeProductComponent_Insert(master_product_id, sub_product_id, quantity, type_id, detail_id);
         }
 
-        public static int productComponentUpdate(int product_component_id, int? master_product_id, int? sub_product_id, int? quantity, string username)
+        public static int productComponentUpdate(int product_component_id, int? master_product_id, int? sub_product_id, int? quantity,int? type_id, string username)
         {
             string master_product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == master_product_id).name;
             string sub_product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == sub_product_id).name;
@@ -402,7 +402,7 @@ namespace dbShopeeAutomationV2.Models
             detailUpdate(detail.detail_id, detail.status, detail.remark, detail.created_by, detail.created_date, username);
             db.SaveChanges();
 
-            return db.NSP_TShopeeProductComponent_Update(product_component_id, master_product_id, sub_product_id, quantity, detail_id);
+            return db.NSP_TShopeeProductComponent_Update(product_component_id, master_product_id, sub_product_id, quantity, type_id, detail_id);
         }
 
         public static int productComponentDelete(int product_component_id)

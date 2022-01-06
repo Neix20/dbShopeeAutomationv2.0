@@ -19,5 +19,6 @@ namespace dbShopeeAutomationV2.Models
         public Nullable<int> sub_product_id { get; set; }
         public Nullable<int> quantity { get; set; }
         public Nullable<int> detail_id { get; set; }
+        public Nullable<int> type_id { get; set; }
     }
 }

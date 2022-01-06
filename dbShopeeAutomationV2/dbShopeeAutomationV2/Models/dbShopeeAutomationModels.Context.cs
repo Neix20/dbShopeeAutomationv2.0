@@ -919,52 +919,6 @@ namespace dbShopeeAutomationV2.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductComponent_Delete", product_component_idParameter);
         }
     
-        public virtual int NSP_TShopeeProductComponent_Insert(Nullable<int> master_product_id, Nullable<int> sub_product_id, Nullable<int> quantity, Nullable<int> detail_id)
-        {
-            var master_product_idParameter = master_product_id.HasValue ?
-                new ObjectParameter("master_product_id", master_product_id) :
-                new ObjectParameter("master_product_id", typeof(int));
-    
-            var sub_product_idParameter = sub_product_id.HasValue ?
-                new ObjectParameter("sub_product_id", sub_product_id) :
-                new ObjectParameter("sub_product_id", typeof(int));
-    
-            var quantityParameter = quantity.HasValue ?
-                new ObjectParameter("quantity", quantity) :
-                new ObjectParameter("quantity", typeof(int));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductComponent_Insert", master_product_idParameter, sub_product_idParameter, quantityParameter, detail_idParameter);
-        }
-    
-        public virtual int NSP_TShopeeProductComponent_Update(Nullable<int> product_component_id, Nullable<int> master_product_id, Nullable<int> sub_product_id, Nullable<int> quantity, Nullable<int> detail_id)
-        {
-            var product_component_idParameter = product_component_id.HasValue ?
-                new ObjectParameter("product_component_id", product_component_id) :
-                new ObjectParameter("product_component_id", typeof(int));
-    
-            var master_product_idParameter = master_product_id.HasValue ?
-                new ObjectParameter("master_product_id", master_product_id) :
-                new ObjectParameter("master_product_id", typeof(int));
-    
-            var sub_product_idParameter = sub_product_id.HasValue ?
-                new ObjectParameter("sub_product_id", sub_product_id) :
-                new ObjectParameter("sub_product_id", typeof(int));
-    
-            var quantityParameter = quantity.HasValue ?
-                new ObjectParameter("quantity", quantity) :
-                new ObjectParameter("quantity", typeof(int));
-    
-            var detail_idParameter = detail_id.HasValue ?
-                new ObjectParameter("detail_id", detail_id) :
-                new ObjectParameter("detail_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductComponent_Update", product_component_idParameter, master_product_idParameter, sub_product_idParameter, quantityParameter, detail_idParameter);
-        }
-    
         public virtual int NSP_TShopeeProductionDetail_Delete(Nullable<int> production_detail_id)
         {
             var production_detail_idParameter = production_detail_id.HasValue ?
@@ -2050,6 +2004,60 @@ namespace dbShopeeAutomationV2.Models
                 new ObjectParameter("detail_id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeSupplier_Update", supplier_idParameter, nameParameter, codeParameter, nationParameter, poc_nameParameter, poc_emailParameter, poc_phone_numberParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProductComponent_Insert(Nullable<int> master_product_id, Nullable<int> sub_product_id, Nullable<int> quantity, Nullable<int> type_id, Nullable<int> detail_id)
+        {
+            var master_product_idParameter = master_product_id.HasValue ?
+                new ObjectParameter("master_product_id", master_product_id) :
+                new ObjectParameter("master_product_id", typeof(int));
+    
+            var sub_product_idParameter = sub_product_id.HasValue ?
+                new ObjectParameter("sub_product_id", sub_product_id) :
+                new ObjectParameter("sub_product_id", typeof(int));
+    
+            var quantityParameter = quantity.HasValue ?
+                new ObjectParameter("quantity", quantity) :
+                new ObjectParameter("quantity", typeof(int));
+    
+            var type_idParameter = type_id.HasValue ?
+                new ObjectParameter("type_id", type_id) :
+                new ObjectParameter("type_id", typeof(int));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductComponent_Insert", master_product_idParameter, sub_product_idParameter, quantityParameter, type_idParameter, detail_idParameter);
+        }
+    
+        public virtual int NSP_TShopeeProductComponent_Update(Nullable<int> product_component_id, Nullable<int> master_product_id, Nullable<int> sub_product_id, Nullable<int> quantity, Nullable<int> type_id, Nullable<int> detail_id)
+        {
+            var product_component_idParameter = product_component_id.HasValue ?
+                new ObjectParameter("product_component_id", product_component_id) :
+                new ObjectParameter("product_component_id", typeof(int));
+    
+            var master_product_idParameter = master_product_id.HasValue ?
+                new ObjectParameter("master_product_id", master_product_id) :
+                new ObjectParameter("master_product_id", typeof(int));
+    
+            var sub_product_idParameter = sub_product_id.HasValue ?
+                new ObjectParameter("sub_product_id", sub_product_id) :
+                new ObjectParameter("sub_product_id", typeof(int));
+    
+            var quantityParameter = quantity.HasValue ?
+                new ObjectParameter("quantity", quantity) :
+                new ObjectParameter("quantity", typeof(int));
+    
+            var type_idParameter = type_id.HasValue ?
+                new ObjectParameter("type_id", type_id) :
+                new ObjectParameter("type_id", typeof(int));
+    
+            var detail_idParameter = detail_id.HasValue ?
+                new ObjectParameter("detail_id", detail_id) :
+                new ObjectParameter("detail_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NSP_TShopeeProductComponent_Update", product_component_idParameter, master_product_idParameter, sub_product_idParameter, quantityParameter, type_idParameter, detail_idParameter);
         }
     }
 }

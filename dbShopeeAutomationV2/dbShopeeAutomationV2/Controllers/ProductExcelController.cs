@@ -388,7 +388,7 @@ namespace dbShopeeAutomationV2.Controllers
                 int master_product_id = product_id;
                 int sub_product_id = material.product_id;
 
-                dbStoredProcedure.productComponentInsert(master_product_id, sub_product_id, 1, username);
+                dbStoredProcedure.productComponentInsert(master_product_id, sub_product_id, 1,1, username);
             }
             db.SaveChanges();
         }

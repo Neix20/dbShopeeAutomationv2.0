@@ -25,6 +25,7 @@ namespace dbShopeeAutomationV2.Controllers
             return PartialView("_ProductComponentGridViewPartial", model.ToList());
         }
 
+     
         [HttpPost, ValidateInput(false)]
         public ActionResult ProductComponentGridViewPartialAddNew(TShopeeProductComponent item)
         {
@@ -32,7 +33,7 @@ namespace dbShopeeAutomationV2.Controllers
 
             item.quantity = (item.quantity == null) ? 0 : item.quantity;
 
-            dbStoredProcedure.productComponentInsert(item.master_product_id, item.sub_product_id, item.quantity, username);
+            dbStoredProcedure.productComponentInsert(item.master_product_id, item.sub_product_id, item.quantity, item.type_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeProductComponents;
@@ -46,7 +47,7 @@ namespace dbShopeeAutomationV2.Controllers
 
             item.quantity = (item.quantity == null) ? 0 : item.quantity;
 
-            dbStoredProcedure.productComponentUpdate(item.product_component_id, item.master_product_id, item.sub_product_id, item.quantity, username);
+            dbStoredProcedure.productComponentUpdate(item.product_component_id, item.master_product_id, item.sub_product_id, item.quantity, item.type_id, username);
             db.SaveChanges();
 
             var model = db.TShopeeProductComponents;

@@ -170,6 +170,7 @@
     <Property Name="master_product_id" Type="int" />
     <Property Name="sub_product_id" Type="int" />
     <Property Name="quantity" Type="int" />
+    <Property Name="type_id" Type="int" />
     <Property Name="detail_id" Type="int" />
   </EntityType>
   <EntityType Name="TShopeeProduction">
@@ -618,6 +619,7 @@
     <Parameter Name="master_product_id" Type="int" Mode="In" />
     <Parameter Name="sub_product_id" Type="int" Mode="In" />
     <Parameter Name="quantity" Type="int" Mode="In" />
+    <Parameter Name="type_id" Type="int" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeProductComponent_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -625,6 +627,7 @@
     <Parameter Name="master_product_id" Type="int" Mode="In" />
     <Parameter Name="sub_product_id" Type="int" Mode="In" />
     <Parameter Name="quantity" Type="int" Mode="In" />
+    <Parameter Name="type_id" Type="int" Mode="In" />
     <Parameter Name="detail_id" Type="int" Mode="In" />
   </Function>
   <Function Name="NSP_TShopeeProduction_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">

@@ -2,15 +2,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     IDictionary<string, List<string>> propDict = new Dictionary<string, List<string>>(){
-        {"E-commerce", new List<string>(){"Customer", "Invoice", "Invoice Status", "Order",
-                                            "Order Status", "Payment Method", "Platform"}},
+        {"E-commerce", new List<string>(){
+            "Customer", "Invoice", "Invoice Status", "Order",
+            "Order Status", "Payment Method", "Platform"
+        }.OrderBy(x => x).ToList() },
         {"Production", new List<string>(){
             "Product Brand", "Product Category", "Product Model", "Product Type",
             "Product", "Product Status", "Production", "Production Status",
-            "Stock Warehouse", "Stock Item", "Upload Excel"}},
-        {"Shipment", new List<string>(){ "Supplier", "Supplier Shipment", "Carrier", "Shipment", "Shipment Status"}},
-        {"Operations", new List<string>(){"Detail", "User", "User Role"}}
+            "Stock Warehouse", "Stock Item", "Upload Excel"
+        }.OrderBy(x => x).ToList() },
+        {"Shipment", new List<string>(){
+            "Supplier", "Supplier Shipment", "Carrier", "Shipment", "Shipment Status"
+        }.OrderBy(x => x).ToList() },
+        {"Operations", new List<string>(){"Detail", "User", "User Role"}.OrderBy(x => x).ToList() }
     };
+
+    propDict
 
     string uName = (User.Identity.IsAuthenticated) ? User.Identity.Name : "Admin";
 }

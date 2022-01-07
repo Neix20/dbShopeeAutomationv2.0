@@ -118,7 +118,7 @@
                 int order_id = int.Parse(e.GetListSourceFieldValue("order_id").ToString());
                 int ord_sta_id = int.Parse(e.GetListSourceFieldValue("order_status_id").ToString());
                 string to_disable = (ord_sta_id == c_ord_sta_id) ? " disabled " : "";
-                string js_func = "$.ajax({ url: '/Order/CompleteOrder', type: 'Post', data: { 'order_id': this.value }, success: resp => { $('#orderItemFormResp').html(resp); alert(`Order ${this.value} has been updated!`); } });";
+                string js_func = "$.ajax({ url: '/Order/CompleteOrder', type: 'Post', data: { 'order_id': this.value }, success: resp => { $('#orderItemFormResp').html(resp); location.reload(); } });";
                 e.Value = $"<button class='btn btn-outline-success' value='{order_id}'{to_disable}onclick=\"{js_func}\">Complete</button>";
             }
         };

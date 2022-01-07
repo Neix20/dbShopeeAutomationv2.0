@@ -105,7 +105,7 @@
                 int production_id = int.Parse(e.GetListSourceFieldValue("production_id").ToString());
                 int pro_sta_id = int.Parse(e.GetListSourceFieldValue("production_status_id").ToString());
                 string to_disable = (pro_sta_id == c_pro_sta_id) ? " disabled " : "";
-                string js_func = "$.ajax({ url: '/Production/CompleteProduction',type: 'Post', data: { 'production_id': this.value }, success: resp => { $('#productionFormResp').html(resp); alert(`Production ${this.value} has been updated!`); } });";
+                string js_func = "$.ajax({ url: '/Production/CompleteProduction',type: 'Post', data: { 'production_id': this.value }, success: resp => { $('#productionFormResp').html(resp); location.reload(); } });";
                 e.Value = $"<button class='btn btn-outline-success' value='{production_id}'{to_disable}onclick=\"{js_func}\">Complete</button>";
             }
         };

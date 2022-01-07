@@ -19,48 +19,54 @@ namespace dbShopeeAutomationV2.Controllers
         dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
         [ValidateInput(false)]
-        public ActionResult ProductComponentGridViewPartial()
+        public ActionResult ProductComponentGridViewPartial(int product_id)
         {
-            var model = db.TShopeeProductComponents;
+            ViewData["product_id"] = product_id;
+            var model = db.TShopeeProductComponents.Where(it => it.master_product_id == product_id);
             return PartialView("_ProductComponentGridViewPartial", model.ToList());
         }
 
      
         [HttpPost, ValidateInput(false)]
-        public ActionResult ProductComponentGridViewPartialAddNew(TShopeeProductComponent item)
+        public ActionResult ProductComponentGridViewPartialAddNew(TShopeeProductComponent item, int product_id)
         {
+            ViewData["product_id"] = product_id;
+
             string username = User.Identity.Name;
 
             item.quantity = (item.quantity == null) ? 0 : item.quantity;
 
-            dbStoredProcedure.productComponentInsert(item.master_product_id, item.sub_product_id, item.quantity, item.type_id, username);
+            dbStoredProcedure.productComponentInsert(product_id, item.sub_product_id, item.quantity, item.type_id, username);
             db.SaveChanges();
 
-            var model = db.TShopeeProductComponents;
+            var model = db.TShopeeProductComponents.Where(it => it.master_product_id == product_id);
             return PartialView("_ProductComponentGridViewPartial", model.ToList());
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult ProductComponentGridViewPartialUpdate(TShopeeProductComponent item)
+        public ActionResult ProductComponentGridViewPartialUpdate(TShopeeProductComponent item, int product_id)
         {
+            ViewData["product_id"] = product_id;
             string username = User.Identity.Name;
 
             item.quantity = (item.quantity == null) ? 0 : item.quantity;
 
-            dbStoredProcedure.productComponentUpdate(item.product_component_id, item.master_product_id, item.sub_product_id, item.quantity, item.type_id, username);
+            dbStoredProcedure.productComponentUpdate(item.product_component_id, product_id, item.sub_product_id, item.quantity, item.type_id, username);
             db.SaveChanges();
 
-            var model = db.TShopeeProductComponents;
+            var model = db.TShopeeProductComponents.Where(it => it.master_product_id == product_id);
             return PartialView("_ProductComponentGridViewPartial", model.ToList());
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult ProductComponentGridViewPartialDelete(int product_component_id)
+        public ActionResult ProductComponentGridViewPartialDelete(int product_component_id, int product_id)
         {
+            ViewData["product_id"] = product_id;
+
             dbStoredProcedure.productComponentDelete(product_component_id);
             db.SaveChanges();
 
-            var model = db.TShopeeProductComponents;
+            var model = db.TShopeeProductComponents.Where(it => it.master_product_id == product_id);
             return PartialView("_ProductComponentGridViewPartial", model.ToList());
         }
     }

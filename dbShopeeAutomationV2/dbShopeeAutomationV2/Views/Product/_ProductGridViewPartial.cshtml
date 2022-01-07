@@ -229,12 +229,8 @@
         settings.SettingsDetail.ShowDetailRow = true;
 
         settings.SetDetailRowTemplateContent(c => {
-
-            Html.RenderAction("ProductComponentMasterDetailDetailPartial", new { product_id = DataBinder.Eval(c.DataItem, "product_id") });
+            Html.RenderAction("ProductComponentGridViewPartial", "ProductComponent", new { product_id = DataBinder.Eval(c.DataItem, "product_id") });
         });
-        //settings.PreRender = (sender, e) => {
-        //((MVCxGridView)sender).DetailRows.ExpandRow(0);
-        //};
 
 
     });
@@ -243,5 +239,6 @@
     {
         grid.SetEditErrorText((string)ViewData["EditError"]);
     }
-        }
-        @grid.Bind(Model).GetHtml()
+}
+
+@grid.Bind(Model).GetHtml()

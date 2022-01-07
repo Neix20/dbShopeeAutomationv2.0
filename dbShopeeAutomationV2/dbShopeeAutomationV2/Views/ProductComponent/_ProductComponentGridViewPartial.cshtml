@@ -11,13 +11,14 @@
     });
 
     var grid = Html.DevExpress().GridView(settings => {
-        settings.Name = "ProductComponentGridView";
+        settings.Name = "ProductComponentGridView" + ViewData["product_id"];
+        settings.SettingsDetail.MasterGridName = "grid";
         settings.Width = Unit.Percentage(100);
-        settings.CallbackRouteValues = new { Controller = "ProductComponent", Action = "ProductComponentGridViewPartial" };
+        settings.CallbackRouteValues = new { Controller = "ProductComponent", Action = "ProductComponentGridViewPartial", product_id = ViewData["product_id"] };
 
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "ProductComponent", Action = "ProductComponentGridViewPartialAddNew" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ProductComponent", Action = "ProductComponentGridViewPartialUpdate" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ProductComponent", Action = "ProductComponentGridViewPartialDelete" };
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "ProductComponent", Action = "ProductComponentGridViewPartialAddNew", product_id = ViewData["product_id"] };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ProductComponent", Action = "ProductComponentGridViewPartialUpdate", product_id = ViewData["product_id"] };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ProductComponent", Action = "ProductComponentGridViewPartialDelete", product_id = ViewData["product_id"] };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsBehavior.ConfirmDelete = true;
 
@@ -29,10 +30,10 @@
         settings.KeyFieldName = "product_component_id";
 
         settings.SettingsPager.Visible = true;
-        settings.Settings.ShowGroupPanel = true;
-        settings.Settings.ShowFilterRow = true;
-        settings.SettingsBehavior.AllowSelectByRowClick = true;
-        settings.SettingsSearchPanel.Visible = true;
+        //settings.Settings.ShowGroupPanel = true;
+        //settings.Settings.ShowFilterRow = true;
+        //settings.SettingsBehavior.AllowSelectByRowClick = true;
+        //settings.SettingsSearchPanel.Visible = true;
 
         // Header Set Center
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
@@ -43,6 +44,8 @@
         {
             col.FieldName = "master_product_id";
             col.Caption = "Master Product ID";
+
+            col.EditFormSettings.Visible = DefaultBoolean.False;
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
@@ -86,7 +89,7 @@
         {
             col.FieldName = "Last Updated By";
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
-            col.ReadOnly = true;
+            col.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
         settings.CustomUnboundColumnData = (s, e) =>
@@ -98,6 +101,7 @@
             };
         };
 
+        // Cell Set Center
         settings.Styles.Cell.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Cell.VerticalAlign = VerticalAlign.Middle;
     });

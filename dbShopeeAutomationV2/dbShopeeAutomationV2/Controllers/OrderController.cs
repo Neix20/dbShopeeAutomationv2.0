@@ -85,5 +85,34 @@ namespace dbShopeeAutomationV2.Controllers
             var model = db.TShopeeOrders;
             return PartialView("_OrderGridViewPartial", model.ToList());
         }
+
+        [HttpPost]
+        public ActionResult CompleteOrder()
+        {
+            string username = User.Identity.Name;
+
+            string order_id_str = generalFunc.trimStr(Request.Form["order_id"]);
+            int order_id = int.Parse(order_id_str);
+
+            // Update Order Status to Complete
+            var order = db.TShopeeOrders.FirstOrDefault(it => it.order_id == order_id);
+            order.order_status_id = dbStatusFunction.orderStatusID("Complete");
+
+            // Get List of Order Item
+            List<TShopeeOrderItem> orderItemList = db.TShopeeOrderItems.Where(it => it.order_id == order_id).ToList();
+
+            orderItemList.ForEach(it =>
+            {
+                var stockItem = db.TShopeeStockItems.FirstOrDefault(si => si.product_id == it.product_id);
+                stockItem.stock_quantity -= it.quantity;
+
+                order.total_price += it.sub_total;
+            });
+
+            db.SaveChanges();
+
+            var model = db.TShopeeOrders;
+            return PartialView("_OrderGridViewPartial", model.ToList());
+        }
     }
 }

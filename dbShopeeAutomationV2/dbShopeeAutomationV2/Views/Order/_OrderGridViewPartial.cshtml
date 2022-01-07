@@ -10,6 +10,8 @@
         detailDict.Add(it.detail_id, it.last_updated_by);
     });
 
+    int c_ord_sta_id = dbStatusFunction.orderStatusID("complete");
+
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "OrderGridView";
         settings.Width = Unit.Percentage(100);
@@ -40,13 +42,13 @@
 
         settings.Columns.Add(col => {
             col.FieldName = "order_title";
-            col.Caption = "Order Title";
+            col.Caption = "Title";
         });
 
         // Order Placement Date
         settings.Columns.Add(col => {
             col.FieldName = "order_placed_date";
-            col.Caption = "Order Placement Date";
+            col.Caption = "Placement Date";
 
             col.ColumnType = MVCxGridViewColumnType.DateEdit;
             col.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
@@ -60,7 +62,7 @@
         settings.Columns.Add(col =>
         {
             col.FieldName = "order_status_id";
-            col.Caption = "Order Status";
+            col.Caption = "Status";
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
@@ -85,6 +87,16 @@
             prop.DisplayFormatString = "C";
         });
 
+        // Complete Button
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Complete?";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.PropertiesEdit.EncodeHtml = false;
+
+            col.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+
         // Last Updated By
         settings.Columns.Add(col =>
         {
@@ -100,11 +112,29 @@
                 int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());
                 e.Value = detailDict[detail_id];
             };
+
+            if (e.Column.FieldName.Equals("Complete?"))
+            {
+                int order_id = int.Parse(e.GetListSourceFieldValue("order_id").ToString());
+                int ord_sta_id = int.Parse(e.GetListSourceFieldValue("order_status_id").ToString());
+                string to_disable = (ord_sta_id == c_ord_sta_id) ? " disabled " : "";
+                string js_func = "$.ajax({ url: '/Order/CompleteOrder', type: 'Post', data: { 'order_id': this.value }, success: resp => { $('#orderItemFormResp').html(resp); alert(`Order ${this.value} has been updated!`); } });";
+                e.Value = $"<button class='btn btn-outline-success' value='{order_id}'{to_disable}onclick=\"{js_func}\">Complete</button>";
+            }
         };
 
         // Cell Styles Center
         settings.Styles.Cell.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Cell.VerticalAlign = VerticalAlign.Middle;
+
+        // Setting Detail Grid
+        settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = false;
+        settings.SettingsDetail.ShowDetailRow = true;
+
+        settings.SetDetailRowTemplateContent(c =>
+        {
+            Html.RenderAction("OrderItemGridViewPartial", "OrderItem", new { order_id = DataBinder.Eval(c.DataItem, "order_id") });
+        });
     });
 
     if (ViewData["EditError"] != null){

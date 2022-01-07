@@ -18,15 +18,17 @@ namespace dbShopeeAutomationV2.Controllers
         dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
         [ValidateInput(false)]
-        public ActionResult OrderItemGridViewPartial()
+        public ActionResult OrderItemGridViewPartial(int order_id)
         {
-            var model = db.TShopeeOrderItems;
-            return PartialView("~/Views/OrderItem/_OrderItemGridViewPartial.cshtml", model.ToList());
+            ViewData["order_id"] = order_id;
+            var model = db.TShopeeOrderItems.Where(it => it.order_id == order_id);
+            return PartialView("_OrderItemGridViewPartial", model.ToList());
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult OrderItemGridViewPartialAddNew(TShopeeOrderItem item)
+        public ActionResult OrderItemGridViewPartialAddNew(TShopeeOrderItem item, int order_id)
         {
+            ViewData["order_id"] = order_id;
             string username = User.Identity.Name;
 
             item.quantity = (item.quantity == null) ? 0 : item.quantity;
@@ -55,13 +57,14 @@ namespace dbShopeeAutomationV2.Controllers
                 item.order_id, item.order_item_status_id, item.product_id, username);
             db.SaveChanges();
 
-            var model = db.TShopeeOrderItems;
+            var model = db.TShopeeOrderItems.Where(it => it.order_id == order_id);
             return PartialView("_OrderItemGridViewPartial", model.ToList());
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult OrderItemGridViewPartialUpdate(TShopeeOrderItem item)
+        public ActionResult OrderItemGridViewPartialUpdate(TShopeeOrderItem item, int order_id)
         {
+            ViewData["order_id"] = order_id;
             string username = User.Identity.Name;
 
             item.quantity = (item.quantity == null) ? 0 : item.quantity;
@@ -103,13 +106,15 @@ namespace dbShopeeAutomationV2.Controllers
                 item.order_id, item.order_item_status_id, item.product_id, username);
             db.SaveChanges();
 
-            var model = db.TShopeeOrderItems;
+            var model = db.TShopeeOrderItems.Where(it => it.order_id == order_id);
             return PartialView("_OrderItemGridViewPartial", model.ToList());
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult OrderItemGridViewPartialDelete(int order_item_id)
+        public ActionResult OrderItemGridViewPartialDelete(int order_item_id, int order_id)
         {
+            ViewData["order_id"] = order_id;
+
             var orderItem = db.TShopeeOrderItems.FirstOrDefault(it => it.order_item_id == order_item_id);
             int order_item_status_id = (int) orderItem.order_item_status_id;
 
@@ -119,7 +124,7 @@ namespace dbShopeeAutomationV2.Controllers
             dbStoredProcedure.orderItemDelete(order_item_id);
             db.SaveChanges();
 
-            var model = db.TShopeeOrderItems;
+            var model = db.TShopeeOrderItems.Where(it => it.order_id == order_id);
             return PartialView("_OrderItemGridViewPartial", model.ToList());
         }
 

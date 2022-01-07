@@ -129,11 +129,17 @@ namespace dbShopeeAutomationV2.Controllers
                     product_brand_id, product_model_id, product_category_id,
                     product_type_id, product_variety_id, product_status_id, username);
 
+                string roll_size = (string)tmp_arr[13].Value;
+                Decimal[] hwl_arr = generalFunc.parseRollSize(roll_size);
+                Decimal height = hwl_arr[0];
+                Decimal width = hwl_arr[1];
+                Decimal length = hwl_arr[2];
+
                 // Insert New Stock Item
                 int stock_warehouse_id = dbStatusFunction.stockWarehouseID("VendLah! (HQ)");
                 int product_id = dbStoredProcedure.getID("TShopeeProduct");
 
-                dbStoredProcedure.stockItemInsert(product_name, product_description, 0, product_id, stock_warehouse_id, username);
+                dbStoredProcedure.stockItemInsert(product_name, product_description, width * length, product_id, stock_warehouse_id, username);
 
                 // Create Supplier Shipment
                 DateTime? ss_r_dt = tmp_arr[5].DateTimeValue;
@@ -144,12 +150,6 @@ namespace dbShopeeAutomationV2.Controllers
                 // Supplier
                 string ss_supplier = (string)tmp_arr[9].Value;
                 int supplier_id = dbStatusFunction.supplierID(ss_supplier);
-
-                string roll_size = (string)tmp_arr[13].Value;
-                Decimal[] hwl_arr = generalFunc.parseRollSize(roll_size);
-                Decimal height = hwl_arr[0];
-                Decimal width = hwl_arr[1];
-                Decimal length = hwl_arr[2];
 
                 // Insert Supplier Shipment
                 dbStoredProcedure.supplierShipmentInsert(
@@ -202,7 +202,6 @@ namespace dbShopeeAutomationV2.Controllers
         }
 
         // 3.
-        // [Depreceated]
         public void getRecord(WorkBook wb, string username)
         {
             WorkSheet ws = wb.GetWorkSheet("Record");
@@ -282,10 +281,14 @@ namespace dbShopeeAutomationV2.Controllers
                     0, width, length,
                     total_quantity, not_ok, ok,
                     last_production_id, product_id, username);
+
+                // Update Stock Item
+                var stockItem = db.TShopeeStockItems.FirstOrDefault(it => it.product_id == product_id);
+                stockItem.stock_quantity += ok;
             }
+            db.SaveChanges();
         }
 
-        // [Depreceated]
         public void checkProduction(WorkSheet ws, string username)
         {
             int last_production_id = dbStoredProcedure.getID("TShopeeProduction");

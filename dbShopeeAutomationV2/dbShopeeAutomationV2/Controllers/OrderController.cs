@@ -57,7 +57,8 @@ namespace dbShopeeAutomationV2.Controllers
             dbStoredProcedure.orderUpdate(item.order_id, item.order_title, item.order_placed_date, item.total_price, item.order_status_id, username);
             db.SaveChanges();
 
-            return RedirectToAction("Index", "OrderItemParam", new { order_id = item.order_id });
+            var model = db.TShopeeOrders;
+            return PartialView("_OrderGridViewPartial", model.ToList());
         }
 
         [HttpPost, ValidateInput(false)]
@@ -66,17 +67,26 @@ namespace dbShopeeAutomationV2.Controllers
             // Get Order Status
             var order = db.TShopeeOrders.FirstOrDefault(it => it.order_id == order_id);
             int ord_sta_id = (int) order.order_status_id;
+            int c_ord_sta_id = dbStatusFunction.orderStatusID("complete");
 
             // Delete List of Order Items
             var orderItemList = db.TShopeeOrderItems.Where(it => it.order_id == order_id).ToList();
-            orderItemList.ForEach(it =>
+            orderItemList.ForEach(tmp_model =>
             {
+                if(ord_sta_id == c_ord_sta_id)
+                {
+                    int product_id = (int) tmp_model.product_id;
+                    var product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == product_id);
+                    var stockItem = db.TShopeeStockItems.FirstOrDefault(it => it.product_id == product_id);
+                    stockItem.stock_quantity -= tmp_model.quantity;
+                }
+
                 // Delete Corresponding Order item Status
-                int order_item_status_id = (int) it.order_item_status_id;
+                int order_item_status_id = (int)tmp_model.order_item_status_id;
                 dbStoredProcedure.orderItemStatusDelete(order_item_status_id);
 
                 // Delete Order Item
-                dbStoredProcedure.orderItemDelete(it.order_item_id);
+                dbStoredProcedure.orderItemDelete(tmp_model.order_item_id);
             });
 
             dbStoredProcedure.orderDelete(order_id);

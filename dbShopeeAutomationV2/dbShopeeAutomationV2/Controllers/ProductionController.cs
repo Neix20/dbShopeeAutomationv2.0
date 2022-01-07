@@ -73,10 +73,31 @@ namespace dbShopeeAutomationV2.Controllers
             var production = db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id);
             int pro_sta_id = (int) production.production_status_id;
 
+            int pro_mat_id = dbStatusFunction.productModelID("material");
+            int c_pro_sta_id = dbStatusFunction.productionStatusID("complete");
+
             // Delete List of Production Detail
             var production_detail_list = db.TShopeeProductionDetails.Where(it => it.production_id == production_id).ToList();
             production_detail_list.ForEach(tmp_model =>
             {
+                // Update Stock Quantity
+                // Can only update Stock Quantity if Production Status is Complete
+                if(pro_sta_id == c_pro_sta_id)
+                {
+                    int product_id = (int)tmp_model.product_id;
+                    var product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == product_id);
+                    var stockItem = db.TShopeeStockItems.FirstOrDefault(it => it.product_id == product_id);
+
+                    // Check if Product is Material or Not
+                    if (product.product_id == pro_mat_id)
+                    {
+                        stockItem.stock_quantity += tmp_model.quantity;
+                    }
+                    else
+                    {
+                        stockItem.stock_quantity -= tmp_model.can_be_used;
+                    }
+                }
                 dbStoredProcedure.productionDetailDelete(tmp_model.production_detail_id);
             });
 

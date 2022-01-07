@@ -115,43 +115,44 @@
             prop.Increment = 0.1M;
         });
 
-        // RMA Number
-        settings.Columns.Add(col =>
-        {
-            col.FieldName = "RMA_num";
-            col.Caption = "RMA Number";
+        // [Depreceated]
+        //// RMA Number
+        //settings.Columns.Add(col =>
+        //{
+        //    col.FieldName = "RMA_num";
+        //    col.Caption = "RMA Number";
 
-            col.EditFormSettings.Visible = DefaultBoolean.False;
+        //    col.EditFormSettings.Visible = DefaultBoolean.False;
 
-            col.ColumnType = MVCxGridViewColumnType.SpinEdit;
-            SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
-            prop.NumberType = SpinEditNumberType.Integer;
-            prop.MinValue = 0;
-            prop.MaxValue = 10000000;
-        });
+        //    col.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        //    SpinEditProperties prop = col.PropertiesEdit as SpinEditProperties;
+        //    prop.NumberType = SpinEditNumberType.Integer;
+        //    prop.MinValue = 0;
+        //    prop.MaxValue = 10000000;
+        //});
 
-        // RMA Issued By
-        settings.Columns.Add(col =>
-        {
-            col.FieldName = "RMA_issued_by";
-            col.Caption = "RMA Issued By";
-            col.EditFormSettings.Visible = DefaultBoolean.False;
-        });
+        //// RMA Issued By
+        //settings.Columns.Add(col =>
+        //{
+        //    col.FieldName = "RMA_issued_by";
+        //    col.Caption = "RMA Issued By";
+        //    col.EditFormSettings.Visible = DefaultBoolean.False;
+        //});
 
-        // RMA Issued Date
-        settings.Columns.Add(col => {
-            col.FieldName = "RMA_issued_date";
-            col.Caption = "RMA Issued Date";
+        //// RMA Issued Date
+        //settings.Columns.Add(col => {
+        //    col.FieldName = "RMA_issued_date";
+        //    col.Caption = "RMA Issued Date";
 
-            col.EditFormSettings.Visible = DefaultBoolean.False;
+        //    col.EditFormSettings.Visible = DefaultBoolean.False;
 
-            col.ColumnType = MVCxGridViewColumnType.DateEdit;
-            col.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
+        //    col.ColumnType = MVCxGridViewColumnType.DateEdit;
+        //    col.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
 
-            DateEditProperties prop = col.PropertiesEdit as DateEditProperties;
-            prop.DisplayFormatString = "yyyy-MM-dd";
-            prop.DisplayFormatInEditMode = true;
-        });
+        //    DateEditProperties prop = col.PropertiesEdit as DateEditProperties;
+        //    prop.DisplayFormatString = "yyyy-MM-dd";
+        //    prop.DisplayFormatInEditMode = true;
+        //});
 
         // Last Updated By
         settings.Columns.Add(col =>

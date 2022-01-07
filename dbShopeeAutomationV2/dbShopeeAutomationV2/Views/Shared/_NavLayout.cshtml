@@ -17,8 +17,6 @@
         {"Operations", new List<string>(){"Detail", "User", "User Role"}.OrderBy(x => x).ToList() }
     };
 
-    propDict
-
     string uName = (User.Identity.IsAuthenticated) ? User.Identity.Name : "Admin";
 }
 

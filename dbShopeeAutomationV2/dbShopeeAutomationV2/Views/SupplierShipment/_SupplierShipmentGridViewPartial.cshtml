@@ -46,7 +46,7 @@
             col.Caption = "Image";
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
             col.PropertiesEdit.EncodeHtml = false;
-            col.ReadOnly = true;
+            col.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
         // Supplier ID
@@ -134,7 +134,7 @@
         {
             col.FieldName = "Last Updated By";
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
-            col.ReadOnly = true;
+            col.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
         settings.CustomUnboundColumnData = (s, e) =>

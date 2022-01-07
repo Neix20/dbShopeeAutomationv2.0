@@ -4,11 +4,7 @@
 @{
     dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
-    Dictionary<int, string> detailDict = new Dictionary<int, string>();
-    db.TShopeeDetails.ToList().ForEach(it =>
-    {
-        detailDict.Add(it.detail_id, it.last_updated_by);
-    });
+    int c_pro_sta_id = dbStatusFunction.productionStatusID("complete");
 
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "ProductionGridView";
@@ -45,7 +41,7 @@
         settings.Columns.Add(col =>
         {
             col.FieldName = "production_status_id";
-            col.Caption = "Complete?";
+            col.Caption = "Status";
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
@@ -89,29 +85,43 @@
             prop.DisplayFormatString = "N2";
         });
 
+        // Complete Button
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Complete?";
+            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            col.PropertiesEdit.EncodeHtml = false;
+
+            col.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+
         // Staff Name
         settings.Columns.Add("staff_name").Caption = "Staff Name";
 
-        // Last Updated By
-        settings.Columns.Add(col =>
-        {
-            col.FieldName = "Last Updated By";
-            col.UnboundType = DevExpress.Data.UnboundColumnType.String;
-            col.ReadOnly = true;
-        });
-
         settings.CustomUnboundColumnData = (s, e) =>
         {
-            if (e.Column.FieldName.Equals("Last Updated By"))
+            if (e.Column.FieldName.Equals("Complete?"))
             {
-                int detail_id = int.Parse(e.GetListSourceFieldValue("detail_id").ToString());
-                e.Value = detailDict[detail_id];
-            };
+                int production_id = int.Parse(e.GetListSourceFieldValue("production_id").ToString());
+                int pro_sta_id = int.Parse(e.GetListSourceFieldValue("production_status_id").ToString());
+                string to_disable = (pro_sta_id == c_pro_sta_id) ? " disabled " : "";
+                string js_func = "$.ajax({ url: '/Production/CompleteProduction',type: 'Post', data: { 'production_id': this.value }, success: resp => { $('#productionFormResp').html(resp); alert(`Production ${this.value} has been updated!`); } });";
+                e.Value = $"<button class='btn btn-outline-success' value='{production_id}'{to_disable}onclick=\"{js_func}\">Complete</button>";
+            }
         };
 
         // Cell Styles Center
         settings.Styles.Cell.HorizontalAlign = HorizontalAlign.Center;
         settings.Styles.Cell.VerticalAlign = VerticalAlign.Middle;
+
+        // Setting Detail Grid
+        settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = false;
+        settings.SettingsDetail.ShowDetailRow = true;
+
+        settings.SetDetailRowTemplateContent(c =>
+        {
+            Html.RenderAction("ProductionDetailGridViewPartial", "ProductionDetail", new { production_id = DataBinder.Eval(c.DataItem, "production_id") });
+        });
     });
 
     if (ViewData["EditError"] != null){

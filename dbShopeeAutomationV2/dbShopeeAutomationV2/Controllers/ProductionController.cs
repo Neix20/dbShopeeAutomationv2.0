@@ -62,7 +62,8 @@ namespace dbShopeeAutomationV2.Controllers
             dbStoredProcedure.productionUpdate(item.production_id, item.title, item.description, item.staff_name, item.created_date, item.total_usage, item.production_status_id, username);
             db.SaveChanges();
 
-            return RedirectToAction("Index", "ProductionDetailParam", new { production_id = item.production_id });
+            var model = db.TShopeeProductions;
+            return PartialView("_ProductionGridViewPartial", model.ToList());
         }
 
         [HttpPost, ValidateInput(false)]
@@ -80,6 +81,43 @@ namespace dbShopeeAutomationV2.Controllers
             });
 
             dbStoredProcedure.productionDelete(production_id);
+            db.SaveChanges();
+
+            var model = db.TShopeeProductions;
+            return PartialView("_ProductionGridViewPartial", model.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult CompleteProduction()
+        {
+            string username = User.Identity.Name;
+
+            string production_id_str = generalFunc.trimStr(Request.Form["production_id"]);
+            int production_id = int.Parse(production_id_str);
+
+            // Update Production
+            var production = db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id);
+
+            production.production_status_id = dbStatusFunction.productionStatusID("Complete");
+
+            int material_model_id = dbStatusFunction.productModelID("Material");
+
+            // Update Stock Item
+            var production_detail_list = db.TShopeeProductionDetails.Where(it => it.production_id == production_id).ToList();
+            production_detail_list.ForEach(tmp_model =>
+            {
+                var product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == tmp_model.product_id);
+                var stock_item = db.TShopeeStockItems.FirstOrDefault(it => it.product_id == tmp_model.product_id);
+                if (product.product_model_id == material_model_id)
+                {
+                    stock_item.stock_quantity -= tmp_model.quantity;
+                    production.total_usage = tmp_model.quantity;
+                }
+                else
+                {
+                    stock_item.stock_quantity += tmp_model.can_be_used;
+                }
+            });
             db.SaveChanges();
 
             var model = db.TShopeeProductions;

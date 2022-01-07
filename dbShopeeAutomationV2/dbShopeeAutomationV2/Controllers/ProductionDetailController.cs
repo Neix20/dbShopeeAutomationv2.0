@@ -19,15 +19,19 @@ namespace dbShopeeAutomationV2.Controllers
         dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
         [ValidateInput(false)]
-        public ActionResult ProductionDetailGridViewPartial()
+        public ActionResult ProductionDetailGridViewPartial(int production_id)
         {
-            var model = db.TShopeeProductionDetails;
+            ViewData["production_id"] = production_id;
+
+            var model = db.TShopeeProductionDetails.Where(it => it.production_id == production_id);
             return PartialView("_ProductionDetailGridViewPartial", model.ToList());
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult ProductionDetailGridViewPartialAddNew(TShopeeProductionDetail item)
+        public ActionResult ProductionDetailGridViewPartialAddNew(TShopeeProductionDetail item, int production_id)
         {
+            ViewData["production_id"] = production_id;
+
             string username = User.Identity.Name;
 
             item.UOM = (item.UOM == null) ? "UOM" : item.UOM;
@@ -49,13 +53,15 @@ namespace dbShopeeAutomationV2.Controllers
                 item.production_id, item.product_id, username);
             db.SaveChanges();
 
-            var model = db.TShopeeProductionDetails;
+            var model = db.TShopeeProductionDetails.Where(it => it.production_id == production_id);
             return PartialView("_ProductionDetailGridViewPartial", model.ToList());
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult ProductionDetailGridViewPartialUpdate(TShopeeProductionDetail item)
+        public ActionResult ProductionDetailGridViewPartialUpdate(TShopeeProductionDetail item, int production_id)
         {
+            ViewData["production_id"] = production_id;
+
             string username = User.Identity.Name;
 
             item.UOM = (item.UOM == null) ? "UOM" : item.UOM;
@@ -71,11 +77,11 @@ namespace dbShopeeAutomationV2.Controllers
             item.can_be_used = (item.can_be_used == null) ? 0 : item.can_be_used;
 
             // Update Stock Item 
-            var production = db.TShopeeProductions.FirstOrDefault(it => it.production_id == item.production_id);
+            var production = db.TShopeeProductions.FirstOrDefault(it => it.production_id == production_id);
+            int pro_sta_id = (int)production.production_status_id;
             int c_pro_sta_id = dbStatusFunction.productionStatusID("complete");
-
             // Only Update Stock Item Count when Production is marked as complete
-            if (production.production_status_id == c_pro_sta_id)
+            if (pro_sta_id == c_pro_sta_id)
             {
                 var oriProductionDetail = db.TShopeeProductionDetails.FirstOrDefault(it => it.production_detail_id == item.production_detail_id);
                 var product = db.TShopeeProducts.FirstOrDefault(it => it.product_id == oriProductionDetail.product_id);
@@ -104,17 +110,19 @@ namespace dbShopeeAutomationV2.Controllers
                 item.production_id, item.product_id, username);
             db.SaveChanges();
 
-            var model = db.TShopeeProductionDetails;
+            var model = db.TShopeeProductionDetails.Where(it => it.production_id == production_id);
             return PartialView("_ProductionDetailGridViewPartial", model.ToList());
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult ProductionDetailGridViewPartialDelete(int production_detail_id)
+        public ActionResult ProductionDetailGridViewPartialDelete(int production_detail_id, int production_id)
         {
+            ViewData["production_id"] = production_id;
+
             dbStoredProcedure.productionDetailDelete(production_detail_id);
             db.SaveChanges();
 
-            var model = db.TShopeeProductionDetails;
+            var model = db.TShopeeProductionDetails.Where(it => it.production_id == production_id);
             return PartialView("_ProductionDetailGridViewPartial", model.ToList());
         }
     }

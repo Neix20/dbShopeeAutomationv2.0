@@ -11,28 +11,29 @@
     });
 
     var grid = Html.DevExpress().GridView(settings => {
-        settings.Name = "ProductionDetailGridView";
+        settings.Name = "ProductionDetailGridView" + ViewData["production_id"];
+        settings.SettingsDetail.MasterGridName = "grid";
         settings.Width = Unit.Percentage(100);
-        settings.CallbackRouteValues = new { Controller = "ProductionDetail", Action = "ProductionDetailGridViewPartial" };
+        settings.CallbackRouteValues = new { Controller = "ProductionDetail", Action = "ProductionDetailGridViewPartial", production_id = ViewData["production_id"] };
 
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "ProductionDetail", Action = "ProductionDetailGridViewPartialAddNew" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ProductionDetail", Action = "ProductionDetailGridViewPartialUpdate" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ProductionDetail", Action = "ProductionDetailGridViewPartialDelete" };
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "ProductionDetail", Action = "ProductionDetailGridViewPartialAddNew", production_id = ViewData["production_id"] };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ProductionDetail", Action = "ProductionDetailGridViewPartialUpdate", production_id = ViewData["production_id"] };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ProductionDetail", Action = "ProductionDetailGridViewPartialDelete", production_id = ViewData["production_id"] };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsBehavior.ConfirmDelete = true;
 
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButtonInHeader = false;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
         settings.CommandColumn.ShowDeleteButton = true;
         settings.CommandColumn.ShowEditButton = true;
 
         settings.KeyFieldName = "production_detail_id";
 
         settings.SettingsPager.Visible = true;
-        settings.Settings.ShowGroupPanel = true;
-        settings.Settings.ShowFilterRow = true;
-        settings.SettingsBehavior.AllowSelectByRowClick = true;
-        settings.SettingsSearchPanel.Visible = true;
+        //settings.Settings.ShowGroupPanel = true;
+        //settings.Settings.ShowFilterRow = true;
+        //settings.SettingsBehavior.AllowSelectByRowClick = true;
+        //settings.SettingsSearchPanel.Visible = true;
 
         // Header Set Center
         settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
@@ -43,6 +44,8 @@
         {
             col.FieldName = "production_id";
             col.Caption = "Production";
+
+            col.EditFormSettings.Visible = DefaultBoolean.False;
 
             col.ColumnType = MVCxGridViewColumnType.ComboBox;
             ComboBoxProperties prop = col.PropertiesEdit as ComboBoxProperties;
@@ -151,6 +154,8 @@
             column.FieldName = "manufactured_date";
             column.Caption = "Manufactured Date";
 
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
             column.ColumnType = MVCxGridViewColumnType.DateEdit;
             column.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
 
@@ -164,6 +169,9 @@
         {
             column.FieldName = "expiry_date";
             column.Caption = "Expiry Date";
+
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
             column.ColumnType = MVCxGridViewColumnType.DateEdit;
             column.PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
 

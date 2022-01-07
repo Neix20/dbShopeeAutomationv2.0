@@ -4,9 +4,7 @@
 @{
     dbShopeeAutomationV2Entities db = new dbShopeeAutomationV2Entities();
 
-    Dictionary<int, string>
-    detailDict = new Dictionary<int, string>
-        ();
+    Dictionary<int, string> detailDict = new Dictionary<int, string>();
     db.TShopeeDetails.ToList().ForEach(it =>
     {
         detailDict.Add(it.detail_id, it.last_updated_by);
@@ -49,6 +47,8 @@
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
             col.PropertiesEdit.EncodeHtml = false;
             col.ReadOnly = true;
+
+            col.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
         settings.Columns.Add("name").Caption = "Name";
@@ -182,6 +182,7 @@
             col.UnboundType = DevExpress.Data.UnboundColumnType.String;
             col.PropertiesEdit.EncodeHtml = false;
             col.ReadOnly = true;
+            col.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
         settings.CustomUnboundColumnData = (s, e) =>

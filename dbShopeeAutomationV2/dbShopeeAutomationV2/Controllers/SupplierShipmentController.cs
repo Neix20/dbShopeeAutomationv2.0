@@ -42,6 +42,10 @@ namespace dbShopeeAutomationV2.Controllers
             item.width = (item.width == null) ? 0 : item.width;
             item.length = (item.length == null) ? 0 : item.length;
 
+            // Update Stock Item Quantity
+            var stockItem = db.TShopeeStockItems.FirstOrDefault(it => it.product_id == item.product_id);
+            stockItem.stock_quantity += item.width * item.length;
+
             dbStoredProcedure.supplierShipmentInsert(
                 item.received_date, item.supplier_tracking_id, item.NTL_tracking_id, 
                 item.height, item.width, item.length, 
@@ -82,6 +86,13 @@ namespace dbShopeeAutomationV2.Controllers
             item.height = (item.height == null) ? 0 : item.height;
             item.width = (item.width == null) ? 0 : item.width;
             item.length = (item.length == null) ? 0 : item.length;
+
+            // Update Stock Item Quantity
+            var oriSupplierShipment = db.TShopeeSupplierShipments.FirstOrDefault(it => it.supplier_shipment_id == item.supplier_shipment_id);
+            var stockItem = db.TShopeeStockItems.FirstOrDefault(it => it.product_id == item.product_id);
+
+            stockItem.stock_quantity -= oriSupplierShipment.width * oriSupplierShipment.length;
+            stockItem.stock_quantity += item.width * item.length;
 
             dbStoredProcedure.supplierShipmentUpdate(
                 item.supplier_shipment_id, item.received_date, item.supplier_tracking_id, item.NTL_tracking_id,
